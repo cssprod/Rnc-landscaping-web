@@ -1,0 +1,36 @@
+{
+  "slug": "fernwood-strata-courtyard-planting",
+  "title": "Courtyard replanting for a Fernwood strata",
+  "service": "landscape-installation",
+  "area": "victoria",
+  "clientType": "Strata",
+  "seo": {
+    "title": "Sample project: Fernwood strata courtyard | RNC",
+    "description": "Sample project: a shaded strata courtyard in Fernwood, Victoria, replanted with shade-tolerant natives and new edging, phased around residents. Free quote."
+  },
+  "summary": "A shaded courtyard with failing shrubs replanted with shade-tolerant natives.",
+  "scope": [
+    "Removal of failed shrubs",
+    "Soil amendment",
+    "Shade-tolerant native planting",
+    "New bed edging",
+    "Mulch"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Half the courtyard shrubs had died and owners disagreed about what to plant.",
+    "We gave council two planting options with a plant list for each. Work was done in halves so residents always had a clear path to their doors.",
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+  ],
+  "result": "Council chose a plan from written options, and residents kept access throughout.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-landscape-installation-before",
+    "after": "proj-landscape-installation-4",
+    "gallery": [
+      "svc-landscape-installation-after",
+      "svc-landscape-installation-detail-1"
+    ]
+  }
+}

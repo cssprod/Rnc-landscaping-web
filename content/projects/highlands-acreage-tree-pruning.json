@@ -1,0 +1,35 @@
+{
+  "slug": "highlands-acreage-tree-pruning",
+  "title": "Clearance pruning on a Highlands acreage",
+  "service": "tree-vegetation",
+  "area": "highlands",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Highlands tree pruning | RNC",
+    "description": "Sample project: clearance pruning near a Highlands home and driveway, with a check of the District's tree bylaw near the lake first. Request a free quote."
+  },
+  "summary": "Clearance pruning over a driveway and roof on a forested lot near a lake.",
+  "scope": [
+    "Bylaw check for work near the lake",
+    "Clearance pruning over the roof and driveway",
+    "Deadwood removal",
+    "Brush chipping"
+  ],
+  "duration": "2 days",
+  "story": [
+    "Branches hung over the roof and scraped vehicles on the driveway.",
+    "Because the lot is near a lake, we checked the District's tree rules first and confirmed which cuts needed a permit. We pruned for clearance and left the canopy intact.",
+    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Highlands](/areas/highlands/), or [get a free quote](/quote/)."
+  ],
+  "result": "Clear roof and driveway, with the bylaw question answered before work.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-tree-vegetation-before",
+    "after": "proj-tree-vegetation-2",
+    "gallery": [
+      "svc-tree-vegetation-after",
+      "svc-tree-vegetation-detail-1"
+    ]
+  }
+}

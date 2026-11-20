@@ -1,0 +1,557 @@
+[
+  {
+    "slug": "victoria",
+    "name": "Victoria",
+    "neighbourhoods": [
+      "James Bay",
+      "Fairfield",
+      "Rockland",
+      "Fernwood",
+      "Oaklands",
+      "Gonzales",
+      "Hillside-Quadra",
+      "North Park",
+      "Burnside Gorge",
+      "Jubilee",
+      "Victoria West",
+      "Downtown",
+      "Harris Green"
+    ],
+    "propertyTypes": [
+      "character homes on mature lots",
+      "condo and apartment stratas",
+      "heritage properties",
+      "downtown commercial and mixed-use frontages",
+      "townhouse stratas"
+    ],
+    "landscapeNotes": [
+      "The tree bylaw gives extra protection to trees on slopes steeper than 33 per cent and within 15 m of a watercourse, so steep or creekside lots need a check before work."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Victoria's Tree Protection Bylaw protects private trees over 30 cm diameter at breast height, hedges with any stem over 30 cm, Garry oak, arbutus, Pacific yew and Pacific dogwood over 50 cm tall, replacement trees, and trees on steep slopes or near watercourses. A permit may be needed to prune, remove or work in the root zone of a protected tree.",
+        "sourceUrl": "https://www.victoria.ca/node/162",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.victoria.ca/node/162",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "saanich",
+    "name": "Saanich",
+    "neighbourhoods": [
+      "Gordon Head",
+      "Cordova Bay",
+      "Cadboro Bay",
+      "Broadmead",
+      "Royal Oak",
+      "Lake Hill",
+      "Quadra",
+      "Tillicum",
+      "Carey",
+      "Cedar Hill",
+      "Shelbourne",
+      "Mount Tolmie",
+      "Blenkinsop",
+      "Prospect Lake"
+    ],
+    "propertyTypes": [
+      "single-family homes on suburban lots",
+      "rural and acreage properties",
+      "townhouse and condo stratas",
+      "commercial plazas",
+      "institutional campuses"
+    ],
+    "landscapeNotes": [
+      "Saanich's bylaw names Garry oak, arbutus, Pacific dogwood and Pacific yew as protected at small sizes, and also protects trees with raptor, osprey or heron nests, so native-tree and nesting checks belong in any pruning or removal plan."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Saanich's Tree Protection Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm diameter; any other tree at 60 cm; plus replacement, significant and nesting trees. A tree cutting permit is required before cutting a protected tree, even if dead or dying, and the bylaw also covers pruning or damaging protected trees.",
+        "sourceUrl": "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "oak-bay",
+    "name": "Oak Bay",
+    "neighbourhoods": [
+      "Uplands",
+      "South Oak Bay",
+      "North Oak Bay",
+      "Henderson",
+      "Estevan",
+      "Gonzales (Oak Bay side)"
+    ],
+    "propertyTypes": [
+      "character and heritage homes on large lots",
+      "estate gardens",
+      "condo stratas",
+      "village commercial frontages"
+    ],
+    "landscapeNotes": [
+      "Oak Bay notes that deer can undo gardeners' work and suggests deer-resistant plants, repaired fencing and barriers around accent plants and fruit trees."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "In Oak Bay, no protected tree may be cut down or damaged unless authorized by a Municipal Arborist permit under the Tree Protection Bylaw or by a development permit. Check the bylaw for which trees are protected.",
+        "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.oakbay.ca/parks-recreation/parks/trees/",
+      "https://oakbay.ca/node/73",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "esquimalt",
+    "name": "Esquimalt",
+    "neighbourhoods": [
+      "Saxe Point",
+      "West Bay",
+      "Rockheights",
+      "Gorge Vale",
+      "Esquimalt Village",
+      "Lampson"
+    ],
+    "propertyTypes": [
+      "older single-family homes",
+      "apartment and condo stratas",
+      "townhouse stratas",
+      "commercial frontages",
+      "institutional and defence-related grounds"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Esquimalt requires a tree permit to remove or prune a protected tree, or to work in its protected root zone, unless exempted. The Tree Protection Bylaw (2022, No. 3076) defines which trees are protected.",
+        "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "langford",
+    "name": "Langford",
+    "neighbourhoods": [
+      "Bear Mountain",
+      "Westhills",
+      "Happy Valley",
+      "Florence Lake",
+      "Langford Lake",
+      "Goldstream",
+      "Glen Lake",
+      "Luxton",
+      "Thetis Heights"
+    ],
+    "propertyTypes": [
+      "newer subdivisions",
+      "townhouse stratas",
+      "hillside homes",
+      "commercial and retail centres",
+      "new-build sites needing landscape installation"
+    ],
+    "landscapeNotes": [
+      "Langford regulates tree and vegetation removal in designated development permit areas such as steep slopes, sensitive ecosystems and land near lakes and streams."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Langford's Tree Protection Bylaw applies across the city. Removing a protected tree on private property needs a Tree Permit (or a Development Permit when part of development); work in designated development permit areas is also regulated, and Parks authorizes all removals on public land and boulevards.",
+        "sourceUrl": "https://www.langford.ca/residents/resident-resources/tree-removal/",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.langford.ca/residents/resident-resources/tree-removal/",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "colwood",
+    "name": "Colwood",
+    "neighbourhoods": [
+      "Royal Bay",
+      "Latoria",
+      "Wishart",
+      "Triangle",
+      "Hatley Park",
+      "Lagoon",
+      "Colwood Corners"
+    ],
+    "propertyTypes": [
+      "newer subdivisions",
+      "waterfront and lagoon-area homes",
+      "townhouse stratas",
+      "commercial frontages"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Colwood's Urban Forest Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm; and any tree over 60 cm or identified as retained, replacement or wildlife tree. Removal needs a Tree Management Permit; pruning within stated limits (keep at least 50% live crown, no more than 25% removed per season) and some hedge work do not.",
+        "sourceUrl": "https://www.colwood.ca/node/5090",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.colwood.ca/node/5090",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "view-royal",
+    "name": "View Royal",
+    "neighbourhoods": [
+      "Portage Inlet",
+      "Helmcken",
+      "Atkins",
+      "Craigflower",
+      "Thetis Lake area",
+      "Six Mile"
+    ],
+    "propertyTypes": [
+      "single-family homes",
+      "waterfront properties on Portage Inlet",
+      "townhouse stratas",
+      "healthcare and institutional grounds"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "View Royal's Tree Protection Bylaw No. 1069 (2022) protects species including shore pine, replacement trees, trees with raptor, osprey or heron nests, trees kept as a permit condition and Town trees. Removing or altering protected trees generally needs a Tree Removal or Alteration Permit; pruning branches up to 10 cm by an ISA certified arborist is exempt, and emergency removals need notice with photos by the next business day.",
+        "sourceUrl": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "sooke",
+    "name": "Sooke",
+    "neighbourhoods": [
+      "Sooke town centre",
+      "Saseenos",
+      "Broomhill",
+      "Whiffin Spit area",
+      "Sooke River area",
+      "John Muir area"
+    ],
+    "propertyTypes": [
+      "rural and acreage properties",
+      "newer subdivisions",
+      "waterfront homes",
+      "commercial frontages"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (confirm your property's water supply): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "central-saanich",
+    "name": "Central Saanich",
+    "neighbourhoods": [
+      "Brentwood Bay",
+      "Saanichton",
+      "Keating",
+      "Tanner Ridge",
+      "Island View"
+    ],
+    "propertyTypes": [
+      "rural and farm properties",
+      "single-family homes",
+      "townhouse stratas",
+      "industrial and commercial sites in Keating"
+    ],
+    "landscapeNotes": [
+      "Central Saanich has an Erosion District where removing any tree needs a permit and a geotechnical engineer's report."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Central Saanich protects dogwood, arbutus, Garry oak, Pacific yew, shore pine and trembling aspen, nesting trees, permit-retained trees and any tree over 0.6 m diameter. Pruning or removing a protected tree needs an application with a site plan (an arborist report may be required); removing any tree in the Erosion District needs an Engineering permit and geotechnical report.",
+        "sourceUrl": "https://www.centralsaanich.ca/node/256",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.centralsaanich.ca/node/256",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "north-saanich",
+    "name": "North Saanich",
+    "neighbourhoods": [
+      "Deep Cove",
+      "Dean Park",
+      "Ardmore",
+      "Curteis Point",
+      "Lands End",
+      "McDonald Park",
+      "Swartz Bay"
+    ],
+    "propertyTypes": [
+      "acreage and rural properties",
+      "waterfront homes",
+      "hobby farms",
+      "townhouse stratas"
+    ],
+    "landscapeNotes": [
+      "North Saanich regulates trees from 10 cm diameter in environmental and steep-slope development permit areas."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "North Saanich's Tree Protection Bylaw No. 1548 requires a permit to remove any regulated tree (generally 20 cm diameter or more, smaller for arbutus, Garry oak, Pacific dogwood, yew and shore pine, plus trees in environmental or steep-slope areas). Topping is prohibited; best-practice pruning needs no permit. Staff review takes about 2-3 weeks and the permit must be posted 48 hours before work.",
+        "sourceUrl": "https://www.northsaanich.ca/node/51",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.northsaanich.ca/node/51",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "sidney",
+    "name": "Sidney",
+    "neighbourhoods": [
+      "Downtown Sidney",
+      "Roberts Bay",
+      "Sidney waterfront",
+      "West Sidney"
+    ],
+    "propertyTypes": [
+      "condo and apartment stratas",
+      "seniors' residences",
+      "compact single-family lots",
+      "Beacon Avenue commercial frontages"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Sidney's Tree Preservation Bylaw protects species including Garry oak, arbutus, Pacific dogwood, western yew, seaside juniper, cascara, shore pine, Douglas-fir, grand fir, western redcedar and bigleaf maple, plus replacement and permit-required trees, Town trees and any tree over 60 cm diameter. A permit may be needed to remove, extensively prune or top a tree on private property.",
+        "sourceUrl": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "highlands",
+    "name": "Highlands",
+    "neighbourhoods": [
+      "Millstream area",
+      "Caleb Pike area",
+      "Fork Lake area"
+    ],
+    "propertyTypes": [
+      "rural acreage on forested lots",
+      "homes near lakes and watercourses"
+    ],
+    "landscapeNotes": [
+      "Highlands requires a tree cutting permit for any tree near a watercourse, lake or steep slope, so many rural lots need a check before clearing."
+    ],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Under Highlands' Tree Management Bylaw No. 10, cutting a protected tree (Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara, manzanita, Douglas-fir over 60 cm, any tree over 80 cm) or any tree near a watercourse, lake or steep slope needs a permit; cutting a significant tree is prohibited. Check for nesting birds before felling in nesting season.",
+        "sourceUrl": "https://www.highlands.ca/node/133",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.highlands.ca/node/133",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  },
+  {
+    "slug": "metchosin",
+    "name": "Metchosin",
+    "neighbourhoods": [
+      "Happy Valley",
+      "William Head area",
+      "Rocky Point area",
+      "Witty's Lagoon area"
+    ],
+    "propertyTypes": [
+      "rural acreage and farm properties",
+      "homes on forested lots",
+      "waterfront properties"
+    ],
+    "landscapeNotes": [],
+    "localRules": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Metchosin's Tree Management Bylaw regulates tree removal; the District asks owners to call the Municipal Hall before removing trees. Where a stream or wetland is on or next to the property, the BC Riparian Areas Regulation may also apply.",
+        "sourceUrl": "https://www.metchosin.ca/node/485",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "sources": [
+      "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "https://www.metchosin.ca/node/485",
+      "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "slug": "north-saanich-grounds-fixture-4",
+  "sample": true,
+  "title": "North Saanich grounds maintenance project 4",
+  "service": "grounds-maintenance",
+  "area": "north-saanich",
+  "clientType": "Institutional",
+  "summary": "Fixture summary for a sample grounds maintenance project in North Saanich.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": null,
+  "images": {
+    "before": "svc-grounds-maintenance-before",
+    "after": "proj-grounds-maintenance-4",
+    "gallery": [
+      "svc-grounds-maintenance-detail-1"
+    ]
+  }
+}

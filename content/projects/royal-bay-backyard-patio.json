@@ -1,0 +1,35 @@
+{
+  "slug": "royal-bay-backyard-patio",
+  "title": "Backyard patio and planting in Royal Bay",
+  "service": "landscape-installation",
+  "area": "colwood",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Royal Bay backyard patio | RNC",
+    "description": "Sample project: a bare new-build backyard in Royal Bay, Colwood, finished with a paver patio, low retaining wall, sod and native shrubs. Get a free quote."
+  },
+  "summary": "A bare new-build backyard finished with a patio, retaining wall and planting.",
+  "scope": [
+    "Grading and drainage",
+    "Paver patio",
+    "Low block retaining wall",
+    "Sod and native shrub border"
+  ],
+  "duration": "4 weeks",
+  "story": [
+    "The yard sloped toward the house and held water in winter.",
+    "We regraded away from the foundation, built a low retaining wall to level the patio area and planted the border with native shrubs that handle dry summers.",
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Colwood](/areas/colwood/), or [get a free quote](/quote/)."
+  ],
+  "result": "A level, usable yard that drains away from the house.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-landscape-installation-before",
+    "after": "proj-landscape-installation-3",
+    "gallery": [
+      "svc-landscape-installation-after",
+      "svc-landscape-installation-detail-2"
+    ]
+  }
+}

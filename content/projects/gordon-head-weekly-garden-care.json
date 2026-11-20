@@ -1,0 +1,35 @@
+{
+  "slug": "gordon-head-weekly-garden-care",
+  "title": "Weekly garden care for a Gordon Head family home",
+  "service": "grounds-maintenance",
+  "area": "saanich",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Gordon Head garden care | RNC",
+    "description": "Sample project: weekly lawn and bed care for a Gordon Head home in Saanich, with moss control, pruning and fall leaf cleanup on one plan. Get a free quote."
+  },
+  "summary": "Regular lawn and bed care for a busy household with a large mossy lawn.",
+  "scope": [
+    "Weekly mowing in spring, every other week in summer",
+    "Moss assessment, aeration and overseeding",
+    "Shrub pruning",
+    "Fall leaf removal"
+  ],
+  "duration": "Ongoing, March to November with winter cleanups",
+  "story": [
+    "The lawn under two big Douglas-firs was more moss than grass, and the owners had no time for weekends in the yard.",
+    "We set a visit schedule, raised the mowing height, and aerated and overseeded the sunnier areas in fall. In the deepest shade we suggested a mulched bed of native groundcover instead of more lawn.",
+    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Saanich](/areas/saanich/), or [get a free quote](/quote/)."
+  ],
+  "result": "A lawn plan matched to the shade, and a schedule the family did not have to manage.",
+  "testimonial": "homeowner-gordon-head",
+  "sample": true,
+  "images": {
+    "before": "svc-grounds-maintenance-before",
+    "after": "proj-grounds-maintenance-2",
+    "gallery": [
+      "svc-grounds-maintenance-after",
+      "svc-grounds-maintenance-detail-1"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "slug": "central-saanich",
+  "name": "Central Saanich",
+  "seo": {
+    "title": "Landscaping in Central Saanich, BC | RNC Landscaping",
+    "description": "Grounds care, landscape installs, irrigation and tree work in Central Saanich, from Brentwood Bay to Saanichton, with permit checks. Get a free quote."
+  },
+  "h1": "Landscaping in Central Saanich",
+  "intro": [
+    "Central Saanich runs from the village streets of Brentwood Bay and Saanichton to farmland and the Keating industrial area. We work on homes, townhouse stratas, rural properties and commercial sites.",
+    "The District protects dogwood, arbutus, Garry oak, Pacific yew, shore pine and trembling aspen, and any tree over 0.6 m in diameter. In the Erosion District, removing any tree needs an engineering permit and a geotechnical report. See [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Brentwood Bay",
+    "Saanichton",
+    "Keating",
+    "Tanner Ridge",
+    "Island View"
+  ],
+  "propertyTypes": [
+    "rural and farm properties",
+    "single-family homes",
+    "townhouse stratas",
+    "industrial and commercial sites in Keating"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Central Saanich protects dogwood, arbutus, Garry oak, Pacific yew, shore pine and trembling aspen, nesting trees, permit-retained trees and any tree over 0.6 m diameter. Pruning or removing a protected tree needs an application with a site plan (an arborist report may be required); removing any tree in the Erosion District needs an Engineering permit and geotechnical report.",
+      "sourceUrl": "https://www.centralsaanich.ca/node/256",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Grounds care for business parks in Keating, village homes and stratas.",
+    "landscape-installation": "Planting and hardscape for village lots and rural homes.",
+    "irrigation": "Irrigation repairs and seasonal service for homes and commercial sites.",
+    "tree-vegetation": "Tree work with protected species and the Erosion District checked first."
+  },
+  "featuredProject": "keating-business-park-grounds-maintenance",
+  "image": "area-central-saanich"
+}

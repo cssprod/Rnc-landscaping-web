@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Commercial and public sector grounds | RNC Landscaping",
+    "description": "Fixture description for the commercial page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Grounds care for strata, commercial and public sites",
+  "lede": "Fixture lede for buyers who need documented scopes and insurance.",
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "Fixture section heading",
+      "body": [
+        "Fixture paragraph for this page."
+      ],
+      "items": []
+    }
+  ]
+}

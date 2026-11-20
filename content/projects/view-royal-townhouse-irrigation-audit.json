@@ -1,0 +1,35 @@
+{
+  "slug": "view-royal-townhouse-irrigation-audit",
+  "title": "Irrigation audit and repair for a View Royal townhouse strata",
+  "service": "irrigation",
+  "area": "view-royal",
+  "clientType": "Strata",
+  "seo": {
+    "title": "Sample project: View Royal irrigation audit | RNC",
+    "description": "Sample project: an irrigation audit and repair for a View Royal townhouse strata, with zone maps and controllers set to CRD watering days. Get a free quote."
+  },
+  "summary": "A zone-by-zone check and repair of an older strata irrigation system.",
+  "scope": [
+    "Zone-by-zone test",
+    "Head and valve repairs",
+    "Controller reset to CRD lawn days for the complex address",
+    "Zone map for council"
+  ],
+  "duration": "4 days",
+  "story": [
+    "Some lawns were soggy while others browned, and nobody had a zone map.",
+    "We ran every zone, replaced broken heads and a sticking valve, and set the controller to the lawn days for the complex's street address. Council received a simple zone map.",
+    "Read more about [irrigation](/services/irrigation/), see our work in [View Royal](/areas/view-royal/), or [get a free quote](/quote/)."
+  ],
+  "result": "Even coverage and a zone map the strata can hand to any contractor.",
+  "testimonial": "strata-council-view-royal",
+  "sample": true,
+  "images": {
+    "before": "svc-irrigation-before",
+    "after": "proj-irrigation-1",
+    "gallery": [
+      "svc-irrigation-after",
+      "svc-irrigation-detail-2"
+    ]
+  }
+}

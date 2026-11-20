@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Privacy policy | RNC Landscaping",
+    "description": "Fixture description for the privacy page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Privacy policy",
+  "lede": "Fixture lede. Analytics are cookieless (Plausible).",
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "Fixture section heading",
+      "body": [
+        "Fixture paragraph for this page."
+      ],
+      "items": []
+    }
+  ]
+}

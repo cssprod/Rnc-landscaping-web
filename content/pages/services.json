@@ -1,0 +1,31 @@
+{
+  "_notes": "Hub lists the 4 services.",
+  "seo": {
+    "title": "Landscaping Services in Greater Victoria | RNC",
+    "description": "Grounds maintenance, landscape installation, irrigation and tree and vegetation management for homes, stratas and businesses in Greater Victoria. Free quote."
+  },
+  "h1": "Landscaping services",
+  "lede": "Four services from one local crew and one point of contact.",
+  "services": [
+    "grounds-maintenance",
+    "landscape-installation",
+    "irrigation",
+    "tree-vegetation"
+  ],
+  "sections": [
+    {
+      "id": "one-crew",
+      "heading": "Why one contractor helps",
+      "body": [
+        "When maintenance, irrigation and tree work come from one crew, a broken sprinkler or a leaning tree gets noticed and handled, not passed between trades."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "Next steps",
+      "body": [
+        "See [sample projects](/portfolio/), check [service areas](/areas/), or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

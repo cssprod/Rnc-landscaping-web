@@ -1,0 +1,109 @@
+{
+  "slug": "winter-pruning-and-storm-prep",
+  "title": "Winter pruning, storm prep and tree permits",
+  "seo": {
+    "title": "Winter Pruning, Storm Prep & Tree Permits | Victoria",
+    "description": "When to prune in Greater Victoria's mild winters, how to ready trees and hedges for wind storms, and how to check your municipality's tree bylaw. Free quote."
+  },
+  "date": "2026-11-19",
+  "summary": "Dormant pruning, storm preparation and how to check whether your tree work needs a permit.",
+  "image": "res-4",
+  "body": [
+    {
+      "p": "Winters here are mild and wet, with windstorms that bring down limbs and sometimes whole trees. Winter is also a good time to prune many trees and shrubs while they are dormant and their structure is easy to see."
+    },
+    {
+      "h2": "What to prune in winter"
+    },
+    {
+      "list": [
+        "Fruit trees such as apples and pears.",
+        "Many deciduous shade trees and shrubs, for structure and clearance.",
+        "Summer-flowering shrubs, late in winter.",
+        "Leave spring-flowering shrubs until after they bloom."
+      ]
+    },
+    {
+      "h2": "Storm prep"
+    },
+    {
+      "list": [
+        "Look for dead branches, cracks, or limbs rubbing against the house or wires.",
+        "Check for leaning trees, lifting soil or mushrooms at the base, which can be signs of root problems.",
+        "Keep branches clear of roofs and gutters.",
+        "Stay well away from any tree touching power lines and call your utility."
+      ]
+    },
+    {
+      "h2": "Check the tree bylaw first"
+    },
+    {
+      "p": "Every municipality in Greater Victoria has its own tree rules. Many protect native species like Garry oak, arbutus, Pacific dogwood and Pacific yew at small sizes, and some cover trees on steep slopes, near water or with nests. Some also limit how much you can prune, and topping is prohibited in places such as North Saanich. Find your municipality in the sources below, or on our [area pages](/areas/), and check before you cut."
+    },
+    {
+      "p": "This is general information, not legal advice. The municipality decides what needs a permit."
+    },
+    {
+      "h2": "Avoid topping"
+    },
+    {
+      "p": "Topping (cutting the top off a tree) leads to weak regrowth and decay. Proper reduction pruning keeps trees healthier and safer."
+    },
+    {
+      "p": "Need pruning, a removal or storm cleanup? See [tree and vegetation management](/services/tree-vegetation/) or [get a free quote](/quote/)."
+    },
+    {
+      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+    }
+  ],
+  "sources": [
+    {
+      "label": "City of Victoria: Tree Protection Bylaw",
+      "url": "https://www.victoria.ca/node/162"
+    },
+    {
+      "label": "District of Saanich: Tree Protection Bylaw",
+      "url": "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html"
+    },
+    {
+      "label": "District of Oak Bay: Trees",
+      "url": "https://www.oakbay.ca/parks-recreation/parks/trees/"
+    },
+    {
+      "label": "Township of Esquimalt: Tree cutting permit",
+      "url": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit"
+    },
+    {
+      "label": "City of Langford: Tree removal",
+      "url": "https://www.langford.ca/residents/resident-resources/tree-removal/"
+    },
+    {
+      "label": "City of Colwood: Urban Forest Bylaw",
+      "url": "https://www.colwood.ca/node/5090"
+    },
+    {
+      "label": "Town of View Royal: Tree Protection Bylaw",
+      "url": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html"
+    },
+    {
+      "label": "District of Central Saanich: Trees",
+      "url": "https://www.centralsaanich.ca/node/256"
+    },
+    {
+      "label": "District of North Saanich: Tree Protection Bylaw",
+      "url": "https://www.northsaanich.ca/node/51"
+    },
+    {
+      "label": "Town of Sidney: Tree Preservation Bylaw",
+      "url": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/"
+    },
+    {
+      "label": "District of Highlands: Tree Management Bylaw",
+      "url": "https://www.highlands.ca/node/133"
+    },
+    {
+      "label": "District of Metchosin: Trees",
+      "url": "https://www.metchosin.ca/node/485"
+    }
+  ]
+}

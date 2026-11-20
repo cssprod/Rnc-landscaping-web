@@ -1,0 +1,36 @@
+{
+  "slug": "colwood",
+  "name": "Colwood",
+  "seo": {
+    "title": "Landscaping in Colwood, BC | RNC Landscaping",
+    "description": "Fixture copy: grounds maintenance, landscape installation, irrigation and tree work in Colwood, BC. Local notes, recent projects and free quotes from RNC Landsc"
+  },
+  "h1": "Landscaping and grounds care in Colwood",
+  "intro": [
+    "Fixture introduction for Colwood: how properties here differ and what owners ask for most.",
+    "Fixture second paragraph about soils, exposure or typical lot sizes."
+  ],
+  "neighbourhoods": [
+    "Fixture neighbourhood A",
+    "Fixture neighbourhood B"
+  ],
+  "propertyTypes": [
+    "Houses",
+    "Strata complexes"
+  ],
+  "localNotes": [
+    {
+      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Fixture local sentence about grounds maintenance in Colwood.",
+    "landscape-installation": "Fixture local sentence about landscape installation in Colwood.",
+    "irrigation": "Fixture local sentence about irrigation in Colwood.",
+    "tree-vegetation": "Fixture local sentence about tree and vegetation in Colwood."
+  },
+  "featuredProject": "oak-bay-landscape-fixture-2",
+  "image": "area-colwood"
+}

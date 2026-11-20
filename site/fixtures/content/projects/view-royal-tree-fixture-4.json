@@ -1,0 +1,28 @@
+{
+  "slug": "view-royal-tree-fixture-4",
+  "sample": true,
+  "title": "View Royal tree and vegetation project 4",
+  "service": "tree-vegetation",
+  "area": "view-royal",
+  "clientType": "Institutional",
+  "summary": "Fixture summary for a sample tree and vegetation project in View Royal.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": null,
+  "images": {
+    "before": "svc-tree-vegetation-before",
+    "after": "proj-tree-vegetation-4",
+    "gallery": [
+      "svc-tree-vegetation-detail-1"
+    ]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "_notes": "Featured items reference services, projects and testimonials by slug.",
+  "seo": {
+    "title": "Landscaping in Greater Victoria, BC | RNC Landscaping",
+    "description": "Grounds maintenance, landscape installation, irrigation and tree care for homes, stratas and businesses across Greater Victoria. Request your free quote today."
+  },
+  "h1": "Landscaping, grounds care, irrigation and tree work in Greater Victoria",
+  "lede": "One local crew for four services, for homes, stratas and commercial sites. We check the local rules first and tell you what happens next.",
+  "heroImage": "home-hero",
+  "cta": {
+    "primary": {
+      "label": "Get a free quote",
+      "href": "/quote/"
+    },
+    "secondary": {
+      "label": "Call [PHONE]",
+      "href": "tel:[PHONE]"
+    }
+  },
+  "featuredServices": [
+    "grounds-maintenance",
+    "landscape-installation",
+    "irrigation",
+    "tree-vegetation"
+  ],
+  "featuredProjects": [
+    "oak-bay-front-garden-renewal",
+    "sidney-strata-seasonal-grounds-care",
+    "view-royal-townhouse-irrigation-audit",
+    "sooke-acreage-brush-and-broom-clearing"
+  ],
+  "featuredTestimonials": [
+    "strata-council-sidney",
+    "homeowner-oak-bay",
+    "general-contractor-langford"
+  ],
+  "sections": [
+    {
+      "id": "services",
+      "heading": "What we do",
+      "body": [
+        "Four services from one contractor and one point of contact, so nothing falls between trades."
+      ],
+      "items": [
+        {
+          "title": "Grounds maintenance",
+          "body": "Mowing, bed care, pruning and seasonal cleanups on a set schedule. [See grounds maintenance](/services/grounds-maintenance/)."
+        },
+        {
+          "title": "Landscape installation",
+          "body": "Planting, sod, patios, paths and retaining walls. [See landscape installation](/services/landscape-installation/)."
+        },
+        {
+          "title": "Irrigation",
+          "body": "Installation, repairs, spring start-up and winterization. [See irrigation](/services/irrigation/)."
+        },
+        {
+          "title": "Tree and vegetation",
+          "body": "Pruning, removals, invasive plants and clearing. [See tree and vegetation](/services/tree-vegetation/)."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "heading": "How we work",
+      "body": [],
+      "items": [
+        {
+          "title": "Local rules, handled",
+          "body": "We check CRD watering rules and your municipality's tree bylaw before we start, and point you to the official source."
+        },
+        {
+          "title": "A written scope",
+          "body": "Every quote says what we will do, how often and when. No surprises at the first visit."
+        },
+        {
+          "title": "One contact",
+          "body": "One person to call for questions, changes and owner concerns."
+        }
+      ]
+    },
+    {
+      "id": "audiences",
+      "heading": "Who we work for",
+      "body": [],
+      "items": [
+        {
+          "title": "Homeowners",
+          "body": "A tidy, healthy yard without managing it yourself."
+        },
+        {
+          "title": "Stratas and property managers",
+          "body": "A seasonal plan you can take to council and notes after each visit. [Strata and commercial service](/commercial/)."
+        },
+        {
+          "title": "Commercial and public buyers",
+          "body": "Work to your specification, with insurance and safety documents on request. [Commercial capability](/commercial/)."
+        }
+      ]
+    },
+    {
+      "id": "areas",
+      "heading": "Where we work",
+      "body": [
+        "We work across Greater Victoria, from Sidney to Sooke. [See all service areas](/areas/)."
+      ]
+    },
+    {
+      "id": "projects",
+      "heading": "Sample projects",
+      "body": [
+        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/portfolio/)."
+      ]
+    },
+    {
+      "id": "cta",
+      "heading": "Ready to talk about your property?",
+      "body": [
+        "Tell us what you need in a few short steps. We'll get back to you to arrange your free quote."
+      ]
+    }
+  ]
+}

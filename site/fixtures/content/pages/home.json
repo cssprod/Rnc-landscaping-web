@@ -1,0 +1,31 @@
+{
+  "seo": {
+    "title": "RNC Landscaping | Greater Victoria landscaping and grounds care",
+    "description": "Fixture description for the home page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Grounds that look after themselves, because we do.",
+  "lede": "Fixture lede: maintenance, installation, irrigation and tree work for homes, strata and commercial sites from Sidney to Sooke.",
+  "sections": [
+    {
+      "id": "approach",
+      "heading": "How we work",
+      "body": [
+        "Fixture paragraph about a clear scope, a consistent crew and straightforward communication."
+      ],
+      "items": [
+        {
+          "title": "Written scopes",
+          "body": "Fixture."
+        },
+        {
+          "title": "Scheduled visits",
+          "body": "Fixture."
+        },
+        {
+          "title": "One contact",
+          "body": "Fixture."
+        }
+      ]
+    }
+  ]
+}

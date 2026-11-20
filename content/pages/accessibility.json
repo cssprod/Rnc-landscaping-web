@@ -1,0 +1,66 @@
+{
+  "_notes": "Accessibility statement.",
+  "seo": {
+    "title": "Accessibility Statement | RNC Landscaping",
+    "description": "RNC Landscaping aims to meet WCAG 2.2 Level AA on this website. Learn what we have done, known limits, and how to report an accessibility problem to us."
+  },
+  "h1": "Accessibility statement",
+  "lede": "We want everyone to be able to use this website, including people who use assistive technology.",
+  "sections": [
+    {
+      "id": "target",
+      "heading": "Our target",
+      "body": [
+        "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA."
+      ]
+    },
+    {
+      "id": "done",
+      "heading": "What we have done",
+      "body": [],
+      "items": [
+        {
+          "title": "Contrast",
+          "body": "Text and controls meet AA contrast ratios."
+        },
+        {
+          "title": "Keyboard",
+          "body": "All links, menus and form steps work with a keyboard, with a visible focus outline."
+        },
+        {
+          "title": "Forms",
+          "body": "Every field has a label, help text and clear error messages linked to the field."
+        },
+        {
+          "title": "Images",
+          "body": "Meaningful images have text alternatives."
+        },
+        {
+          "title": "Motion",
+          "body": "Animation is minimal and turned off when you choose reduced motion."
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "heading": "Known limits",
+      "body": [
+        "Some linked government pages and PDF documents are outside our control and may not meet the same standard."
+      ]
+    },
+    {
+      "id": "report",
+      "heading": "Report a problem",
+      "body": [
+        "If something doesn't work for you, contact us at [EMAIL] or [PHONE]. Tell us the page and what happened, and we'll work on a fix or give you the information another way."
+      ]
+    },
+    {
+      "id": "related",
+      "heading": "Related pages",
+      "body": [
+        "[Contact](/contact/), [privacy policy](/privacy/), [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

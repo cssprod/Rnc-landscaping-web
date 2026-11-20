@@ -1,0 +1,36 @@
+{
+  "slug": "langford-townhouse-landscape-package",
+  "title": "Landscape package for a new Langford townhouse build",
+  "service": "landscape-installation",
+  "area": "langford",
+  "clientType": "General contractor",
+  "seo": {
+    "title": "Sample project: Langford townhouse landscape | RNC",
+    "description": "Sample project: soft landscape package for a new Langford townhouse build, installed to the contractor's drawings and schedule. Request a free quote today."
+  },
+  "summary": "Soft landscaping for a new townhouse site, built to the general contractor's drawings.",
+  "scope": [
+    "Topsoil placement and fine grading",
+    "Sod for common lawns",
+    "Tree and shrub planting to plan",
+    "Irrigation to the drawings",
+    "Deficiency walkthrough"
+  ],
+  "duration": "5 weeks, phased with the build",
+  "story": [
+    "The general contractor needed landscaping finished in phases as each building block closed out.",
+    "We worked to the landscape drawings, coordinated deliveries with the site supervisor and attended a deficiency walkthrough at the end of each phase.",
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+  ],
+  "result": "Landscape phases completed to the drawings and handed over with deficiencies closed.",
+  "testimonial": "general-contractor-langford",
+  "sample": true,
+  "images": {
+    "before": "svc-landscape-installation-before",
+    "after": "proj-landscape-installation-2",
+    "gallery": [
+      "svc-landscape-installation-after",
+      "svc-landscape-installation-detail-1"
+    ]
+  }
+}

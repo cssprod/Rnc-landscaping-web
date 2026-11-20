@@ -1,0 +1,110 @@
+{
+  "_notes": "faqs[] rendered grouped by category; also emitted as FAQPage schema.",
+  "seo": {
+    "title": "Landscaping FAQ: Quotes, Permits & Scheduling | RNC",
+    "description": "Answers on how quotes work, tree permits, watering rules, scheduling and what our maintenance includes across Greater Victoria. Ask us for a free quote."
+  },
+  "h1": "Frequently asked questions",
+  "lede": "How quotes work, local rules, scheduling and what to expect.",
+  "faqs": [
+    {
+      "q": "How much does landscaping cost?",
+      "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/quote/).",
+      "category": "Quotes"
+    },
+    {
+      "q": "Is the quote really free?",
+      "a": "Yes. There is no charge to request or receive a quote.",
+      "category": "Quotes"
+    },
+    {
+      "q": "What affects the price of a quote?",
+      "a": "Size of the area, access, the condition of the site, materials, disposal, how often we visit and the season. Your written quote states the assumptions.",
+      "category": "Quotes"
+    },
+    {
+      "q": "How soon will I hear back?",
+      "a": "We'll get back to you after we receive your request. If it's urgent, call [PHONE].",
+      "category": "Quotes"
+    },
+    {
+      "q": "Can you quote to our specification or tender?",
+      "a": "Yes. Attach or describe it in the quote form and we'll quote to it. See [commercial](/commercial/).",
+      "category": "Quotes"
+    },
+    {
+      "q": "Do I need a permit to cut down or prune a tree?",
+      "a": "Often, yes. Each municipality has its own tree bylaw, and many protect Garry oak, arbutus and other native species at small sizes. We check before any work. See [tree permits and winter pruning](/resources/winter-pruning-and-storm-prep/). This is general information, not legal advice.",
+      "category": "Local rules"
+    },
+    {
+      "q": "What are the CRD watering days?",
+      "a": "Under Stage 1 (May 1 to September 30), even addresses water lawns Wednesday and Saturday, odd addresses Thursday and Sunday, 4 to 10 am or 7 to 10 pm. Drip and hand watering of gardens is allowed any day. Check the CRD site for current rules. Read our [watering guide](/resources/crd-watering-rules-guide/).",
+      "category": "Local rules"
+    },
+    {
+      "q": "How do you dispose of invasive plants?",
+      "a": "We keep them separate from green waste and dispose of them following CRD guidance.",
+      "category": "Local rules"
+    },
+    {
+      "q": "How often should a lawn be mowed?",
+      "a": "In spring growth, weekly or every other week is common. Summer and winter need less. Your plan sets the frequency.",
+      "category": "Scheduling"
+    },
+    {
+      "q": "Do you work in winter?",
+      "a": "Yes. Pruning, cleanups, storm debris and some installation continue through Greater Victoria's mild winters.",
+      "category": "Scheduling"
+    },
+    {
+      "q": "Do I need to be home?",
+      "a": "No, as long as we can reach the work area safely. Tell us about gates, pets and parking in your request.",
+      "category": "Scheduling"
+    },
+    {
+      "q": "What does grounds maintenance include?",
+      "a": "Mowing, edging, bed care, pruning and seasonal cleanups, as listed in your scope. See [grounds maintenance](/services/grounds-maintenance/).",
+      "category": "Services"
+    },
+    {
+      "q": "Does landscaping include irrigation?",
+      "a": "It can. We install drip or spray zones during a build, or service an existing system. See [irrigation](/services/irrigation/).",
+      "category": "Services"
+    },
+    {
+      "q": "Do you remove trees?",
+      "a": "Yes, after checking whether a permit is needed. See [tree and vegetation management](/services/tree-vegetation/).",
+      "category": "Services"
+    },
+    {
+      "q": "Which areas do you serve?",
+      "a": "All 13 municipalities listed on our [areas page](/areas/), from Sidney to Sooke.",
+      "category": "Services"
+    },
+    {
+      "q": "Are you insured and registered with WorkSafeBC?",
+      "a": "Liability insurance: [LIABILITY LIMIT]. WorkSafeBC: [WORKSAFEBC STATUS]. Documents are available on request.",
+      "category": "About us"
+    },
+    {
+      "q": "Do you offer a warranty?",
+      "a": "[WARRANTY]",
+      "category": "About us"
+    },
+    {
+      "q": "Are the projects and reviews on this site real?",
+      "a": "Items marked Sample are examples of the work we do, not records of specific past jobs. We will replace them with real projects and reviews, shared with permission.",
+      "category": "About us"
+    }
+  ],
+  "sections": [
+    {
+      "id": "more",
+      "heading": "Still have a question?",
+      "body": [
+        "[Contact us](/contact/) or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

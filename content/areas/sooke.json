@@ -1,0 +1,48 @@
+{
+  "slug": "sooke",
+  "name": "Sooke",
+  "seo": {
+    "title": "Landscaping & Property Clearing in Sooke, BC | RNC",
+    "description": "Landscaping, yard care, irrigation, brush clearing and tree work for Sooke homes and rural acreages. Ask RNC Landscaping for a free quote and site visit."
+  },
+  "h1": "Landscaping and property clearing in Sooke",
+  "intro": [
+    "Sooke properties are often larger and more rural: acreages in Saseenos and Broomhill, waterfront homes near Whiffin Spit, and newer subdivisions near the town centre.",
+    "Broom, blackberry and brush can close in a rural lot quickly. We clear it while keeping native trees, and dispose of invasive material following CRD guidance. Confirm whether your property is on the regional water supply before relying on CRD watering rules. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Sooke town centre",
+    "Saseenos",
+    "Broomhill",
+    "Whiffin Spit area",
+    "Sooke River area",
+    "John Muir area"
+  ],
+  "propertyTypes": [
+    "rural and acreage properties",
+    "newer subdivisions",
+    "waterfront homes",
+    "commercial frontages"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (confirm your property's water supply): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Lawn and yard upkeep for subdivisions, and rough mowing for acreages.",
+    "landscape-installation": "Planting and hardscape for new homes and waterfront lots.",
+    "irrigation": "Irrigation for homes on the regional supply and on private systems.",
+    "tree-vegetation": "Brush, broom and blackberry clearing, plus tree pruning and removals."
+  },
+  "featuredProject": "sooke-acreage-brush-and-broom-clearing",
+  "image": "area-sooke"
+}

@@ -1,0 +1,67 @@
+{
+  "slug": "native-and-drought-tolerant-planting",
+  "title": "Native and drought-tolerant planting for Greater Victoria",
+  "seo": {
+    "title": "Native & Drought-Tolerant Planting in Victoria, BC",
+    "description": "Plants that handle Greater Victoria's dry summers and wet winters, how to plant them well, and which invasive species to keep out of your garden. Free quote."
+  },
+  "date": "2026-11-19",
+  "summary": "How to choose and plant for dry summers and wet winters, and which invasive plants to avoid.",
+  "image": "res-5",
+  "body": [
+    {
+      "p": "Greater Victoria has wet, mild winters and long dry summers. Plants that suit that pattern need less water once established, which matters when lawn watering is limited from May to September."
+    },
+    {
+      "h2": "Native plants to consider"
+    },
+    {
+      "list": [
+        "Shrubs: Oregon grape, salal, red-flowering currant, mock orange, oceanspray, snowberry.",
+        "Groundcovers: kinnikinnick, wild strawberry.",
+        "Ferns for shade: sword fern, deer fern.",
+        "Meadow plants for sunny, dry sites: camas, nodding onion, Oregon sunshine.",
+        "Trees for the right site: Garry oak, vine maple, shore pine."
+      ]
+    },
+    {
+      "h2": "Drought-tolerant non-natives"
+    },
+    {
+      "p": "Lavender, rosemary, sedums, rockrose and many ornamental grasses do well in sunny, well-drained spots. Several of these are also less attractive to deer."
+    },
+    {
+      "h2": "Planting well"
+    },
+    {
+      "list": [
+        "Plant in fall where you can, so winter rain establishes roots.",
+        "Group plants by water need.",
+        "Mulch to hold moisture.",
+        "Water new plants deeply through their first one or two summers; drip is allowed any day under CRD Stage 1 rules."
+      ]
+    },
+    {
+      "h2": "Keep invasives out"
+    },
+    {
+      "p": "English ivy, Himalayan blackberry, Scotch broom, English holly and spurge laurel spread from gardens into parks and natural areas. The CRD lists priority invasive species, asks for sightings to be reported and explains safe disposal. Do not plant them, and remove them before they seed."
+    },
+    {
+      "p": "Planning new planting? See [landscape installation](/services/landscape-installation/), the [fall cleanup guide](/resources/fall-cleanup-and-leaf-guide/) or [get a free quote](/quote/)."
+    },
+    {
+      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+    }
+  ],
+  "sources": [
+    {
+      "label": "CRD: Invasive species",
+      "url": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    },
+    {
+      "label": "CRD: Outdoor watering schedule",
+      "url": "https://www.crd.ca/environment/water-conservation/watering-schedule"
+    }
+  ]
+}

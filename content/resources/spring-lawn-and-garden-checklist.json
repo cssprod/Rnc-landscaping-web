@@ -1,0 +1,78 @@
+{
+  "slug": "spring-lawn-and-garden-checklist",
+  "title": "Spring lawn and garden checklist for Greater Victoria",
+  "seo": {
+    "title": "Spring Lawn & Garden Checklist for Greater Victoria",
+    "description": "A practical list of spring lawn, bed and pruning tasks suited to Greater Victoria's coastal climate, plus the local rules to know first. Need help? Free quote."
+  },
+  "date": "2026-11-19",
+  "summary": "What to do in your lawn and beds from March to May on southern Vancouver Island.",
+  "image": "res-1",
+  "body": [
+    {
+      "p": "Spring comes early on southern Vancouver Island. Lawns start growing in March, and beds wake up well before the last frost in much of the rest of Canada. A little work now saves a lot in summer, when the CRD lawn watering schedule limits how much water you can use."
+    },
+    {
+      "h2": "Lawn"
+    },
+    {
+      "list": [
+        "Rake out winter debris and look for moss. Moss usually points to shade, compaction or poor drainage, not just a lack of fertilizer.",
+        "Aerate compacted areas once the soil is moist but not waterlogged.",
+        "Overseed thin patches in April or May while the ground is cool and damp.",
+        "Start mowing high. Taller grass shades its roots and copes better with dry summers.",
+        "In deep shade under big firs or cedars, consider a mulched bed of native groundcover instead of lawn."
+      ]
+    },
+    {
+      "h2": "Beds and borders"
+    },
+    {
+      "list": [
+        "Clear weeds before they set seed.",
+        "Cut back last year's perennial stems once new growth shows.",
+        "Top up mulch to hold moisture into summer.",
+        "Divide crowded perennials.",
+        "Plant new perennials and shrubs early so roots grow before the dry months."
+      ]
+    },
+    {
+      "h2": "Pruning"
+    },
+    {
+      "list": [
+        "Prune summer-flowering shrubs in early spring.",
+        "Wait until after flowering for spring bloomers like rhododendron, forsythia and lilac.",
+        "Check for nesting birds in hedges and trees before cutting. Federal and provincial rules protect active nests."
+      ]
+    },
+    {
+      "h2": "Irrigation"
+    },
+    {
+      "p": "Start up your system and check every zone before CRD Stage 1 rules begin on May 1. See our [irrigation start-up and winterization guide](/resources/irrigation-start-up-and-winterization/) and the [CRD watering rules guide](/resources/crd-watering-rules-guide/)."
+    },
+    {
+      "h2": "Before you cut a tree"
+    },
+    {
+      "p": "Every municipality in the region has its own tree bylaw. If a tree is large, native (like Garry oak or arbutus) or near a slope or stream, check the rules first. Find your municipality's link on our [area pages](/areas/)."
+    },
+    {
+      "p": "Want this handled for you? [Get a free quote](/quote/) for [grounds maintenance](/services/grounds-maintenance/)."
+    },
+    {
+      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+    }
+  ],
+  "sources": [
+    {
+      "label": "CRD: Outdoor watering schedule",
+      "url": "https://www.crd.ca/environment/water-conservation/watering-schedule"
+    },
+    {
+      "label": "CRD: Invasive species",
+      "url": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    }
+  ]
+}

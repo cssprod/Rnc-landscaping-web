@@ -1,0 +1,50 @@
+{
+  "slug": "metchosin",
+  "name": "Metchosin",
+  "seo": {
+    "title": "Landscaping & Acreage Care in Metchosin, BC | RNC",
+    "description": "Acreage upkeep, clearing, landscaping, irrigation and tree work for Metchosin properties, with a check of local tree rules first. Request a free quote."
+  },
+  "h1": "Landscaping and acreage care in Metchosin",
+  "intro": [
+    "Metchosin is farms, forested lots and waterfront properties, from Happy Valley to the Witty's Lagoon and William Head areas.",
+    "The District asks owners to call the Municipal Hall before removing trees, and where a stream or wetland is on or next to the property, provincial riparian rules may also apply. See [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Happy Valley",
+    "William Head area",
+    "Rocky Point area",
+    "Witty's Lagoon area"
+  ],
+  "propertyTypes": [
+    "rural acreage and farm properties",
+    "homes on forested lots",
+    "waterfront properties"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Metchosin's Tree Management Bylaw regulates tree removal; the District asks owners to call the Municipal Hall before removing trees. Where a stream or wetland is on or next to the property, the BC Riparian Areas Regulation may also apply.",
+      "sourceUrl": "https://www.metchosin.ca/node/485",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Acreage and farm property upkeep: mowing, hedges and fence lines.",
+    "landscape-installation": "Planting and simple hardscape for rural homes.",
+    "irrigation": "Drip and spray systems for gardens on wells or the regional supply.",
+    "tree-vegetation": "Invasive removal, brush clearing and tree work after a check with the District."
+  },
+  "featuredProject": "metchosin-trail-edge-invasive-removal",
+  "image": "area-metchosin"
+}

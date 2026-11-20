@@ -1,0 +1,36 @@
+{
+  "slug": "oak-bay-front-garden-renewal",
+  "title": "Front garden renewal in Oak Bay",
+  "service": "landscape-installation",
+  "area": "oak-bay",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Oak Bay front garden renewal | RNC",
+    "description": "Sample project: an Oak Bay character home's front garden rebuilt with deer-resistant planting, a stone path and drip irrigation. Request your free quote today."
+  },
+  "summary": "A tired lawn and overgrown beds replaced with deer-resistant planting and a stone path.",
+  "scope": [
+    "Lawn removal and soil amendment",
+    "Flagstone path to the front door",
+    "Deer-resistant shrubs and perennials",
+    "Drip irrigation for new beds",
+    "Mulch and care notes"
+  ],
+  "duration": "3 weeks",
+  "story": [
+    "Deer had eaten most of the old planting, and the lawn struggled in summer.",
+    "We checked the protected tree near the boulevard before digging, kept work outside its root zone, and planted lavender, rosemary, sword fern, Oregon grape and other plants deer tend to leave alone. Drip lines went in under the mulch.",
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Oak Bay](/areas/oak-bay/), or [get a free quote](/quote/)."
+  ],
+  "result": "A front garden suited to deer pressure and dry summers, with less lawn to water.",
+  "testimonial": "homeowner-oak-bay",
+  "sample": true,
+  "images": {
+    "before": "svc-landscape-installation-before",
+    "after": "proj-landscape-installation-1",
+    "gallery": [
+      "svc-landscape-installation-after",
+      "svc-landscape-installation-detail-2"
+    ]
+  }
+}

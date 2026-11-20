@@ -1,0 +1,51 @@
+{
+  "slug": "sidney",
+  "name": "Sidney",
+  "seo": {
+    "title": "Landscaping & Garden Care in Sidney, BC | RNC",
+    "description": "Garden care, strata grounds maintenance, irrigation and tree work for Sidney homes, condos and businesses, with tree bylaw checks. Request a free quote."
+  },
+  "h1": "Landscaping and garden care in Sidney",
+  "intro": [
+    "Sidney is compact: condo and apartment stratas, seniors' residences, small single-family lots and the frontages along Beacon Avenue.",
+    "The Town's Tree Preservation Bylaw protects many native species and any tree over 60 cm in diameter, and a permit may be needed to remove, extensively prune or top a tree. See [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Downtown Sidney",
+    "Roberts Bay",
+    "Sidney waterfront",
+    "West Sidney"
+  ],
+  "propertyTypes": [
+    "condo and apartment stratas",
+    "seniors' residences",
+    "compact single-family lots",
+    "Beacon Avenue commercial frontages"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Sidney's Tree Preservation Bylaw protects species including Garry oak, arbutus, Pacific dogwood, western yew, seaside juniper, cascara, shore pine, Douglas-fir, grand fir, western redcedar and bigleaf maple, plus replacement and permit-required trees, Town trees and any tree over 60 cm diameter. A permit may be needed to remove, extensively prune or top a tree on private property.",
+      "sourceUrl": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Year-round strata and residence grounds care with notes to council or management.",
+    "landscape-installation": "Low-maintenance planting for small lots and condo entrances.",
+    "irrigation": "Controllers set to the complex's street address for strata lawn days.",
+    "tree-vegetation": "Hedge reductions and pruning with the Town's rules checked first."
+  },
+  "featuredProject": "sidney-strata-seasonal-grounds-care",
+  "image": "area-sidney"
+}

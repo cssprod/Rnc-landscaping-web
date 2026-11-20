@@ -1,0 +1,83 @@
+{
+  "_notes": "Owner/lawyer to confirm retention period and service-provider list. Draft for legal review. Written with PIPEDA and BC PIPA in mind.",
+  "seo": {
+    "title": "Privacy Policy (Draft) | RNC Landscaping",
+    "description": "How RNC Landscaping collects, uses and protects personal information from quote requests and this website, including cookieless analytics. Draft for review."
+  },
+  "h1": "Privacy policy",
+  "lede": "Draft for legal review. This page has not yet been reviewed by a lawyer and must not be relied on as final.",
+  "status": "draft-for-legal-review",
+  "updated": "2026-11-19",
+  "sections": [
+    {
+      "id": "who",
+      "heading": "Who we are",
+      "body": [
+        "[LEGAL NAME], operating as RNC Landscaping, [ADDRESS]. Privacy questions: [EMAIL]."
+      ]
+    },
+    {
+      "id": "collect",
+      "heading": "What we collect",
+      "body": [
+        "When you request a quote: your name, email, phone (optional), organization (optional), property area and address (optional), project details and any photos you upload. We do not ask for payment information on this website."
+      ]
+    },
+    {
+      "id": "why",
+      "heading": "Why we collect it",
+      "body": [
+        "To respond to your request, prepare a quote, schedule a site visit and carry out work you agree to. We do not sell personal information or use it for unrelated marketing without your consent."
+      ]
+    },
+    {
+      "id": "consent",
+      "heading": "Consent",
+      "body": [
+        "We ask for your consent on the quote form. You can withdraw consent at any time by contacting [EMAIL], subject to legal or contractual limits."
+      ]
+    },
+    {
+      "id": "storage",
+      "heading": "Where it is stored",
+      "body": [
+        "Form submissions are received by our website host and stored in a spreadsheet we use to track requests. These service providers may store data outside Canada, including in the United States, where it may be subject to local laws. A list of these providers is available on request."
+      ]
+    },
+    {
+      "id": "analytics",
+      "heading": "Analytics and cookies",
+      "body": [
+        "We use Plausible Analytics, a cookieless analytics service, to count visits in aggregate. It does not use tracking cookies or collect personal information that identifies you. This site does not set tracking cookies."
+      ]
+    },
+    {
+      "id": "retention",
+      "heading": "How long we keep it",
+      "body": [
+        "We keep quote requests only as long as needed for the purposes above and for our business records."
+      ]
+    },
+    {
+      "id": "safeguards",
+      "heading": "How we protect it",
+      "body": [
+        "We limit access to people who need it and use reasonable security safeguards with our service providers."
+      ]
+    },
+    {
+      "id": "rights",
+      "heading": "Your rights",
+      "body": [
+        "You may ask to see or correct the personal information we hold about you. Contact [EMAIL]. If you're not satisfied, you may contact the Office of the Information and Privacy Commissioner for British Columbia."
+      ]
+    },
+    {
+      "id": "links",
+      "heading": "Related pages",
+      "body": [
+        "[Terms of use](/terms/), [accessibility](/accessibility/), [contact](/contact/)."
+      ]
+    }
+  ]
+}

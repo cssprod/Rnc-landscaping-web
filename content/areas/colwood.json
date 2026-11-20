@@ -1,0 +1,54 @@
+{
+  "slug": "colwood",
+  "name": "Colwood",
+  "seo": {
+    "title": "Landscaping & Grounds Care in Colwood, BC | RNC",
+    "description": "Landscaping, lawn and bed care, irrigation and tree work for Colwood homes and stratas, including Royal Bay, with permit checks. Request a free quote."
+  },
+  "h1": "Landscaping and grounds care in Colwood",
+  "intro": [
+    "Colwood mixes new homes in Royal Bay and Latoria with older lots near the lagoon and Colwood Corners, plus townhouse stratas and commercial frontages.",
+    "Colwood's Urban Forest Bylaw protects native species at small sizes and needs a Tree Management Permit for removal. Pruning inside stated limits does not need one. We check which side of that line your work falls on. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Royal Bay",
+    "Latoria",
+    "Wishart",
+    "Triangle",
+    "Hatley Park",
+    "Lagoon",
+    "Colwood Corners"
+  ],
+  "propertyTypes": [
+    "newer subdivisions",
+    "waterfront and lagoon-area homes",
+    "townhouse stratas",
+    "commercial frontages"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Colwood's Urban Forest Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm; and any tree over 60 cm or identified as retained, replacement or wildlife tree. Removal needs a Tree Management Permit; pruning within stated limits (keep at least 50% live crown, no more than 25% removed per season) and some hedge work do not.",
+      "sourceUrl": "https://www.colwood.ca/node/5090",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Lawn and bed care for new subdivisions and stratas.",
+    "landscape-installation": "Finishing bare new-build yards with grading, patios, walls and planting.",
+    "irrigation": "New systems for new lawns, and seasonal service for established ones.",
+    "tree-vegetation": "Pruning within Colwood's limits, and removals after permit checks."
+  },
+  "featuredProject": "royal-bay-backyard-patio",
+  "image": "area-colwood"
+}

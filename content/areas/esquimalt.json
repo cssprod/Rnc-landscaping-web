@@ -1,0 +1,54 @@
+{
+  "slug": "esquimalt",
+  "name": "Esquimalt",
+  "seo": {
+    "title": "Landscaping & Yard Care in Esquimalt, BC | RNC",
+    "description": "Yard maintenance, landscape installs, irrigation and tree work for Esquimalt homes and stratas, with tree permit checks built in. Request a free quote."
+  },
+  "h1": "Landscaping and yard care in Esquimalt",
+  "intro": [
+    "Esquimalt has older family homes near Saxe Point and Gorge Vale, apartment and townhouse stratas, commercial frontages in the village, and institutional grounds.",
+    "The Township's Tree Protection Bylaw requires a permit to remove or prune a protected tree, or to work in its root zone, unless exempt. We check before we start. Read about [irrigation](/services/irrigation/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Saxe Point",
+    "West Bay",
+    "Rockheights",
+    "Gorge Vale",
+    "Esquimalt Village",
+    "Lampson"
+  ],
+  "propertyTypes": [
+    "older single-family homes",
+    "apartment and condo stratas",
+    "townhouse stratas",
+    "commercial frontages",
+    "institutional and defence-related grounds"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Esquimalt requires a tree permit to remove or prune a protected tree, or to work in its protected root zone, unless exempted. The Tree Protection Bylaw (2022, No. 3076) defines which trees are protected.",
+      "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Yard and strata maintenance for older lots with mature hedges and small lawns.",
+    "landscape-installation": "Bed renewals and planting for homes, stratas and community gardens.",
+    "irrigation": "Spray-to-drip conversions and repairs for homes, stratas and institutional grounds.",
+    "tree-vegetation": "Tree and hedge work with a check of Esquimalt's tree permit rules."
+  },
+  "featuredProject": "esquimalt-church-garden-drip-conversion",
+  "image": "area-esquimalt"
+}

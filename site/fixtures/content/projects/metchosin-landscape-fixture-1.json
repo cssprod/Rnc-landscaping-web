@@ -1,0 +1,28 @@
+{
+  "slug": "metchosin-landscape-fixture-1",
+  "sample": true,
+  "title": "Metchosin landscape installation project 1",
+  "service": "landscape-installation",
+  "area": "metchosin",
+  "clientType": "Public sector",
+  "summary": "Fixture summary for a sample landscape installation project in Metchosin.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": "fixture-testimonial-1",
+  "images": {
+    "before": "svc-landscape-installation-before",
+    "after": "proj-landscape-installation-1",
+    "gallery": [
+      "svc-landscape-installation-detail-1"
+    ]
+  }
+}

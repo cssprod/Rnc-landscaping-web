@@ -1,0 +1,35 @@
+{
+  "slug": "sooke-acreage-brush-and-broom-clearing",
+  "title": "Brush and broom clearing on a Sooke acreage",
+  "service": "tree-vegetation",
+  "area": "sooke",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Sooke brush and broom clearing | RNC",
+    "description": "Sample project: Scotch broom, blackberry and brush cleared on a Sooke acreage, keeping native trees, with invasive material disposed of properly. Free quote."
+  },
+  "summary": "Scotch broom and blackberry cleared from a rural lot while keeping native trees.",
+  "scope": [
+    "Broom and blackberry removal",
+    "Brush clearing around outbuildings",
+    "Retention of native trees",
+    "Disposal of invasive material"
+  ],
+  "duration": "1 week",
+  "story": [
+    "Broom and blackberry had closed in the driveway and a field.",
+    "We cut and pulled broom before it set seed, cleared blackberry, kept the young firs and arbutus and disposed of the invasive material following CRD guidance.",
+    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Sooke](/areas/sooke/), or [get a free quote](/quote/)."
+  ],
+  "result": "An open driveway and field, with native trees kept.",
+  "testimonial": "homeowner-sooke",
+  "sample": true,
+  "images": {
+    "before": "svc-tree-vegetation-before",
+    "after": "proj-tree-vegetation-1",
+    "gallery": [
+      "svc-tree-vegetation-after",
+      "svc-tree-vegetation-detail-2"
+    ]
+  }
+}

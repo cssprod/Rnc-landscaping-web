@@ -1,0 +1,66 @@
+{
+  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock.",
+  "seo": {
+    "title": "About RNC Landscaping | Greater Victoria Landscapers",
+    "description": "Meet RNC Landscaping, a local landscaping contractor serving Greater Victoria homes, stratas and businesses. Learn how we work and keep crews safe on site."
+  },
+  "h1": "About RNC Landscaping",
+  "lede": "A local contractor for grounds maintenance, landscape installation, irrigation and tree work across Greater Victoria.",
+  "images": {
+    "owner": "about-owner",
+    "crew": "about-crew"
+  },
+  "sections": [
+    {
+      "id": "owner",
+      "heading": "[OWNER NAME]",
+      "body": [
+        "[OWNER BIO]"
+      ]
+    },
+    {
+      "id": "values",
+      "heading": "What we value",
+      "body": [],
+      "items": [
+        {
+          "title": "Say what we'll do, then do it",
+          "body": "A written scope, a clear schedule and no surprises."
+        },
+        {
+          "title": "Respect the property",
+          "body": "We protect lawns, beds and structures, and clean up before we leave."
+        },
+        {
+          "title": "Respect the rules",
+          "body": "We check watering rules and tree bylaws first, and point you to the source."
+        },
+        {
+          "title": "Be a good neighbour",
+          "body": "We keep noise, parking and debris in mind on every street we work on."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "heading": "Safety",
+      "body": [
+        "Safety comes before speed. Crews plan each job, use the right protective equipment and stop work when conditions are unsafe. WorkSafeBC: [WORKSAFEBC STATUS]. Insurance: [LIABILITY LIMIT]."
+      ]
+    },
+    {
+      "id": "credentials",
+      "heading": "Licences and certifications",
+      "body": [
+        "Licences: [LICENCES]. Certifications: [CERTIFICATIONS]. Memberships: [MEMBERSHIPS]."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "Work with us",
+      "body": [
+        "See [our services](/services/), browse [sample projects](/portfolio/), or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

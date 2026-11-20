@@ -1,0 +1,69 @@
+{
+  "_notes": "Lawyer to confirm limitation-of-liability wording. Draft for legal review.",
+  "seo": {
+    "title": "Terms of Use (Draft) | RNC Landscaping",
+    "description": "Terms for using the RNC Landscaping website, including quote requests, sample content, links to official sources and limits on liability. Draft for review."
+  },
+  "h1": "Terms of use",
+  "lede": "Draft for legal review. This page has not yet been reviewed by a lawyer and must not be relied on as final.",
+  "status": "draft-for-legal-review",
+  "updated": "2026-11-19",
+  "sections": [
+    {
+      "id": "use",
+      "heading": "Using this website",
+      "body": [
+        "By using this site you agree to these terms. The site is operated by [LEGAL NAME], operating as RNC Landscaping."
+      ]
+    },
+    {
+      "id": "quotes",
+      "heading": "Quote requests",
+      "body": [
+        "Submitting a quote request does not create a contract. Any work is governed by a separate written quote or agreement that you accept."
+      ]
+    },
+    {
+      "id": "info",
+      "heading": "General information only",
+      "body": [
+        "Guides on this site, including summaries of watering rules and tree bylaws, are general information, not legal or professional advice. Rules change; always check the official source."
+      ]
+    },
+    {
+      "id": "samples",
+      "heading": "Sample content",
+      "body": [
+        "Projects, reviews and images marked Sample are illustrations, not records of specific past jobs or clients."
+      ]
+    },
+    {
+      "id": "links",
+      "heading": "Links to other sites",
+      "body": [
+        "We link to government and other websites for reference. We are not responsible for their content."
+      ]
+    },
+    {
+      "id": "liability",
+      "heading": "Limitation of liability",
+      "body": [
+        "To the extent permitted by law, we are not liable for loss arising from use of this website."
+      ]
+    },
+    {
+      "id": "law",
+      "heading": "Governing law",
+      "body": [
+        "These terms are governed by the laws of British Columbia and the applicable laws of Canada."
+      ]
+    },
+    {
+      "id": "related",
+      "heading": "Related pages",
+      "body": [
+        "[Privacy policy](/privacy/), [accessibility](/accessibility/), [contact](/contact/)."
+      ]
+    }
+  ]
+}

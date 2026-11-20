@@ -1,0 +1,140 @@
+{
+  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies.",
+  "seo": {
+    "title": "Commercial & Strata Landscaping in Greater Victoria",
+    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a free quote and site visit."
+  },
+  "h1": "Commercial, strata and institutional landscaping",
+  "lede": "Grounds maintenance, installation, irrigation and tree work for stratas, property managers, public and institutional buyers, and general contractors across Greater Victoria.",
+  "heroImage": "commercial-hero",
+  "capabilityStatement": {
+    "label": "Download capability statement",
+    "href": "/downloads/rnc-capability-statement.pdf",
+    "note": "PDF, supplied by RNC Landscaping."
+  },
+  "sections": [
+    {
+      "id": "buyers",
+      "heading": "Who we work with",
+      "body": [],
+      "items": [
+        {
+          "title": "Strata councils",
+          "body": "A written scope and visit calendar council can approve, and one contact for owner concerns."
+        },
+        {
+          "title": "Property managers",
+          "body": "Several sites on one schedule, with issue reports in writing."
+        },
+        {
+          "title": "Public and institutional buyers",
+          "body": "Municipalities, school districts, health and campus facilities, housing providers, churches and nonprofits. We can respond to formal requests and work to your specification."
+        },
+        {
+          "title": "General contractors and developers",
+          "body": "Soft and hard landscape packages built to drawings, coordinated through your site supervisor."
+        }
+      ]
+    },
+    {
+      "id": "compliance",
+      "heading": "Documents and compliance",
+      "body": [
+        "Copies are available on request with any formal submission."
+      ],
+      "items": [
+        {
+          "title": "Liability insurance",
+          "body": "Commercial general liability: [LIABILITY LIMIT]."
+        },
+        {
+          "title": "WorkSafeBC",
+          "body": "[WORKSAFEBC STATUS]"
+        },
+        {
+          "title": "Business licences",
+          "body": "[LICENCES]"
+        },
+        {
+          "title": "Certifications",
+          "body": "[CERTIFICATIONS]"
+        },
+        {
+          "title": "Memberships",
+          "body": "[MEMBERSHIPS]"
+        },
+        {
+          "title": "Legal name",
+          "body": "[LEGAL NAME]"
+        }
+      ]
+    },
+    {
+      "id": "capability",
+      "heading": "Capability",
+      "body": [],
+      "items": [
+        {
+          "title": "Crew",
+          "body": "Crew size: [CREW SIZE]."
+        },
+        {
+          "title": "Equipment",
+          "body": "An equipment list is available on request."
+        },
+        {
+          "title": "Services",
+          "body": "[Grounds maintenance](/services/grounds-maintenance/), [landscape installation](/services/landscape-installation/), [irrigation](/services/irrigation/) and [tree and vegetation management](/services/tree-vegetation/)."
+        },
+        {
+          "title": "Service area",
+          "body": "All 13 municipalities in our [service areas](/areas/)."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "heading": "Safety on site",
+      "body": [
+        "We plan work around occupants, traffic and public access, use signage and barriers where needed, and follow the site's safety rules and orientation. Safety program details: [WORKSAFEBC STATUS]."
+      ]
+    },
+    {
+      "id": "process",
+      "heading": "How we respond to a request",
+      "body": [],
+      "items": [
+        {
+          "title": "Send the request",
+          "body": "Use the [quote form](/quote/) or email [EMAIL] with your specification or drawings."
+        },
+        {
+          "title": "Site review",
+          "body": "We visit the site and note questions about the scope."
+        },
+        {
+          "title": "Written submission",
+          "body": "A written quote to your scope, with documents you request."
+        },
+        {
+          "title": "Start-up meeting",
+          "body": "Agree contacts, schedule, reporting and site rules before work starts."
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "heading": "References",
+      "body": [
+        "References are available on request."
+      ]
+    },
+    {
+      "id": "cta",
+      "heading": "Request a quote or site visit",
+      "body": [
+        "[Get a free quote](/quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
+      ]
+    }
+  ]
+}

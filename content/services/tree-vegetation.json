@@ -1,0 +1,132 @@
+{
+  "slug": "tree-vegetation",
+  "name": "Tree & Vegetation Management",
+  "navLabel": "Tree and vegetation",
+  "seo": {
+    "title": "Tree Pruning, Removal & Vegetation Care | Victoria BC",
+    "description": "Tree and shrub pruning, removals, invasive plant control and clearing in Greater Victoria, with permit checks under local tree bylaws. Get a free quote."
+  },
+  "hero": {
+    "h1": "Tree pruning, removal and vegetation management",
+    "lede": "Pruning, removals, invasive plant control and brush clearing, with a check of your municipality's tree bylaw before any cut.",
+    "image": "svc-tree-vegetation-hero"
+  },
+  "audiences": [
+    {
+      "title": "Homeowners",
+      "body": "Overgrown hedges, crowded trees or a yard taken over by ivy and blackberry, handled with the right permits checked first."
+    },
+    {
+      "title": "Stratas and property managers",
+      "body": "Tree and hedge work across the complex, with clear notes for council on what is protected and what needs a permit."
+    },
+    {
+      "title": "Public, institutional and rural landowners",
+      "body": "Invasive removal, trail-edge clearing and vegetation control to a written plan, with proper disposal."
+    }
+  ],
+  "includes": [
+    {
+      "title": "Tree and shrub pruning",
+      "body": "Structural and clearance pruning that keeps trees healthy. We do not top trees."
+    },
+    {
+      "title": "Tree removal",
+      "body": "Removal of dead, damaged or unsuitable trees once any required permit is in place. See our [tree permit guide](/resources/winter-pruning-and-storm-prep/)."
+    },
+    {
+      "title": "Hedge reduction",
+      "body": "Overgrown cedar, laurel and other hedges reduced in stages, within bylaw limits."
+    },
+    {
+      "title": "Invasive plant control",
+      "body": "English ivy, Himalayan blackberry, Scotch broom, laurel and other invasives removed and disposed of to CRD guidance."
+    },
+    {
+      "title": "Brush and lot clearing",
+      "body": "Clearing overgrowth on rural and acreage lots while keeping protected and native trees."
+    },
+    {
+      "title": "Storm cleanup",
+      "body": "Fallen limbs and debris cleared after winter windstorms."
+    }
+  ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Send photos of the trees or area on the [quote form](/quote/)."
+    },
+    {
+      "title": "Site visit and bylaw check",
+      "body": "We identify species and size and check whether your municipality's tree bylaw applies."
+    },
+    {
+      "title": "Written scope",
+      "body": "You get the planned work, any permit that may be needed, and nesting-season timing if relevant."
+    },
+    {
+      "title": "Work",
+      "body": "We work safely, protect nearby plants and structures, and clean up."
+    },
+    {
+      "title": "Disposal",
+      "body": "Wood and brush are removed; invasive material goes to an approved disposal site."
+    }
+  ],
+  "seasonal": [
+    {
+      "season": "Spring",
+      "items": [
+        "Nesting checks before work",
+        "Invasive control as growth starts",
+        "Pruning after flowering for spring-blooming shrubs"
+      ]
+    },
+    {
+      "season": "Summer",
+      "items": [
+        "Clearance pruning",
+        "Broom and blackberry removal before seed set",
+        "Hedge trimming"
+      ]
+    },
+    {
+      "season": "Fall",
+      "items": [
+        "Assessing trees before winter storms",
+        "Ivy removal from trunks",
+        "Hedge reductions"
+      ]
+    },
+    {
+      "season": "Winter",
+      "items": [
+        "Dormant pruning",
+        "Storm cleanup",
+        "Removals once permits are in place"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit to remove a tree?",
+      "a": "Often, yes. Every municipality in Greater Victoria has its own rules, and protected species like Garry oak and arbutus are covered at small sizes in many places. We check before any work. See our [area pages](/areas/) for local links."
+    },
+    {
+      "q": "Will you apply for the permit?",
+      "a": "We can help you prepare the information the municipality asks for. The permit decision is the municipality's."
+    },
+    {
+      "q": "Do you top trees?",
+      "a": "No. Topping harms trees and is prohibited under some local bylaws."
+    },
+    {
+      "q": "Are your crews certified arborists?",
+      "a": "Our current certifications are listed here: [CERTIFICATIONS]."
+    }
+  ],
+  "detailImages": [
+    "svc-tree-vegetation-detail-1",
+    "svc-tree-vegetation-detail-2"
+  ]
+}

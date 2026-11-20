@@ -1,0 +1,36 @@
+{
+  "slug": "esquimalt",
+  "name": "Esquimalt",
+  "seo": {
+    "title": "Landscaping in Esquimalt, BC | RNC Landscaping",
+    "description": "Fixture copy: grounds maintenance, landscape installation, irrigation and tree work in Esquimalt, BC. Local notes, recent projects and free quotes from RNC Land"
+  },
+  "h1": "Landscaping and grounds care in Esquimalt",
+  "intro": [
+    "Fixture introduction for Esquimalt: how properties here differ and what owners ask for most.",
+    "Fixture second paragraph about soils, exposure or typical lot sizes."
+  ],
+  "neighbourhoods": [
+    "Fixture neighbourhood A",
+    "Fixture neighbourhood B"
+  ],
+  "propertyTypes": [
+    "Houses",
+    "Strata complexes"
+  ],
+  "localNotes": [
+    {
+      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Fixture local sentence about grounds maintenance in Esquimalt.",
+    "landscape-installation": "Fixture local sentence about landscape installation in Esquimalt.",
+    "irrigation": "Fixture local sentence about irrigation in Esquimalt.",
+    "tree-vegetation": "Fixture local sentence about tree and vegetation in Esquimalt."
+  },
+  "featuredProject": "north-saanich-grounds-fixture-4",
+  "image": "area-esquimalt"
+}

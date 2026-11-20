@@ -1,0 +1,53 @@
+{
+  "slug": "oak-bay",
+  "name": "Oak Bay",
+  "seo": {
+    "title": "Landscaping & Garden Care in Oak Bay, BC | RNC",
+    "description": "Garden maintenance, landscape renewal, irrigation and tree care for Oak Bay homes and estates, with deer-aware planting and permit checks. Get a free quote."
+  },
+  "h1": "Landscaping and garden care in Oak Bay",
+  "intro": [
+    "Oak Bay has large character lots in Uplands and South Oak Bay, estate gardens with mature trees, condo stratas and the village frontages along Oak Bay Avenue.",
+    "Deer are a real factor here. Oak Bay suggests deer-resistant plants, repaired fencing and barriers around accent plants and fruit trees, and we plan new planting with that in mind. Protected trees need a Municipal Arborist permit before cutting. See [landscape installation](/services/landscape-installation/) or [get a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Uplands",
+    "South Oak Bay",
+    "North Oak Bay",
+    "Henderson",
+    "Estevan",
+    "Gonzales (Oak Bay side)"
+  ],
+  "propertyTypes": [
+    "character and heritage homes on large lots",
+    "estate gardens",
+    "condo stratas",
+    "village commercial frontages"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "In Oak Bay, no protected tree may be cut down or damaged unless authorized by a Municipal Arborist permit under the Tree Protection Bylaw or by a development permit. Check the bylaw for which trees are protected.",
+      "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Detailed bed care, hedge work and seasonal cleanups for established and estate gardens.",
+    "landscape-installation": "Garden renewals with deer-resistant planting, stone paths and drip irrigation.",
+    "irrigation": "Drip and spray systems adjusted to protect heritage stonework and mature beds.",
+    "tree-vegetation": "Pruning and removals only after Oak Bay's tree permit rules have been checked."
+  },
+  "featuredProject": "oak-bay-front-garden-renewal",
+  "image": "area-oak-bay"
+}

@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Portfolio | RNC Landscaping",
+    "description": "Fixture description for the portfolio page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Portfolio",
+  "lede": "Fixture lede for the portfolio hub.",
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "Fixture section heading",
+      "body": [
+        "Fixture paragraph for this page."
+      ],
+      "items": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "_notes": "Hub lists 16 sample projects filterable by service. Every card shows 'Sample' and images show 'Sample image'.",
+  "seo": {
+    "title": "Landscaping Projects & Examples | RNC Landscaping",
+    "description": "Browse sample landscaping, maintenance, irrigation and tree projects from across Greater Victoria, by service and area. Ready to start? Get a free quote."
+  },
+  "h1": "Sample projects",
+  "lede": "Examples of maintenance, installation, irrigation and tree work across Greater Victoria. Every project here is marked Sample.",
+  "sections": [
+    {
+      "id": "about-samples",
+      "heading": "About these projects",
+      "body": [
+        "These sample projects show the scope and approach we bring to typical jobs. Images are labelled Sample image."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "Have a project in mind?",
+      "body": [
+        "Read about [our services](/services/), see [reviews](/reviews/), or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

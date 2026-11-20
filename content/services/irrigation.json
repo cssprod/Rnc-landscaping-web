@@ -1,0 +1,132 @@
+{
+  "slug": "irrigation",
+  "name": "Irrigation",
+  "navLabel": "Irrigation",
+  "seo": {
+    "title": "Irrigation Install, Repair & Winterization, Victoria",
+    "description": "Irrigation installation, repairs, spring start-up and winterization in Greater Victoria, set up to suit CRD watering rules. Contact RNC for a free quote."
+  },
+  "hero": {
+    "h1": "Irrigation installation and repair in Greater Victoria",
+    "lede": "New systems, repairs, spring start-up and fall winterization, with controllers set to match CRD watering days and times.",
+    "image": "svc-irrigation-hero"
+  },
+  "audiences": [
+    {
+      "title": "Homeowners",
+      "body": "A system that waters lawn and beds on the right days without you resetting the timer every month."
+    },
+    {
+      "title": "Stratas and property managers",
+      "body": "Start-up, shutdown and repair for the whole complex, with zone notes so the next season starts faster. Lawn watering days follow the complex's street address."
+    },
+    {
+      "title": "Commercial and institutional sites",
+      "body": "Repairs and seasonal service scheduled around occupants, with a record of what was checked and changed."
+    }
+  ],
+  "includes": [
+    {
+      "title": "New installation",
+      "body": "Spray zones for lawns and drip lines for beds, trees and shrubs, laid out by plant need."
+    },
+    {
+      "title": "Repairs",
+      "body": "Broken heads, leaking valves, damaged lines and faulty controllers found and fixed."
+    },
+    {
+      "title": "Spring start-up",
+      "body": "System charged, each zone run and checked, heads adjusted and the controller set for the season."
+    },
+    {
+      "title": "Winterization",
+      "body": "System shut down and drained or blown out before freezing nights to protect pipes and valves."
+    },
+    {
+      "title": "Water-efficiency upgrades",
+      "body": "Converting beds from spray to drip, adding rain or soil-moisture sensors, and smart controllers."
+    },
+    {
+      "title": "Watering schedule set-up",
+      "body": "Controllers set to the [CRD lawn watering schedule](/resources/crd-watering-rules-guide/) for your address."
+    }
+  ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Tell us about your system or project on the [quote form](/quote/)."
+    },
+    {
+      "title": "Site check",
+      "body": "We run each zone, look at coverage, pressure and the controller, and note problems."
+    },
+    {
+      "title": "Written scope",
+      "body": "You get a list of what needs fixing or installing, and why."
+    },
+    {
+      "title": "Work and test",
+      "body": "We complete the work, then run every zone again to confirm coverage."
+    },
+    {
+      "title": "Schedule and notes",
+      "body": "We set the controller and leave a simple zone map and notes."
+    }
+  ],
+  "seasonal": [
+    {
+      "season": "Spring",
+      "items": [
+        "System start-up and zone check",
+        "Controller set before CRD Stage 1 begins on May 1",
+        "Repairs from winter damage"
+      ]
+    },
+    {
+      "season": "Summer",
+      "items": [
+        "Coverage and leak checks",
+        "Schedule adjustments in hot spells within the rules",
+        "Drip conversions for beds"
+      ]
+    },
+    {
+      "season": "Fall",
+      "items": [
+        "Winterization before freezing nights",
+        "Controller shut-off",
+        "Planning upgrades"
+      ]
+    },
+    {
+      "season": "Winter",
+      "items": [
+        "Design for new systems",
+        "Installation in mild, dry spells",
+        "Controller and valve replacements"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "When should I winterize my irrigation system?",
+      "a": "Usually in October or early November, before the first hard frost. Read our [irrigation start-up and winterization guide](/resources/irrigation-start-up-and-winterization/)."
+    },
+    {
+      "q": "Does drip irrigation follow the same watering days?",
+      "a": "Under CRD Stage 1 rules, drip irrigation of trees, shrubs and gardens is allowed any day; lawn sprinkling has set days and times. Check the current rules on the CRD site."
+    },
+    {
+      "q": "Can you repair a system someone else installed?",
+      "a": "Yes. We work on most residential and commercial systems."
+    },
+    {
+      "q": "Do you test backflow preventers?",
+      "a": "Tell us about your system when you request a quote and we will let you know what we can do: [CERTIFICATIONS]."
+    }
+  ],
+  "detailImages": [
+    "svc-irrigation-detail-1",
+    "svc-irrigation-detail-2"
+  ]
+}

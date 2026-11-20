@@ -1,0 +1,62 @@
+{
+  "slug": "saanich",
+  "name": "Saanich",
+  "seo": {
+    "title": "Landscaping in Saanich, BC | RNC Landscaping",
+    "description": "Grounds maintenance, landscape installs, irrigation and tree care across Saanich, from Gordon Head to Cordova Bay, with tree permit checks. Get a free quote."
+  },
+  "h1": "Landscaping in Saanich, BC",
+  "intro": [
+    "Saanich covers suburban streets in Gordon Head and Cadboro Bay, rural lots near Prospect Lake and Blenkinsop, and stratas and plazas around Royal Oak and Shelbourne. Each needs a different plan.",
+    "Saanich protects Garry oak, arbutus, Pacific dogwood and Pacific yew at small sizes, plus trees with raptor or heron nests, and a permit is needed before cutting a protected tree even if it is dead. We build that check into every tree job. See [grounds maintenance](/services/grounds-maintenance/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Gordon Head",
+    "Cordova Bay",
+    "Cadboro Bay",
+    "Broadmead",
+    "Royal Oak",
+    "Lake Hill",
+    "Quadra",
+    "Tillicum",
+    "Carey",
+    "Cedar Hill",
+    "Shelbourne",
+    "Mount Tolmie",
+    "Blenkinsop",
+    "Prospect Lake"
+  ],
+  "propertyTypes": [
+    "single-family homes on suburban lots",
+    "rural and acreage properties",
+    "townhouse and condo stratas",
+    "commercial plazas",
+    "institutional campuses"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Saanich's Tree Protection Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm diameter; any other tree at 60 cm; plus replacement, significant and nesting trees. A tree cutting permit is required before cutting a protected tree, even if dead or dying, and the bylaw also covers pruning or damaging protected trees.",
+      "sourceUrl": "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Lawn, bed and hedge care for suburban lots, with moss plans for shady yards under big firs.",
+    "landscape-installation": "Front and back garden builds on suburban lots, and planting on rural properties.",
+    "irrigation": "Start-up, repair and winterization for home and strata systems across Saanich.",
+    "tree-vegetation": "Pruning and removals planned around Saanich's protected species and nesting trees."
+  },
+  "featuredProject": "gordon-head-weekly-garden-care",
+  "image": "area-saanich"
+}

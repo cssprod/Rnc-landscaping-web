@@ -1,0 +1,36 @@
+{
+  "slug": "central-saanich",
+  "name": "Central Saanich",
+  "seo": {
+    "title": "Landscaping in Central Saanich, BC | RNC Landscaping",
+    "description": "Fixture copy: grounds maintenance, landscape installation, irrigation and tree work in Central Saanich, BC. Local notes, recent projects and free quotes from RN"
+  },
+  "h1": "Landscaping and grounds care in Central Saanich",
+  "intro": [
+    "Fixture introduction for Central Saanich: how properties here differ and what owners ask for most.",
+    "Fixture second paragraph about soils, exposure or typical lot sizes."
+  ],
+  "neighbourhoods": [
+    "Fixture neighbourhood A",
+    "Fixture neighbourhood B"
+  ],
+  "propertyTypes": [
+    "Houses",
+    "Strata complexes"
+  ],
+  "localNotes": [
+    {
+      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Fixture local sentence about grounds maintenance in Central Saanich.",
+    "landscape-installation": "Fixture local sentence about landscape installation in Central Saanich.",
+    "irrigation": "Fixture local sentence about irrigation in Central Saanich.",
+    "tree-vegetation": "Fixture local sentence about tree and vegetation in Central Saanich."
+  },
+  "featuredProject": "highlands-irrigation-fixture-1",
+  "image": "area-central-saanich"
+}

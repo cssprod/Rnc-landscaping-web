@@ -1,0 +1,35 @@
+{
+  "slug": "rockland-spring-start-up-and-repair",
+  "title": "Spring start-up and repairs in Rockland",
+  "service": "irrigation",
+  "area": "victoria",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Rockland irrigation start-up | RNC",
+    "description": "Sample project: spring irrigation start-up for a Rockland heritage garden in Victoria, with frost-damage repairs and a CRD-ready controller. Get a free quote."
+  },
+  "summary": "Start-up of a heritage garden's system after a cold snap cracked lines.",
+  "scope": [
+    "System charge and leak check",
+    "Repair of cracked lateral lines",
+    "Head adjustment",
+    "Controller set for Stage 1"
+  ],
+  "duration": "1 day",
+  "story": [
+    "The system had not been drained before a cold snap.",
+    "We found and repaired two cracked lines, adjusted heads off the heritage stonework and set the controller before May 1.",
+    "Read more about [irrigation](/services/irrigation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+  ],
+  "result": "System running before the watering season, with a reminder booked for fall shutdown.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-irrigation-before",
+    "after": "proj-irrigation-3",
+    "gallery": [
+      "svc-irrigation-after",
+      "svc-irrigation-detail-2"
+    ]
+  }
+}

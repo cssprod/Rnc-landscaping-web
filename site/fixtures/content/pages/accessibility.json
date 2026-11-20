@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Accessibility | RNC Landscaping",
+    "description": "Fixture description for the accessibility page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Accessibility",
+  "lede": "Fixture lede.",
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "Fixture section heading",
+      "body": [
+        "Fixture paragraph for this page."
+      ],
+      "items": []
+    }
+  ]
+}

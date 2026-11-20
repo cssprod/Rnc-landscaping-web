@@ -1,0 +1,28 @@
+{
+  "slug": "langford-irrigation-fixture-3",
+  "sample": true,
+  "title": "Langford irrigation project 3",
+  "service": "irrigation",
+  "area": "langford",
+  "clientType": "Public sector",
+  "summary": "Fixture summary for a sample irrigation project in Langford.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": null,
+  "images": {
+    "before": "svc-irrigation-before",
+    "after": "proj-irrigation-3",
+    "gallery": [
+      "svc-irrigation-detail-1"
+    ]
+  }
+}

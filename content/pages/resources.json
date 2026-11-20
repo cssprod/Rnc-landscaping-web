@@ -1,0 +1,26 @@
+{
+  "_notes": "Hub lists the 6 resource articles.",
+  "seo": {
+    "title": "Seasonal Garden & Landscape Guides | Greater Victoria",
+    "description": "Practical seasonal guides for Greater Victoria: spring checklist, CRD watering rules, fall cleanup, winter pruning, native planting and irrigation care."
+  },
+  "h1": "Seasonal guides for Greater Victoria gardens",
+  "lede": "Practical, local guides to lawn, garden, irrigation and tree care through the year, with links to the official rules.",
+  "articles": [
+    "spring-lawn-and-garden-checklist",
+    "crd-watering-rules-guide",
+    "fall-cleanup-and-leaf-guide",
+    "winter-pruning-and-storm-prep",
+    "native-and-drought-tolerant-planting",
+    "irrigation-start-up-and-winterization"
+  ],
+  "sections": [
+    {
+      "id": "help",
+      "heading": "Want it done for you?",
+      "body": [
+        "See [grounds maintenance](/services/grounds-maintenance/), [irrigation](/services/irrigation/) or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

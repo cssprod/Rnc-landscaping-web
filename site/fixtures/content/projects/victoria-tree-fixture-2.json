@@ -1,0 +1,28 @@
+{
+  "slug": "victoria-tree-fixture-2",
+  "sample": true,
+  "title": "Victoria tree and vegetation project 2",
+  "service": "tree-vegetation",
+  "area": "victoria",
+  "clientType": "Strata",
+  "summary": "Fixture summary for a sample tree and vegetation project in Victoria.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": null,
+  "images": {
+    "before": "svc-tree-vegetation-before",
+    "after": "proj-tree-vegetation-2",
+    "gallery": [
+      "svc-tree-vegetation-detail-1"
+    ]
+  }
+}

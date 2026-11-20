@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "allowJs": true, "checkJs": true, "noEmit": true, "strict": false, "noImplicitAny": false,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"], "types": ["node"], "skipLibCheck": true, "maxNodeModuleJsDepth": 0, "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["build.mjs", "site.config.mjs", "src/**/*.mjs", "src/**/*.js", "event-schema.d.ts"]
+}

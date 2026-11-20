@@ -1,0 +1,61 @@
+{
+  "slug": "victoria",
+  "name": "Victoria",
+  "seo": {
+    "title": "Landscaping Services in Victoria, BC | RNC Landscaping",
+    "description": "Landscaping, grounds care, irrigation and tree work for Victoria homes and stratas, from James Bay to Fernwood, with tree bylaw checks. Get a free quote."
+  },
+  "h1": "Landscaping in Victoria, BC",
+  "intro": [
+    "Victoria lots range from heritage gardens in Rockland to small condo courtyards downtown. We look after character homes, townhouse and apartment stratas, and commercial frontages across the city.",
+    "Many Victoria trees are protected, including Garry oak and arbutus at small sizes, and trees on steep slopes or near watercourses. We check the City's bylaw before we prune or remove, and before digging near a root zone. Browse [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "James Bay",
+    "Fairfield",
+    "Rockland",
+    "Fernwood",
+    "Oaklands",
+    "Gonzales",
+    "Hillside-Quadra",
+    "North Park",
+    "Burnside Gorge",
+    "Jubilee",
+    "Victoria West",
+    "Downtown",
+    "Harris Green"
+  ],
+  "propertyTypes": [
+    "character homes on mature lots",
+    "condo and apartment stratas",
+    "heritage properties",
+    "downtown commercial and mixed-use frontages",
+    "townhouse stratas"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Victoria's Tree Protection Bylaw protects private trees over 30 cm diameter at breast height, hedges with any stem over 30 cm, Garry oak, arbutus, Pacific yew and Pacific dogwood over 50 cm tall, replacement trees, and trees on steep slopes or near watercourses. A permit may be needed to prune, remove or work in the root zone of a protected tree.",
+      "sourceUrl": "https://www.victoria.ca/node/162",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Weekly and every-other-week care for compact city lawns, boulevard-facing beds and strata courtyards.",
+    "landscape-installation": "Planting plans for tight city lots and shaded courtyards, built around protected trees.",
+    "irrigation": "Controllers set to the CRD lawn days for your address, including a complex's street address for stratas.",
+    "tree-vegetation": "Pruning and removals with a check of Victoria's Tree Protection Bylaw first."
+  },
+  "featuredProject": "fernwood-strata-courtyard-planting",
+  "image": "area-victoria"
+}

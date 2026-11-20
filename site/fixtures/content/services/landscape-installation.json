@@ -1,0 +1,108 @@
+{
+  "slug": "landscape-installation",
+  "name": "Landscape Installation & Construction",
+  "navLabel": "Landscape installation",
+  "seo": {
+    "title": "Landscape Installation & Construction in Greater Victoria | ",
+    "description": "Fixture copy: landscape installation & construction for homeowners, strata councils and commercial sites across Greater Victoria, BC. Request a free quote from "
+  },
+  "hero": {
+    "h1": "Landscape Installation & Construction for Greater Victoria properties",
+    "lede": "Fixture lede for landscape installation: a short paragraph describing the service in plain language for owners and property managers.",
+    "image": "svc-landscape-installation-hero"
+  },
+  "audiences": [
+    {
+      "title": "Homeowners",
+      "body": "Fixture text describing what homeowners get from this service."
+    },
+    {
+      "title": "Strata and property managers",
+      "body": "Fixture text on schedules, reporting and a single point of contact."
+    },
+    {
+      "title": "Commercial and public sites",
+      "body": "Fixture text on scopes, insurance documents and site rules."
+    }
+  ],
+  "includes": [
+    {
+      "title": "Design-build planning",
+      "body": "Fixture description of design-build planning."
+    },
+    {
+      "title": "Planting and softscape",
+      "body": "Fixture description of planting and softscape."
+    },
+    {
+      "title": "Hardscape and paths",
+      "body": "Fixture description of hardscape and paths."
+    },
+    {
+      "title": "Soil and drainage prep",
+      "body": "Fixture description of soil and drainage prep."
+    }
+  ],
+  "process": [
+    {
+      "title": "Site visit",
+      "body": "We walk the property with you and note what is needed."
+    },
+    {
+      "title": "Written quote",
+      "body": "You get a clear scope and a free quote."
+    },
+    {
+      "title": "Scheduled work",
+      "body": "Work is booked and completed to the agreed scope."
+    },
+    {
+      "title": "Follow-up",
+      "body": "We check in after the work is done."
+    }
+  ],
+  "seasonal": [
+    {
+      "season": "Spring",
+      "items": [
+        "Fixture spring task one",
+        "Fixture task two"
+      ]
+    },
+    {
+      "season": "Summer",
+      "items": [
+        "Fixture summer task one",
+        "Fixture task two"
+      ]
+    },
+    {
+      "season": "Fall",
+      "items": [
+        "Fixture fall task one",
+        "Fixture task two"
+      ]
+    },
+    {
+      "season": "Winter",
+      "items": [
+        "Fixture winter task one",
+        "Fixture task two"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Do you offer landscape installation for strata properties?",
+      "a": "Fixture answer. Yes, we work with strata councils and property managers."
+    },
+    {
+      "q": "How do I get a quote?",
+      "a": "Use the [free quote form](/quote/) or call [PHONE]."
+    }
+  ],
+  "detailImages": [
+    "svc-landscape-installation-detail-1",
+    "svc-landscape-installation-detail-2"
+  ]
+}

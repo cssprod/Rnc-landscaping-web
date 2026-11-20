@@ -1,0 +1,67 @@
+{
+  "slug": "irrigation-start-up-and-winterization",
+  "title": "Irrigation start-up and winterization guide",
+  "seo": {
+    "title": "Irrigation Start-Up & Winterizing in Victoria, BC",
+    "description": "When and how to start up and winterize an irrigation system on southern Vancouver Island, with a zone checklist and CRD watering days to set. Get a free quote."
+  },
+  "date": "2026-11-19",
+  "summary": "A spring start-up checklist and a fall shutdown guide for home and strata irrigation systems.",
+  "image": "res-6",
+  "body": [
+    {
+      "p": "Freezing nights are not frequent here, but one hard frost can crack pipes and valves in a system full of water. A proper fall shutdown and a careful spring start-up prevent most repairs."
+    },
+    {
+      "h2": "Spring start-up (April)"
+    },
+    {
+      "list": [
+        "Open the main supply slowly to avoid pressure surges.",
+        "Run each zone and look for leaks, broken heads and dry spots.",
+        "Adjust heads so they water plants, not paths or buildings.",
+        "Replace the controller battery and check the clock.",
+        "Set lawn zones to your CRD days and times before May 1."
+      ]
+    },
+    {
+      "h2": "Fall winterization (October to early November)"
+    },
+    {
+      "list": [
+        "Turn off the controller or set it to off or rain mode.",
+        "Shut off the supply to the system.",
+        "Drain the system, or have it blown out with compressed air by someone with the right equipment.",
+        "Insulate exposed pipes and the backflow assembly where applicable."
+      ]
+    },
+    {
+      "h2": "Backflow preventers"
+    },
+    {
+      "p": "Many irrigation systems have a backflow preventer that protects drinking water. Ask your water supplier whether your assembly needs testing."
+    },
+    {
+      "h2": "Upgrades to consider"
+    },
+    {
+      "list": [
+        "Convert shrub and flower beds from spray to drip.",
+        "Add a rain or soil-moisture sensor.",
+        "Use a smart controller that adjusts to weather."
+      ]
+    },
+    {
+      "p": "Book start-up or winterization through [irrigation services](/services/irrigation/), read the [CRD watering rules guide](/resources/crd-watering-rules-guide/), or [get a free quote](/quote/)."
+    },
+    {
+      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+    }
+  ],
+  "sources": [
+    {
+      "label": "CRD: Outdoor watering schedule",
+      "url": "https://www.crd.ca/environment/water-conservation/watering-schedule"
+    }
+  ]
+}

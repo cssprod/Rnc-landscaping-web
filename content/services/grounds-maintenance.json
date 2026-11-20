@@ -1,0 +1,136 @@
+{
+  "slug": "grounds-maintenance",
+  "name": "Grounds Maintenance",
+  "navLabel": "Grounds maintenance",
+  "seo": {
+    "title": "Grounds & Landscape Maintenance in Victoria, BC | RNC",
+    "description": "Scheduled mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites in Greater Victoria. Ask RNC Landscaping for a free quote."
+  },
+  "hero": {
+    "h1": "Grounds and landscape maintenance in Greater Victoria",
+    "lede": "Mowing, bed care, pruning and seasonal cleanups on a set schedule, with a written scope so you know what each visit covers.",
+    "image": "svc-grounds-maintenance-hero"
+  },
+  "audiences": [
+    {
+      "title": "Homeowners",
+      "body": "A tidy lawn and healthy beds without managing it yourself. We agree on what each visit includes and how often we come, then we keep to it."
+    },
+    {
+      "title": "Strata councils and property managers",
+      "body": "A written scope and visit schedule you can take to council, one contact for owner concerns, and a seasonal plan for the whole complex. See [commercial and strata service](/commercial/)."
+    },
+    {
+      "title": "Commercial and institutional sites",
+      "body": "Work to your specification, scheduled around tenants, students or patients, with insurance and safety documents on request."
+    }
+  ],
+  "includes": [
+    {
+      "title": "Lawn care",
+      "body": "Mowing, edging and string trimming, plus aeration, overseeding and moss control when the lawn needs it."
+    },
+    {
+      "title": "Bed care",
+      "body": "Weeding, deadheading, cutting back perennials, edging bed lines and topping up mulch."
+    },
+    {
+      "title": "Pruning",
+      "body": "Hedges, shrubs and small ornamental trees pruned at the right time of year for each plant. Larger trees go to our [tree and vegetation service](/services/tree-vegetation/)."
+    },
+    {
+      "title": "Seasonal cleanups",
+      "body": "Spring start-up, fall leaf removal and cut-back, and storm debris cleanup after winter wind."
+    },
+    {
+      "title": "Green waste removal",
+      "body": "We haul clippings and debris away. Invasive plants are bagged and disposed of to CRD rules."
+    },
+    {
+      "title": "Visit notes",
+      "body": "On recurring work we note anything we see that needs attention, such as a broken sprinkler head or a leaning tree, and tell you before we act."
+    }
+  ],
+  "process": [
+    {
+      "title": "Tell us about the property",
+      "body": "Use the [free quote form](/quote/) to share the address, property type and what you need."
+    },
+    {
+      "title": "Site walk",
+      "body": "We walk the property with you or your site contact and note lawn areas, beds, hedges and access."
+    },
+    {
+      "title": "Written scope and schedule",
+      "body": "You get a written quote that lists tasks per visit, visit frequency and the season it covers."
+    },
+    {
+      "title": "Regular visits",
+      "body": "The crew works to the scope. Questions or changes go through one contact."
+    },
+    {
+      "title": "Seasonal check-in",
+      "body": "Before each season we review what is working and adjust the plan with you."
+    }
+  ],
+  "seasonal": [
+    {
+      "season": "Spring",
+      "items": [
+        "First mow and edging",
+        "Bed cleanup and mulch",
+        "Moss and thatch assessment",
+        "Shrub pruning after flowering"
+      ]
+    },
+    {
+      "season": "Summer",
+      "items": [
+        "Regular mowing at a taller height in dry spells",
+        "Weeding and deadheading",
+        "Hedge trimming",
+        "Checking that irrigation suits CRD watering days"
+      ]
+    },
+    {
+      "season": "Fall",
+      "items": [
+        "Leaf removal",
+        "Perennial cut-back",
+        "Aeration and overseeding",
+        "Gutters and drains cleared of leaves where included"
+      ]
+    },
+    {
+      "season": "Winter",
+      "items": [
+        "Storm debris cleanup",
+        "Dormant pruning of suitable shrubs",
+        "Winter bed tidy",
+        "Planning for spring"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "How often will you visit?",
+      "a": "It depends on the property and season. Many lawns need weekly or every-other-week visits in spring and early summer and less in winter. Your quote states the visit frequency."
+    },
+    {
+      "q": "Do you work year-round?",
+      "a": "Yes. Greater Victoria's mild winters mean pruning, cleanups and storm debris work continue through the cooler months."
+    },
+    {
+      "q": "Can you quote to our existing strata specification?",
+      "a": "Yes. Send the specification with your quote request and we will price to it and note any questions."
+    },
+    {
+      "q": "What happens to the green waste?",
+      "a": "We remove it. Invasive plants are kept separate and disposed of following CRD guidance."
+    }
+  ],
+  "detailImages": [
+    "svc-grounds-maintenance-detail-1",
+    "svc-grounds-maintenance-detail-2"
+  ]
+}

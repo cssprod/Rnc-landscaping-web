@@ -1,0 +1,28 @@
+{
+  "slug": "sidney-tree-fixture-1",
+  "sample": true,
+  "title": "Sidney tree and vegetation project 1",
+  "service": "tree-vegetation",
+  "area": "sidney",
+  "clientType": "Homeowner",
+  "summary": "Fixture summary for a sample tree and vegetation project in Sidney.",
+  "scope": [
+    "Fixture scope item one",
+    "Fixture scope item two",
+    "Fixture scope item three"
+  ],
+  "duration": "2 weeks",
+  "story": [
+    "Fixture paragraph describing the starting point of the site.",
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "result": "Fixture one-line result.",
+  "testimonial": "fixture-testimonial-1",
+  "images": {
+    "before": "svc-tree-vegetation-before",
+    "after": "proj-tree-vegetation-1",
+    "gallery": [
+      "svc-tree-vegetation-detail-1"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: site } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Typecheck (JSDoc)
+        run: npx --yes -p typescript -p @types/node tsc -p jsconfig.json
+      - name: Validate event schema
+        run: npx --yes @clamp-sh/event-schema validate --file event-schema.yaml || npx --yes @clamp-sh/event-schema validate
+      - name: Build (preview) and static checks
+        run: node tools/check-all.mjs
+      - name: Browser tests
+        run: |
+          npx --yes playwright install --with-deps chromium
+          npx --yes -p playwright playwright test
+      - name: Production build gate (expected to fail until tokens are filled)
+        run: CONTEXT=production node build.mjs
+        continue-on-error: true
+      - name: Lighthouse CI
+        run: |
+          node build.mjs
+          npx --yes @lhci/cli@0.14 autorun --collect.staticDistDir=dist --collect.url=/ --collect.url=/services/irrigation/ --collect.url=/quote/ --assert.preset=lighthouse:no-pwa --assert.assertions.categories:performance=warn --assert.assertions.categories:accessibility=error --assert.assertions.categories:seo=warn --assert.assertions.is-crawlable=off --upload.target=temporary-public-storage
+      - name: axe accessibility
+        run: |
+          node tools/serve.mjs 4321 & sleep 2
+          for p in / /services/irrigation/ /quote/ /portfolio/ /areas/oak-bay/ /contact/; do npx --yes @axe-core/cli "http://localhost:4321$p" --exit; done

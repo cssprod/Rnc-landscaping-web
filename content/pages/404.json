@@ -1,0 +1,34 @@
+{
+  "_notes": "Not found page.",
+  "seo": {
+    "title": "Page Not Found | RNC Landscaping",
+    "description": "Sorry, we couldn't find that page. Try our landscaping services, service areas or seasonal guides, or request a free quote for your Greater Victoria property."
+  },
+  "h1": "We couldn't find that page",
+  "lede": "The page may have moved or the link may be wrong.",
+  "sections": [
+    {
+      "id": "try",
+      "heading": "Try one of these",
+      "body": [],
+      "items": [
+        {
+          "title": "Services",
+          "body": "[See our services](/services/)."
+        },
+        {
+          "title": "Areas",
+          "body": "[Find your area](/areas/)."
+        },
+        {
+          "title": "Guides",
+          "body": "[Read seasonal guides](/resources/)."
+        },
+        {
+          "title": "Quote",
+          "body": "[Get a free quote](/quote/)."
+        }
+      ]
+    }
+  ]
+}

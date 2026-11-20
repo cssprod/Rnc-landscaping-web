@@ -1,0 +1,34 @@
+{
+  "slug": "fixture-guide-6",
+  "title": "Fixture seasonal guide 6",
+  "seo": {
+    "title": "Fixture seasonal guide 6 | RNC Landscaping",
+    "description": "Fixture description for seasonal guide 6: practical steps for Greater Victoria gardens and grounds, written in plain language for owners and managers."
+  },
+  "date": "2026-11-19",
+  "summary": "Fixture summary of the guide in one sentence.",
+  "image": "res-6",
+  "body": [
+    {
+      "p": "Fixture opening paragraph."
+    },
+    {
+      "h2": "What to do now"
+    },
+    {
+      "list": [
+        "Fixture step one",
+        "Fixture step two"
+      ]
+    },
+    {
+      "p": "Fixture closing paragraph with a [link to the quote form](/quote/)."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Capital Regional District",
+      "url": "https://www.crd.bc.ca/"
+    }
+  ]
+}

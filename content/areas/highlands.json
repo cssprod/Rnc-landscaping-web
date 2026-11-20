@@ -1,0 +1,48 @@
+{
+  "slug": "highlands",
+  "name": "Highlands",
+  "seo": {
+    "title": "Landscaping & Tree Work in Highlands, BC | RNC",
+    "description": "Tree work, brush clearing, landscaping and property upkeep for Highlands acreages, with tree permit checks near lakes and steep slopes. Get your free quote."
+  },
+  "h1": "Landscaping and tree work in Highlands",
+  "intro": [
+    "Highlands is rural and forested, with homes near lakes and on steep, rocky lots around Millstream, Caleb Pike and Fork Lake.",
+    "A tree cutting permit is needed for protected species and for any tree near a watercourse, lake or steep slope, and cutting a significant tree is prohibited. Many homes use wells, so CRD watering rules apply only where connected. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Millstream area",
+    "Caleb Pike area",
+    "Fork Lake area"
+  ],
+  "propertyTypes": [
+    "rural acreage on forested lots",
+    "homes near lakes and watercourses"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "Under Highlands' Tree Management Bylaw No. 10, cutting a protected tree (Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara, manzanita, Douglas-fir over 60 cm, any tree over 80 cm) or any tree near a watercourse, lake or steep slope needs a permit; cutting a significant tree is prohibited. Check for nesting birds before felling in nesting season.",
+      "sourceUrl": "https://www.highlands.ca/node/133",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Property upkeep around the house, driveway and outbuildings.",
+    "landscape-installation": "Planting suited to rocky, dry sites and native meadow edges.",
+    "irrigation": "Drip systems for gardens on well water, designed for low flow.",
+    "tree-vegetation": "Clearance pruning and removals after a permit check near lakes and slopes."
+  },
+  "featuredProject": "highlands-acreage-tree-pruning",
+  "image": "area-highlands"
+}

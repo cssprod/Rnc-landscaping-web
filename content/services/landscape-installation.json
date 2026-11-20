@@ -1,0 +1,132 @@
+{
+  "slug": "landscape-installation",
+  "name": "Landscape Installation & Construction",
+  "navLabel": "Landscape installation",
+  "seo": {
+    "title": "Landscape Installation & Design-Build in Victoria | RNC",
+    "description": "Design-build landscaping in Greater Victoria: planting, sod, patios, paths and retaining walls, planned around your site and bylaws. Request a free quote."
+  },
+  "hero": {
+    "h1": "Landscape installation and construction in Greater Victoria",
+    "lede": "Planting, sod, patios, paths and retaining walls, planned around your soil, slope, sun and the bylaws that apply to your lot.",
+    "image": "svc-landscape-installation-hero"
+  },
+  "audiences": [
+    {
+      "title": "Homeowners",
+      "body": "A front garden, backyard patio or new planting plan built in clear phases, with a written scope before any digging starts."
+    },
+    {
+      "title": "Stratas and property managers",
+      "body": "Courtyard renewals, entrance plantings and replacements for failed shrubs, scheduled to limit disruption for residents."
+    },
+    {
+      "title": "General contractors and developers",
+      "body": "Soft and hard landscape packages built to your drawings and schedule, with coordination through your site supervisor. See [commercial work](/commercial/)."
+    }
+  ],
+  "includes": [
+    {
+      "title": "Design and layout",
+      "body": "A plan that fits the site: sun, drainage, slope, deer pressure and how you want to use the space."
+    },
+    {
+      "title": "Planting",
+      "body": "Trees, shrubs and perennials suited to our dry summers and wet winters, including native and drought-tolerant choices."
+    },
+    {
+      "title": "Sod and seed",
+      "body": "Soil preparation, grading, and new lawn installed with a watering plan that follows CRD new-sod rules."
+    },
+    {
+      "title": "Hardscape",
+      "body": "Patios, paths, steps, edging and low retaining walls in stone or pavers."
+    },
+    {
+      "title": "Drainage and soil",
+      "body": "Grading, soil amendment and simple drainage fixes so new planting is not sitting in winter water."
+    },
+    {
+      "title": "Irrigation built in",
+      "body": "Drip or spray zones added during the build through our [irrigation service](/services/irrigation/)."
+    }
+  ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Tell us what you have in mind on the [quote form](/quote/). Photos help."
+    },
+    {
+      "title": "Site visit",
+      "body": "We measure, check soil, slope and access, and look for protected trees or root zones near the work."
+    },
+    {
+      "title": "Plan and written scope",
+      "body": "You get a layout, plant list and written scope, with any permits that may apply named up front."
+    },
+    {
+      "title": "Build",
+      "body": "We prepare the ground, install hardscape, then plant and mulch. You get updates as each phase finishes."
+    },
+    {
+      "title": "Walkthrough and care notes",
+      "body": "We walk the finished work with you and leave watering and care notes for the first season."
+    }
+  ],
+  "seasonal": [
+    {
+      "season": "Spring",
+      "items": [
+        "Planting before summer dry",
+        "Sod installation",
+        "Patio and path builds"
+      ]
+    },
+    {
+      "season": "Summer",
+      "items": [
+        "Hardscape construction",
+        "Drip irrigation for new beds",
+        "Planning fall planting"
+      ]
+    },
+    {
+      "season": "Fall",
+      "items": [
+        "Planting trees and shrubs while soil is warm and rain returns",
+        "Bed renewals",
+        "Drainage work before winter"
+      ]
+    },
+    {
+      "season": "Winter",
+      "items": [
+        "Design and planning",
+        "Hardscape when ground conditions allow",
+        "Bare-root planting in mild spells"
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit for my landscape project?",
+      "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Read our [tree permit notes](/resources/winter-pruning-and-storm-prep/)."
+    },
+    {
+      "q": "When is the best time to plant?",
+      "a": "Fall is often a good time on southern Vancouver Island because rain returns and roots grow through the mild winter. Spring works too, with careful watering through summer."
+    },
+    {
+      "q": "Can you work from my designer's plan?",
+      "a": "Yes. We can build from your plan or a general contractor's drawings."
+    },
+    {
+      "q": "How do you price a project?",
+      "a": "We price each project from a site visit and a written scope. There is no charge for the quote."
+    }
+  ],
+  "detailImages": [
+    "svc-landscape-installation-detail-1",
+    "svc-landscape-installation-detail-2"
+  ]
+}

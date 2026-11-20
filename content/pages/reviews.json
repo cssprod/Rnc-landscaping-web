@@ -1,0 +1,35 @@
+{
+  "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label.",
+  "seo": {
+    "title": "Reviews and Client Feedback | RNC Landscaping",
+    "description": "Read what homeowners, strata councils, property managers and contractors say about landscaping work in Greater Victoria. Then request your own free quote."
+  },
+  "h1": "Reviews",
+  "lede": "What clients say about working with us. Reviews marked Sample are examples until we publish real reviews with permission.",
+  "testimonials": [
+    "strata-council-sidney",
+    "homeowner-gordon-head",
+    "property-manager-keating",
+    "homeowner-oak-bay",
+    "general-contractor-langford",
+    "strata-council-view-royal",
+    "facilities-volunteer-esquimalt",
+    "homeowner-sooke"
+  ],
+  "sections": [
+    {
+      "id": "sample-note",
+      "heading": "About sample reviews",
+      "body": [
+        "Sample reviews show the kind of feedback we work toward. They are not from identified clients."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "See the work",
+      "body": [
+        "Browse [sample projects](/portfolio/), read about [our services](/services/), or [get a free quote](/quote/)."
+      ]
+    }
+  ]
+}

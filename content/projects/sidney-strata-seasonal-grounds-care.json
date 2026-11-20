@@ -1,0 +1,36 @@
+{
+  "slug": "sidney-strata-seasonal-grounds-care",
+  "title": "Seasonal grounds care for a Sidney condo strata",
+  "service": "grounds-maintenance",
+  "area": "sidney",
+  "clientType": "Strata",
+  "seo": {
+    "title": "Sample project: Sidney strata grounds care | RNC",
+    "description": "Sample project: a year-round grounds plan for a Sidney condo strata, with set visits, bed care, hedge trimming and one contact for council. Get a free quote."
+  },
+  "summary": "A written, year-round grounds plan for a mid-size condo strata near Beacon Avenue.",
+  "scope": [
+    "Mowing and edging on a seasonal schedule",
+    "Bed weeding, mulching and deadheading",
+    "Two hedge trims a year",
+    "Spring and fall cleanups",
+    "Visit notes to the property manager"
+  ],
+  "duration": "Ongoing, 12-month agreement",
+  "story": [
+    "The council wanted the same standard across the whole year and one person to call when owners had concerns.",
+    "We wrote a scope that listed tasks for each visit and a calendar for hedges and cleanups. After each visit the property manager got a short note of what was done and anything that needed a decision.",
+    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Sidney](/areas/sidney/), or [get a free quote](/quote/)."
+  ],
+  "result": "Council had a written scope to review each season and a single contact for owner concerns.",
+  "testimonial": "strata-council-sidney",
+  "sample": true,
+  "images": {
+    "before": "svc-grounds-maintenance-before",
+    "after": "proj-grounds-maintenance-1",
+    "gallery": [
+      "svc-grounds-maintenance-after",
+      "svc-grounds-maintenance-detail-2"
+    ]
+  }
+}

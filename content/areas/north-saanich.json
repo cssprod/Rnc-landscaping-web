@@ -1,0 +1,54 @@
+{
+  "slug": "north-saanich",
+  "name": "North Saanich",
+  "seo": {
+    "title": "Landscaping in North Saanich, BC | RNC Landscaping",
+    "description": "Acreage and garden maintenance, landscape projects, irrigation and tree work in North Saanich, with tree permit checks before removal. Get a free quote."
+  },
+  "h1": "Landscaping in North Saanich",
+  "intro": [
+    "North Saanich has acreages, hobby farms and waterfront homes from Deep Cove to Lands End, along with townhouse stratas near Dean Park.",
+    "The Tree Protection Bylaw requires a permit to remove regulated trees, which can be smaller in environmental and steep-slope areas. Topping is prohibited. Permits are reviewed by staff and must be posted before work, so plan ahead. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
+    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  ],
+  "neighbourhoods": [
+    "Deep Cove",
+    "Dean Park",
+    "Ardmore",
+    "Curteis Point",
+    "Lands End",
+    "McDonald Park",
+    "Swartz Bay"
+  ],
+  "propertyTypes": [
+    "acreage and rural properties",
+    "waterfront homes",
+    "hobby farms",
+    "townhouse stratas"
+  ],
+  "localNotes": [
+    {
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true
+    },
+    {
+      "text": "North Saanich's Tree Protection Bylaw No. 1548 requires a permit to remove any regulated tree (generally 20 cm diameter or more, smaller for arbutus, Garry oak, Pacific dogwood, yew and shore pine, plus trees in environmental or steep-slope areas). Topping is prohibited; best-practice pruning needs no permit. Staff review takes about 2-3 weeks and the permit must be posted 48 hours before work.",
+      "sourceUrl": "https://www.northsaanich.ca/node/51",
+      "verify": true
+    },
+    {
+      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "verify": true
+    }
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Acreage upkeep: lawns, rough mowing, hedges and fence lines.",
+    "landscape-installation": "Gardens for waterfront and rural homes, with deer and wind in mind.",
+    "irrigation": "Irrigation for large lawns and beds, including drip for hedgerows.",
+    "tree-vegetation": "Removals timed around permit review, and best-practice pruning."
+  },
+  "featuredProject": "deep-cove-acreage-upkeep",
+  "image": "area-north-saanich"
+}

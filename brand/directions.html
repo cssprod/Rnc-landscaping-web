@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RNC Landscaping, home page directions</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#cfd3cc;font:var(--step-0)/var(--leading-body) var(--font-text);color:var(--color-ink)}
+.note{max-width:1440px;margin:var(--space-7) auto var(--space-4);padding:0 var(--gutter)}
+.note h2{font:var(--step-3)/var(--leading-tight) var(--font-display);margin:0 0 var(--space-2)}
+.frame{width:1440px;margin:0 auto var(--space-8);background:var(--color-bg);box-shadow:var(--shadow-2)}
+.wrap{max-width:var(--content-max);margin:0 auto;padding:0 var(--gutter)}
+.nav{display:flex;align-items:center;gap:var(--space-6);padding:var(--space-5) 0}
+.nav img{height:40px}.nav a{color:inherit;text-decoration:none;font-weight:500}.nav .sp{flex:1}.nav .btn{color:var(--color-accent-ink)}
+.btn{display:inline-block;background:var(--color-accent);color:var(--color-accent-ink);padding:var(--space-3) var(--space-5);border-radius:var(--radius-m);font-weight:600;text-decoration:none;transition:background var(--dur-fast) var(--ease)}
+.btn:hover{background:#3b3275}.btn:focus-visible,a:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px}
+.link{color:var(--color-brand);font-weight:600}
+.photo{position:relative;overflow:hidden;background:var(--color-brand)}
+.photo::after{content:"photo";position:absolute;left:12px;bottom:10px;font-size:var(--step--1);color:var(--color-brand-ink);background:rgba(28,48,39,.7);padding:2px 8px;border-radius:var(--radius-s)}
+.photo svg{display:block;width:100%;height:100%}
+h1{font:var(--step-5)/var(--leading-tight) var(--font-display);margin:0;letter-spacing:-.01em}
+/* A */
+.a-hero{display:grid;grid-template-columns:5fr 7fr;gap:var(--space-7);align-items:end;padding:var(--space-7) 0 var(--space-8)}
+.a-hero p{max-width:34ch;color:var(--color-ink-muted);font-size:var(--step-1)}
+.a-hero .photo{height:620px;border-radius:var(--radius-l) var(--radius-l) var(--radius-l) 0}
+.a-svc{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);padding:var(--space-8) 0;border-top:1px solid var(--color-line)}
+.a-svc h3{font:var(--step-2)/1.2 var(--font-display);margin:var(--space-4) 0 var(--space-2)}
+.a-svc .photo{height:220px;border-radius:var(--radius-m)}
+.a-band{background:var(--color-brand-deep);color:var(--color-brand-ink);padding:var(--space-8) 0}
+.a-band h2{font:var(--step-4)/var(--leading-tight) var(--font-display);max-width:20ch;margin:0 0 var(--space-5)}
+.a-band .btn{box-shadow:0 0 0 2px var(--color-brand-ink)}
+/* B */
+.b{--color-bg:#EEF0EA;--font-display:Georgia,serif;--radius-l:0px}
+.b .hero{position:relative;height:760px}.b .hero .photo{position:absolute;inset:0}
+.b .hero .card{position:absolute;left:var(--gutter);bottom:var(--space-7);max-width:640px;background:var(--color-bg);padding:var(--space-7)}
+.b .hero h1{font-size:var(--step-4)}
+.b .split{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);padding:var(--space-8) 0}
+.b ul{list-style:none;padding:0;margin:0}.b li{padding:var(--space-4) 0;border-bottom:1px solid var(--color-line);font:var(--step-2) var(--font-display)}
+</style></head><body>
+
+<div class="note"><h2>Direction A: Outcrop (recommended)</h2>
+<p>Type leads on the left, a tall photo sits on the right with one square corner where it meets the ground. Services follow as four quiet columns with photos, then a deep fir band holds the commercial message. The Camas violet appears only on CTAs.</p></div>
+<div class="frame"><div class="wrap">
+ <nav class="nav" aria-label="Primary"><img src="logo.svg" alt="RNC Landscaping"><span class="sp"></span><a href="#">Services</a><a href="#">Commercial</a><a href="#">Portfolio</a><a href="#">Areas</a><a class="btn" href="#">Get a Free Quote</a></nav>
+ <section class="a-hero"><div><h1>Landscapes that settle into the West Coast.</h1>
+  <p>Grounds maintenance, installation, irrigation and tree care for homes, stratas and public properties across Greater Victoria.</p>
+  <p><a class="btn" href="#">Get a Free Quote</a> &nbsp; <a class="link" href="#">Call [PHONE]</a></p></div>
+  <div class="photo" role="img" aria-label="Photo placeholder: Garry oak meadow over mossy rock"><svg viewBox="0 0 700 620" preserveAspectRatio="xMidYMid slice"><rect width="700" height="620" fill="#C9D1C4"/><path d="M0 430 C150 380 300 400 420 370 C560 340 640 360 700 380 V620 H0Z" fill="#7D8781"/><path d="M0 500 C200 470 400 490 700 460 V620 H0Z" fill="#2E4A3B"/><circle cx="470" cy="250" r="120" fill="#4E6B55"/><rect x="462" y="300" width="16" height="90" fill="#1F2523"/></svg></div></section>
+ <section class="a-svc" aria-label="Services">
+  <div><div class="photo"></div><h3>Grounds Maintenance</h3><p>Recurring mowing, bed care, pruning and seasonal cleanups.</p></div>
+  <div><div class="photo" style="background:#4E6B55"></div><h3>Landscape Installation</h3><p>Design-build planting, stone and structure.</p></div>
+  <div><div class="photo" style="background:#7D8781"></div><h3>Irrigation</h3><p>Start-ups, repairs, winterization and water-wise upgrades.</p></div>
+  <div><div class="photo" style="background:#1C3027"></div><h3>Tree &amp; Vegetation</h3><p>Pruning, removals, invasive species and clearing.</p></div>
+ </section></div>
+ <section class="a-band"><div class="wrap"><h2>Grounds care for stratas, campuses and public sites.</h2><a class="btn" href="#">Get a Free Quote</a></div></section>
+</div>
+
+<div class="note"><h2>Direction B: Field journal</h2>
+<p>A full-bleed photo with a type card anchored to the lower left, zero radius, and services as a large typographic list beside an image. More dramatic and photo-dependent; it needs strong real photography to work and feels colder without it.</p></div>
+<div class="frame b"><div class="wrap"><nav class="nav" aria-label="Primary B"><img src="logo.svg" alt="RNC Landscaping"><span class="sp"></span><a href="#">Services</a><a href="#">Commercial</a><a href="#">Areas</a><a class="btn" href="#">Get a Free Quote</a></nav></div>
+ <section class="hero"><div class="photo" role="img" aria-label="Photo placeholder: coastal fir and stone"><svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice"><rect width="1440" height="760" fill="#AEB9AC"/><path d="M900 120 L820 330 H860 L780 520 H1020 L940 330 H980Z" fill="#2E4A3B"/><path d="M0 560 C400 500 900 540 1440 500 V760 H0Z" fill="#4C5652"/></svg></div>
+  <div class="card"><h1>Careful work on Victoria's ground.</h1><p>Maintenance, installation, irrigation and tree care, quoted free.</p><a class="btn" href="#">Get a Free Quote</a></div></section>
+ <div class="wrap split"><ul><li>Grounds Maintenance</li><li>Landscape Installation &amp; Construction</li><li>Irrigation</li><li>Tree &amp; Vegetation Management</li></ul><div class="photo" style="height:420px"></div></div>
+</div>
+<div class="note"><h2>Recommendation</h2><p>Direction A. It reads premium without needing finished photography on day one, keeps copy at readable widths, and gives the CTA one clear place in each view. tokens.css reflects A.</p></div>
+</body></html>

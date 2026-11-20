@@ -1,0 +1,35 @@
+{
+  "slug": "langford-retail-centre-irrigation-repair",
+  "title": "Irrigation repair for a Langford retail centre",
+  "service": "irrigation",
+  "area": "langford",
+  "clientType": "Commercial",
+  "seo": {
+    "title": "Sample project: Langford retail irrigation | RNC",
+    "description": "Sample project: irrigation repair for a Langford retail centre's parking islands, scheduled before store hours, with a written record of fixes. Free quote."
+  },
+  "summary": "Leak and coverage repairs across parking-island planters.",
+  "scope": [
+    "Leak tracing",
+    "Valve replacement",
+    "Drip line repairs in planters",
+    "Written repair record"
+  ],
+  "duration": "3 mornings",
+  "story": [
+    "The property manager saw water running across the lot on watering mornings.",
+    "We traced the leaks to a failed valve and damaged drip lines, worked before store hours and sent a written record of each repair.",
+    "Read more about [irrigation](/services/irrigation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+  ],
+  "result": "Leaks fixed, with a record of what was replaced.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-irrigation-before",
+    "after": "proj-irrigation-4",
+    "gallery": [
+      "svc-irrigation-after",
+      "svc-irrigation-detail-1"
+    ]
+  }
+}

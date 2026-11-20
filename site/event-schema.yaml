@@ -1,0 +1,45 @@
+version: "0.1"
+
+# Custom events sent to Plausible (cookieless) from src/scripts/main.js via track().
+# Types are generated into event-schema.d.ts by: node tools/gen-event-types.mjs
+events:
+  quote_started:
+    intent: First interaction with the quote form. Top of the quote funnel.
+    properties: {}
+
+  quote_step_completed:
+    intent: A quote step passed validation. Shows where people drop out of the 4-step form.
+    properties:
+      step:
+        type: number
+        required: true
+        description: Step number just completed (1 to 4).
+        examples: [1, 2, 3, 4]
+
+  quote_submitted:
+    intent: Quote form sent after passing validation. Primary conversion.
+    properties:
+      service:
+        type: enum
+        values: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, not-sure]
+        required: true
+
+  call_clicked:
+    intent: A tel link was tapped. Secondary conversion; location shows which placement earned it.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [header, hero, cta_band, footer, contact_page, quote_aside]
+
+  email_clicked:
+    intent: A mailto link was clicked. Secondary contact signal.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [footer, contact_page]
+
+  capability_statement_downloaded:
+    intent: Commercial or public buyer downloaded the capability statement PDF. B2B intent signal.
+    properties: {}

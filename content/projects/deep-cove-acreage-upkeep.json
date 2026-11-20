@@ -1,0 +1,35 @@
+{
+  "slug": "deep-cove-acreage-upkeep",
+  "title": "Acreage upkeep for a Deep Cove property",
+  "service": "grounds-maintenance",
+  "area": "north-saanich",
+  "clientType": "Homeowner",
+  "seo": {
+    "title": "Sample project: Deep Cove acreage upkeep | RNC",
+    "description": "Sample project: monthly acreage upkeep in Deep Cove, North Saanich: field mowing, hedge trimming and blackberry control on one schedule. Get a free quote."
+  },
+  "summary": "Monthly upkeep of lawns, long grass, hedges and beds on a two-acre lot.",
+  "scope": [
+    "Lawn mowing near the house",
+    "Rough mowing of field edges",
+    "Laurel and cedar hedge trimming",
+    "Blackberry control along the fence line"
+  ],
+  "duration": "Ongoing, monthly visits",
+  "story": [
+    "The owners travel for part of the year and wanted the property kept up while they were away.",
+    "We set monthly visits with extra spring mowing, kept blackberry off the fence line and sent photos after each visit.",
+    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [North Saanich](/areas/north-saanich/), or [get a free quote](/quote/)."
+  ],
+  "result": "A property kept to a set standard while the owners were away.",
+  "testimonial": null,
+  "sample": true,
+  "images": {
+    "before": "svc-grounds-maintenance-before",
+    "after": "proj-grounds-maintenance-4",
+    "gallery": [
+      "svc-grounds-maintenance-after",
+      "svc-grounds-maintenance-detail-1"
+    ]
+  }
+}

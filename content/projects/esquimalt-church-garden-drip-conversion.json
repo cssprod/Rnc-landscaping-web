@@ -1,0 +1,34 @@
+{
+  "slug": "esquimalt-church-garden-drip-conversion",
+  "title": "Drip conversion for an Esquimalt church garden",
+  "service": "irrigation",
+  "area": "esquimalt",
+  "clientType": "Institutional",
+  "seo": {
+    "title": "Sample project: Esquimalt drip conversion | RNC",
+    "description": "Sample project: spray heads in an Esquimalt church garden converted to drip irrigation for beds and shrubs, with a simple controller. Request a free quote."
+  },
+  "summary": "Spray heads in shrub beds converted to drip lines for a volunteer-run garden.",
+  "scope": [
+    "Spray to drip conversion in four beds",
+    "New controller",
+    "Volunteer walkthrough"
+  ],
+  "duration": "3 days",
+  "story": [
+    "Volunteers were hand-adjusting spray heads that soaked the walkways.",
+    "We converted the beds to drip, installed a simple controller and showed volunteers how to pause it for rain.",
+    "Read more about [irrigation](/services/irrigation/), see our work in [Esquimalt](/areas/esquimalt/), or [get a free quote](/quote/)."
+  ],
+  "result": "Water goes to the plants, not the paths, and volunteers can run the system.",
+  "testimonial": "facilities-volunteer-esquimalt",
+  "sample": true,
+  "images": {
+    "before": "svc-irrigation-before",
+    "after": "proj-irrigation-2",
+    "gallery": [
+      "svc-irrigation-after",
+      "svc-irrigation-detail-1"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "seo": {
+    "title": "Frequently asked questions | RNC Landscaping",
+    "description": "Fixture description for the faq page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Frequently asked questions",
+  "lede": "Fixture lede for the FAQ page.",
+  "sections": [],
+  "faqs": [
+    {
+      "q": "Fixture question one?",
+      "a": "Fixture answer one.",
+      "category": "Quotes"
+    },
+    {
+      "q": "Fixture question two?",
+      "a": "Fixture answer two.",
+      "category": "Quotes"
+    },
+    {
+      "q": "Fixture question three?",
+      "a": "Fixture answer three.",
+      "category": "Services"
+    }
+  ]
+}

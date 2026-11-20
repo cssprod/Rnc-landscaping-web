@@ -1,0 +1,36 @@
+{
+  "slug": "keating-business-park-grounds-maintenance",
+  "title": "Grounds maintenance for a Keating business park",
+  "service": "grounds-maintenance",
+  "area": "central-saanich",
+  "clientType": "Commercial",
+  "seo": {
+    "title": "Sample project: Keating business park grounds | RNC",
+    "description": "Sample project: grounds maintenance for a Central Saanich business park in Keating, with early visits around tenants and clear notes. Request a free quote."
+  },
+  "summary": "Scheduled frontage, boulevard-edge and parking-island care for a multi-tenant business park.",
+  "scope": [
+    "Mowing of frontage lawns",
+    "Parking island bed care and mulch",
+    "Litter pick-up during visits",
+    "Spring and fall cleanups",
+    "Issue reports to the property manager"
+  ],
+  "duration": "Ongoing, seasonal agreement",
+  "story": [
+    "The property manager needed work done before tenants' trucks filled the lot.",
+    "We scheduled early-morning visits, kept a short checklist for each area and flagged a damaged sprinkler line and a dying shrub row for a decision.",
+    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Central Saanich](/areas/central-saanich/), or [get a free quote](/quote/)."
+  ],
+  "result": "Work finished around tenant hours, with issues reported in writing.",
+  "testimonial": "property-manager-keating",
+  "sample": true,
+  "images": {
+    "before": "svc-grounds-maintenance-before",
+    "after": "proj-grounds-maintenance-3",
+    "gallery": [
+      "svc-grounds-maintenance-after",
+      "svc-grounds-maintenance-detail-2"
+    ]
+  }
+}

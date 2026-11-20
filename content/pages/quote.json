@@ -1,0 +1,362 @@
+{
+  "_notes": "Four-step form posted to Netlify Forms. 'steps' defines fields; 'messages' covers form-level states. Field names are stable for the sheet columns.",
+  "seo": {
+    "title": "Get a Free Landscaping Quote | RNC Landscaping Victoria",
+    "description": "Tell us about your property and project in a few short steps and RNC Landscaping will follow up to arrange your free quote anywhere in Greater Victoria."
+  },
+  "h1": "Get a free quote",
+  "lede": "Four short steps. There is no charge for a quote, and we'll get back to you to talk about your property.",
+  "aside": {
+    "image": "quote-aside",
+    "heading": "What happens next",
+    "items": [
+      "We read your request.",
+      "We get back to you to ask any questions and arrange a site visit if needed.",
+      "You get a written quote with the scope and schedule."
+    ]
+  },
+  "steps": [
+    {
+      "id": "service",
+      "title": "Service and property",
+      "progressLabel": "Step 1 of 4: Service and property",
+      "fields": [
+        {
+          "name": "services",
+          "type": "checkbox-group",
+          "label": "What do you need help with?",
+          "help": "Choose all that apply.",
+          "required": true,
+          "options": [
+            {
+              "value": "grounds-maintenance",
+              "label": "Grounds maintenance"
+            },
+            {
+              "value": "landscape-installation",
+              "label": "Landscape installation"
+            },
+            {
+              "value": "irrigation",
+              "label": "Irrigation"
+            },
+            {
+              "value": "tree-vegetation",
+              "label": "Tree and vegetation work"
+            },
+            {
+              "value": "not-sure",
+              "label": "Not sure yet"
+            }
+          ],
+          "errors": {
+            "required": "Choose at least one service, or choose Not sure yet."
+          }
+        },
+        {
+          "name": "propertyType",
+          "type": "radio",
+          "label": "What type of property is it?",
+          "required": true,
+          "options": [
+            {
+              "value": "home",
+              "label": "House"
+            },
+            {
+              "value": "acreage",
+              "label": "Acreage or rural property"
+            },
+            {
+              "value": "strata",
+              "label": "Strata or townhouse complex"
+            },
+            {
+              "value": "commercial",
+              "label": "Commercial property"
+            },
+            {
+              "value": "institutional",
+              "label": "Institutional or public site"
+            },
+            {
+              "value": "construction",
+              "label": "Construction project (general contractor)"
+            },
+            {
+              "value": "other",
+              "label": "Other"
+            }
+          ],
+          "errors": {
+            "required": "Choose the type of property."
+          }
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "title": "Location and timing",
+      "progressLabel": "Step 2 of 4: Location and timing",
+      "fields": [
+        {
+          "name": "area",
+          "type": "select",
+          "label": "Where is the property?",
+          "required": true,
+          "placeholder": "Choose an area",
+          "options": [
+            {
+              "value": "victoria",
+              "label": "Victoria"
+            },
+            {
+              "value": "saanich",
+              "label": "Saanich"
+            },
+            {
+              "value": "oak-bay",
+              "label": "Oak Bay"
+            },
+            {
+              "value": "esquimalt",
+              "label": "Esquimalt"
+            },
+            {
+              "value": "langford",
+              "label": "Langford"
+            },
+            {
+              "value": "colwood",
+              "label": "Colwood"
+            },
+            {
+              "value": "view-royal",
+              "label": "View Royal"
+            },
+            {
+              "value": "sooke",
+              "label": "Sooke"
+            },
+            {
+              "value": "central-saanich",
+              "label": "Central Saanich"
+            },
+            {
+              "value": "north-saanich",
+              "label": "North Saanich"
+            },
+            {
+              "value": "sidney",
+              "label": "Sidney"
+            },
+            {
+              "value": "highlands",
+              "label": "Highlands"
+            },
+            {
+              "value": "metchosin",
+              "label": "Metchosin"
+            },
+            {
+              "value": "other",
+              "label": "Other"
+            }
+          ],
+          "errors": {
+            "required": "Choose the area where the property is."
+          }
+        },
+        {
+          "name": "areaOther",
+          "type": "text",
+          "label": "Community name",
+          "help": "Shown when you choose Other.",
+          "requiredWhen": {
+            "area": "other"
+          },
+          "maxLength": 80,
+          "errors": {
+            "required": "Enter the community where the property is."
+          }
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "label": "Street address (optional)",
+          "help": "Helps us plan a site visit. Stratas: use the complex's street address.",
+          "required": false,
+          "maxLength": 160
+        },
+        {
+          "name": "timing",
+          "type": "radio",
+          "label": "When would you like the work done?",
+          "required": true,
+          "options": [
+            {
+              "value": "asap",
+              "label": "As soon as possible"
+            },
+            {
+              "value": "1-3-months",
+              "label": "In the next 1 to 3 months"
+            },
+            {
+              "value": "later",
+              "label": "Later this year or next season"
+            },
+            {
+              "value": "ongoing",
+              "label": "Ongoing or recurring service"
+            },
+            {
+              "value": "flexible",
+              "label": "Flexible"
+            }
+          ],
+          "errors": {
+            "required": "Choose when you would like the work done."
+          }
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "title": "Project details",
+      "progressLabel": "Step 3 of 4: Project details",
+      "fields": [
+        {
+          "name": "details",
+          "type": "textarea",
+          "label": "Tell us about the work",
+          "help": "For example: lawn size, number of hedges, trees you're concerned about, or a specification or tender you want us to quote to.",
+          "required": true,
+          "minLength": 10,
+          "maxLength": 2000,
+          "errors": {
+            "required": "Tell us a little about the work so we can prepare.",
+            "minLength": "Add a few more words so we understand the job (at least 10 characters).",
+            "maxLength": "Keep this under 2,000 characters. You can send more detail later."
+          }
+        },
+        {
+          "name": "photos",
+          "type": "file",
+          "label": "Photos (optional)",
+          "help": "Up to 3 photos, JPG, PNG or HEIC, up to 8 MB each.",
+          "required": false,
+          "multiple": true,
+          "maxFiles": 3,
+          "maxSizeMB": 8,
+          "accept": "image/jpeg,image/png,image/heic",
+          "errors": {
+            "maxFiles": "You can add up to 3 photos. Remove one to add another.",
+            "maxSize": "This photo is larger than 8 MB. Choose a smaller photo.",
+            "type": "This file type isn't supported. Use JPG, PNG or HEIC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Your contact details",
+      "progressLabel": "Step 4 of 4: Contact details",
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "label": "Your name",
+          "required": true,
+          "autocomplete": "name",
+          "maxLength": 100,
+          "errors": {
+            "required": "Enter your name."
+          }
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "autocomplete": "email",
+          "errors": {
+            "required": "Enter your email address.",
+            "format": "Enter an email address like name@example.com."
+          }
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "label": "Phone (optional)",
+          "help": "If you'd rather we call.",
+          "required": false,
+          "autocomplete": "tel",
+          "errors": {
+            "format": "Enter a phone number with area code, like 250 555 0123."
+          }
+        },
+        {
+          "name": "contactPreference",
+          "type": "radio",
+          "label": "How should we contact you?",
+          "required": true,
+          "options": [
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            }
+          ],
+          "errors": {
+            "required": "Choose how we should contact you.",
+            "phoneNeeded": "Add a phone number, or choose Email."
+          }
+        },
+        {
+          "name": "organization",
+          "type": "text",
+          "label": "Strata, company or organization (optional)",
+          "required": false,
+          "maxLength": 120
+        },
+        {
+          "name": "consent",
+          "type": "checkbox",
+          "label": "I agree that RNC Landscaping may use these details to respond to my request, as described in the [privacy policy](/privacy/).",
+          "required": true,
+          "errors": {
+            "required": "Check this box so we can use your details to respond."
+          }
+        }
+      ]
+    }
+  ],
+  "buttons": {
+    "next": "Next",
+    "back": "Back",
+    "submit": "Send my quote request",
+    "sending": "Sending..."
+  },
+  "messages": {
+    "errorSummary": "There is a problem with {count} field(s). Fix the items below and try again.",
+    "submitError": "Your request didn't send. Check your connection and try again, or call [PHONE].",
+    "success": {
+      "heading": "Thanks, we have your request",
+      "body": "We'll get back to you to talk about your property and arrange your free quote. If it's urgent, call [PHONE]."
+    },
+    "noJs": "This form works best with JavaScript on. You can still send it as one page."
+  },
+  "sections": [
+    {
+      "id": "other-ways",
+      "heading": "Prefer to talk?",
+      "body": [
+        "Call [PHONE] or email [EMAIL]. See [contact details](/contact/) and [common questions](/faq/)."
+      ]
+    }
+  ]
+}
