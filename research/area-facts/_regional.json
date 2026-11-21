@@ -1,0 +1,100 @@
+{
+  "facts": [
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules (Water Conservation Bylaw No. 4099) run May 1 to September 30 every year for properties on the Regional Water Supply System: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm by any method, or 12:01-10 am or 7-10 pm with timed/automatic irrigation. Trees, shrubs, flowers and vegetable gardens may be sprinkled any day 4-10 am or 7-10 pm, and hand watering or micro/drip irrigation is allowed any day, any time. Strata and other multi-unit complexes use the complex's street address. New sod and newly seeded lawns need no permit and have a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "sourceTitle": "Regional Watering Schedule - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "corrected",
+      "formerIds": [
+        "crd-watering-stage1"
+      ],
+      "note": "Canonical regional copy (aligned 2026-11-21). Merges V1's 'crd-watering-stage1' (Victoria, Saanich, Oak Bay, Esquimalt, View Royal, Central Saanich, North Saanich) with V2's 'regional-crd-stage1-watering' (Colwood, Highlands, Langford, Metchosin, Sidney, Sooke). Both lanes fetched this live page and matched this excerpt on 2026-11-21; V3 did not re-check. The text is V2's, which is the more complete version. V2: verified on the live CRD page (www.crd.ca/node/4919 redirects here). Corrections: added the separate timed/automatic irrigation window (12:01-10 am or 7-10 pm), the any-day rules for trees, shrubs and gardens, the multi-unit address rule and the bylaw number. V1: the old URL (crd.bc.ca/education/...) is not reachable, and the old excerpt 'The watering schedule days only apply to lawns!' is not on the current page. V1 also read on the page that the CRD has not needed Stage 2 or 3 restrictions since the Sooke Lake Reservoir dam was raised in 2002, and that new sod may be watered in the 4 to 10 a.m. and 7 to 10 p.m. windows for its first 21 days, and new seed until it is established or for 49 days, whichever is less, with no permit. The bylaw applies to customers of the Regional Water Supply System; properties on private wells are not covered (V1 noted this for Central Saanich, rural Saanich and North Saanich)."
+    },
+    {
+      "id": "regional-crd-water-systems",
+      "kind": "regional",
+      "unique": false,
+      "text": "The CRD's Juan de Fuca Water Distribution System supplies drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and East Sooke; the Saanich Peninsula Water Distribution System supplies Central Saanich, Sidney and North Saanich. Properties not connected (for example on private wells) are outside the CRD watering schedule.",
+      "sourceUrl": "https://www.crd.ca/programs-services/water/drinking-water-systems",
+      "sourceTitle": "Drinking Water Systems - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The Juan de Fuca Water Distribution System provides drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and electoral area East Sooke.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "added",
+      "formerIds": [],
+      "note": "Canonical regional copy (aligned 2026-11-21); only V2 recorded this fact (same id in Colwood, Highlands, Langford, Metchosin, Sidney and Sooke), and V3 did not re-check it. Referenced only by the municipalities the text names. V2: new shared regional fact. Same page, verbatim: 'The Saanich Peninsula Water Distribution System provides drinking water to Central Saanich, Sidney and North Saanich.' The last sentence (unconnected properties are outside the schedule) follows from the watering page, which says Bylaw 4099 applies to customers of the Regional Water Supply System."
+    },
+    {
+      "id": "regional-crd-invasive-disposal",
+      "kind": "regional",
+      "unique": false,
+      "text": "Invasive plants can be taken to Hartland Landfill in bags marked 'Invasive Species' or in covered loads; knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs. The CRD's Regional Invasive Species Program lists priority species including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "sourceTitle": "Invasive Species - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "added",
+      "formerIds": [
+        "crd-invasive-disposal"
+      ],
+      "note": "Canonical regional copy (aligned 2026-11-21). Merges V1's 'crd-invasive-disposal' (Victoria, Saanich, Oak Bay, Esquimalt, View Royal, Central Saanich, North Saanich) with V2's 'regional-crd-invasive-disposal' (Colwood, Highlands, Langford, Metchosin, Sidney, Sooke). Both lanes fetched this live page and matched this excerpt on 2026-11-21; V3 did not re-check. The text is V2's, which adds the priority-species list. V2: it confirms the CRD invasive-species note already used in content/areas/*.json. Same page, verbatim: 'Knotweed species disposal requires a controlled waste permit (reduced fee)' and 'Note: Knotweed species must not be disposed of at these locations.' V1 (Victoria): the page also warns that giant hogweed, poison hemlock and daphne laurel can harm skin and need protective clothing."
+    },
+    {
+      "id": "regional-bc-rapr",
+      "kind": "regional",
+      "unique": false,
+      "text": "B.C.'s riparian rules (the Riparian Areas Protection Regulation, formerly the Riparian Areas Regulation) apply across the Capital Regional District except the City of Victoria and Esquimalt. Residential, commercial or industrial work within 30 m of a fish-bearing stream, lake, wetland or ditch, including removing or altering plants and disturbing soil, can need a Qualified Environmental Professional's assessment; each local government sets how it applies through permit areas or bylaws. Amendments to the regulation take effect January 1, 2027.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-fish-habitat/riparian-areas-regulations/rar-brochure-2016_final_web.pdf",
+      "sourceTitle": "Riparian Areas Regulation brochure (Province of B.C., 2016)",
+      "sourceType": "official",
+      "excerpt": "within 30 metres of a watercourse, even if that watercourse is not on your property,",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "corrected",
+      "formerIds": [],
+      "note": "Canonical regional copy (aligned 2026-11-21); only V2 recorded this fact (same id in Colwood, Highlands, Langford, Metchosin, Sidney and Sooke), and V3 did not re-check it. Referenced by every municipality in scope, which per the text is the whole CRD except the City of Victoria and Esquimalt. V2: the 30 m figure is not on the RAPR web page itself, so the source is now the provincial brochure. Brochure, verbatim: the activities listed include 'Removing or altering plants' and 'Disturbing soils'. Regulation page (https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/riparian-areas-regulation), verbatim: 'Amendments to RAPR come into effect on January 1, 2027.' Citizen resources page (.../riparian-areas-regulation/citizen-resources), verbatim: 'Capital (except City of Victoria and Esquimalt)'. The 2016 guidebook adds that the rules do not apply to marine or estuarine shorelines. The brochure predates the 2019 rename and the 2027 amendments, so re-check after January 1, 2027."
+    },
+    {
+      "id": "regional-bc-wildlife-act-nests",
+      "kind": "regional",
+      "unique": false,
+      "text": "Section 34 of B.C.'s Wildlife Act makes it an offence to take, injure, molest or destroy a bird or its egg, the nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl (protected even when not in use), or any other bird's nest while it holds a bird or egg. Trees are therefore checked for nests before felling or heavy pruning, especially in spring and summer.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf",
+      "sourceTitle": "Migratory Birds and Breeding Birds: Federal and Provincial Legislation (BC Timber Sales, March 2024)",
+      "sourceType": "official",
+      "excerpt": "possesses, takes, injures, molests or destroys: a) A bird or its egg, b) The nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "corrected",
+      "formerIds": [],
+      "note": "Canonical regional copy (aligned 2026-11-21); only V2 recorded this fact (same id in Colwood, Highlands, Langford, Metchosin, Sidney and Sooke), and V3 did not re-check it. Provincial, so every municipality references it. V2: the earlier source (www2.gov.bc.ca .../environmental-regulatory-compliance/wildlife) now returns 404, so the source is now this provincial guidance sheet, which quotes section 34. Same sheet, verbatim: 'c) The nest of a bird not referred to in paragraph (b) when the nest is occupied by a bird or its egg.' It also says inactive nests of listed species 'have regulatory protection'. Correction: the species list is now exact (peregrine falcon, gyrfalcon and burrowing owl added; 'some other nests' removed)."
+    },
+    {
+      "id": "regional-bc-private-well-drought",
+      "kind": "regional",
+      "unique": false,
+      "text": "Provincial (BC): owners with private wells are advised to conserve water year-round, including through drought-friendly landscaping. They should also follow local watering restrictions, check nearby observation wells in the same aquifer, and consider collecting rainwater for gardens.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-wells/bc_gov_drywellbrochure.pdf",
+      "sourceTitle": "What to do if your well goes dry (Province of BC brochure)",
+      "sourceType": "official",
+      "excerpt": "This should be done year-round and can include using less water, using low-water appliances, and drought-friendly landscaping.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "status": "confirmed",
+      "formerIds": [
+        "prov-private-well-drought"
+      ],
+      "note": "Canonical regional copy (aligned 2026-11-21) of V1's 'prov-private-well-drought', which was embedded only in North Saanich; V3 did not re-check it. Referenced only by municipalities where a local fact or a verification note records properties on private wells. V1: confirmed on the live PDF (section 'Drought preparation and planning'). Rainwater collection was added from the same section; the brochure notes that rainwater is not safe to drink unless treated."
+    }
+  ]
+}

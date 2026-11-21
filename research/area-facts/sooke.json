@@ -5,14 +5,20 @@
   "verification": {
     "by": "V2",
     "on": "2026-11-21",
-    "log": "research/area-verification-V2.md"
+    "log": "research/area-verification-V2.md",
+    "recheck": {
+      "by": "V3",
+      "on": "2026-11-21",
+      "log": "research/area-verification-V3.md",
+      "scope": "facts left unverified because www.sooke.ca was blocked"
+    }
   },
   "facts": [
     {
       "id": "sooke-tree-bylaw-status",
       "kind": "rule",
       "unique": true,
-      "text": "We could not confirm from the District's website whether Sooke has adopted a municipal tree-cutting bylaw; the District surveyed residents on a proposed tree management bylaw in 2020. Check with the District of Sooke before removing large trees. Inside development permit areas (foreshore, riparian, steep slopes and others), vegetation removal is regulated through the OCP; see sooke-ocp-800-dpas.",
+      "text": "We could not confirm from the District's website whether Sooke has a tree-cutting bylaw for private land; a 2020 news report says the District surveyed residents on a proposed tree management bylaw. Check with the District of Sooke (250-642-1634) before removing large trees. Trees on District boulevards, parks and trails fall under Policy 11.6 (see sooke-municipal-trees-policy). Inside development permit areas (foreshore, riparian, steep slopes and others), vegetation removal is regulated through the OCP; see sooke-ocp-800-dpas.",
       "sourceUrl": "https://www.sookenewsmirror.com/news/sooke-survey-collects-thoughts-on-tree-bylaw/",
       "sourceTitle": "Sooke survey collects thoughts on tree bylaw - Sooke News Mirror",
       "excerpt": "Sooke council is working on a bylaw to regulate tree management.",
@@ -20,7 +26,21 @@
       "reviewedOn": null,
       "sourceType": "secondary",
       "status": "unverified",
-      "note": "V2 UNVERIFIED (status note, NOT a claim that no bylaw exists). Checked: the District's Bylaws page (/municipal-hall/bylaws/) lists Burning, Noise, Parking and Securing Attractants regulation pages and no tree page; the Urban Forest and Tree Care page gives care advice and describes no tree-cutting permit. The 'Browse and Search Bylaws' list loads only through a scripted search, which was not run this session, so the full bylaw register was not seen. The news article (SECONDARY, 2020) was not re-fetched (host not allowed)."
+      "note": "V3 STILL UNVERIFIED (status note, NOT a claim that no bylaw exists). Re-checked on www.sooke.ca, now allowed: the Bylaws page lists Burning, Noise, Parking and Securing Attractants regulation pages and no tree page. The 'Browse and Search Bylaws' list is filled by a script that calls a /umbraco/ endpoint, which the site's robots.txt disallows, so it was not queried. The District's public sitemap (https://www.sooke.ca/sitemap.xml, 744 URLs, read 2026-11-21) lists 78 bylaw pages; none has 'tree' in its title. The only tree document listed is 'Trees On Municipal Property (Policy No. 11.6)', adopted January 24, 2005, which covers boulevards, parks and trails only. A sitemap is not a complete register, so this is NOT evidence that no bylaw exists. The 2020 news article (SECONDARY) still could not be re-fetched (www.sookenewsmirror.com is not allowed). Earlier (V2): the Urban Forest and Tree Care page gives care advice and describes no tree-cutting permit; that is still true on www.sooke.ca."
+    },
+    {
+      "id": "sooke-municipal-trees-policy",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sooke's Policy 11.6 (2005) covers trees on District boulevards, parks and trails. A request to trim or remove a municipal tree for a better view is reviewed by the Municipal Engineer, who may allow trimming; removal must be authorized by Council, and the applicant bears all costs and liabilities. Trees the District considers dangerous are removed by its own tree contractor.",
+      "sourceUrl": "https://www.sooke.ca/media/d3ueotd0/trees-on-municipal-property-policy-no-116-2005.pdf",
+      "sourceTitle": "Trees on Municipal Property: Boulevards, Parks and Trails (Policy No. 11.6, District of Sooke, adopted January 24, 2005)",
+      "excerpt": "Removal of these trees must be authorized by Council. All costs and liabilities arising from this action are to be borne by the applicant.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "added",
+      "note": "V3: NEW, found while re-checking sooke-tree-bylaw-status. Listed at https://www.sooke.ca/media-manager/media-pages/policies/trees-on-municipal-property-policy-no-116/. Same PDF, verbatim: 'The Municipal Engineer may grant permission for the trimming of these trees.' and 'Trees, which are felt to be dangerous to the public by the District of Sooke, are to be removed by the District of Sooke tree contractor.' Applies to municipal property only; it says nothing about trees on private land."
     },
     {
       "id": "sooke-tree-care-private",
@@ -34,7 +54,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "added",
-      "note": "V2: new. Same page, verbatim: 'Hire a certified arborist for large or complex work.' Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: new. Same page, verbatim: 'Hire a certified arborist for large or complex work.' Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     },
     {
       "id": "sooke-firesmart",
@@ -48,7 +68,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "corrected",
-      "note": "V2: the source is now the District's own page, replacing the SECONDARY CTV article; the program is current. Correction: added the District's FireSmart zone guidance; dropped 'sooke.ca/firesmart', which returned 404 on the District host. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: the source is now the District's own page, replacing the SECONDARY CTV article; the program is current. Correction: added the District's FireSmart zone guidance; dropped 'sooke.ca/firesmart', which returned 404 on the District host. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     },
     {
       "id": "sooke-ocp-800-dpas",
@@ -62,7 +82,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "corrected",
-      "note": "V2: Correction: the adopted plan has NINE DPAs (DPA 1-9), not the '10 DPAs' Capital Daily reported for the DRAFT. The OCP page (https://www.sooke.ca/programs-services/planning-and-development/official-community-plan-ocp/), verbatim: 'On December 8, 2025, Council adopted Official Community Plan (OCP) Bylaw No. 800 (PDF)'. There is no separate wildfire DPA; Part 7 can require a wildfire hazard assessment for lands over 4 ha. The PDF was fetched from the District's Govstack media host, the same host as the earlier sourceUrl."
+      "note": "V2: Correction: the adopted plan has NINE DPAs (DPA 1-9), not the '10 DPAs' Capital Daily reported for the DRAFT. The OCP page (https://www.sooke.ca/programs-services/planning-and-development/official-community-plan-ocp/), verbatim: 'On December 8, 2025, Council adopted Official Community Plan (OCP) Bylaw No. 800 (PDF)'. There is no separate wildfire DPA; Part 7 can require a wildfire hazard assessment for lands over 4 ha. The PDF was fetched from the District's Govstack media host, the same host as the earlier sourceUrl. V3: the OCP page now opens on www.sooke.ca and still carries the adoption sentence; the Part 7 PDF re-opened on the Govstack media host."
     },
     {
       "id": "sooke-dpa-landscape-exemptions",
@@ -132,7 +152,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "corrected",
-      "note": "V2: the source is now the official District page, replacing the SECONDARY Island Social Trends post; the season dates are confirmed. Added from the page FAQ, verbatim: 'open burning beyond small recreational fires—including yard waste burning, land clearing, or larger fires—requires a permit issued by Sooke Fire Rescue.' The page's opening text and its FAQ differ on whether basic backyard burning needs a permit; tell readers to call Sooke Fire Rescue first. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: the source is now the official District page, replacing the SECONDARY Island Social Trends post; the season dates are confirmed. Added from the page FAQ, verbatim: 'open burning beyond small recreational fires—including yard waste burning, land clearing, or larger fires—requires a permit issued by Sooke Fire Rescue.' The page's opening text and its FAQ differ on whether basic backyard burning needs a permit; tell readers to call Sooke Fire Rescue first. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page. For the drop-off rules (no commercial loads, no invasive plants), see sooke-yard-waste-dropoff."
     },
     {
       "id": "sooke-priority-invasives",
@@ -146,13 +166,13 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "added",
-      "note": "V2: new official replacement for the invasive-species angle of sooke-scotch-broom. Same page, verbatim: 'Never compost invasive plants; dispose of them according to guidelines, such as those provided by the CRD.' Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: new official replacement for the invasive-species angle of sooke-scotch-broom. Same page, verbatim: 'Never compost invasive plants; dispose of them according to guidelines, such as those provided by the CRD.' Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     },
     {
       "id": "sooke-scotch-broom",
       "kind": "condition",
       "unique": true,
-      "text": "Scotch broom is said to have reached Vancouver Island through an 1851 Sooke garden, and it still crowds rural Sooke lots; the District has run an annual broom drop-off at its parks yard.",
+      "text": "Scotch broom is said to have reached Vancouver Island through an 1851 Sooke garden, and it still crowds rural Sooke lots.",
       "sourceUrl": "https://www.pressreader.com/canada/times-colonist/20240505/281981792670376",
       "sourceTitle": "Sooke wants you to pull some broom - Times Colonist (May 5, 2024)",
       "excerpt": "Sooke wants you to pull some broom",
@@ -160,7 +180,21 @@
       "reviewedOn": null,
       "sourceType": "secondary",
       "status": "unverified",
-      "note": "V2 UNVERIFIED: SECONDARY and not re-fetched (host not allowed). The District's invasive page lists Scotch broom as a priority species but does not mention 1851 or a broom drop-off; the burning page mentions a free yard-waste drop-off in May only. Use sooke-priority-invasives instead."
+      "note": "V3 STILL UNVERIFIED: SECONDARY and not re-fetched (www.pressreader.com is not allowed). Re-checked on www.sooke.ca: no District page mentions 1851. CORRECTED: the old clause 'the District has run an annual broom drop-off at its parks yard' was REMOVED, because the District's 2026 free yard-waste drop-off does NOT accept invasive plant material (see sooke-yard-waste-dropoff). Use sooke-priority-invasives for broom, and the CRD Hartland rule (regional-crd-invasive-disposal) for disposal."
+    },
+    {
+      "id": "sooke-yard-waste-dropoff",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sooke runs a free yard-waste drop-off at the District Parks Yard, 2070 Kaltasin Road, for District residential owners and occupants: in May and, in 2026, also on Saturdays in October (the last 2026 day was October 31). It takes leaves, grass clippings, branches, prunings and garden debris, but not commercial loads or invasive plant material.",
+      "sourceUrl": "https://www.sooke.ca/news-and-public-notices/posts/final-free-yard-waste-drop-off-day-set-for-october-31-2026-program/",
+      "sourceTitle": "Final Free Yard Waste Drop-Off Day Set for October 31 (2026 Program) - District of Sooke (Oct 30, 2026)",
+      "excerpt": "Commercial loads and invasive plant materials cannot be accepted.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "added",
+      "note": "V3: NEW, found while re-checking sooke-scotch-broom. Same bulletin, verbatim: 'The service is available to District of Sooke residential property owners and occupants.' September 3, 2026 bulletin (https://www.sooke.ca/news-and-public-notices/posts/free-yard-waste-drop-off-expands-to-october-as-sooke-firesmart-efforts-continue/), verbatim: 'Every Saturday in October, excluding Thanksgiving weekend'. The Burning Regulations page still describes the program as 'during the month of May'. TIME-BOUND: dates change yearly. A landscaping company's loads are commercial, so RNC cannot use this drop-off."
     },
     {
       "id": "sooke-wildlife-neighbourhoods",
@@ -174,7 +208,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "added",
-      "note": "V2: new; closes the R1b deer gap for Sooke (no deer-management program found, just the District's guidance). Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: new; closes the R1b deer gap for Sooke (no deer-management program found, just the District's guidance). Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     },
     {
       "id": "sooke-attractants-392",
@@ -188,7 +222,7 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "added",
-      "note": "V2: new. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
+      "note": "V2: new. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     },
     {
       "id": "sooke-water-edges",
@@ -202,7 +236,7 @@
       "reviewedOn": null,
       "sourceType": "secondary",
       "status": "unverified",
-      "note": "V2 PARTLY VERIFIED: the CRD Drinking Water Systems page confirms that the Juan de Fuca system serves Sooke (reviewed in regional-crd-water-systems). The wells, hauled-water and Otter Point extension claims are still SECONDARY and were not re-fetched (host not allowed). The excerpt is a search snippet and is undated."
+      "note": "V3 STILL UNVERIFIED: the District's sitemap (read 2026-11-21) has no page on the Otter Point Road water extension, wells or hauled water, and www.sookenewsmirror.com is still not allowed. Only the Juan de Fuca part is verified (regional-crd-water-systems). The excerpt is a search snippet and is undated."
     },
     {
       "id": "sooke-whiffin-spit",
@@ -216,82 +250,20 @@
       "reviewedOn": "2026-11-21",
       "sourceType": "official",
       "status": "corrected",
-      "note": "V2: the source is now an official District bulletin dated Nov 16, 2026, replacing Wikipedia. Correction: removed the Wikipedia-only claims (the spit 'almost landlocks' the harbour, breakwater repairs). Any 'exposed waterfront lots' framing is ours. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network)."
-    },
-    {
-      "id": "regional-crd-stage1-watering",
-      "kind": "regional",
-      "unique": false,
-      "text": "CRD Stage 1 watering rules (Water Conservation Bylaw No. 4099) run May 1 to September 30 every year for properties on the Regional Water Supply System: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm by any method, or 12:01-10 am or 7-10 pm with timed/automatic irrigation. Trees, shrubs, flowers and vegetable gardens may be sprinkled any day 4-10 am or 7-10 pm, and hand watering or micro/drip irrigation is allowed any day, any time. Strata and other multi-unit complexes use the complex's street address. New sod and newly seeded lawns need no permit and have a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "sourceTitle": "Regional Watering Schedule - Capital Regional District",
-      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "sourceType": "official",
-      "status": "corrected",
-      "note": "V2: verified on the live CRD page (www.crd.ca/node/4919 redirects here). Corrections: added the separate timed/automatic irrigation window (12:01-10 am or 7-10 pm), the any-day rules for trees, shrubs and gardens, the multi-unit address rule and the bylaw number. Shared regional block, not municipality-specific; R1a files use the id 'crd-watering-stage1' for the same rule, so the integrator should merge the two ids."
-    },
-    {
-      "id": "regional-crd-water-systems",
-      "kind": "regional",
-      "unique": false,
-      "text": "The CRD's Juan de Fuca Water Distribution System supplies drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and East Sooke; the Saanich Peninsula Water Distribution System supplies Central Saanich, Sidney and North Saanich. Properties not connected (for example on private wells) are outside the CRD watering schedule.",
-      "sourceUrl": "https://www.crd.ca/programs-services/water/drinking-water-systems",
-      "sourceTitle": "Drinking Water Systems - Capital Regional District",
-      "excerpt": "The Juan de Fuca Water Distribution System provides drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and electoral area East Sooke.",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "sourceType": "official",
-      "status": "added",
-      "note": "V2: new shared regional fact. Same page, verbatim: 'The Saanich Peninsula Water Distribution System provides drinking water to Central Saanich, Sidney and North Saanich.' The last sentence (unconnected properties are outside the schedule) follows from the watering page, which says Bylaw 4099 applies to customers of the Regional Water Supply System."
-    },
-    {
-      "id": "regional-crd-invasive-disposal",
-      "kind": "regional",
-      "unique": false,
-      "text": "Invasive plants can be taken to Hartland Landfill in bags marked 'Invasive Species' or in covered loads; knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs. The CRD's Regional Invasive Species Program lists priority species including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "sourceTitle": "Invasive Species - Capital Regional District",
-      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "sourceType": "official",
-      "status": "added",
-      "note": "V2: new shared regional fact; it confirms the CRD invasive-species note already used in content/areas/*.json. Same page, verbatim: 'Knotweed species disposal requires a controlled waste permit (reduced fee)' and 'Note: Knotweed species must not be disposed of at these locations.'"
-    },
-    {
-      "id": "regional-bc-rapr",
-      "kind": "regional",
-      "unique": false,
-      "text": "B.C.'s riparian rules (the Riparian Areas Protection Regulation, formerly the Riparian Areas Regulation) apply across the Capital Regional District except the City of Victoria and Esquimalt. Residential, commercial or industrial work within 30 m of a fish-bearing stream, lake, wetland or ditch, including removing or altering plants and disturbing soil, can need a Qualified Environmental Professional's assessment; each local government sets how it applies through permit areas or bylaws. Amendments to the regulation take effect January 1, 2027.",
-      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-fish-habitat/riparian-areas-regulations/rar-brochure-2016_final_web.pdf",
-      "sourceTitle": "Riparian Areas Regulation brochure (Province of B.C., 2016)",
-      "excerpt": "within 30 metres of a watercourse, even if that watercourse is not on your property,",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "sourceType": "official",
-      "status": "corrected",
-      "note": "V2: the 30 m figure is not on the RAPR web page itself, so the source is now the provincial brochure. Brochure, verbatim: the activities listed include 'Removing or altering plants' and 'Disturbing soils'. Regulation page (https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/riparian-areas-regulation), verbatim: 'Amendments to RAPR come into effect on January 1, 2027.' Citizen resources page (.../riparian-areas-regulation/citizen-resources), verbatim: 'Capital (except City of Victoria and Esquimalt)'. The 2016 guidebook adds that the rules do not apply to marine or estuarine shorelines. The brochure predates the 2019 rename and the 2027 amendments, so re-check after January 1, 2027."
-    },
-    {
-      "id": "regional-bc-wildlife-act-nests",
-      "kind": "regional",
-      "unique": false,
-      "text": "Section 34 of B.C.'s Wildlife Act makes it an offence to take, injure, molest or destroy a bird or its egg, the nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl (protected even when not in use), or any other bird's nest while it holds a bird or egg. Trees are therefore checked for nests before felling or heavy pruning, especially in spring and summer.",
-      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf",
-      "sourceTitle": "Migratory Birds and Breeding Birds: Federal and Provincial Legislation (BC Timber Sales, March 2024)",
-      "excerpt": "possesses, takes, injures, molests or destroys: a) A bird or its egg, b) The nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "sourceType": "official",
-      "status": "corrected",
-      "note": "V2: the earlier source (www2.gov.bc.ca .../environmental-regulatory-compliance/wildlife) now returns 404, so the source is now this provincial guidance sheet, which quotes section 34. Same sheet, verbatim: 'c) The nest of a bird not referred to in paragraph (b) when the nest is occupied by a bird or its egg.' It also says inactive nests of listed species 'have regulatory protection'. Correction: the species list is now exact (peregrine falcon, gyrfalcon and burrowing owl added; 'some other nests' removed)."
+      "note": "V2: the source is now an official District bulletin dated Nov 16, 2026, replacing Wikipedia. Correction: removed the Wikipedia-only claims (the spit 'almost landlocks' the harbour, breakwater repairs). Any 'exposed waterfront lots' framing is ours. Page fetched via sooke-012-ca.govstack.com, the District of Sooke's own Govstack host that serves the same site as www.sooke.ca (www.sooke.ca itself was refused by this session's network). V3: re-opened on www.sooke.ca on 2026-11-21 (the host is now allowed); the excerpt matches the live page."
     }
   ],
+  "regionalRefs": [
+    "regional-crd-stage1-watering",
+    "regional-crd-water-systems",
+    "regional-crd-invasive-disposal",
+    "regional-bc-rapr",
+    "regional-bc-wildlife-act-nests"
+  ],
   "gaps": [
-    "Tree bylaw status: the District's dynamic bylaw search was not run; do NOT claim none exists. Ask the District (250-642-1634).",
+    "Tree bylaw status: still not confirmed either way. The scripted bylaw search sits under a robots.txt-disallowed path and was not queried; the sitemap shows no tree bylaw page, which is NOT proof none exists. Ask the District (250-642-1634); never claim that Sooke has no tree bylaw.",
     "Salt spray and soils: no official source found beyond the Whiffin Spit storm bulletin.",
-    "Wells and hauled water outside the CRD service area: no official source read (env.gov.bc.ca and news hosts are not allowed)."
+    "Wells and hauled water outside the CRD service area: no official source found on www.sooke.ca; news hosts are not allowed.",
+    "Not added (outside the V3 re-check scope, possible leads): Soil Removal and Deposit Bylaw No. 860 and Noise Control Bylaw No. 485 are listed on www.sooke.ca."
   ]
 }

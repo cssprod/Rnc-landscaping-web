@@ -135,31 +135,12 @@
       "verify": true,
       "reviewedOn": null,
       "note": "UNVERIFIED: secondary land-trust page, from search snippet. V1 could not open it because hat.bc.ca is not on this session's allowed hosts. es-dpa1-native-planting is an official alternative for the native-planting point."
-    },
-    {
-      "id": "crd-watering-stage1",
-      "kind": "regional",
-      "text": "Regional (CRD, not municipal): every year from May 1 to September 30, Stage 1 of the CRD Water Conservation Bylaw applies on the regional water supply. Lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4 to 10 a.m. or 7 to 10 p.m.; automatic systems may start at 12:01 a.m. Trees, shrubs, flowers and vegetables may be sprinkled any day in those hours, and hand watering and drip are allowed any time. A strata complex uses the complex's street address.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "sourceTitle": "Regional Watering Schedule | Capital Regional District",
-      "sourceType": "official",
-      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "note": "V1: confirmed. CORRECTED: the old URL (crd.bc.ca/education/...) is not reachable and www.crd.ca/node/4919 redirects here, so the URL was updated. The old excerpt 'The watering schedule days only apply to lawns!' is not on the current page and was replaced."
-    },
-    {
-      "id": "crd-invasive-disposal",
-      "kind": "regional",
-      "text": "Regional (CRD): invasive plants can go to Hartland Landfill in bags marked 'Invasive Species' or in covered loads. Knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "sourceTitle": "Invasive Species | Capital Regional District",
-      "sourceType": "official",
-      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
-      "verify": true,
-      "reviewedOn": "2026-11-21",
-      "note": "V1: NEW shared regional fact (same id in every V1 file)."
     }
+  ],
+  "regionalRefs": [
+    "regional-crd-stage1-watering",
+    "regional-crd-invasive-disposal",
+    "regional-bc-wildlife-act-nests"
   ],
   "gaps": [
     "Deer pressure in Esquimalt: no Esquimalt-specific source found.",
