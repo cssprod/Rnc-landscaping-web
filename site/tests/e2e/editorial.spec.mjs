@@ -17,7 +17,9 @@ test('an unknown URL serves the 404 page with links back in', async ({ page }) =
   const res = await page.goto('/no-such-page/');
   expect(res?.status()).toBe(404);
   await expect(page.locator('h1')).toHaveCount(1);
-  await expect(page.locator('main a[href="/free-quote/"]')).toHaveCount(1);
+  // The quote card links /free-quote/ from its heading and from its body copy, so count at least one, and none to the retired /quote/.
+  await expect(page.locator('main a[href="/free-quote/"]').first()).toBeVisible();
+  await expect(page.locator('main a[href="/quote/"]')).toHaveCount(0);
 });
 
 test('legal pages and the accessibility statement render', async ({ page }) => {
