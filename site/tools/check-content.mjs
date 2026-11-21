@@ -498,6 +498,6 @@ if (failures.length) {
   console.error(`  check-content by rule: ${Object.entries(by).map(([r, n]) => `${r} ${n}`).join(', ')}`);
   if (argv.includes('--all')) for (const f of failures) console.error(`  - ${f}`);
 }
-const ok = report('content (schema v3)', /** @type {any} */ (failures));
+const ok = report('check-content', /** @type {any} */ (failures));
 if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);
 export default ok;

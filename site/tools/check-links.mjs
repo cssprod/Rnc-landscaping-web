@@ -225,6 +225,6 @@ async function httpCheck() {
 }
 
 for (const w of warnings) console.warn(`  warn: ${w}`);
-const ok = report('internal links and URL map', /** @type {any} */ (failures));
+const ok = report('check-links', /** @type {any} */ (failures));
 if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);
 export default ok;

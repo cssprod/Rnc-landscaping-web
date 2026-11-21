@@ -78,6 +78,6 @@ for (const f of existsSync(DIST) ? files() : []) {
     for (const m of foot.matchAll(/\shref="((?:tel|sms|mailto):[^"]*|https?:\/\/[^"]*)"/g)) if (/\[|%5B/i.test(m[1])) e('footer-tel-mailto', `token inside an href: ${m[1]} (render the text and the chip instead)`);
   }
 }
-const ok = report('HTML structure', /** @type {any} */ (failures));
+const ok = report('check-html', /** @type {any} */ (failures));
 if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);
 export default ok;
