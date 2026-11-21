@@ -102,7 +102,7 @@ if (existsSync(join(DIST, 'assets/brand/favicon.svg'))) cpSync(join(DIST, 'asset
 if (existsSync(join(DIST, 'assets/brand/apple-touch-icon.png'))) cpSync(join(DIST, 'assets/brand/apple-touch-icon.png'), join(DIST, 'apple-touch-icon.png'));
 
 /* ---- origin ---- */
-if (launch && !has('DOMAIN')) issues.push('SITE_MODE=launch needs DOMAIN in site.config.mjs');
+if (launch && !has('DOMAIN')) issues.push('SITE_MODE=launch needs DOMAIN in content/site.json tokens');
 const origin = launch ? `https://${tok('DOMAIN')}` : '';
 const hasCapability = !!site.capabilityStatement && existsSync(join(DIST, site.capabilityStatement));
 if (!hasCapability) (launch ? issues : warnings).push(`capability statement PDF missing: add static${site.capabilityStatement}`);
@@ -187,7 +187,7 @@ for (const a of site.areas) if (!data.areas[a]) issues.push(`missing area conten
   for (const i of issues) {
     const m = i.match(/^unresolved token (\[[^\]]+\]) in (.+)$/) || i.match(/^(.+?): (renders sample content.*)$/);
     if (!m) { rest.push(i); continue; }
-    const [key, file] = i.startsWith('unresolved') ? [`unresolved ${m[1]} (set it in site.config.mjs)`, m[2]] : [m[2], m[1]];
+    const [key, file] = i.startsWith('unresolved') ? [`unresolved ${m[1]} (set it in content/site.json tokens)`, m[2]] : [m[2], m[1]];
     groups.set(key, [...(groups.get(key) || []), file]);
   }
   issues.length = 0;
