@@ -200,7 +200,7 @@ function init(form) {
 
   const labels = { services: {}, area: {}, timing: {}, contact: {} };
   for (const el of qa('[name=services],[name=timing],[name=contact],select[name=area] option')) {
-    if (el.value) labels[el.tagName === 'OPTION' ? 'area' : el.name][el.value] = el.dataset.label || el.textContent.trim();
+    if (el.value) labels[el.tagName === 'OPTION' ? 'area' : el.name][el.value] = el.dataset.label || (el.labels?.[0] || el).textContent.trim();
   }
   const read = () => {
     const fd = new FormData(form);

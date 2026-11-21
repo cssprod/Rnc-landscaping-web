@@ -3,6 +3,9 @@
    surfaces (no glass), hairline rules, 16px+ inputs so iOS does not zoom, targets ≥ 44px. */
 
 .quote-page [hidden] { display: none !important; }
+/* Neutralise the legacy .quote-* port in 40-pages.css (sticky glass aside, page padding) until it is removed. */
+.quote-page { padding-block: 0; }
+.quote-aside { position: static; overflow: visible; }
 
 /* ---- head + reassurance strip ---- */
 .quote-head { padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 3vw, 2.5rem); }
