@@ -2,10 +2,10 @@
   "_notes": "Free-quote page (/free-quote/), blueprint C5. One page, six inputs. The website stores nothing: Send opens the visitor's own email app with the request written out (mailto), and an in-page panel offers Copy request, the address, Call/Text (only once PHONE is known) and Gmail/Outlook web links. Keys: seo, h1, lede; reassurance (array of short strings shown as a strip under the H1); fields (the six inputs, in order; field 'name' values are stable and are read by site/src/scripts/quote.js: services, area, description, timing, name, contact, plus the conditional phone input nested in contact.phone); each field has label, optional help, optional placeholder/examples, and errors {required, ...}; options [{value, label, subject?, hint?}] where 'subject' is the short label used in the email subject. errorSummary {heading, intro}; buttons {submit, copy, copied, copyAddress, copiedAddress, reopen, edit, gmail, outlook, call, text}; messages {submitHelp, noJs, privacy, ready {heading, body, noEmail}, truncated, copyFailed, smsBody}; nextSteps {heading, items[{title, body}]} ('What happens next'); credentials {heading, lede} (the row itself is ui.credentialRow tokens); aside {image, heading} (photo slot and heading for the side column); sections[] (other ways to reach us). Retired: the 4-step 'steps' key (replaced by 'fields' with the redesign; nothing else read it). {count} in errorSummary.intro is replaced with the number of problems. [REPLY TIME], [EMAIL], [PHONE] and credential tokens stay as tokens until RNC confirms them.",
   "seo": {
     "title": "Free landscaping quote in Greater Victoria | RNC",
-    "description": "Ask RNC Landscaping for a free, no-obligation quote. Six quick questions, then your own email app sends the request. No prices online: every quote is site-specific."
+    "description": "Ask RNC Landscaping for a free, no-obligation quote in Greater Victoria. Six quick questions, then your own email app sends it. Every quote is site-specific."
   },
   "h1": "Get a free quote",
-  "lede": "Six quick questions. When you press Send, your own email app opens with the request written out, so you can add photos and send it yourself. Nothing is stored on this website.",
+  "lede": "Six quick questions. Then your own email app opens with the request written out, so you can add photos and send it yourself. Nothing is stored on this website.",
   "reassurance": [
     "Free, no obligation",
     "We reply within [REPLY TIME]",
