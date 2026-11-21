@@ -1,39 +1,64 @@
 // @ts-check
-/** Free-quote page (blueprint C2 "Free quote", C5 quote builder). */
-import { html, md, paras, raw, fmtDate } from '../lib/html.mjs';
-import { picture, hasPhoto, getSlot } from '../lib/images.mjs';
+/**
+ * Free-quote page (blueprint C2 "Free quote", C5 quote builder and trust):
+ * H1 → reassurance strip → quote builder → "What happens next" → credentials → other ways to reach us.
+ */
+import { html, md, paras } from '../lib/html.mjs';
+import { picture } from '../lib/images.mjs';
 import { layout } from '../components/layout.mjs';
 import * as ui from '../components/ui.mjs';
-import { areaMap } from '../components/map.mjs';
 import { quoteForm } from '../components/forms.mjs';
 import { icon } from '../components/sprite.mjs';
-import * as schema from '../lib/schema.mjs';
-import { site } from '../../site.config.mjs';
-import { telLink, mailLink } from '../lib/tokens.mjs';
-import { route, HOME, clip, hostOf } from './_shared.mjs';
+import { has } from '../lib/tokens.mjs';
+import { route, HOME } from './_shared.mjs';
 
 /** @param {import('./_shared.mjs').Env} env @param {import('./_shared.mjs').Ctx} ctx */
 export default function quotePages(env, ctx) {
-  const { d, pg, sec, without, projects, testimonials, resources, svcName, svcLabel, areaName } = ctx;
+  const { d, pg } = ctx;
   /** @type {import('./_shared.mjs').Route[]} */
   const R = [];
-  /** @param {string} path @param {() => any} render @param {{ sources?: string[], noindex?: boolean }} [o] */
-  const add = (path, render, o) => R.push(route(path, render, o));
-  add('/free-quote/', () => {
+  R.push(route('/free-quote/', () => {
     const p = pg('quote');
+    const next = p.nextSteps || { heading: 'What happens next', items: [] };
+    const creds = p.credentials || { heading: 'Insurance and credentials' };
+    const other = (p.sections || []).find((/** @type {any} */ s) => s.id === 'other-ways');
     return layout(env, {
-      path: '/free-quote/', title: p.seo.title, description: p.seo.description, crumbs: [HOME, { name: 'Free quote', path: '/free-quote/' }], bodyClass: 'is-quote',
+      path: '/free-quote/', title: p.seo.title, description: p.seo.description,
+      crumbs: [HOME, { name: 'Free quote', path: '/free-quote/' }], bodyClass: 'is-quote', scripts: ['quote'],
       body: html`<div class="quote-page">
-        <div class="aurora" aria-hidden="true"></div>
-        <div class="wrap quote-page__grid">
-          <div class="quote-page__main"><div class="page-head__inner quote-page__head"><!--crumbs--><h1 id="page-title">${p.h1}</h1><p class="page-head__lede">${md(p.lede)}</p></div>${quoteForm(d, p)}</div>
-          <aside class="quote-aside glass-card" aria-labelledby="qa-h">${picture(p.aside?.image || 'quote-aside', { sizes: '(min-width: 1100px) 380px, 100vw', aspect: '3:2', credit: false })}
-            <div class="quote-aside__body"><h2 id="qa-h">${p.aside?.heading || 'What happens next'}</h2>
-            <ol class="next-steps">${(p.aside?.items || ['We read your request.', 'We get back to you to ask questions and arrange a site visit if needed.', 'You get a written quote with the scope and schedule.']).map((/** @type {string} */ i, n) => html`<li><span class="next-steps__n">${n + 1}</span><span>${i}</span></li>`)}</ol>
-            <div class="quote-aside__contact"><h3>Prefer to talk?</h3><p>${icon('phone', { size: 16 })}${telLink('quote_aside')}</p><p>${icon('mail', { size: 16 })}${mailLink('quote_aside')}</p></div></div></aside>
-        </div>
-      </div>`,
+  <header class="quote-head">
+    <div class="wrap quote-head__inner">
+      <!--crumbs-->
+      <h1 id="page-title">${p.h1}</h1>
+      <p class="quote-head__lede">${md(p.lede)}</p>
+      ${Array.isArray(p.reassurance) && p.reassurance.length ? html`<ul class="quote-reassure">${p.reassurance.map((/** @type {string} */ x) => html`<li>${icon('check', { size: 16 })}<span>${md(x)}</span></li>`)}</ul>` : ''}
+    </div>
+  </header>
+  <div class="wrap quote-layout">
+    <div class="quote-main">${quoteForm(d, p)}</div>
+    <aside class="quote-aside" aria-label="About your quote">
+      ${p.aside?.image ? html`<div class="quote-aside__media">${picture(p.aside.image, { sizes: '(min-width: 64em) 380px, 100vw', aspect: '3:2', credit: false })}</div>` : ''}
+      <section class="quote-next" aria-labelledby="quote-next-h">
+        <h2 id="quote-next-h">${next.heading}</h2>
+        <ol class="quote-steps">${(next.items || []).map((/** @type {any} */ s, /** @type {number} */ i) => html`<li><span class="quote-steps__n" aria-hidden="true">${ui.pad2(i + 1)}</span><div><h3>${s.title}</h3><p>${md(s.body)}</p></div></li>`)}</ol>
+      </section>
+      <section class="quote-creds" aria-labelledby="quote-creds-h">
+        <h2 id="quote-creds-h">${creds.heading}</h2>${creds.lede ? html`<p class="quote-help">${md(creds.lede)}</p>` : ''}
+        ${ui.credentialRow()}
+      </section>
+      ${other ? html`<section class="quote-other" aria-labelledby="quote-other-h">
+        <h2 id="quote-other-h">${other.heading}</h2>
+        <ul class="quote-contacts">
+          <li>${icon('phone', { size: 18 })}${ui.contactLink('tel', 'quote_aside')}</li>
+          ${has('PHONE') ? html`<li>${icon('chat', { size: 18 })}${ui.contactLink('sms', 'quote_aside', { label: 'Text [PHONE]' })}</li>` : ''}
+          <li>${icon('mail', { size: 18 })}${ui.contactLink('email', 'quote_aside')}</li>
+        </ul>
+        ${paras(other.body)}
+      </section>` : ''}
+    </aside>
+  </div>
+</div>`,
     });
-  });
+  }, { sources: ['content/pages/quote.json', 'site/src/pages/quote.mjs', 'site/src/components/forms.mjs', 'site/src/scripts/quote.js'] }));
   return R;
 }

@@ -69,7 +69,7 @@ export function business(env) {
     foundingDate: val('FOUNDED'),
     address: clean({ '@type': 'PostalAddress', streetAddress: val('ADDRESS'), addressRegion: 'BC', addressCountry: 'CA' }),
     openingHoursSpecification: hours.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days.map((d) => `https://schema.org/${d}`), opens: h.opens, closes: h.closes })),
-    areaServed: site.areas.map((a) => ({ '@id': placeId(env, a) })),
+    areaServed: places(env),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: `${site.name} services`,
