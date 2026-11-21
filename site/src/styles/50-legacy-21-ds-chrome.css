@@ -1,0 +1,27 @@
+/* 50-legacy-21-ds-chrome.css: legacy slice of the pre-redesign site.css (lines 585–605).
+   Owner: ds-chrome. footer.
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* ================= footer ================= */
+.site-footer { position: relative; isolation: isolate; overflow: hidden; padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: max(var(--space-6), env(safe-area-inset-bottom)); background: var(--color-deep); color: var(--color-on-deep-2); font-size: var(--font-size-subheadline); }
+.site-footer__glow { position: absolute; inset: -40% 30% auto -20%; height: 120%; z-index: -1; background: radial-gradient(closest-side, rgba(108, 196, 144, 0.16), transparent); pointer-events: none; }
+.site-footer a:not(.btn) { color: #fff; text-decoration: none; }
+.site-footer a:not(.btn):hover { text-decoration: underline; }
+.site-footer h2 { margin-bottom: var(--space-4); color: #fff; font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); letter-spacing: 0; }
+.site-footer ul { list-style: none; display: grid; gap: 4px; margin: 0; padding: 0; }
+.site-footer li a { display: inline-block; padding-block: 3px; }
+.site-footer__top { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-6); }
+.site-footer__brand p { max-width: 32ch; margin: var(--space-4) 0 var(--space-5); }
+.brand--footer { color: #fff; }
+.brand--footer:hover { text-decoration: none !important; }
+.site-footer__areas ul { grid-template-columns: 1fr 1fr; column-gap: var(--space-4); }
+.site-footer address { display: grid; gap: 10px; font-style: normal; }
+.site-footer address p { display: flex; align-items: center; gap: 10px; margin: 0; }
+.site-footer address .i { color: rgba(255, 255, 255, 0.6); }
+.site-footer__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: var(--font-size-footnote); }
+.site-footer__legal p { margin: 0; }
+.site-footer__legal ul { display: flex; gap: var(--space-5); }
+.site-footer__note { margin-top: var(--space-4); color: rgba(255, 255, 255, 0.62); font-size: var(--font-size-footnote); }
+}

@@ -1,0 +1,10 @@
+/* 50-legacy-25-living.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: living. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .media--art img { filter: brightness(0.8) saturate(0.95); }
+}
+:root[data-theme="dark"] .media--art img { filter: brightness(0.8) saturate(0.95); }
+}

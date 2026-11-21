@@ -1,6 +1,10 @@
 node_modules/
 site/dist/
 site/test-results/
+site/playwright-report/
+site/screenshots/
+launch-dist/
 .netlify/
 .DS_Store
-site/screenshots/
+# build output markers live only inside output directories
+.rnc-dist

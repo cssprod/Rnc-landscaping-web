@@ -1,0 +1,9 @@
+/* 50-legacy-09-t-editorial.css: legacy slice of the pre-redesign site.css (lines 292–294).
+   Owner: t-editorial. .legal.
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+.legal .section { padding-block: calc(var(--space-section) * 0.3); }
+.legal .prose-section__grid { grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); }
+.legal .prose-section__body > p:first-child { font-size: inherit; color: var(--color-ink-2); }
+}

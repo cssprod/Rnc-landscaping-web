@@ -1,0 +1,33 @@
+/* 50-legacy-32-ds-core.css: legacy slice of the pre-redesign site.css (lines 651–677).
+   Owner: ds-core. motion: keyframes, hero entrance, view() reveals, reduced-motion kill switch (→ 95-motion.css, deleted in W2); print (→ 99-print.css, deleted in W2).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+/* ================= motion ================= */
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop { from { transform: translateY(-6px) scale(0.98); } to { transform: none; } }
+@keyframes rise { from { transform: translateY(26px) scale(0.985); } to { transform: none; } }
+@keyframes lift { from { transform: translateY(18px); } to { transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__content > * { animation: lift 900ms var(--ease-out) both; }
+  .hero__content > :nth-child(2) { animation-delay: 60ms; }
+  .hero__content > :nth-child(3) { animation-delay: 120ms; }
+  .hero__content > :nth-child(4) { animation-delay: 180ms; }
+  .hero__media img { animation: settle 1600ms var(--ease-out) both; }
+  @keyframes settle { from { transform: scale(1.06); } to { transform: none; } }
+  @supports (animation-timeline: view()) {
+    .tile, .card, .bento__card, .quote, .step-card, .season, .service-item, .note-card, .contact-card, .trust__item, .item-card, .feature-split__media, .inset-list { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; scroll-behavior: auto !important; }
+}
+
+@media print {
+  .site-header, .cta-band, .hero__dock, .skip-link, .site-footer__glow { display: none !important; }
+  .hero { min-height: 0; color: #000; background: none; padding-top: 0; }
+  .hero__media, .hero__scrim, .aurora { display: none; }
+  .hero__title, .hero__lede { color: #000; text-shadow: none; }
+  .glass-card, .glass-bar { box-shadow: none; border: 1px solid #ccc; background: #fff; }
+}
+}

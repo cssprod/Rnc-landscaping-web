@@ -1,0 +1,19 @@
+/* 50-legacy-30-t-projects.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: t-projects. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (max-width: 959.98px) {
+  .case__body { grid-template-columns: minmax(0, 1fr); }
+  .case__scope { position: static; }
+}
+@media (max-width: 599.98px) {
+  .spec-bar { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .spec-bar > div + div { border-left: 0; }
+  .spec-bar > div:nth-child(even) { border-left: 1px solid var(--color-line); }
+  .spec-bar > div:nth-child(n + 3) { border-top: 1px solid var(--color-line); }
+  .filters__count { margin-left: 0; }
+  .filters { border-radius: var(--radius-l); }
+  .segmented { flex: 1 1 100%; }
+}
+}

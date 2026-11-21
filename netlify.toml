@@ -16,7 +16,10 @@
   SITE_MODE = "showcase"
 
 # ---------- Headers ----------
-# Showcase builds also write dist/_headers with X-Robots-Tag: noindex.
+# Showcase builds also write dist/_headers with X-Robots-Tag: noindex. site/tools/serve.mjs applies these blocks and
+# dist/_headers locally, so Playwright runs under the same CSP. script-src carries exactly the sha256 of each
+# INLINE_SCRIPTS entry (site/src/lib/head-scripts.mjs): the build and `node tools/csp.mjs --check` fail otherwise;
+# `node tools/csp.mjs --print` prints the list.
 [[headers]]
   for = "/*"
   [headers.values]

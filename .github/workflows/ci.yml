@@ -8,26 +8,33 @@ jobs:
     defaults: { run: { working-directory: site } }
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 } # full history: the sitemap <lastmod> comes from git
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      # Dev tools go into site/node_modules (git-ignored, no package.json): the site itself has no dependencies.
       - name: Typecheck (JSDoc)
-        run: npx --yes -p typescript -p @types/node tsc -p jsconfig.json
+        run: |
+          npm install --no-save --no-package-lock --no-audit --no-fund typescript@5 @types/node@22
+          npx --no-install tsc -p jsconfig.json
       - name: Design tokens and contrast (light and dark)
         run: node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs
       - name: Build (showcase) and static checks
-        run: node tools/check-all.mjs
-      - name: Browser tests
+        run: node tools/check-all.mjs && node tools/csp.mjs --check
+      - name: Unit and browser tests
         run: |
-          npx --yes playwright install --with-deps chromium
-          npx --yes -p playwright playwright test
+          npm install --no-save --no-package-lock --no-audit --no-fund typescript@5 @types/node@22 playwright@1.63
+          npx --no-install playwright install --with-deps chromium
+          node --test "tests/unit/**/*.test.mjs"
+          node build.mjs --offline-images
+          npx --no-install playwright test --grep-invert @integration
       - name: Launch gate (expected to fail until tokens are filled)
-        run: SITE_MODE=launch node build.mjs
+        run: SITE_MODE=launch node build.mjs --out=../launch-dist
         continue-on-error: true
       - name: Lighthouse CI
         run: |
           node build.mjs
-          npx --yes @lhci/cli@0.14 autorun --collect.staticDistDir=dist --collect.url=/ --collect.url=/services/irrigation/ --collect.url=/quote/ --assert.preset=lighthouse:no-pwa --assert.assertions.categories:performance=warn --assert.assertions.categories:accessibility=error --assert.assertions.categories:seo=warn --assert.assertions.is-crawlable=off --upload.target=temporary-public-storage
+          npx --yes @lhci/cli@0.14 autorun --collect.staticDistDir=dist --collect.url=/ --collect.url=/services/irrigation/ --collect.url=/free-quote/ --assert.preset=lighthouse:no-pwa --assert.assertions.categories:performance=warn --assert.assertions.categories:accessibility=error --assert.assertions.categories:seo=warn --assert.assertions.is-crawlable=off --upload.target=temporary-public-storage
       - name: axe accessibility
         run: |
           node tools/serve.mjs 4321 & sleep 2
-          for p in / /services/irrigation/ /quote/ /portfolio/ /areas/oak-bay/ /contact/; do npx --yes @axe-core/cli "http://localhost:4321$p" --exit; done
+          for p in / /services/irrigation/ /free-quote/ /projects/ /areas/oak-bay/ /contact/; do npx --yes @axe-core/cli "http://localhost:4321$p" --exit; done

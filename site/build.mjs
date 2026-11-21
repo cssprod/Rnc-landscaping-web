@@ -5,9 +5,12 @@
  *   node build.mjs                      showcase build (default): placeholders shown as chips, noindex
  *   SITE_MODE=launch node build.mjs     launch build: fails on [TOKENS], samples or fixtures; indexable
  *   node build.mjs --offline-images     generated illustrations instead of CDN photos (tests, screenshots)
+ *   node build.mjs --out=DIR            build into DIR (default: $SITE_DIST, else site/dist). The build empties DIR first,
+ *                                       but only when it is empty or carries the .rnc-dist marker (CONTRACT §14).
+ *   node build.mjs --no-minify          readable CSS and JS (debugging)
  */
-import { mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, cpSync, readdirSync, statSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { mkdirSync, writeFileSync, readFileSync, existsSync, cpSync, readdirSync, statSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadAll, sharedFile, paths, fallbacks } from './src/lib/data.mjs';
 import { initImages, renderArt } from './src/lib/images.mjs';
@@ -17,19 +20,39 @@ import { routes } from './src/pages/routes.mjs';
 import { INLINE_SCRIPTS } from './src/lib/head-scripts.mjs';
 import { site } from './site.config.mjs';
 import { generate as tokensCss, readTokens } from '../brand/build-tokens.mjs';
+import { prepareDist, DistGuardError } from './src/lib/build/dist-guard.mjs';
+import { bundleCss } from './src/lib/build/css.mjs';
+import { buildModules, addModulePreloads } from './src/lib/build/modules.mjs';
+import { shakeSprite } from './src/lib/build/sprite-shake.mjs';
+import { gitLastmod } from './src/lib/build/lastmod.mjs';
+import { cspScriptHashes, inlineScriptProblems, sha256 } from './src/lib/build/inline-scripts.mjs';
 
 const t0 = Date.now();
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
 const context = process.env.CONTEXT || 'dev';
 const launch = process.env.SITE_MODE === 'launch';
 const offline = args.has('--offline-images');
-const DIST = join(paths.site, 'dist');
+const minify = !args.has('--no-minify');
+const outArg = argv.find((a) => a.startsWith('--out='))?.slice(6);
+if (argv.includes('--out')) { console.error('build: use --out=DIR'); process.exit(2); }
+const DEFAULT_DIST = join(paths.site, 'dist');
+const DIST = resolve(outArg || process.env.SITE_DIST || DEFAULT_DIST);
 /** @type {string[]} */
 const issues = [];
 /** @type {string[]} */
 const warnings = [];
+/** Problems that fail every build, showcase included. @type {string[]} */
+const fatal = [];
 
-rmSync(DIST, { recursive: true, force: true });
+try {
+  const { legacy } = prepareDist(DIST, { legacyDir: DEFAULT_DIST });
+  if (legacy) warnings.push(`${DIST} was a build from before the .rnc-dist marker; it was replaced and is marked now`);
+} catch (e) {
+  if (!(e instanceof DistGuardError)) throw e;
+  console.error(`build: ${e.message}`);
+  process.exit(1);
+}
 mkdirSync(join(DIST, 'assets', 'brand'), { recursive: true });
 mkdirSync(join(DIST, 'assets', 'build'), { recursive: true });
 mkdirSync(join(DIST, 'assets', 'fonts'), { recursive: true });
@@ -38,33 +61,29 @@ mkdirSync(join(DIST, 'assets', 'art'), { recursive: true });
 const data = loadAll();
 initImages(data.images, { offline });
 
-/* ---- CSS: tokens (compiled from brand/tokens.json) + components, one content-hashed file ---- */
+/* ---- CSS: tokens (compiled from brand/tokens.json, unlayered) + site/src/styles/*.css in name order, one hashed file ---- */
 const tokens = tokensCss(readTokens());
 const tokensFile = sharedFile('brand', 'tokens.css');
 if (tokensFile && readFileSync(tokensFile, 'utf8') !== tokens) warnings.push('brand/tokens.css is stale: run node brand/build-tokens.mjs (the build uses tokens.json directly)');
-/** Conservative CSS minifier: comments and whitespace only (never touches values inside strings or url()). @param {string} src */
-const minifyCss = (src) => src
-  .replace(/\/\*[\s\S]*?\*\//g, '')
-  .replace(/\s+/g, ' ')
-  .replace(/\s*([{};>])\s*/g, '$1')
-  .replace(/([,:])\s+(?![^(]*\)\s*(?:and|or)\b)/g, '$1')
-  .replace(/;}/g, '}')
-  .trim();
-const css = minifyCss(`${tokens}\n${readFileSync(join(paths.site, 'src/styles/site.css'), 'utf8')}`);
-const js = readFileSync(join(paths.site, 'src/scripts/main.js'), 'utf8');
 const h = (/** @type {string} */ s) => createHash('sha256').update(s).digest('hex').slice(0, 10);
-const assets = { css: `/assets/build/site.${h(css)}.css`, js: `/assets/build/main.${h(js)}.js` };
+const { css } = bundleCss({ tokens, stylesDir: join(paths.site, 'src/styles'), minify });
+
+/* ---- JS: every site/src/scripts module, hashed leaves first with import specifiers rewritten (CONTRACT §12) ---- */
+const { modules, files: moduleFiles } = buildModules(join(paths.site, 'src/scripts'), { minify });
+for (const f of moduleFiles) writeFileSync(join(DIST, f.url), f.code);
+if (!modules.main) issues.push('missing src/scripts/main.js');
+/** env.assets.js (main) and env.assets.css keep their seed meaning; env.assets.modules[name] = { src, deps[] }. */
+const assets = { css: `/assets/build/site.${h(css)}.css`, js: modules.main?.src || '', modules };
 writeFileSync(join(DIST, assets.css), css);
-writeFileSync(join(DIST, assets.js), js);
 
 /* ---- CSP: one policy for every path; it must carry the sha256 of every frozen inline script (CONTRACT §11) ---- */
-const inlineHashes = INLINE_SCRIPTS.map((s) => `sha256-${createHash('sha256').update(s).digest('base64')}`);
 const tomlPath = join(paths.root, 'netlify.toml');
 const toml = existsSync(tomlPath) ? readFileSync(tomlPath, 'utf8') : '';
-if (!toml) issues.push('netlify.toml not found at the repository root');
+const cspHashes = cspScriptHashes(toml);
+if (!toml) fatal.push('netlify.toml not found at the repository root');
 else {
-  if (!/for = "\/\*"[\s\S]*?Content-Security-Policy/.test(toml)) issues.push('netlify.toml has no Content-Security-Policy header for "/*"');
-  for (const hash of inlineHashes) if (!toml.includes(`'${hash}'`)) issues.push(`netlify.toml CSP is missing '${hash}' for an inline head script (src/lib/head-scripts.mjs)`);
+  if (!/for = "\/\*"[\s\S]*?Content-Security-Policy/.test(toml)) fatal.push('netlify.toml has no Content-Security-Policy header for "/*"');
+  for (const s of INLINE_SCRIPTS) if (!cspHashes.includes(sha256(s))) fatal.push(`netlify.toml CSP script-src is missing '${sha256(s)}' for an inline head script (src/lib/head-scripts.mjs)`);
 }
 
 /* ---- static files, fonts, brand assets ---- */
@@ -91,16 +110,28 @@ const analyticsDomain = launch && has('PLAUSIBLE DOMAIN') ? tok('PLAUSIBLE DOMAI
 const env = { launch, context, origin, data, assets, hasCapability, analyticsDomain };
 
 /* ---- pages ---- */
-/** CONTRACT §14 route shape (the optional fields are read defensively). @typedef {{ path: string, file: string, render: () => any, sitemap?: boolean, noindex?: boolean, showcaseOnly?: boolean }} BuildRoute */
-const list = /** @type {BuildRoute[]} */ (routes(env));
-let pageCount = 0;
+/**
+ * CONTRACT §14 route shape (the optional fields are read defensively).
+ * @typedef {{ path: string, file: string, render: () => any, sources?: string[], scripts?: string[], sitemap?: boolean, noindex?: boolean, showcaseOnly?: boolean }} BuildRoute
+ */
+// showcaseOnly routes (/styleguide/) are never built in launch mode.
+const list = /** @type {BuildRoute[]} */ (routes(env)).filter((r) => !(launch && r.showcaseOnly));
+let pageCount = 0, spriteBefore = 0, spriteAfter = 0;
 for (const r of list) {
   // A route whose file is not .html (e.g. _redirects) is written raw: tokens resolved as plain text, no chips, no typographer.
   const isHtml = r.file.endsWith('.html');
-  const out = isHtml
+  let out = isHtml
     ? typographer(finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: true }))
     : finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: false });
-  if (launch && isHtml && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
+  if (isHtml) {
+    if (launch && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
+    // Keep only the sprite symbols this page references, preload the module graph, and police inline scripts.
+    const before = out.length;
+    out = shakeSprite(out).html;
+    spriteBefore += before; spriteAfter += out.length;
+    out = addModulePreloads(out, modules);
+    for (const p of inlineScriptProblems(out, { allowed: INLINE_SCRIPTS, cspHashes })) fatal.push(`${r.file}: ${p}`);
+  }
   const file = join(DIST, r.file);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, out);
@@ -115,9 +146,16 @@ for (const a of art) writeFileSync(join(DIST, 'assets', 'art', `${a.id}.svg`), a
 const indexable = list.filter((r) => r.path !== '/404.html' && r.file.endsWith('.html') && r.sitemap !== false && !r.noindex && !r.showcaseOnly);
 const today = new Date().toISOString().slice(0, 10);
 const smOrigin = origin || 'https://[DOMAIN]';
+// <lastmod>: the latest git commit date of the route's sources; the build date when that is unknown (one warning per reason).
+const lastmod = gitLastmod(paths.root);
+if (lastmod.reason) warnings.push(`sitemap lastmod uses the build date: ${lastmod.reason === 'shallow' ? 'this is a shallow git clone (fetch the full history for real dates)' : 'git history is not available'}`);
+let undated = 0;
+const lastmodOf = (/** @type {BuildRoute} */ r) => { const d = lastmod.dateFor(r.sources); if (!d) undated++; return d || today; };
+const smRows = indexable.map((r) => `  <url><loc>${smOrigin}${r.path}</loc><lastmod>${lastmodOf(r)}</lastmod></url>`);
+if (undated && !lastmod.reason) warnings.push(`sitemap lastmod uses the build date for ${undated} of ${indexable.length} route(s) without committed sources[]`);
 writeFileSync(join(DIST, 'sitemap.xml'), finalizeTokens(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${indexable.map((r) => `  <url><loc>${smOrigin}${r.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${smRows.join('\n')}
 </urlset>
 `, { launch, file: 'sitemap.xml', issues, html: false }));
 writeFileSync(join(DIST, 'robots.txt'), launch
@@ -163,8 +201,13 @@ const kb = (/** @type {string} */ dir) => {
   return (n / 1024).toFixed(0);
 };
 for (const w of warnings) console.warn(`warn: ${w}`);
+if (fatal.length) {
+  console.error(`\nBuild FAILED: ${fatal.length} problem(s) that would break the site in production:\n${fatal.slice(0, 40).map((i) => `  - ${i}`).join('\n')}${fatal.length > 40 ? `\n  … and ${fatal.length - 40} more` : ''}\n`);
+  process.exit(1);
+}
 if (issues.length) {
   console.error(`\nBuild ${launch ? 'FAILED' : 'has problems'} (${launch ? 'launch' : 'showcase'}, ${context}). Fix before publishing:\n${issues.map((i) => `  - ${i}`).join('\n')}\n`);
-  if (launch || issues.some((i) => i.startsWith('netlify.toml') || i.startsWith('missing'))) process.exit(1);
+  if (launch || issues.some((i) => i.startsWith('missing'))) process.exit(1);
 }
-console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}) into dist/ (${kb(DIST)} KB) in ${Date.now() - t0} ms`);
+const shown = DIST.startsWith(`${paths.site}/`) ? DIST.slice(paths.site.length + 1) : DIST;
+console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}${minify ? '' : ', unminified'}) into ${shown}/ (${kb(DIST)} KB; sprite tree-shaking saved ${((spriteBefore - spriteAfter) / 1024 / Math.max(1, pageCount)).toFixed(1)} KB per page) in ${Date.now() - t0} ms`);

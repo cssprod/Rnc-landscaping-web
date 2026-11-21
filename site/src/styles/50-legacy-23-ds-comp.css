@@ -1,0 +1,33 @@
+/* 50-legacy-23-ds-comp.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: ds-comp. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (max-width: 1099.98px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .seasons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 959.98px) {
+  .prose-section__grid { grid-template-columns: minmax(0, 1fr); }
+  .faq__grid { grid-template-columns: minmax(0, 1fr); }
+  .prose-section__head h2 { position: static; }
+  .prose-section__head h3 { position: static; }
+  .faq__head h2 { position: static; }
+  .bento { grid-template-columns: minmax(0, 1fr); }
+  .bento--3 { grid-template-columns: minmax(0, 1fr); }
+  .bento--3 .bento__card:first-child { grid-row: auto; min-height: 260px; }
+  .trust__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 599.98px) {
+  .tiles { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 82%; margin-inline: calc(-1 * var(--layout-gutter)); padding: 4px var(--layout-gutter) 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--layout-gutter); scrollbar-width: none; }
+  .tiles::-webkit-scrollbar { display: none; }
+  .tile { scroll-snap-align: start; }
+  .card-grid--4 { grid-template-columns: minmax(0, 1fr); }
+  .seasons { grid-template-columns: minmax(0, 1fr); }
+  .trust__grid { grid-template-columns: minmax(0, 1fr); }
+  .hero__ctas .btn { flex: 1 1 auto; }
+  .dock__note { display: none; }
+  .ba.is-enhanced .ba__control { flex-direction: column; align-items: stretch; gap: 4px; }
+}
+}

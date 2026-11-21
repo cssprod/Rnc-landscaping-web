@@ -1,0 +1,17 @@
+/* 50-legacy-11-t-home.css: legacy slice of the pre-redesign site.css (lines 310–320).
+   Owner: t-home. feature split (home).
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* Feature split (home) */
+.feature-split { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-4); }
+.feature-split__media { position: relative; isolation: isolate; display: block; min-height: 440px; overflow: hidden; border-radius: var(--radius-2xl); color: #fff; text-decoration: none; box-shadow: var(--shadow-2); }
+.feature-split__media .media { position: absolute; inset: 0; height: 100%; aspect-ratio: auto !important; }
+.feature-split__media .media img { transition: transform var(--dur-slow) var(--ease-out); }
+.feature-split__media .media__chip { top: 14px; bottom: auto; }
+.feature-split__media:hover .media img { transform: scale(1.04); }
+.feature-split__glass { position: absolute; left: 14px; right: 14px; bottom: 14px; display: grid; gap: 8px; padding: 22px 24px; border-radius: calc(var(--radius-2xl) - 14px); color: rgba(255, 255, 255, 0.86); font-size: var(--font-size-subheadline); }
+.feature-split__title { color: #fff; font-size: 1.375rem; font-weight: var(--font-weight-semibold); line-height: 1.2; letter-spacing: -0.018em; }
+.stack-cards { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+}

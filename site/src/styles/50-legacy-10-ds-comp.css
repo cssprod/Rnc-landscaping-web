@@ -1,0 +1,21 @@
+/* 50-legacy-10-ds-comp.css: legacy slice of the pre-redesign site.css (lines 295–309).
+   Owner: ds-comp. bento (ui/cards).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* Bento of glass cards */
+.bento { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.bento--3 { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-rows: auto auto; }
+.bento--3 .bento__card:first-child { grid-row: span 2; }
+.bento__card { display: flex; flex-direction: column; min-height: 200px; padding: clamp(1.5rem, 3vw, 2.25rem); }
+.bento__card h3 { margin-bottom: 8px; font-size: var(--font-size-title-3); }
+.bento__card p { margin: 0; color: var(--color-ink-2); }
+.bento--3 .bento__card:first-child { justify-content: flex-end; min-height: 340px; overflow: hidden; background-image: radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--color-brand-2) 18%, transparent), transparent 60%); }
+.bento--3 .bento__card:first-child::before { background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='360' viewBox='0 0 560 360'%3E%3Cg fill='none' stroke='%23367A4F' stroke-opacity='.16' stroke-width='1.3'%3E%3Cpath d='M300 40c90-30 180 10 270-10'/%3E%3Cpath d='M240 80c110-36 210 16 330-8'/%3E%3Cpath d='M190 126c120-44 240 22 380-6'/%3E%3Cpath d='M150 176c140-50 260 28 420-4'/%3E%3Cpath d='M120 228c150-54 280 30 450 0'/%3E%3Cellipse cx='420' cy='120' rx='56' ry='30'/%3E%3Cellipse cx='420' cy='120' rx='26' ry='12'/%3E%3C/g%3E%3C/svg%3E") right top / 560px auto no-repeat,
+  var(--glass-sheen); }
+.bento--3 .bento__card:first-child .icon-tile { margin-bottom: auto; width: 60px; height: 60px; border-radius: 18px; }
+.bento--3 .bento__card:first-child h3 { margin-top: var(--space-7); font-size: var(--font-size-title-2); }
+.bento--3 .bento__card:first-child p { font-size: 1.0625rem; max-width: 40ch; }
+}
