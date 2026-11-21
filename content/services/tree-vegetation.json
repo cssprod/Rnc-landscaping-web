@@ -11,6 +11,13 @@
     "lede": "Pruning, removals, invasive plant control and brush clearing, with a check of your municipality's tree bylaw before any cut.",
     "image": "svc-tree-vegetation-hero"
   },
+  "localContext": "Most Greater Victoria municipalities protect native trees such as Garry oak and arbutus, and the rules on size, pruning and permits differ from one to the next.",
+  "goodFitIf": [
+    "Branches hang over your roof, driveway or the sidewalk.",
+    "A hedge has grown too tall or wide and needs to come back in stages.",
+    "English ivy, Himalayan blackberry or Scotch broom is taking over a yard, lot or trail edge.",
+    "You need to know whether a tree is protected before anyone cuts it."
+  ],
   "audiences": [
     {
       "title": "Homeowners",
@@ -32,7 +39,7 @@
     },
     {
       "title": "Tree removal",
-      "body": "Removal of dead, damaged or unsuitable trees once any required permit is in place. See our [tree permit guide](/resources/winter-pruning-and-storm-prep/)."
+      "body": "Removal of dead, damaged or unsuitable trees once any required permit is in place. See our [winter pruning and tree permits guide](/resources/winter-pruning-and-storm-prep/)."
     },
     {
       "title": "Hedge reduction",
@@ -51,6 +58,31 @@
       "body": "Fallen limbs and debris cleared after winter windstorms."
     }
   ],
+  "perVisit": {
+    "caption": "What happens at each stage",
+    "rows": [
+      {
+        "task": "Site visit and bylaw check",
+        "detail": "Species and size identified, and your municipality's tree bylaw checked before any cut is planned."
+      },
+      {
+        "task": "Written scope",
+        "detail": "The planned work, any permit that may be needed and, in spring and summer, nesting-season timing."
+      },
+      {
+        "task": "Nest check",
+        "detail": "Trees and hedges checked for active nests before cutting during nesting season."
+      },
+      {
+        "task": "Work",
+        "detail": "Pruning, removal or clearing, with nearby plants and structures protected."
+      },
+      {
+        "task": "Clean-up and disposal",
+        "detail": "Wood and brush removed; invasive material kept separate and taken to an approved disposal site."
+      }
+    ]
+  },
   "process": [
     {
       "title": "Request a quote",
@@ -107,10 +139,15 @@
       ]
     }
   ],
+  "localRulesRefs": [
+    "regional-bc-wildlife-act-nests",
+    "regional-crd-invasive-disposal",
+    "regional-bc-rapr"
+  ],
   "faqs": [
     {
       "q": "Do I need a permit to remove a tree?",
-      "a": "Often, yes. Every municipality in Greater Victoria has its own rules, and protected species like Garry oak and arbutus are covered at small sizes in many places. We check before any work. See our [area pages](/areas/) for local links."
+      "a": "Often, yes. Most municipalities in Greater Victoria have a tree bylaw, and many protect native species such as Garry oak and arbutus at small sizes. The rules differ, so we check yours before any work. See our [area pages](/areas/) for local links."
     },
     {
       "q": "Will you apply for the permit?",
@@ -118,11 +155,19 @@
     },
     {
       "q": "Do you top trees?",
-      "a": "No. Topping harms trees and is prohibited under some local bylaws."
+      "a": "No. Topping harms trees, and bylaws in the region restrict it; North Saanich's tree bylaw prohibits it. See our [North Saanich page](/areas/north-saanich/)."
     },
     {
       "q": "Are your crews certified arborists?",
       "a": "Our current certifications are listed here: [CERTIFICATIONS]."
+    },
+    {
+      "q": "Can you prune or clear during nesting season?",
+      "a": "Sometimes. B.C.'s Wildlife Act protects a bird's nest while it holds birds or eggs, so in spring and summer we check for nests before cutting and plan the work around any we find."
+    },
+    {
+      "q": "What happens to the invasive plants you remove?",
+      "a": "We keep them apart from other green waste and take them to a disposal site that accepts them, following CRD guidance. Knotweed needs special handling and is not accepted at municipal yard-waste drop-offs."
     }
   ],
   "detailImages": [
