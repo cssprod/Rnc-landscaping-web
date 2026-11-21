@@ -5,7 +5,7 @@
     "description": "Call, email or send a quote request to RNC Landscaping for grounds care, landscape installation, irrigation or tree work anywhere in Greater Victoria, BC."
   },
   "h1": "Contact RNC Landscaping",
-  "lede": "The quickest way to start is the free quote form. You can also call or email.",
+  "lede": "The easiest way to start is the free quote form. You can also call or email.",
   "sections": [
     {
       "id": "details",
@@ -34,7 +34,28 @@
       "id": "quote",
       "heading": "Request a quote",
       "body": [
-        "[Get a free quote](/quote/) in four short steps. We'll get back to you."
+        "[Get a free quote](/free-quote/) using our quote form. We reply within [REPLY TIME]."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "What happens next",
+      "body": [
+        "Read [how we work](/process/) for the full steps."
+      ],
+      "items": [
+        {
+          "title": "We reply",
+          "body": "Within [REPLY TIME], with any questions about the property or the work."
+        },
+        {
+          "title": "Site visit",
+          "body": "If the job needs one, we arrange a time to see the property."
+        },
+        {
+          "title": "Written quote",
+          "body": "A written scope and schedule. The quote is free, with no obligation."
+        }
       ]
     },
     {

@@ -1,5 +1,5 @@
 {
-  "_notes": "faqs[] rendered grouped by category; also emitted as FAQPage schema.",
+  "_notes": "faqs[] rendered grouped by category; also emitted as FAQPage schema. Each FAQ has an id so other pages (home faq.ids) reference it instead of copying the text.",
   "seo": {
     "title": "Landscaping FAQ: Quotes, Permits & Scheduling | RNC",
     "description": "Answers on how quotes work, tree permits, watering rules, scheduling and what our maintenance includes across Greater Victoria. Ask us for a free quote."
@@ -8,91 +8,115 @@
   "lede": "How quotes work, local rules, scheduling and what to expect.",
   "faqs": [
     {
+      "id": "cost",
       "q": "How much does landscaping cost?",
       "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/quote/).",
       "category": "Quotes"
     },
     {
+      "id": "free-quote",
       "q": "Is the quote really free?",
       "a": "Yes. There is no charge to request or receive a quote.",
       "category": "Quotes"
     },
     {
+      "id": "quote-factors",
       "q": "What affects the price of a quote?",
       "a": "Size of the area, access, the condition of the site, materials, disposal, how often we visit and the season. Your written quote states the assumptions.",
       "category": "Quotes"
     },
     {
+      "id": "reply-time",
       "q": "How soon will I hear back?",
-      "a": "We'll get back to you after we receive your request. If it's urgent, call [PHONE].",
+      "a": "We reply within [REPLY TIME]. If it's urgent, call [PHONE].",
       "category": "Quotes"
     },
     {
+      "id": "after-request",
+      "q": "What happens after I send a request?",
+      "a": "We read it, reply within [REPLY TIME] with any questions, and arrange a site visit if the job needs one. Then you get a written quote with the scope and schedule. See [how we work](/process/).",
+      "category": "Quotes"
+    },
+    {
+      "id": "specification",
       "q": "Can you quote to our specification or tender?",
       "a": "Yes. Attach or describe it in the quote form and we'll quote to it. See [commercial](/commercial/).",
       "category": "Quotes"
     },
     {
+      "id": "tree-permits",
       "q": "Do I need a permit to cut down or prune a tree?",
-      "a": "Often, yes. Each municipality has its own tree bylaw, and many protect Garry oak, arbutus and other native species at small sizes. We check before any work. See [tree permits and winter pruning](/resources/winter-pruning-and-storm-prep/). This is general information, not legal advice.",
+      "a": "Often, yes. Most municipalities here have a tree bylaw, and many protect Garry oak, arbutus and other native species at small sizes. We check before any work. See [tree permits and winter pruning](/resources/winter-pruning-and-storm-prep/). This is general information, not legal advice.",
       "category": "Local rules"
     },
     {
+      "id": "crd-watering",
       "q": "What are the CRD watering days?",
-      "a": "Under Stage 1 (May 1 to September 30), even addresses water lawns Wednesday and Saturday, odd addresses Thursday and Sunday, 4 to 10 am or 7 to 10 pm. Drip and hand watering of gardens is allowed any day. Check the CRD site for current rules. Read our [watering guide](/resources/crd-watering-rules-guide/).",
+      "a": "From May 1 to September 30, CRD Stage 1 rules allow lawn watering on two days a week, set by your address, in the early morning or evening. Hand watering and drip irrigation of gardens are allowed any day. Our [watering guide](/resources/crd-watering-rules-guide/) has the full schedule and the link to the CRD.",
       "category": "Local rules"
     },
     {
+      "id": "invasives",
       "q": "How do you dispose of invasive plants?",
       "a": "We keep them separate from green waste and dispose of them following CRD guidance.",
       "category": "Local rules"
     },
     {
+      "id": "mowing-frequency",
       "q": "How often should a lawn be mowed?",
       "a": "In spring growth, weekly or every other week is common. Summer and winter need less. Your plan sets the frequency.",
       "category": "Scheduling"
     },
     {
+      "id": "winter-work",
       "q": "Do you work in winter?",
       "a": "Yes. Pruning, cleanups, storm debris and some installation continue through Greater Victoria's mild winters.",
       "category": "Scheduling"
     },
     {
+      "id": "be-home",
       "q": "Do I need to be home?",
       "a": "No, as long as we can reach the work area safely. Tell us about gates, pets and parking in your request.",
       "category": "Scheduling"
     },
     {
+      "id": "grounds-includes",
       "q": "What does grounds maintenance include?",
       "a": "Mowing, edging, bed care, pruning and seasonal cleanups, as listed in your scope. See [grounds maintenance](/services/grounds-maintenance/).",
       "category": "Services"
     },
     {
+      "id": "irrigation-included",
       "q": "Does landscaping include irrigation?",
       "a": "It can. We install drip or spray zones during a build, or service an existing system. See [irrigation](/services/irrigation/).",
       "category": "Services"
     },
     {
+      "id": "tree-removal",
       "q": "Do you remove trees?",
       "a": "Yes, after checking whether a permit is needed. See [tree and vegetation management](/services/tree-vegetation/).",
       "category": "Services"
     },
     {
+      "id": "areas",
       "q": "Which areas do you serve?",
       "a": "All 13 municipalities listed on our [areas page](/areas/), from Sidney to Sooke.",
       "category": "Services"
     },
     {
+      "id": "insurance",
       "q": "Are you insured and registered with WorkSafeBC?",
       "a": "Liability insurance: [LIABILITY LIMIT]. WorkSafeBC: [WORKSAFEBC STATUS]. Documents are available on request.",
       "category": "About us"
     },
     {
+      "id": "warranty",
       "q": "Do you offer a warranty?",
-      "a": "[WARRANTY]",
+      "a": "Our workmanship guarantee: [WARRANTY]. See [how to raise a concern](/process/).",
       "category": "About us"
     },
     {
+      "id": "samples",
       "q": "Are the projects and reviews on this site real?",
       "a": "Items marked Sample are examples of the work we do, not records of specific past jobs. We will replace them with real projects and reviews, shared with permission.",
       "category": "About us"

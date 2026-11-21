@@ -1,8 +1,8 @@
 {
-  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies.",
+  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies. The commitments section (A12 #5) states operational commitments only: no response-time numbers beyond [REPLY TIME], fleet sizes, client names or invented figures. Owner to confirm each before launch.",
   "seo": {
     "title": "Commercial & Strata Landscaping in Greater Victoria",
-    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a free quote and site visit."
+    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a quote and site visit."
   },
   "h1": "Commercial, strata and institutional landscaping",
   "lede": "Grounds maintenance, installation, irrigation and tree work for stratas, property managers, public and institutional buyers, and general contractors across Greater Victoria.",
@@ -33,6 +33,39 @@
         {
           "title": "General contractors and developers",
           "body": "Soft and hard landscape packages built to drawings, coordinated through your site supervisor."
+        }
+      ]
+    },
+    {
+      "id": "commitments",
+      "heading": "What you can expect",
+      "body": [
+        "These are commitments about how we work on managed sites, not results claimed for past clients."
+      ],
+      "items": [
+        {
+          "title": "A written scope before work starts",
+          "body": "Tasks for each visit, how often we come and the season covered, in a quote your council or procurement team can review."
+        },
+        {
+          "title": "One contact",
+          "body": "One person for questions, scope changes and owner or tenant concerns."
+        },
+        {
+          "title": "Visit notes",
+          "body": "After recurring visits, a short note of what was done and anything that needs a decision."
+        },
+        {
+          "title": "Issues reported in writing",
+          "body": "Problems we find, such as a damaged sprinkler line, are reported in writing before we act on anything outside the scope."
+        },
+        {
+          "title": "Work planned around occupants",
+          "body": "Start times, access and site rules agreed at a start-up meeting before the first visit."
+        },
+        {
+          "title": "A reply within [REPLY TIME]",
+          "body": "For new requests and for questions about an existing scope."
         }
       ]
     },

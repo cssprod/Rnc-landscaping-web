@@ -1,5 +1,5 @@
 {
-  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock.",
+  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock. People: only the owner, through [OWNER NAME] and [OWNER BIO]; no team grid, and no invented names, roles, bios or crew photos.",
   "seo": {
     "title": "About RNC Landscaping | Greater Victoria Landscapers",
     "description": "Meet RNC Landscaping, a local landscaping contractor serving Greater Victoria homes, stratas and businesses. Learn how we work and keep crews safe on site."
@@ -25,7 +25,7 @@
       "items": [
         {
           "title": "Say what we'll do, then do it",
-          "body": "A written scope, a clear schedule and no surprises."
+          "body": "A written scope and a clear schedule, so you see the plan before work starts."
         },
         {
           "title": "Respect the property",
@@ -37,7 +37,7 @@
         },
         {
           "title": "Be a good neighbour",
-          "body": "We keep noise, parking and debris in mind on every street we work on."
+          "body": "We plan around noise, parking and debris on the streets we work on."
         }
       ]
     },
@@ -56,10 +56,18 @@
       ]
     },
     {
+      "id": "guarantee",
+      "heading": "Our workmanship guarantee",
+      "body": [
+        "Our guarantee on workmanship: [WARRANTY]. If something we did is not right, [tell us](/contact/). [How we handle a concern](/process/) explains what happens next."
+      ]
+    },
+    {
       "id": "next",
       "heading": "Work with us",
       "body": [
-        "See [our services](/services/), browse [sample projects](/portfolio/), or [get a free quote](/quote/)."
+        "See [our services](/services/), browse [sample projects](/portfolio/), or [get a free quote](/quote/).",
+        "Read [how we work](/process/), from first request to finished job."
       ]
     }
   ]

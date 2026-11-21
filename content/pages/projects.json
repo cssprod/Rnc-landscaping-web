@@ -2,7 +2,7 @@
   "_notes": "C1 /projects/ hub. Replaces portfolio.json, which routes read as a fallback until it is removed. Lists the 16 sample projects, filterable by service and municipality (?service= / ?area= preselect). Per D6 no stock photos appear under /projects/: cards and case studies use labelled living-art illustrations until RNC supplies photos.",
   "seo": {
     "title": "Sample Landscaping Projects in Greater Victoria | RNC",
-    "description": "Sample maintenance, installation, irrigation and tree projects across Greater Victoria, each with its challenge, approach and result. Filter by service or area."
+    "description": "Sample maintenance, installation, irrigation and tree projects across Greater Victoria, each with its challenge, approach and result. Filter by service."
   },
   "h1": "Sample projects",
   "lede": "Examples of maintenance, installation, irrigation and tree work across Greater Victoria. Every project here is a labelled sample.",
