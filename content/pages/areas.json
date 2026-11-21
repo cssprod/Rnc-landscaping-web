@@ -6,21 +6,6 @@
   },
   "h1": "Areas we serve",
   "lede": "Thirteen municipalities across Greater Victoria. Each area page covers the local rules that affect yard and tree work, with a link to each rule's source.",
-  "areas": [
-    "victoria",
-    "saanich",
-    "oak-bay",
-    "esquimalt",
-    "langford",
-    "colwood",
-    "view-royal",
-    "sooke",
-    "central-saanich",
-    "north-saanich",
-    "sidney",
-    "highlands",
-    "metchosin"
-  ],
   "sections": [
     {
       "id": "rules",
