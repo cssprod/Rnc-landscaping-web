@@ -101,7 +101,7 @@ export function quoteForm(data, page) {
     ${s.fields.map((f) => field(f, 'q'))}
     <div class="step__nav" data-step-nav></div>
   </fieldset>`)}
-  <div class="quote-form__submit" data-submit-row><button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Create my email'}</button><p class="field__help">Opens your email app${has('EMAIL') ? '' : html`, addressed to ${mailLink('quote_form')}`}. Nothing is sent until you press send.</p></div>
+  <div class="quote-form__submit" data-submit-row><button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Create my email'}</button><p class="field__help">Opens your email app${has('EMAIL') ? '' : html` with the request written out. Add ${mailLink('quote_form')} as the recipient`}. Nothing is sent until you press send.</p></div>
   <div class="quote-ready" data-quote-ready hidden tabindex="-1">
     <span class="icon-tile icon-tile--success">${icon('check', { size: 24 })}</span>
     <h2>${ready.heading || 'Your email is ready to send'}</h2>

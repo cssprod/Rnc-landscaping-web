@@ -6,7 +6,7 @@
  */
 import { html, raw } from '../lib/html.mjs';
 import { site, siteJson, optionalTokens } from '../../site.config.mjs';
-import { has, val, telHref, telLink, mailLink } from '../lib/tokens.mjs';
+import { has, val, telHref, smsHref, telLink, mailLink } from '../lib/tokens.mjs';
 import { headMeta, jsonLd } from '../lib/seo.mjs';
 import { sprite, icon, logo, SERVICE_ICON } from './sprite.mjs';
 import { HEAD_SCRIPT, SPECULATION_RULES } from '../lib/head-scripts.mjs';
@@ -29,9 +29,6 @@ const serviceName = (env, slug) => {
   const s = siteJson.services.find((x) => x.slug === slug);
   return s?.navLabel || s?.name || env.data.services[slug]?.navLabel || slug;
 };
-
-/** Plain-text digits for tel:/sms: targets (only called once PHONE is known). */
-const smsHref = () => telHref().replace(/^tel:/, 'sms:');
 
 /** Header call action: a tel: link once PHONE is known; "Call [PHONE]" as plain text in showcase builds; nothing in launch (CONTRACT §3). @param {Env} env */
 function headerCall(env) {

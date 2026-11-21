@@ -63,6 +63,22 @@ const FOUNDING_RE = /\b(?:since|founded(?: in)?|established(?: in)?|est\.)\s+(?:
 const realPhone = (s) => [...s.matchAll(new RegExp(PHONE_RE.source, 'g'))].map((m) => m[0]).find((x) => !/\b555[\s.-]\d{4}\b/.test(x));
 /** A real-looking email address (reserved example domains are allowed). @param {string} s */
 const realEmail = (s) => [...s.matchAll(new RegExp(EMAIL_RE.source, 'gi'))].map((m) => m[0]).find((x) => !/@(?:[\w-]+\.)*example\.(?:com|org|net|ca)$|\.(?:test|invalid|example)$/i.test(x));
+/** The 10 NANP digits of a phone value, without a country code or extension. @param {string} s */
+const phoneDigits = (s) => s.replace(/(?:ext(?:ension)?\.?|x|#)\s*\d+\s*$/i, '').replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '');
+/**
+ * Whether text contains RNC's own value for token k, in any format: a phone in any punctuation or with a country code,
+ * an email in any letter case, other values as typed.
+ * @param {string} text @param {string} k @param {string} v
+ */
+const typesOwn = (text, k, v) => {
+  if (k === 'PHONE') {
+    const want = phoneDigits(v);
+    if (want.length !== 10) return text.includes(v);
+    return text.includes(v) || [...text.matchAll(new RegExp(PHONE_RE.source, 'g'))].some((m) => phoneDigits(m[0]) === want);
+  }
+  if (k === 'EMAIL') return text.toLowerCase().includes(v.toLowerCase());
+  return text.includes(v);
+};
 const VIRTUAL_SLOT = /^(?:proj-[a-z0-9]+(?:-[a-z0-9]+)*-art|process-hero)$/;
 
 /** @typedef {{ rule: string, path: string, message: string, toString(): string }} Failure */
@@ -202,7 +218,7 @@ function run() {
       const code = stripComments(readFileSync(join(SRC, f), 'utf8'));
       const file = `site/src/${rel}`;
       for (const t of FACT_TOKENS) if (code.includes(`[${t}]`)) fail('single-source', file, `types the business fact [${t}]: read it from siteJson (content/site.json)`);
-      for (const [k, v] of values) if (code.includes(v)) fail('single-source', file, `types the ${k} value "${v}": read it from siteJson`);
+      for (const [k, v] of values) if (typesOwn(code, k, v)) fail('single-source', file, `types the ${k} value "${v}": read it from siteJson`);
       const ph = realPhone(code.replace(/\d+(?:\.\d+)?(?:,\d+)+/g, ''));
       if (ph) fail('single-source', file, `types a phone number (${ph})`);
       const em = realEmail(code);
@@ -219,7 +235,7 @@ function run() {
         if (typeof val !== 'string' || /(^|\.)(sourceUrl|url|excerpt|sourceTitle)$/.test(path)) return;
         if (val.includes('[FOUNDED]')) fail('single-source', file, `[FOUNDED] at ${path}: the founding year appears only in JSON-LD`);
         if (FOUNDING_RE.test(val)) fail('single-source', file, `founding-year or years-in-business claim at ${path} ("${val.match(FOUNDING_RE)?.[0]}")`);
-        const own = values.filter(([, v]) => val.includes(v));
+        const own = values.filter(([k, v]) => typesOwn(val, k, v));
         for (const [k] of own) fail('single-source', file, `${k} value typed at ${path}: use [${k}]`);
         if (sourced || own.length) return;
         const ph = realPhone(val);
@@ -444,6 +460,11 @@ function stripComments(code) {
  * Depth-first walk over JSON. @param {any} v @param {(key: string, val: any, path: string) => void} fn
  * @param {string} [path] @param {string} [key]
  */
+function visit(v, fn, path = '', key = '') {
+  fn(key, v, path);
+  if (Array.isArray(v)) v.forEach((x, i) => visit(x, fn, `${path}[${i}]`, key));
+  else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) visit(x, fn, path ? `${path}.${k}` : k, k);
+}
 /**
  * Like visit(), and also tells fn whether a containing object carries a sourceUrl (a sourced third-party fact).
  * @param {any} v @param {(val: any, path: string, sourced: boolean) => void} fn @param {string} [path] @param {boolean} [sourced]
@@ -455,11 +476,6 @@ function visitSourced(v, fn, path = '', sourced = false) {
     const s = sourced || (typeof v.sourceUrl === 'string' && v.sourceUrl !== '');
     for (const [k, x] of Object.entries(v)) visitSourced(x, fn, path ? `${path}.${k}` : k, s);
   }
-}
-function visit(v, fn, path = '', key = '') {
-  fn(key, v, path);
-  if (Array.isArray(v)) v.forEach((x, i) => visit(x, fn, `${path}[${i}]`, key));
-  else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) visit(x, fn, path ? `${path}.${k}` : k, k);
 }
 
 /**

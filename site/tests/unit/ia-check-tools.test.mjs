@@ -120,6 +120,11 @@ const real = (rel) => JSON.parse(readFileSync(join(REPO, rel), 'utf8'));
 /** @param {string} root @param {string} rules */
 const content = (root, rules) => run('check-content', [`--root=${root}`, `--rules=${rules}`, '--all'], { SITE_DIST: '/nonexistent-dist' });
 
+test('the fixture content is a passing schema-v3 example #schema-v3', () => {
+  const r = content(join(SITE, 'fixtures'), 'schema-v3');
+  assert.equal(r.code, 0, r.out);
+});
+
 test('check-content validates against the v3 schemas: enums, forbidden price keys, $ amounts, slugs, link targets #schema-v3', () => {
   const p = real('content/projects/oak-bay-front-garden-renewal.json');
   const root = repo({
@@ -241,6 +246,13 @@ test('check-content lets a sourced third-party contact pass and flags a bare pho
   const sj = real('content/site.json');
   const own = content(repo({ 'content/site.json': { ...sj, tokens: { ...sj.tokens, PHONE: '250-474-3167' } }, 'content/areas/metchosin.json': { ...a, localRules: [...(a.localRules || []), rule] } }), 'single-source');
   assert.match(own.out, /metchosin\.json: \[single-source\] PHONE value typed at localRules\[\d+\]\.text: use \[PHONE\]/);
+  // ...in another format too: other punctuation, a country code, or the email in another letter case.
+  const fmt = content(repo({ 'content/site.json': { ...sj, tokens: { ...sj.tokens, PHONE: '+1 (250) 474-3167 ext 4', EMAIL: 'Trees@Metchosin.ca' } }, 'content/areas/metchosin.json': { ...a, localRules: [...(a.localRules || []), rule] } }), 'single-source');
+  assert.match(fmt.out, /metchosin\.json: \[single-source\] PHONE value typed at localRules\[\d+\]\.text: use \[PHONE\]/);
+  assert.match(fmt.out, /metchosin\.json: \[single-source\] EMAIL value typed at localRules\[\d+\]\.text: use \[EMAIL\]/);
+  // A different number in the same exchange is still a sourced third-party contact.
+  const other = content(repo({ 'content/site.json': { ...sj, tokens: { ...sj.tokens, PHONE: '250-474-3168' } }, 'content/areas/metchosin.json': { ...a, localRules: [...(a.localRules || []), rule] } }), 'single-source');
+  assert.doesNotMatch(other.out, /metchosin\.json: \[single-source\]/);
 });
 
 test('check-content compares the footer NAP after the build typographer: digit ranges and apostrophes #nap-consistency', async () => {

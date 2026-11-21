@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { siteJson, tokens, site, siteJsonPath } from '../../site.config.mjs';
-import { finalizeTokens } from '../../src/lib/tokens.mjs';
+import { finalizeTokens, e164, telHref, smsHref } from '../../src/lib/tokens.mjs';
 import { routes } from '../../src/pages/routes.mjs';
 import { testEnv } from '../helpers/env.mjs';
 
@@ -58,6 +58,22 @@ test('header, footer and JSON-LD follow site.json NAP, hours, founding year and 
     assert.ok(!f.includes('2001') && !header(h).includes('2001'), 'the founding year never shows in visible copy');
     assert.ok(h.includes('Licence TEST-1'), 'credentials band reads site.json credentials');
     assert.ok(page('/contact/').includes('Mon–Fri 8–4'), 'contact cards read site.json hours');
+  } finally { Object.assign(tokens, saved); }
+});
+
+test('a PHONE with an extension gives tel:+1…;ext= and an sms: target without it #consumers', () => {
+  const saved = { ...tokens };
+  try {
+    for (const p of ['250-555-0199 ext 2', '(250) 555-0199 x2', '250.555.0199, ext. 2', '1-250-555-0199 #2']) assert.equal(e164(p), '+12505550199', p);
+    assert.equal(e164('250-555-0199'), '+12505550199');
+    Object.assign(tokens, { PHONE: '250-555-0199 ext 2' });
+    assert.equal(telHref(), 'tel:+12505550199;ext=2');
+    assert.equal(smsHref(), 'sms:+12505550199');
+    const f = footer(page('/'));
+    assert.match(f, /href="tel:\+12505550199;ext=2"/);
+    assert.match(f, /href="sms:\+12505550199"/);
+    Object.assign(tokens, { PHONE: '250-555-0199' });
+    assert.equal(telHref(), 'tel:+12505550199');
   } finally { Object.assign(tokens, saved); }
 });
 
