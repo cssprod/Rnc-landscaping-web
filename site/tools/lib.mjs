@@ -2,7 +2,8 @@
 /** Shared helpers for the quality tools. */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-export const DIST = resolve(new URL('../dist', import.meta.url).pathname);
+/** Built site directory: SITE_DIST when set (CONTRACT §14), else site/dist. */
+export const DIST = process.env.SITE_DIST ? resolve(process.env.SITE_DIST) : resolve(new URL('../dist', import.meta.url).pathname);
 /** @param {string} [ext] */
 export function files(ext = '.html') {
   return readdirSync(DIST, { recursive: true }).map(String).filter((f) => f.endsWith(ext) && statSync(join(DIST, f)).isFile() && !f.startsWith('admin/'));

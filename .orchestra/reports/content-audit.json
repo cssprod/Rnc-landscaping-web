@@ -1,7 +1,7 @@
 {
   "generatedAt": "2026-11-21",
   "auditor": "R2 content auditor (honesty + editorial lens), W0",
-  "scope": "content/** (62 files) audited against cedar-springs-teardown-blueprint.md A12, A13, C1–C8, P0–P4; REDESIGN-PLAN v2 decisions; CONTRACT v2 hard rules; PLAN.md locked decisions.",
+  "scope": "content/** (62 files) audited against research/cedar-springs-teardown-blueprint.md A12, A13, C1–C8, P0–P4; REDESIGN-PLAN v2 decisions; CONTRACT v2 hard rules; PLAN.md locked decisions.",
   "counts": {
     "files": 62,
     "issues": 263,

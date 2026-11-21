@@ -3,7 +3,7 @@
 This is the working brief for the redesign.
 
 **Sources and documents:**
-- **Requirements** come from `research/cedar-springs-teardown-blueprint.md` (the "blueprint"; it sits at the repo root until the seed commit moves it). Section numbers below refer to it.
+- **Requirements** come from `research/cedar-springs-teardown-blueprint.md` (the "blueprint"; the seed commit moved it there from the repo root). Section numbers below refer to it.
 - **The contract** is `CONTRACT.md` v3: URLs, schemas, attributes, module names and ownership.
 - **The art direction** is in `DESIGN-DIRECTION.md`, written by the W0 synthesizer: palettes, the bento grammar, a hero concept per template, and the approved effects with their budgets.
 - **Per-stream work** is in `.orchestra/briefs/<stream>.json`. The item-by-item checklist is `.orchestra/traceability.json`.

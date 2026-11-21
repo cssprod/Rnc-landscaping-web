@@ -8,7 +8,7 @@ events:
     properties: {}
 
   quote_step_completed:
-    intent: A quote step passed validation. Shows where people drop out of the 4-step form (step 4 fires when the email is composed).
+    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use the quote_mailto_opened / quote_copied / quote_webmail_opened outcomes). A quote step passed validation (v2 4-step form)."
     properties:
       step:
         type: number
@@ -17,7 +17,7 @@ events:
         examples: [1, 2, 3, 4]
 
   quote_submitted:
-    intent: Quote form passed validation and the visitor's email app was opened with the request. Primary conversion.
+    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use quote_mailto_opened). Quote form passed validation and the visitor's email app was opened with the request."
     properties:
       service:
         type: enum
@@ -25,7 +25,7 @@ events:
         required: true
 
   call_clicked:
-    intent: A tel link was tapped. Secondary conversion; location shows which placement earned it.
+    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use call_click). A tel link was tapped."
     properties:
       location:
         type: string
@@ -33,7 +33,7 @@ events:
         examples: [header, hero, cta_band, footer, contact_page, quote_aside]
 
   email_clicked:
-    intent: A mailto link was clicked. Secondary contact signal.
+    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use email_click). A mailto link was clicked."
     properties:
       location:
         type: string
@@ -43,3 +43,54 @@ events:
   capability_statement_downloaded:
     intent: Commercial or public buyer downloaded the capability statement PDF. B2B intent signal.
     properties: {}
+
+  # ---- CONTRACT v3 §13 names (added at the seed; the v2 names above are removed by quote in W2) ----
+  quote_mailto_opened:
+    intent: The quote builder opened the visitor's email app with the composed request. Primary conversion.
+    properties:
+      service:
+        type: string
+        required: true
+        description: Service slug, or multiple, or not-sure.
+        examples: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, multiple, not-sure]
+      area:
+        type: string
+        required: true
+        description: Area slug, or other.
+        examples: [victoria, saanich, oak-bay, other]
+
+  quote_copied:
+    intent: The visitor copied the composed quote request from the ready panel.
+    properties: {}
+
+  quote_webmail_opened:
+    intent: The visitor opened the composed quote request in a webmail compose window.
+    properties:
+      provider:
+        type: enum
+        values: [gmail, outlook]
+        required: true
+
+  call_click:
+    intent: A tel link was tapped. Secondary conversion; location shows which placement earned it.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [header, sticky_bar, hero, cta_band, footer, contact_page, quote_ready, quote_aside]
+
+  sms_click:
+    intent: An sms link was tapped. Secondary conversion.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [header, sticky_bar, hero, cta_band, footer, contact_page, quote_ready, quote_aside]
+
+  email_click:
+    intent: A mailto link was clicked. Secondary contact signal.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [header, sticky_bar, hero, cta_band, footer, contact_page, quote_ready, quote_aside]

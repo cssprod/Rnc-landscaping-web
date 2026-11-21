@@ -10,7 +10,7 @@
  * Only the token names listed in CONTRACT.md are allowed here.
  */
 
-/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'PLAUSIBLE DOMAIN'} TokenName */
+/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'REPLY TIME'|'GOOGLE PROFILE'|'FOUNDED'|'PLAUSIBLE DOMAIN'} TokenName */
 
 /** @type {Record<TokenName, string|null>} */
 export const tokens = {
@@ -30,11 +30,14 @@ export const tokens = {
   MEMBERSHIPS: null,
   WARRANTY: null,
   DOMAIN: null, // bare host, e.g. "rnclandscaping.ca" (required for SITE_MODE=launch)
+  'REPLY TIME': null, // e.g. "2 business days": the reply-time promise on /free-quote/, the CTA band and the contact page
+  'GOOGLE PROFILE': null, // optional: Google Business Profile or reviews URL; unset in launch omits every link built on it
+  FOUNDED: null, // optional: four-digit year, used only as JSON-LD foundingDate (never in visible copy)
   'PLAUSIBLE DOMAIN': null, // optional: set to turn on cookieless analytics in launch builds
 };
 
 /** Tokens a launch build may leave empty (features that simply stay off). */
-export const optionalTokens = /** @type {TokenName[]} */ (['PLAUSIBLE DOMAIN']);
+export const optionalTokens = /** @type {TokenName[]} */ (['PLAUSIBLE DOMAIN', 'GOOGLE PROFILE', 'FOUNDED']);
 
 export const site = {
   name: 'RNC Landscaping',

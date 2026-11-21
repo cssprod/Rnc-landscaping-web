@@ -14,7 +14,7 @@ import { initImages, renderArt } from './src/lib/images.mjs';
 import { finalizeTokens, tok, has } from './src/lib/tokens.mjs';
 import { typographer } from './src/lib/html.mjs';
 import { routes } from './src/pages/routes.mjs';
-import { JS_FLAG } from './src/components/layout.mjs';
+import { INLINE_SCRIPTS } from './src/lib/head-scripts.mjs';
 import { site } from './site.config.mjs';
 import { generate as tokensCss, readTokens } from '../brand/build-tokens.mjs';
 
@@ -57,14 +57,14 @@ const assets = { css: `/assets/build/site.${h(css)}.css`, js: `/assets/build/mai
 writeFileSync(join(DIST, assets.css), css);
 writeFileSync(join(DIST, assets.js), js);
 
-/* ---- CSP: one policy for every path; its hash must match the inline JS flag ---- */
-const flagHash = `sha256-${createHash('sha256').update(JS_FLAG).digest('base64')}`;
+/* ---- CSP: one policy for every path; it must carry the sha256 of every frozen inline script (CONTRACT §11) ---- */
+const inlineHashes = INLINE_SCRIPTS.map((s) => `sha256-${createHash('sha256').update(s).digest('base64')}`);
 const tomlPath = join(paths.root, 'netlify.toml');
 const toml = existsSync(tomlPath) ? readFileSync(tomlPath, 'utf8') : '';
 if (!toml) issues.push('netlify.toml not found at the repository root');
 else {
   if (!/for = "\/\*"[\s\S]*?Content-Security-Policy/.test(toml)) issues.push('netlify.toml has no Content-Security-Policy header for "/*"');
-  if (!toml.includes(flagHash)) issues.push(`netlify.toml CSP is missing '${flagHash}' for the inline JS flag script`);
+  for (const hash of inlineHashes) if (!toml.includes(`'${hash}'`)) issues.push(`netlify.toml CSP is missing '${hash}' for an inline head script (src/lib/head-scripts.mjs)`);
 }
 
 /* ---- static files, fonts, brand assets ---- */
@@ -91,15 +91,20 @@ const analyticsDomain = launch && has('PLAUSIBLE DOMAIN') ? tok('PLAUSIBLE DOMAI
 const env = { launch, context, origin, data, assets, hasCapability, analyticsDomain };
 
 /* ---- pages ---- */
-const list = routes(env);
+/** CONTRACT §14 route shape (the optional fields are read defensively). @typedef {{ path: string, file: string, render: () => any, sitemap?: boolean, noindex?: boolean, showcaseOnly?: boolean }} BuildRoute */
+const list = /** @type {BuildRoute[]} */ (routes(env));
 let pageCount = 0;
 for (const r of list) {
-  const out = typographer(finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: true }));
-  if (launch && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
+  // A route whose file is not .html (e.g. _redirects) is written raw: tokens resolved as plain text, no chips, no typographer.
+  const isHtml = r.file.endsWith('.html');
+  const out = isHtml
+    ? typographer(finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: true }))
+    : finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: false });
+  if (launch && isHtml && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
   const file = join(DIST, r.file);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, out);
-  pageCount++;
+  if (isHtml) pageCount++;
 }
 
 /* ---- illustrations for slots without a photo ---- */
@@ -107,7 +112,7 @@ const art = renderArt();
 for (const a of art) writeFileSync(join(DIST, 'assets', 'art', `${a.id}.svg`), a.svg);
 
 /* ---- sitemap, robots, manifest, headers ---- */
-const indexable = list.filter((r) => r.path !== '/404.html');
+const indexable = list.filter((r) => r.path !== '/404.html' && r.file.endsWith('.html') && r.sitemap !== false && !r.noindex && !r.showcaseOnly);
 const today = new Date().toISOString().slice(0, 10);
 const smOrigin = origin || 'https://[DOMAIN]';
 writeFileSync(join(DIST, 'sitemap.xml'), finalizeTokens(`<?xml version="1.0" encoding="UTF-8"?>

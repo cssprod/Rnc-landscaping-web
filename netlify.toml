@@ -25,7 +25,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
     X-Frame-Options = "DENY"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo=' https://plausible.io; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://plausible.io; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-Oll6+m4CCBe9f8HiX1NwMDMSxA4sH6+jgiL5Tt6PPmw=' 'sha256-e/V45puEkmExhxNeRRDj63BcBJYQnr0OxJtHNZf1ofY=' https://plausible.io; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://plausible.io; form-action 'self' mailto:; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
 
 # Content-hashed CSS and JS never change at the same URL.
 [[headers]]

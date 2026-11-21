@@ -1,0 +1,21 @@
+{
+  "seed": [],
+  "w1": [
+    {
+      "owner": "build",
+      "item": "tests/site.spec.mjs lists pages from ../dist instead of SITE_DIST; import DIST from tools/lib.mjs (ia owns tests split — coordinate: ia writes the split specs, build makes lib DIST the single source)."
+    },
+    {
+      "owner": "build",
+      "item": "check-links --url-map=FILE should exit 1 when an explicitly named map file is missing."
+    },
+    {
+      "owner": "build",
+      "item": "CONTRACT §11: build must fail when any inline <script> is not byte-equal to an INLINE_SCRIPTS entry; serve.mjs must apply netlify.toml headers incl. CSP. The INLINE_SCRIPTS hash check in build.mjs is already done at seed."
+    },
+    {
+      "owner": "qa",
+      "item": "Deprecated event intents are double-quoted in event-schema.yaml; detect them with a quote-tolerant regex /^\"?Deprecated:/ or a real YAML parse."
+    }
+  ]
+}

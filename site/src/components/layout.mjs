@@ -9,9 +9,10 @@ import { has, telHref, telLink, mailLink } from '../lib/tokens.mjs';
 import { ogUrl } from '../lib/images.mjs';
 import * as schema from '../lib/schema.mjs';
 import { sprite, icon, logo, SERVICE_ICON } from './sprite.mjs';
+import { HEAD_SCRIPT, SPECULATION_RULES } from '../lib/head-scripts.mjs';
 
-/** Inline script that flags JS support before first paint (hash pinned in netlify.toml CSP). */
-export const JS_FLAG = "document.documentElement.classList.add('js')";
+/** Alias of HEAD_SCRIPT (CONTRACT §11 JS_FLAG transition), kept so W1 branches that still import it build; W2 ds-chrome deletes it. */
+export const JS_FLAG = HEAD_SCRIPT;
 
 /**
  * @typedef {{ name: string, path: string }} Crumb
@@ -141,8 +142,9 @@ ${og ? html`<meta property="og:image" content="${og}">` : ''}
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
+<script>${raw(HEAD_SCRIPT)}</script>
 <link rel="stylesheet" href="${env.assets.css}">
-<script>${raw(JS_FLAG)}</script>
+<script type="speculationrules">${raw(SPECULATION_RULES)}</script>
 <script type="module" src="${env.assets.js}"></script>
 ${env.analyticsDomain ? html`<script defer data-domain="${env.analyticsDomain}" src="https://plausible.io/js/script.js"></script>` : ''}
 ${ld.map((o) => html`<script type="application/ld+json">${raw(JSON.stringify(o).replace(/</g, '\\u003c'))}</script>`)}
