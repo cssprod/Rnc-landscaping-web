@@ -521,8 +521,9 @@ html:not(.js) .stepper, .js .filters [data-filters-submit] { display: none; }
 .stepper[hidden] { display: none; }
 .stepper li { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; height: 40px; padding: 0 10px; border-radius: var(--radius-pill); color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease), flex-grow var(--dur-base) var(--ease); }
 .stepper__t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stepper li:not(.is-current) { flex: 0 0 auto; padding: 0 7px; }
 .stepper li:not(.is-current) .stepper__t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.stepper li.is-current { flex-grow: 4; background: var(--color-bg-elevated); color: var(--color-ink); box-shadow: var(--shadow-1), 0 0 0 0.5px var(--color-line); }
+.stepper li.is-current { flex: 1 1 auto; background: var(--color-bg-elevated); color: var(--color-ink); box-shadow: var(--shadow-1), 0 0 0 0.5px var(--color-line); }
 .stepper li.is-done { color: var(--color-brand); }
 .stepper__n { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: color-mix(in srgb, currentColor 14%, transparent); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
 .stepper li.is-done .stepper__n { background: var(--color-brand); color: var(--color-brand-ink); }
