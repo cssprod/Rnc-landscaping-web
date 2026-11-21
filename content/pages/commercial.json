@@ -131,7 +131,7 @@
       "items": [
         {
           "title": "Send the request",
-          "body": "Use the [quote form](/quote/) or email [EMAIL] with your specification or drawings."
+          "body": "Use the [quote form](/free-quote/) or email [EMAIL] with your specification or drawings."
         },
         {
           "title": "Site review",
@@ -158,7 +158,7 @@
       "id": "cta",
       "heading": "Request a quote or site visit",
       "body": [
-        "[Get a free quote](/quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
+        "[Get a free quote](/free-quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
       ]
     }
   ]
