@@ -102,8 +102,9 @@ export function minifyJs(src) {
       continue;
     }
     if (WORD.test(c) || (c === '.' && /\d/.test(d || ''))) {
-      let j = i;
-      while (j < n && (WORD.test(src[j]) || (src[j] === '.' && /\d/.test(src[i])))) j++;
+      const num = /[\d.]/.test(c);
+      let j = i + 1;
+      while (j < n && (WORD.test(src[j]) || (num && src[j] === '.'))) j++;
       const w = src.slice(i, j);
       out += w;
       prev = /^[\d.]/.test(w) ? 'num' : `word:${w}`;

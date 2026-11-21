@@ -1,0 +1,1 @@
+:root{--font:"Inter Variable", "Inter Fallback", system-ui;--shadow:0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 0.5px var(--line);--empty-ish:;--json:{ "a": [1, 2], "b": "c;d" };--with-comment:a /* kept */ b;--important:1px !important;color:var(--x,red)}.a{--card-fill:var(--material-regular);background:var(--card-fill)}

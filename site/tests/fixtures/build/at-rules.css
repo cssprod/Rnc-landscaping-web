@@ -1,0 +1,26 @@
+/* Golden fixture: at-rule preludes keep their conditions; nesting and layers. */
+@layer legacy, reset ,base;
+@layer legacy {
+  @media (min-width: 40em) and (max-width: 63.99em) {
+    .a { padding: calc( 1rem + 2vw ) ; }
+  }
+  @media not all and (monochrome) { .b { color: red } }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .c { background: #fff; }
+  }
+  @supports (animation-timeline: view()) {
+    .d { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+  }
+}
+@layer reset {}
+@container card (min-width: 30em) { .e { display: grid } }
+@media print { .f { display: none !important ; } }
+@keyframes rise { from { transform: translateY(26px) scale(0.985); } to { transform: none; } }
+@font-face { font-family: "X"; src: url("/x.woff2") format("woff2"); font-weight: 400 720; }
+.g {
+  color: red;
+  & .h { color: blue; }
+  &:hover { color: green }
+}
+.i > :is(.j, .k) :not(.l) { margin: 0 }
+.m:nth-child( 2n + 1 ) { color: red }
