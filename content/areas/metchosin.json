@@ -2,14 +2,13 @@
   "slug": "metchosin",
   "name": "Metchosin",
   "seo": {
-    "title": "Landscaping & Acreage Care in Metchosin, BC | RNC",
-    "description": "Acreage upkeep, clearing, landscaping, irrigation and tree work for Metchosin properties, with a check of local tree rules first. Request a free quote."
+    "title": "Landscaping in Metchosin, BC — Acreage & Tree Work | RNC",
+    "description": "Acreage upkeep, invasive removal, tree work and irrigation for Metchosin farms, forested lots and shoreline homes, from Happy Valley to William Head."
   },
   "h1": "Landscaping and acreage care in Metchosin",
-  "intro": [
-    "Metchosin is farms, forested lots and waterfront properties, from Happy Valley to the Witty's Lagoon and William Head areas.",
-    "The District asks owners to call the Municipal Hall before removing trees, and where a stream or wetland is on or next to the property, provincial riparian rules may also apply. See [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Metchosin has 1,658 ha in the Agricultural Land Reserve, so much of the work is on farm edges, pasture and forested acreage between Happy Valley, Witty's Lagoon and William Head. Parts of the District rely on vulnerable aquifers and low water sources inside a high-to-extreme interface fire hazard setting.",
+    "Council wants continuous tree cover kept, and Garry oak, arbutus, manzanita, cascara, Pacific dogwood and western yew are on the protected list, so the Municipal Hall gets a call before any removal. On the shoreline bluffs, a 1993 hazard plan found erosion and sloughing, which is why those slopes are a development permit area."
   ],
   "neighbourhoods": [
     "Happy Valley",
@@ -22,29 +21,204 @@
     "homes on forested lots",
     "waterfront properties"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "metchosin-tree-bylaw",
+      "topic": "trees",
+      "text": "Metchosin's Tree Management Bylaw regulates tree removal because Council wants continuous tree cover kept, and the District asks owners to call the Municipal Hall (250-474-3167) before removing trees. Where a stream or wetland is on or next to the property, the B.C. riparian rules may also apply.",
+      "sourceUrl": "https://www.metchosin.ca/municipal-hall/tree-cutting-permits",
+      "sourceTitle": "Tree Cutting Permits - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "Council believes that maintaining continuous tree cover in Metchosin important to the community and the region to preserve forests, ecosystems and natural heritage.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Metchosin's Tree Management Bylaw regulates tree removal; the District asks owners to call the Municipal Hall before removing trees. Where a stream or wetland is on or next to the property, the BC Riparian Areas Regulation may also apply.",
-      "sourceUrl": "https://www.metchosin.ca/node/485",
-      "verify": true
+      "id": "metchosin-protected-species",
+      "topic": "trees",
+      "text": "Metchosin's protected trees are Garry oak, Pacific dogwood, arbutus, manzanita, cascara and western yew, and the District asks owners to call the Municipal Hall before removing any of them.",
+      "sourceUrl": "https://www.metchosin.ca/community/environment-wildlife/protected-trees",
+      "sourceTitle": "Protected Trees - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "Contact the municipal hall at 250-474-3167 before you remove any of these species.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "metchosin-tree-cover-ocp",
+      "topic": "trees",
+      "text": "Metchosin's OCP discourages cutting trees for land uses other than farming and asks Council to encourage tree preservation.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "sourceTitle": "Official Community Plan Bylaw 258, consolidated March 2026 (District of Metchosin)",
+      "sourceType": "official",
+      "excerpt": "Cutting of trees for land uses other than agricultural production is to be discouraged",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-burning",
+      "topic": "burning",
+      "text": "Metchosin allows open burning from October 1 to May 31 only (unless otherwise posted), 6 am to 6 pm, with fires out by 6 pm. Only dry leaves, tree trimmings and yard debris from the same property, under 10 cm in diameter, may be burned. Backyard piles are limited to 3 m across, at least 20 m from structures and 10 m from trees, fences and shrubs, for no more than three days in a row, with no stumps. Larger debris needs a written permit from the Metchosin Fire Department, beach fires are prohibited, and the District posts closures, so check the current status before lighting a pile.",
+      "sourceUrl": "https://www.metchosin.ca/fire-department/burning-regulation",
+      "sourceTitle": "Burning Regulations - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "Open burning is permitted from October 1st to May 31st only (unless otherwise posted).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-dpas",
+      "topic": "other",
+      "text": "Metchosin's development permit areas are the Village Centre, Shoreline Slopes, Bilston Floodplain and Centre Mountain Resort areas. A development permit is needed before subdivision or any construction or alteration of a building or structure in them, so waterfront-bluff and Bilston Creek floodplain lots need a check before building work.",
+      "sourceUrl": "https://www.metchosin.ca/municipal-hall/building-development/development-permits",
+      "sourceTitle": "Development Permits - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "required before subdivision or any construction or alteration of a building or structure on land that is located in a development permit area",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-sensitive-areas",
+      "topic": "other",
+      "text": "Metchosin's OCP protects the Sensitive Environments on its Map 4 (lakes, watercourses, riparian wetlands, marine shorelands, wildlife habitat, unique vegetation and land prone to erosion or flooding), and those designations override other land-use designations outside the ALR.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "sourceTitle": "Official Community Plan Bylaw 258, consolidated March 2026 (District of Metchosin)",
+      "sourceType": "official",
+      "excerpt": "preserve the Sensitive Environments, as identified on Map 4, including lakes, watercourses, Riparian-wetland Areas, marine shorelands, wildlife habitat, unique and attractive vegetation, lands with erosion and flooding potential",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "metchosin-shoreland-slopes",
+      "kind": "soils",
+      "text": "Metchosin's OCP designates Shoreland Slopes development permit areas because the 1993 Hazard Land Management Plan found erosion, sloughing and drainage problems on parts of the shoreline bluffs. In the Park Drive-Farhill Road area, groundwater levels have risen sharply.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "sourceTitle": "Official Community Plan Bylaw 258, consolidated March 2026 (District of Metchosin)",
+      "sourceType": "official",
+      "excerpt": "The 1993 Hazard Land Management Plan has identified areas of the Metchosin shoreland slopes as having erosion, land sloughing and drainage problems.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-alr",
+      "kind": "lot-types",
+      "text": "Metchosin has 1,658 ha (4,211 acres) in the Agricultural Land Reserve, so work here is often on farm edges, hedgerows, pasture and acreage.",
+      "sourceUrl": "https://www.metchosin.ca/sites/metchosin.ca/files/2024-09/Metchosin%20Ag%20Plan_FINAL.pdf",
+      "sourceTitle": "Metchosin Agricultural Area Plan (Final, 2024)",
+      "sourceType": "official",
+      "excerpt": "The District of Metchosin contains 1,658 ha (4,211 acres) of land in the Agricultural Land Reserve (ALR)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-wells",
+      "kind": "wells",
+      "text": "Metchosin's OCP says parts of the District rely on vulnerable aquifers and low water sources, often only marginally adequate for fire fighting, within a high-to-extreme interface fire hazard setting. Parts of the District are on CRD piped water (Juan de Fuca system), so confirm each property's supply before planning irrigation.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "sourceTitle": "Official Community Plan Bylaw 258, consolidated March 2026 (District of Metchosin)",
+      "sourceType": "official",
+      "excerpt": "Parts of Metchosin rely upon vulnerable aquifers and low water sources that are often marginally adequate for fire suppression needs",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-firesmart",
+      "kind": "other",
+      "text": "Metchosin runs a FireSmart program for its wildland-urban interface. Its tips: remove flammable bark mulch from around the home, prune lower tree branches to 2 m, and move firewood 10-30 m and propane tanks 10 m from the house.",
+      "sourceUrl": "https://www.metchosin.ca/fire-department/firesmart",
+      "sourceTitle": "FireSmart - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "Bark mulch is highly flammable. Remove bark mulch from around your home and don’t lead fire to your door.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-invasive-disposal",
+      "kind": "other",
+      "text": "Metchosin works with the CRD on invasive-species treatment, encourages private landowners to manage invasives on their land, holds an Invasive Species Week (July 1-7), and says not to compost invasive plants at home; Hartland Landfill takes them even though it does not take garden waste.",
+      "sourceUrl": "https://www.metchosin.ca/community/environment-wildlife/invasive-species",
+      "sourceTitle": "Invasive Species - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "While the landfill does not allow garden waste, invasive species are exempt and can be disposed at the landfill.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "metchosin-wildlife",
+      "kind": "other",
+      "text": "Metchosin posts reported cougar, wolf and bear sightings (for example, a reported cougar predation on Eales Road in early November 2026). Its Bear Smart advice includes picking ripe and fallen fruit daily and keeping meat and cooked food out of compost.",
+      "sourceUrl": "https://www.metchosin.ca/community/environment-wildlife/wildlife-resources",
+      "sourceTitle": "Wildlife Resources - District of Metchosin",
+      "sourceType": "official",
+      "excerpt": "The Municipal Office posts reported cougar sightings for our residents",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "metchosin-trail-edge-invasive-removal"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Kept a Happy Valley burn pile to dry trimmings under 10 cm, 20 m from the barn, and lit it only after checking the District's posted burning status.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "tree-vegetation",
+    "grounds-maintenance"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Acreage and farm property upkeep: mowing, hedges and fence lines.",
-    "landscape-installation": "Planting and simple hardscape for rural homes.",
-    "irrigation": "Drip and spray systems for gardens on wells or the regional supply.",
-    "tree-vegetation": "Invasive removal, brush clearing and tree work after a check with the District."
+    "grounds-maintenance": "Fence lines, pasture edges and hedgerows on Metchosin acreage need regular mowing and trimming through the growing season.",
+    "landscape-installation": "New planting near the house follows the District's FireSmart tips, which start with no bark mulch against the walls.",
+    "irrigation": "With some Metchosin lots on wells and others on the Juan de Fuca system, each property's supply is confirmed before a system is designed.",
+    "tree-vegetation": "Invasive plants from a Metchosin clearing go to Hartland Landfill rather than a home compost, as the District advises."
   },
+  "neighbours": [
+    "colwood",
+    "langford",
+    "sooke"
+  ],
   "featuredProject": "metchosin-trail-edge-invasive-removal",
-  "image": "area-metchosin"
+  "image": "area-metchosin",
+  "intro": [
+    "Metchosin has 1,658 ha in the Agricultural Land Reserve, so much of the work is on farm edges, pasture and forested acreage between Happy Valley, Witty's Lagoon and William Head. Parts of the District rely on vulnerable aquifers and low water sources inside a high-to-extreme interface fire hazard setting.",
+    "Council wants continuous tree cover kept, and Garry oak, arbutus, manzanita, cascara, Pacific dogwood and western yew are on the protected list, so the Municipal Hall gets a call before any removal. On the shoreline bluffs, a 1993 hazard plan found erosion and sloughing, which is why those slopes are a development permit area.",
+    "Ivy, blackberry and brush come under [tree and vegetation management](/services/tree-vegetation/), pasture, hedgerow and fence-line upkeep under [grounds maintenance](/services/grounds-maintenance/), and any Metchosin property can be assessed through a [free quote](/free-quote/)."
+  ],
+  "localNotes": [
+    {
+      "text": "Metchosin's protected trees are Garry oak, Pacific dogwood, arbutus, manzanita, cascara and western yew, and the District asks owners to call the Municipal Hall before removing any of them.",
+      "sourceUrl": "https://www.metchosin.ca/community/environment-wildlife/protected-trees",
+      "verify": true
+    },
+    {
+      "text": "Metchosin allows open burning from October 1 to May 31 only (unless otherwise posted), 6 am to 6 pm, with fires out by 6 pm. Only dry leaves, tree trimmings and yard debris from the same property, under 10 cm in diameter, may be burned. Backyard piles are limited to 3 m across, at least 20 m from structures and 10 m from trees, fences and shrubs, for no more than three days in a row, with no stumps. Larger debris needs a written permit from the Metchosin Fire Department, beach fires are prohibited, and the District posts closures, so check the current status before lighting a pile.",
+      "sourceUrl": "https://www.metchosin.ca/fire-department/burning-regulation",
+      "verify": true
+    },
+    {
+      "text": "Metchosin's OCP says parts of the District rely on vulnerable aquifers and low water sources, often only marginally adequate for fire fighting, within a high-to-extreme interface fire hazard setting. Parts of the District are on CRD piped water (Juan de Fuca system), so confirm each property's supply before planning irrigation.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "verify": true
+    },
+    {
+      "text": "Metchosin's OCP designates Shoreland Slopes development permit areas because the 1993 Hazard Land Management Plan found erosion, sloughing and drainage problems on parts of the shoreline bluffs. In the Park Drive-Farhill Road area, groundwater levels have risen sharply.",
+      "sourceUrl": "https://www.metchosin.ca/sites/7/files/2026-04/258OCP_ConMarch2026_Optimized.pdf",
+      "verify": true
+    }
+  ]
 }

@@ -2,14 +2,13 @@
   "slug": "langford",
   "name": "Langford",
   "seo": {
-    "title": "Landscaping in Langford, BC | RNC Landscaping",
-    "description": "Landscape installation, grounds care, irrigation and tree work for Langford homes, stratas and new builds, from Bear Mountain to Happy Valley. Free quote."
+    "title": "Landscaping in Langford, BC — New Builds & Irrigation | RNC",
+    "description": "Landscape installation, irrigation, grounds care and tree work for Langford new builds, stratas and retail sites, from Westhills to Bear Mountain."
   },
   "h1": "Landscaping in Langford, BC",
-  "intro": [
-    "Langford is growing fast. We work on new subdivisions in Westhills and Happy Valley, hillside homes on Bear Mountain, townhouse stratas and retail centres, and new-build sites that need landscape installed to drawings.",
-    "Langford regulates tree and vegetation removal in development permit areas such as steep slopes, sensitive ecosystems and land near lakes and streams, and its Tree Protection Bylaw applies across the city. See [commercial and contractor work](/commercial/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Langford is building fast, from Westhills and Happy Valley to hillside homes on Bear Mountain, and the City's advisories list active blasting notices near new development. Zoning asks for every unbuilt part of a lot to be landscaped and, in multi-family and commercial zones, watered by an underground automatic system.",
+    "Trees are protected across the city from 20 cm across, and most cutting permits need a certified arborist's report. Near Langford's lakes and streams, the riparian permit area reaches 45 m from the high-water mark."
   ],
   "neighbourhoods": [
     "Bear Mountain",
@@ -29,29 +28,252 @@
     "commercial and retail centres",
     "new-build sites needing landscape installation"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "langford-tree-bylaw-2269",
+      "topic": "trees",
+      "text": "Langford regulates tree cutting on private property under Tree Protection Bylaw 2269. In most cases the City needs a certified arborist's report before it issues a Tree Cutting Permit, and it may also ask for a Registered Professional Biologist's report near lakes, streams and sensitive ecosystems.",
+      "sourceUrl": "https://langford.ca/residents/resident-resources/tree-removal/",
+      "sourceTitle": "Tree Removal - City of Langford",
+      "sourceType": "official",
+      "excerpt": "In most cases the City will require a report from a certified arborist before issuing a Tree Cutting Permit.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Langford's Tree Protection Bylaw applies across the city. Removing a protected tree on private property needs a Tree Permit (or a Development Permit when part of development); work in designated development permit areas is also regulated, and Parks authorizes all removals on public land and boulevards.",
-      "sourceUrl": "https://www.langford.ca/residents/resident-resources/tree-removal/",
-      "verify": true
+      "id": "langford-protected-20cm",
+      "topic": "trees",
+      "text": "Langford's Tree Protection Bylaw applies across the city to any tree at least 20 cm in diameter measured 1.4 m above the base. It also covers trees planted under a development or tree cutting permit, trees on City land, trees protected by a covenant, and trees showing evidence of nesting or use by raptors, osprey or a heron colony.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2024/11/Tree-Bylaw-FAQs.pdf",
+      "sourceTitle": "Langford Tree Protection Bylaw - Frequently Asked Questions (Nov 2024)",
+      "sourceType": "official",
+      "excerpt": "A diameter of at least 20cm, measured 1.4m above the base",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "langford-pruning-bap",
+      "topic": "trees",
+      "text": "In Langford, pruning needs no permit when it follows Best Arboriculture Practices, for example not removing more than 25% of a tree's live foliage. Topping is restricted in most circumstances.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2024/11/Tree-Bylaw-FAQs.pdf",
+      "sourceTitle": "Langford Tree Protection Bylaw - Frequently Asked Questions (Nov 2024)",
+      "sourceType": "official",
+      "excerpt": "Examples of BAP include not removing more than 25% of the tree’s live foliage and restricts topping of a tree in most circumstances.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-invasive-exempt",
+      "topic": "trees",
+      "text": "Langford's tree bylaw exempts cutting a protected tree species that is a regulated invasive plant, or an unregulated invasive plant of concern declared by the Province or the Invasive Species Council of BC.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2024/11/Tree-Bylaw-FAQs.pdf",
+      "sourceTitle": "Langford Tree Protection Bylaw - Frequently Asked Questions (Nov 2024)",
+      "sourceType": "official",
+      "excerpt": "Cutting or Removal of a Protected Tree species that is a regulated invasive plant or an unregulated invasive plant of concern in British Columbia",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-tree-replacement",
+      "topic": "trees",
+      "text": "A protected tree removed in Langford must be replaced, with a refundable deposit for each replacement tree: half is returned once the tree is planted and the rest a year later if it is still healthy.",
+      "sourceUrl": "https://langford.ca/residents/resident-resources/tree-removal/",
+      "sourceTitle": "Tree Removal - City of Langford",
+      "sourceType": "official",
+      "excerpt": "Fifty percent of the deposit will be returned once the tree is planted and the full deposit will be returned a year after planting if the tree is still in good health.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-env-hazard-dpa",
+      "topic": "other",
+      "text": "Langford's Environmental Protection & Hazard Area development permit guidelines (June 2026) cover riparian zones, sensitive ecosystems, the 200-year floodplain, steep slopes, drainage-concern areas and interface fire hazard areas. Inside an environmental or hazard area, land may not be altered (site clearing, tree or vegetation removal, blasting or landscaping) without a development permit unless an exemption applies.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "sourceTitle": "Environmental Protection & Hazard Area Development Permit Area Guidelines (City of Langford, June 2026)",
+      "sourceType": "official",
+      "excerpt": "Land must not be altered (including site clearing, tree/vegetation removal, blasting, and/or landscaping) when it is within an area designated for:",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-riparian-45m",
+      "topic": "other",
+      "text": "Langford's riparian development permit area extends 45 m from the high-water mark of every watercourse, mapped or not. Disturbance inside it needs a development permit or an exemption, and the usual minimum setback is 30 m from the high-water mark, backed by a QEP assessment under the provincial riparian regulation.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "sourceTitle": "Environmental Protection & Hazard Area Development Permit Area Guidelines (City of Langford, June 2026)",
+      "sourceType": "official",
+      "excerpt": "The DPA is measured as 45m from the high-water mark of a watercourse. Disturbance within this area is prohibited unless authorized by a DP or DP exemption.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-dpa-invasive-handtools",
+      "topic": "invasives",
+      "text": "In Langford's riparian and sensitive-ecosystem permit areas, ecological restoration (planting native vegetation or removing non-native or invasive vegetation with small hand tools) is exempt from a development permit, though the City may ask for a disposal, safety and erosion-control plan.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "sourceTitle": "Environmental Protection & Hazard Area Development Permit Area Guidelines (City of Langford, June 2026)",
+      "sourceType": "official",
+      "excerpt": "or removing non-native or invasive vegetation using small hand tools.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-interface-fire-dpa",
+      "topic": "other",
+      "text": "Langford maps Interface Fire Hazard development permit areas (Map 16, OCP Bylaw 2200). Removing trees or vegetation there is exempt from a development permit only if no other environmental or hazard permit area applies, and lands rated Moderate or Low on the map are exempt.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "sourceTitle": "Environmental Protection & Hazard Area Development Permit Area Guidelines (City of Langford, June 2026)",
+      "sourceType": "official",
+      "excerpt": "For the removal of trees or vegetation, if no other Environmental Protection or Hazardous Area Development Permit Areas apply;",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-community-standards",
+      "topic": "other",
+      "text": "Langford's Community Standards Bylaw 2255 (adopted May 19, 2026) defines 'unsightly' to include grass over 30 cm and noxious weeds, and requires owners and occupiers to make reasonable efforts to eradicate noxious weeds on their property.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/05/Community-Standards-Bylaw-No.-2255-2026-Online-1.pdf",
+      "sourceTitle": "Community Standards Bylaw 2255, 2026 (City of Langford)",
+      "sourceType": "official",
+      "excerpt": "includes the accumulation of Waste or other materials, overgrown grass over 30 centimetres, Noxious Weeds,",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-boulevard-maintenance",
+      "topic": "other",
+      "text": "Langford owners and occupiers must keep the boulevard next to their property free of noxious weeds and waste, with grass mowed to 30 cm or less. They must also keep boulevard landscaping clear of sight lines and watered within CRD watering rules, unless the City waters it.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/05/Community-Standards-Bylaw-No.-2255-2026-Online-1.pdf",
+      "sourceTitle": "Community Standards Bylaw 2255, 2026 (City of Langford)",
+      "sourceType": "official",
+      "excerpt": "keep grass within the Boulevard mowed or trimmed to a height of not more than 30 centimetres;",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-construction-hours",
+      "topic": "other",
+      "text": "Langford's Community Standards Bylaw counts grading and landscaping as construction. Exterior construction and site preparation or grading are allowed Monday to Friday 7 am-7 pm and Saturday 9 am-5 pm, and not on Sundays or statutory holidays without a Noise Permit. Rock breaking, drilling, crushing and blasting are limited to weekdays 8 am-5 pm.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/05/Community-Standards-Bylaw-No.-2255-2026-Online-1.pdf",
+      "sourceTitle": "Community Standards Bylaw 2255, 2026 (City of Langford)",
+      "sourceType": "official",
+      "excerpt": "activities ancillary to that construction, demolition, or reconstruction, such as grading, landscaping, or maintenance",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-landscape-standards",
+      "topic": "other",
+      "text": "For new development, Langford requires landscape and irrigation plans for boulevards, parks and other public land to be approved by Parks before work starts (Schedule 14, Subdivision and Development Servicing Bylaw 1000). Irrigation plans must come from a certified irrigation designer (IIABC or IA), and topsoil must meet the BCSLA/BCNLA Landscape Standard. Development permit landscape plans also follow Zoning Bylaw 300 s.3.21 and the City Landscape Policy.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2023/04/Bylaw-1000-Web-VersionConsolidated-to-20240509.pdf",
+      "sourceTitle": "Subdivision and Development Servicing Bylaw 1000, consolidated to 2024-05-09 (City of Langford)",
+      "sourceType": "official",
+      "excerpt": "Irrigation plans must be designed by a certified irrigation designer – turf/commercial classification as certified by IIABC or IA.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-zoning-landscaping",
+      "topic": "other",
+      "text": "Langford's Zoning Bylaw 300 says required landscape areas should keep existing trees and native vegetation (other than invasives), and all unbuilt, unparked parts of a lot must be landscaped. In multi-family, commercial, industrial and institutional zones, planted areas need an underground automatic irrigation system. Front-yard fences are limited to 1.2 m, and side and rear fences on houses and townhouses to 1.8 m.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2023/04/Zoning-Bylaw-20240415-1.pdf",
+      "sourceTitle": "Zoning Bylaw 300 (City of Langford)",
+      "sourceType": "official",
+      "excerpt": "All planted areas (trees, shrubs, groundcover, lawn, raised beds and planters in a landscape and screening area must be serviced and maintained by an underground automatic irrigation system.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "langford-burning-half-acre",
+      "topic": "burning",
+      "text": "In Langford, only individually owned residential lots of 2,023 m2 (0.5 acre) or more may burn, with a permit, in two periods: November 1-30 and March 15-April 15, not on long weekends. Burning runs sunrise to sunset, only leaves and tree trimmings may be burned, piles are limited to 1.5 m by 1.5 m, and land-clearing or construction debris may never be burned.",
+      "sourceUrl": "https://langford.ca/residents/public-health-and-safety/fire-rescue/",
+      "sourceTitle": "Fire Rescue - City of Langford",
+      "sourceType": "official",
+      "excerpt": "The first is between November 1 and November 30 and the second is between March 15 and April 15 of any calendar year (inclusive).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "langford-rock-blasting",
+      "kind": "other",
+      "text": "Langford's public advisories have a dedicated blasting category. In November 2026 it listed current blasting notices for 890 Walfred Road, 721 Treanor Avenue and 3003 Irwin Road (Westhills), so new-build yards near development sites can sit next to active rock work.",
+      "sourceUrl": "https://langford.ca/advisories/",
+      "sourceTitle": "Advisories - City of Langford",
+      "sourceType": "official",
+      "excerpt": "Find all of the latest blasting, infrastructure, parks and other advisories here.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "langford-townhouse-landscape-package"
+    },
+    {
+      "kind": "project",
+      "project": "langford-retail-centre-irrigation-repair"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Set a Happy Valley townhouse's new lawn zones to its CRD watering days and flagged the boulevard planting the owners must keep watered under the City's standards bylaw.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "landscape-installation",
+    "irrigation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Recurring care for newer subdivisions and townhouse stratas, including young planting.",
-    "landscape-installation": "New-build landscaping for homeowners and general contractors, from grading to sod.",
-    "irrigation": "Irrigation for new lawns and retail planters, set to CRD watering days.",
-    "tree-vegetation": "Tree work on hillside and lakeside lots, with permit areas checked first."
+    "grounds-maintenance": "Langford's Community Standards Bylaw treats grass over 30 cm and noxious weeds as unsightly, so rental and vacant lots need regular mowing.",
+    "landscape-installation": "Landscaping counts as construction under the City's noise rules, so install work runs 7 am to 7 pm on weekdays and 9 to 5 on Saturdays.",
+    "irrigation": "Planted areas in Langford's multi-family and commercial zones must be served by an underground automatic system, and public-land plans need a certified irrigation designer.",
+    "tree-vegetation": "Pruning that follows Best Arboriculture Practices needs no permit in Langford, but removing a protected tree means a replacement and a deposit."
   },
+  "neighbours": [
+    "view-royal",
+    "colwood",
+    "highlands",
+    "metchosin"
+  ],
   "featuredProject": "langford-townhouse-landscape-package",
-  "image": "area-langford"
+  "image": "area-langford",
+  "intro": [
+    "Langford is building fast, from Westhills and Happy Valley to hillside homes on Bear Mountain, and the City's advisories list active blasting notices near new development. Zoning asks for every unbuilt part of a lot to be landscaped and, in multi-family and commercial zones, watered by an underground automatic system.",
+    "Trees are protected across the city from 20 cm across, and most cutting permits need a certified arborist's report. Near Langford's lakes and streams, the riparian permit area reaches 45 m from the high-water mark.",
+    "New-build yards and contractor packages fit [landscape installation](/services/landscape-installation/), planter and lawn systems fit [irrigation](/services/irrigation/), and you can [get a free quote](/free-quote/) for a Langford site."
+  ],
+  "localNotes": [
+    {
+      "text": "Langford's Tree Protection Bylaw applies across the city to any tree at least 20 cm in diameter measured 1.4 m above the base. It also covers trees planted under a development or tree cutting permit, trees on City land, trees protected by a covenant, and trees showing evidence of nesting or use by raptors, osprey or a heron colony.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2024/11/Tree-Bylaw-FAQs.pdf",
+      "verify": true
+    },
+    {
+      "text": "Langford's riparian development permit area extends 45 m from the high-water mark of every watercourse, mapped or not. Disturbance inside it needs a development permit or an exemption, and the usual minimum setback is 30 m from the high-water mark, backed by a QEP assessment under the provincial riparian regulation.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "verify": true
+    },
+    {
+      "text": "Langford's Community Standards Bylaw counts grading and landscaping as construction. Exterior construction and site preparation or grading are allowed Monday to Friday 7 am-7 pm and Saturday 9 am-5 pm, and not on Sundays or statutory holidays without a Noise Permit. Rock breaking, drilling, crushing and blasting are limited to weekdays 8 am-5 pm.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/05/Community-Standards-Bylaw-No.-2255-2026-Online-1.pdf",
+      "verify": true
+    },
+    {
+      "text": "Langford's Zoning Bylaw 300 says required landscape areas should keep existing trees and native vegetation (other than invasives), and all unbuilt, unparked parts of a lot must be landscaped. In multi-family, commercial, industrial and institutional zones, planted areas need an underground automatic irrigation system. Front-yard fences are limited to 1.2 m, and side and rear fences on houses and townhouses to 1.8 m.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2023/04/Zoning-Bylaw-20240415-1.pdf",
+      "verify": true
+    }
+  ]
 }

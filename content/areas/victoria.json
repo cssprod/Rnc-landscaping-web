@@ -2,14 +2,13 @@
   "slug": "victoria",
   "name": "Victoria",
   "seo": {
-    "title": "Landscaping Services in Victoria, BC | RNC Landscaping",
-    "description": "Landscaping, grounds care, irrigation and tree work for Victoria homes and stratas, from James Bay to Fernwood, with tree bylaw checks. Get a free quote."
+    "title": "Landscaping in Victoria, BC — Gardens & Tree Care | RNC",
+    "description": "Garden builds, tree care, irrigation and upkeep for Victoria homes and stratas, planned around the City's tree bylaw and boulevard guidelines."
   },
   "h1": "Landscaping in Victoria, BC",
-  "intro": [
-    "Victoria lots range from heritage gardens in Rockland to small condo courtyards downtown. We look after character homes, townhouse and apartment stratas, and commercial frontages across the city.",
-    "Many Victoria trees are protected, including Garry oak and arbutus at small sizes, and trees on steep slopes or near watercourses. We check the City's bylaw before we prune or remove, and before digging near a root zone. Browse [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Victoria lots run from heritage gardens in Rockland and Fairfield to strata courtyards downtown and homes along the Gorge Waterway. Many hold trees the City protects: any tree over 30 cm across, and Garry oak, arbutus, Pacific yew and Pacific dogwood once they pass 50 cm tall.",
+    "Boulevards have their own guidelines in the city, and in-ground irrigation is not allowed on them, so sprinkler zones belong on the yard side of the property line. On Gorge and Victoria Arm lots, the first 7 m from the high-water mark stays natural and free of chemical pesticides and fertilizers."
   ],
   "neighbourhoods": [
     "James Bay",
@@ -33,29 +32,205 @@
     "downtown commercial and mixed-use frontages",
     "townhouse stratas"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "vic-tree-30cm",
+      "topic": "trees",
+      "text": "Victoria's Tree Protection Bylaw protects trees on private property with a diameter over 30 cm, and hedges that contain any single stem over 30 cm in diameter. Diameter is measured at breast height, 1.4 m above grade.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
+      "sourceType": "official",
+      "excerpt": "A hedge that contains any single stem with a diameter over 30 cm",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Victoria's Tree Protection Bylaw protects private trees over 30 cm diameter at breast height, hedges with any stem over 30 cm, Garry oak, arbutus, Pacific yew and Pacific dogwood over 50 cm tall, replacement trees, and trees on steep slopes or near watercourses. A permit may be needed to prune, remove or work in the root zone of a protected tree.",
-      "sourceUrl": "https://www.victoria.ca/node/162",
-      "verify": true
+      "id": "vic-tree-slope-watercourse",
+      "topic": "trees",
+      "text": "In Victoria a tree of any size is protected if it grows on a slope steeper than 33 per cent over 10 metres, or within 15 metres of the natural boundary of a watercourse.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
+      "sourceType": "official",
+      "excerpt": "A tree of any size that is within 15 metres of the natural boundary of a watercourse",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "vic-tree-native-height",
+      "topic": "trees",
+      "text": "Victoria protects four native species, Garry oak, arbutus, Pacific yew and Pacific dogwood, once they are over 50 cm tall. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
+      "sourceType": "official",
+      "excerpt": "Garry Oak (Quercus garryana), Arbutus (Arbutus menziesii), Pacific Yew (Taxus brevifolia) or Pacific Dogwood (Cornus nuttallii) over 50 cm in height measured above natural grade",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-tree-pruning-permit",
+      "topic": "trees",
+      "text": "In Victoria, pruning a protected tree needs a permit only if you cut branches over 10 cm in diameter or remove more than 25% of its live foliage and bud-bearing branches. Lighter pruning to good arboricultural practice needs no permit.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
+      "sourceType": "official",
+      "excerpt": "Branches with a diameter >10 cm … More than 25% of the total live foliage and bud bearing branches",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-tree-replacement",
+      "topic": "trees",
+      "text": "If you remove a protected tree in Victoria, you must plant a replacement: one large or medium tree, or two small-species trees. The City holds a refundable deposit until the replacement has survived a year.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
+      "sourceType": "official",
+      "excerpt": "If you remove a protected tree, you will be required to replace it.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-tree-permit-scope",
+      "topic": "trees",
+      "text": "Victoria's Tree Protection Bylaw applies to trees on private property. You may need a permit to prune or remove a protected tree, or to work in its protected root zone, for example when digging for a patio, wall or irrigation line. Questions go to treepermits@victoria.ca.",
+      "sourceUrl": "https://www.victoria.ca/parks-recreation/trees-urban-forest/tree-protection-bylaw",
+      "sourceTitle": "Tree Protection Bylaw | City of Victoria",
+      "sourceType": "official",
+      "excerpt": "If you would like to prune, remove or work in the protected root zone of a bylaw-protected tree, a permit may be required.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-boulevard-gardens",
+      "topic": "other",
+      "text": "Victoria boulevard gardens need no pre-approval, but owners must follow the City's Boulevard Gardening Guidelines, register the garden, and make a BC One Call before digging. Paving over or graveling a boulevard counts as an alteration and is not permitted.",
+      "sourceUrl": "https://www.victoria.ca/parks-recreation/growing-city/community-gardening",
+      "sourceTitle": "Community Gardening: Boulevard Gardens | City of Victoria",
+      "sourceType": "official",
+      "excerpt": "Paving over, laying down gravel or similar activities are considered alterations to the boulevard and are not permitted.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-boulevard-no-irrigation",
+      "topic": "other",
+      "text": "Victoria's Boulevard Gardening Guidelines rule out permanent installations such as in-ground irrigation on the boulevard. They also say: dig with hand tools only, contact Parks at least 10 days before digging, keep stones or gravel to 10% of the boulevard, plant no trees, and keep plants under 1 m where sightlines matter (60 cm near intersections and driveways).",
+      "sourceUrl": "https://www.victoria.ca/media/file/boulevard-gardening-guidelines",
+      "sourceTitle": "Boulevard Gardening Guidelines (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "Permanent installations such as in-ground irrigation systems and permanent structures and ornaments are not allowed",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-gorge-guidelines",
+      "topic": "other",
+      "text": "On Victoria lots along the Gorge Waterway and Victoria Arm, Schedule 2K of the Victoria 2050 OCP keeps a 7 m strip from the high-water mark natural. Removing native trees, shrubs or forest debris there is prohibited, with narrow exceptions. Chemical pesticides and fertilizers must not be used, and fill or seawalls are allowed only where needed to stop erosion.",
+      "sourceUrl": "https://www.victoria.ca/media/file/victoria-arm-gorge-waterway-guidelines-2025",
+      "sourceTitle": "Victoria Arm - Gorge Waterway Design Guidelines, Victoria 2050 OCP Schedule 2K (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "The removal of native trees, shrubs and forest debris within a strip measured 7 metres perpendicular from the high water mark is prohibited",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-pesticide-bylaw",
+      "topic": "other",
+      "text": "Victoria's Pesticide Use Reduction Bylaw (07-094) bans non-essential pesticide use to maintain trees, shrubs, flowers, ornamental plants and turf on private and public land. Other pesticide use for that purpose needs a City permit. Listed low-risk pesticides and designated invasive species are among the exemptions.",
+      "sourceUrl": "https://www.victoria.ca/media/file/pesticide-use-reduction-bylaw-07-094-consolidated",
+      "sourceTitle": "Pesticide Use Reduction Bylaw 07-094, consolidated May 22, 2019 (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "A person must not apply or otherwise use pesticides on public land or private land, for the purpose of maintaining outdoor trees, shrubs, flowers, or other ornamental plants",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vic-leafblower-hours",
+      "topic": "other",
+      "text": "In residential areas, Victoria's Noise Bylaw allows leaf blowers only from 9 am to 8 pm on weekdays and 9 am to 5 pm on weekends and holidays. They must also stay under 65 dBA measured at 15.2 m.",
+      "sourceUrl": "https://www.victoria.ca/media/file/noise-bylaw-03-012",
+      "sourceTitle": "Noise Bylaw 03-012, consolidated February 1, 2015 (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "between 9:00 a.m. and 8:00 p.m. on a weekday, or (ii) between 9:00 a.m. and 5:00 p.m. on a Saturday, Sunday or holiday",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "vic-salt-spray",
+      "kind": "salt-spray",
+      "text": "Salt spray is a garden factor near Victoria's shoreline: in a UBC Botanical Garden forum thread, a Victoria gardener living a block from the water reports plants and trees scorched by it every year. Seaside beds there do better with salt-tolerant plants.",
+      "sourceUrl": "https://forums.botanicalgarden.ubc.ca/threads/oceanfront-plants.73692/",
+      "sourceTitle": "Oceanfront Plants (UBC Botanical Garden forums, Victoria gardener thread)",
+      "sourceType": "secondary",
+      "excerpt": "plants and trees become fried every year from the salt spray",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-invasives",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "fernwood-strata-courtyard-planting"
+    },
+    {
+      "kind": "project",
+      "project": "rockland-spring-start-up-and-repair"
+    },
+    {
+      "kind": "job-note",
+      "service": "landscape-installation",
+      "text": "Replanted a James Bay boulevard garden with hand tools only, keeping plants under 60 cm beside the driveway and stones well below a tenth of the strip.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "landscape-installation",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Weekly and every-other-week care for compact city lawns, boulevard-facing beds and strata courtyards.",
-    "landscape-installation": "Planting plans for tight city lots and shaded courtyards, built around protected trees.",
-    "irrigation": "Controllers set to the CRD lawn days for your address, including a complex's street address for stratas.",
-    "tree-vegetation": "Pruning and removals with a check of Victoria's Tree Protection Bylaw first."
+    "grounds-maintenance": "Compact city lawns and strata courtyards need regular care, and leaf blowers in Victoria's residential areas may run only within the Noise Bylaw's hours.",
+    "landscape-installation": "New beds and patios on tight Victoria lots have to respect the root zones of trees the City protects, so the layout starts from those trees.",
+    "irrigation": "Victoria boulevards cannot take in-ground irrigation, so systems are laid out to water the yard side of the property line.",
+    "tree-vegetation": "Pruning a protected tree in the city needs a permit only for cuts over 10 cm or more than a quarter of the live foliage, so the scope is settled before work begins."
   },
+  "neighbours": [
+    "oak-bay",
+    "saanich",
+    "esquimalt"
+  ],
   "featuredProject": "fernwood-strata-courtyard-planting",
-  "image": "area-victoria"
+  "image": "area-victoria",
+  "intro": [
+    "Victoria lots run from heritage gardens in Rockland and Fairfield to strata courtyards downtown and homes along the Gorge Waterway. Many hold trees the City protects: any tree over 30 cm across, and Garry oak, arbutus, Pacific yew and Pacific dogwood once they pass 50 cm tall.",
+    "Boulevards have their own guidelines in the city, and in-ground irrigation is not allowed on them, so sprinkler zones belong on the yard side of the property line. On Gorge and Victoria Arm lots, the first 7 m from the high-water mark stays natural and free of chemical pesticides and fertilizers.",
+    "For a courtyard or front garden in a city neighbourhood, start with [landscape installation](/services/landscape-installation/); for work near a protected oak or arbutus, see [tree and vegetation management](/services/tree-vegetation/), or [ask for a free quote](/free-quote/) for your Victoria address."
+  ],
+  "localNotes": [
+    {
+      "text": "Victoria's Tree Protection Bylaw protects trees on private property with a diameter over 30 cm, and hedges that contain any single stem over 30 cm in diameter. Diameter is measured at breast height, 1.4 m above grade.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "verify": true
+    },
+    {
+      "text": "Victoria protects four native species, Garry oak, arbutus, Pacific yew and Pacific dogwood, once they are over 50 cm tall. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "verify": true
+    },
+    {
+      "text": "Victoria's Boulevard Gardening Guidelines rule out permanent installations such as in-ground irrigation on the boulevard. They also say: dig with hand tools only, contact Parks at least 10 days before digging, keep stones or gravel to 10% of the boulevard, plant no trees, and keep plants under 1 m where sightlines matter (60 cm near intersections and driveways).",
+      "sourceUrl": "https://www.victoria.ca/media/file/boulevard-gardening-guidelines",
+      "verify": true
+    },
+    {
+      "text": "On Victoria lots along the Gorge Waterway and Victoria Arm, Schedule 2K of the Victoria 2050 OCP keeps a 7 m strip from the high-water mark natural. Removing native trees, shrubs or forest debris there is prohibited, with narrow exceptions. Chemical pesticides and fertilizers must not be used, and fill or seawalls are allowed only where needed to stop erosion.",
+      "sourceUrl": "https://www.victoria.ca/media/file/victoria-arm-gorge-waterway-guidelines-2025",
+      "verify": true
+    }
+  ]
 }

@@ -2,14 +2,13 @@
   "slug": "sooke",
   "name": "Sooke",
   "seo": {
-    "title": "Landscaping & Property Clearing in Sooke, BC | RNC",
-    "description": "Landscaping, yard care, irrigation, brush clearing and tree work for Sooke homes and rural acreages. Ask RNC Landscaping for a free quote and site visit."
+    "title": "Landscaping in Sooke, BC — Clearing & Yard Care | RNC",
+    "description": "Brush and broom clearing, yard care, tree work and irrigation for Sooke acreages and homes, from Saseenos and Broomhill to the Whiffin Spit shore."
   },
   "h1": "Landscaping and property clearing in Sooke",
-  "intro": [
-    "Sooke properties are often larger and more rural: acreages in Saseenos and Broomhill, waterfront homes near Whiffin Spit, and newer subdivisions near the town centre.",
-    "Broom, blackberry and brush can close in a rural lot quickly. We clear it while keeping native trees, and dispose of invasive material following CRD guidance. Confirm whether your property is on the regional water supply before relying on CRD watering rules. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Sooke properties are often rural and forested, from acreages in Saseenos and Broomhill to waterfront homes near Whiffin Spit, where fall and winter storms bring higher tides and storm surges. Most of the town's tree canopy is on private land, and the District's FireSmart advice keeps shrubs spaced and branches pruned up to 2 m on these lots.",
+    "Water supply varies here: Sooke is on the CRD's Juan de Fuca system, but some rural lots beyond the mains are reported to use wells or hauled water, so the supply is confirmed before irrigation is planned. Bears, cougars and deer pass through Sooke neighbourhoods, and Bylaw 392 requires attractants such as fallen fruit and compost to be secured."
   ],
   "neighbourhoods": [
     "Sooke town centre",
@@ -25,24 +24,247 @@
     "waterfront homes",
     "commercial frontages"
   ],
+  "localRules": [
+    {
+      "id": "sooke-tree-bylaw-status",
+      "topic": "trees",
+      "text": "From the District's website we could not confirm whether Sooke regulates tree cutting on private land, and a local news report says council was working on a tree management bylaw. Before removing a large tree, check with the District of Sooke (250-642-1634); inside development permit areas, vegetation removal is regulated through the OCP as well.",
+      "sourceUrl": "https://www.sookenewsmirror.com/news/sooke-survey-collects-thoughts-on-tree-bylaw/",
+      "sourceTitle": "Sooke survey collects thoughts on tree bylaw - Sooke News Mirror",
+      "sourceType": "secondary",
+      "excerpt": "Sooke council is working on a bylaw to regulate tree management.",
+      "verify": true,
+      "reviewedOn": null
+    },
+    {
+      "id": "sooke-municipal-trees-policy",
+      "topic": "trees",
+      "text": "Sooke's Policy 11.6 (2005) covers trees on District boulevards, parks and trails. A request to trim or remove a municipal tree for a better view is reviewed by the Municipal Engineer, who may allow trimming; removal must be authorized by Council, at the applicant's expense and liability. Trees the District considers dangerous are removed by its own tree contractor.",
+      "sourceUrl": "https://www.sooke.ca/media/d3ueotd0/trees-on-municipal-property-policy-no-116-2005.pdf",
+      "sourceTitle": "Trees on Municipal Property: Boulevards, Parks and Trails (Policy 11.6, District of Sooke, adopted January 24, 2005)",
+      "sourceType": "official",
+      "excerpt": "The Municipal Engineer may grant permission for the trimming of these trees.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-ocp-800-dpas",
+      "topic": "other",
+      "text": "Sooke adopted Official Community Plan Bylaw 800 on December 8, 2025. Its Part 7 sets out nine development permit areas: Energy and Water, General, Foreshore Area, Riparian Area, Steep Slopes, Town Centre, Intensive Residential, Neighbourhood Commercial and Employment Lands. Inside them, land alteration, building and subdivision need a development permit unless an exemption applies, and a DPA Viewer map shows which may apply to a property.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceType": "official",
+      "excerpt": "issuance of a Development Permit is required prior to any proposed land alteration, building and subdivision within a DPA.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-dpa-landscape-exemptions",
+      "topic": "other",
+      "text": "Sooke's OCP exempts yard or garden work within an existing landscaped area from development permits. It also exempts planting native trees, shrubs or groundcover to improve habitat or soil stability, and removing invasive plants (such as gorse, Scotch broom, knotweed, English ivy and daphne) by low-disturbance hand or mechanical methods, as long as native plants go back in right away.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceType": "official",
+      "excerpt": "Yard or garden work within an existing landscaped area;",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-dpa-hazard-tree",
+      "topic": "trees",
+      "text": "In Sooke's permit areas, removing hazardous trees is exempt only with an ISA Certified Arborist's report accepted by the District beforehand. In riparian and foreshore areas, the removal must also be supervised or confirmed by a Qualified Environmental Professional.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceType": "official",
+      "excerpt": "In riparian or foreshore Development Permit Areas, hazardous tree removal must be supervised or confirmed by a Qualified Environmental Professional (QEP)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-foreshore-15m",
+      "topic": "other",
+      "text": "Sooke's Foreshore Area permit area deals with grading, vegetation removal or structural works within about 15 m of the sea's natural boundary. It is not meant to regulate routine maintenance or gardening in existing yards, and its guidelines ask that existing trees and native vegetation be kept within at least 15 m upland of the shore.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceType": "official",
+      "excerpt": "The intent is not to regulate routine property maintenance, gardening, or enjoyment of existing residential yards",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-steep-slopes-dpa",
+      "topic": "other",
+      "text": "Sooke's Steep Slopes permit area (DPA 5) covers mapped parcels and any land with slopes over 30% across at least 10 m horizontally. Land clearing and other site disturbance there is reviewed to protect slope stability and properties downhill.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceType": "official",
+      "excerpt": "have slopes greater than 30% for a minimum horizontal distance of 10m.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-backyard-burning",
+      "topic": "burning",
+      "text": "Backyard burning in Sooke is allowed only from November 1 to April 30, when the ventilation index is Good, no fire ban is in place and the weather is safe. Under Fire Protection Services Bylaw 292, burning yard waste or clearing land needs a permit from Sooke Fire Rescue, and fires must be at least 15 m from buildings and property lines. As an alternative, the District runs free yard-waste drop-off in May at the Sooke Parks Yard, 2070 Kaltasin Road.",
+      "sourceUrl": "https://www.sooke.ca/municipal-hall/bylaws/burning-regulations/",
+      "sourceTitle": "Burning Regulations - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "Backyard burning is permitted in the District of Sooke from November 1 to April 30, when ventilation is GOOD and conditions are safe.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-yard-waste-dropoff",
+      "topic": "other",
+      "text": "Sooke runs a free yard-waste drop-off at the District Parks Yard, 2070 Kaltasin Road, for District residential owners and occupants: in May and, in 2026, also on Saturdays in October. It takes leaves, grass clippings, branches, prunings and garden debris, but not commercial loads or invasive plant material.",
+      "sourceUrl": "https://www.sooke.ca/news-and-public-notices/posts/final-free-yard-waste-drop-off-day-set-for-october-31-2026-program/",
+      "sourceTitle": "Final Free Yard Waste Drop-Off Day Set for October 31 (2026 Program) - District of Sooke (Oct 30, 2026)",
+      "sourceType": "official",
+      "excerpt": "Commercial loads and invasive plant materials cannot be accepted.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-attractants-392",
+      "topic": "other",
+      "text": "Sooke's Animal Regulation and Impounding Bylaw 392 requires residents to secure wildlife attractants, which it says include compost, fruit trees and fallen fruit. The District advises harvesting fruit promptly, clearing fallen fruit, and fencing or netting where appropriate.",
+      "sourceUrl": "https://www.sooke.ca/municipal-hall/bylaws/securing-attractants/",
+      "sourceTitle": "Securing Attractants - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "Under Bylaw No. 392, residents must ensure attractants are secured.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "sooke-tree-care-private",
+      "kind": "other",
+      "text": "Most of Sooke's tree canopy is on private land. The District's tree-care guidance tells owners to water young trees for their first 2-3 years, prune dead or damaged branches ideally in the dormant season, and hire a certified arborist for large or complex work.",
+      "sourceUrl": "https://www.sooke.ca/programs-services/environmental-services/urban-forest-and-tree-care/",
+      "sourceTitle": "Urban Forest and Tree Care - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "Most of Sooke’s tree canopy is on private land.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-firesmart",
+      "kind": "other",
+      "text": "Sooke is a forested community, and the District's FireSmart landscaping advice is to keep 1-1.5 m of non-combustible space around the home, keep shrubs and woody debris tidy and well spaced from 1.5 to 10 m out, prune branches up to 2 m from the ground, and keep trees at least 10 m from structures where possible. Sooke Fire Rescue Services (250-642-5422) books free home and property assessments.",
+      "sourceUrl": "https://www.sooke.ca/programs-services/environmental-services/urban-forest-and-tree-care/",
+      "sourceTitle": "Urban Forest and Tree Care - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "Call Sooke Fire Rescue Services at 250-642-5422 to book a free home and property assessment.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-priority-invasives",
+      "kind": "other",
+      "text": "Sooke's priority invasive plants include knotweed, English ivy, Himalayan blackberry, Scotch broom, gorse, giant hogweed and garden escapees such as lamium, daphne and periwinkle. The District works with the T'Sou-ke Nation on knotweed along salmon streams and warns never to cut or compost knotweed or to compost any invasive plant.",
+      "sourceUrl": "https://www.sooke.ca/programs-services/environmental-services/invasive-species/",
+      "sourceTitle": "Invasive Species - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "Do not cut or compost: Cutting promotes regrowth and spreads fragments.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-wildlife-neighbourhoods",
+      "kind": "deer",
+      "text": "The District says bears, cougars, deer, raccoons and other wildlife commonly move through Sooke neighbourhoods, especially in spring and fall. Gardens and fruit trees draw them in, and deer need space in fawning season.",
+      "sourceUrl": "https://www.sooke.ca/programs-services/environmental-services/coexisting-with-wildlife/",
+      "sourceTitle": "Coexisting with Wildlife - District of Sooke",
+      "sourceType": "official",
+      "excerpt": "It’s common to see bears, cougars, deer, raccoons, and other wildlife moving through neighbourhoods, especially in spring and fall.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sooke-water-edges",
+      "kind": "water-supply",
+      "text": "Sooke is on the CRD's Juan de Fuca water system, but a local news report says council backed extending municipal water to about 75 properties on Otter Point Road, and some rural lots beyond the mains are reported to rely on wells or hauled water. Confirm a Sooke property's supply before planning irrigation.",
+      "sourceUrl": "https://www.sookenewsmirror.com/news/sooke-council-backs-water-service-extension/",
+      "sourceTitle": "Sooke council backs water service extension - Sooke News Mirror",
+      "sourceType": "secondary",
+      "excerpt": "Sooke council backed extending municipal water to about 75 properties on Otter Point Road",
+      "verify": true,
+      "reviewedOn": null
+    },
+    {
+      "id": "sooke-whiffin-spit",
+      "kind": "exposure",
+      "text": "The District of Sooke notes that fall and winter storms bring higher tides, strong winds and storm surges to Sooke's coastline, washing driftwood, seaweed and debris onto the Whiffin Spit trail.",
+      "sourceUrl": "https://www.sooke.ca/news-and-public-notices/posts/storm-surges-and-high-tides-bring-seasonal-changes-to-whiffin-spit/",
+      "sourceTitle": "Storm Surges and High Tides Bring Seasonal Changes to Whiffin Spit - District of Sooke (Nov 16, 2026)",
+      "sourceType": "official",
+      "excerpt": "As fall and winter storms bring higher tides, strong winds and storm surges to Sooke's coastline",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "sooke-acreage-brush-and-broom-clearing"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Pulled broom by hand inside a Broomhill creek strip and replanted the gaps with native shrubs the same week, so the work stayed within the OCP exemption.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "tree-vegetation",
+    "grounds-maintenance"
+  ],
+  "servicesBlurb": {
+    "grounds-maintenance": "Rough mowing and yard upkeep on Sooke acreages follow the District's tidy-and-spaced FireSmart guidance for the ground 1.5 to 10 m from the house.",
+    "landscape-installation": "Planting on Sooke foreshore lots keeps existing trees and native vegetation within 15 m of the shore, as the Foreshore permit area guidelines ask.",
+    "irrigation": "Before a system goes in, the property's water supply is confirmed, because not every rural Sooke lot is on the regional mains.",
+    "tree-vegetation": "Sooke exempts low-disturbance invasive removal inside permit areas only when native plants go back in right away, and its knotweed advice is never to cut or compost it."
+  },
+  "neighbours": [
+    "metchosin",
+    "langford"
+  ],
+  "featuredProject": "sooke-acreage-brush-and-broom-clearing",
+  "image": "area-sooke",
+  "intro": [
+    "Sooke properties are often rural and forested, from acreages in Saseenos and Broomhill to waterfront homes near Whiffin Spit, where fall and winter storms bring higher tides and storm surges. Most of the town's tree canopy is on private land, and the District's FireSmart advice keeps shrubs spaced and branches pruned up to 2 m on these lots.",
+    "Water supply varies here: Sooke is on the CRD's Juan de Fuca system, but some rural lots beyond the mains are reported to use wells or hauled water, so the supply is confirmed before irrigation is planned. Bears, cougars and deer pass through Sooke neighbourhoods, and Bylaw 392 requires attractants such as fallen fruit and compost to be secured.",
+    "Broom, blackberry and brush come under [tree and vegetation management](/services/tree-vegetation/), lawn and acreage upkeep under [grounds maintenance](/services/grounds-maintenance/), and a [free quote](/free-quote/) can start with a Sooke site visit."
+  ],
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (confirm your property's water supply): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "text": "Sooke's Foreshore Area permit area deals with grading, vegetation removal or structural works within about 15 m of the sea's natural boundary. It is not meant to regulate routine maintenance or gardening in existing yards, and its guidelines ask that existing trees and native vegetation be kept within at least 15 m upland of the shore.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
       "verify": true
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "text": "Sooke's OCP exempts yard or garden work within an existing landscaped area from development permits. It also exempts planting native trees, shrubs or groundcover to improve habitat or soil stability, and removing invasive plants (such as gorse, Scotch broom, knotweed, English ivy and daphne) by low-disturbance hand or mechanical methods, as long as native plants go back in right away.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
+      "verify": true
+    },
+    {
+      "text": "Backyard burning in Sooke is allowed only from November 1 to April 30, when the ventilation index is Good, no fire ban is in place and the weather is safe. Under Fire Protection Services Bylaw 292, burning yard waste or clearing land needs a permit from Sooke Fire Rescue, and fires must be at least 15 m from buildings and property lines. As an alternative, the District runs free yard-waste drop-off in May at the Sooke Parks Yard, 2070 Kaltasin Road.",
+      "sourceUrl": "https://www.sooke.ca/municipal-hall/bylaws/burning-regulations/",
+      "verify": true
+    },
+    {
+      "text": "Sooke's Animal Regulation and Impounding Bylaw 392 requires residents to secure wildlife attractants, which it says include compost, fruit trees and fallen fruit. The District advises harvesting fruit promptly, clearing fallen fruit, and fencing or netting where appropriate.",
+      "sourceUrl": "https://www.sooke.ca/municipal-hall/bylaws/securing-attractants/",
       "verify": true
     }
-  ],
-  "servicesBlurb": {
-    "grounds-maintenance": "Lawn and yard upkeep for subdivisions, and rough mowing for acreages.",
-    "landscape-installation": "Planting and hardscape for new homes and waterfront lots.",
-    "irrigation": "Irrigation for homes on the regional supply and on private systems.",
-    "tree-vegetation": "Brush, broom and blackberry clearing, plus tree pruning and removals."
-  },
-  "featuredProject": "sooke-acreage-brush-and-broom-clearing",
-  "image": "area-sooke"
+  ]
 }

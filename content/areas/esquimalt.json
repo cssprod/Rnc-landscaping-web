@@ -2,14 +2,13 @@
   "slug": "esquimalt",
   "name": "Esquimalt",
   "seo": {
-    "title": "Landscaping & Yard Care in Esquimalt, BC | RNC",
-    "description": "Yard maintenance, landscape installs, irrigation and tree work for Esquimalt homes and stratas, with tree permit checks built in. Request a free quote."
+    "title": "Landscaping in Esquimalt, BC — Irrigation & Gardens | RNC",
+    "description": "Irrigation, garden renewals, yard care and tree work for Esquimalt homes, stratas and church grounds, planned around the Township's DPA 1 guidelines."
   },
   "h1": "Landscaping and yard care in Esquimalt",
-  "intro": [
-    "Esquimalt has older family homes near Saxe Point and Gorge Vale, apartment and townhouse stratas, commercial frontages in the village, and institutional grounds.",
-    "The Township's Tree Protection Bylaw requires a permit to remove or prune a protected tree, or to work in its root zone, unless exempt. We check before we start. Read about [irrigation](/services/irrigation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Esquimalt is compact and close to the water, from older homes near Saxe Point and West Bay to stratas in the village and lots on the Gorge. Its Natural Environment permit area covers much new landscaping and asks for mostly native plants chosen for wind and sea spray.",
+    "Trees are protected in the Township from 30 cm across, and arbutus, Garry oak and Pacific dogwood from just 4 cm. Along the Gorge, the first 7.5 m from the high-water mark is kept as natural as possible, and new buildings stay 20 m back."
   ],
   "neighbourhoods": [
     "Saxe Point",
@@ -26,29 +25,189 @@
     "commercial frontages",
     "institutional and defence-related grounds"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "es-tree-bylaw-3076",
+      "topic": "trees",
+      "text": "Esquimalt's Tree Protection Bylaw, 2022, 3076 protects any tree 30 cm or more in diameter at breast height (1.4 m). It also protects native Douglas-fir, grand fir and western redcedar once 4 m tall, and arbutus, bigleaf maple, Garry oak, Pacific dogwood and Pacific yew from 4 cm DBH. Trees on steep slopes, wildlife and nest trees, and replacement trees are protected too.",
+      "sourceUrl": "https://www.esquimalt.ca/media/file/tree-protection-bylaw-2022-no-3076",
+      "sourceTitle": "Tree Protection Bylaw, 2022, 3076 (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "any tree regardless of species having a DBH of 30 centimetres or more",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Esquimalt requires a tree permit to remove or prune a protected tree, or to work in its protected root zone, unless exempted. The Tree Protection Bylaw (2022, No. 3076) defines which trees are protected.",
-      "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
-      "verify": true
+      "id": "es-tree-permit-scope",
+      "topic": "trees",
+      "text": "In Esquimalt you need a permit to cut, remove or alter a protected tree, even one that is dead, dying or hazardous. The permit form covers removal, pruning and work in the protected root zone, and applications go to trees@esquimalt.ca.",
+      "sourceUrl": "https://www.esquimalt.ca/parks/trees-urban-forestry",
+      "sourceTitle": "Trees & Urban Forestry | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "You will need a permit to cut, remove or alter a protected tree. This includes trees which are dead, dying, or hazardous.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "es-tree-neighbour-pruning",
+      "topic": "trees",
+      "text": "Esquimalt residents may prune overhanging branches under 4 inches (about 10 cm) in diameter from a neighbour's tree, following ISA practice. Larger limbs need a tree cutting permit.",
+      "sourceUrl": "https://www.esquimalt.ca/parks/trees-urban-forestry",
+      "sourceTitle": "Trees & Urban Forestry | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "Residents are within their rights to prune overhanging branches that are less than 4 inches in diameter from neighbouring trees.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-dpa1-landscaping",
+      "topic": "other",
+      "text": "Esquimalt's Natural Environment Development Permit Area (DPA 1) covers new buildings and structures, additions over 10 m² and landscaping, with some exceptions. Township-approved ecological restoration and new permeable paths under 1 m wide are exempt.",
+      "sourceUrl": "https://www.esquimalt.ca/node/277",
+      "sourceTitle": "Environmental Areas | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "This Development Permit Area applies to: New buildings and structures … Landscaping (with some exceptions)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-shoreline-setback",
+      "topic": "other",
+      "text": "Within Esquimalt's DPA 1, new development is not permitted within 20 m of the high-water mark of the Gorge Waterway, or within 10 m of the high-water mark of the Strait of Juan de Fuca.",
+      "sourceUrl": "https://www.esquimalt.ca/node/277",
+      "sourceTitle": "Environmental Areas | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "Within Development Permit Area No 1 – Natural Environment, new development is not permitted: within 20 metres of the high water mark of the Gorge Waterway",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-gorge-natural-strip",
+      "topic": "other",
+      "text": "Esquimalt's DPA 1 guidelines ask that land within 7.5 m of the Gorge Waterway's high-water mark be kept as natural as possible, and restored with native trees and plants where it has been altered.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "Land within 7.5m of the high watermark of the Gorge Waterway shall be retained in as natural a state as possible.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-dpa1-soil-views",
+      "topic": "other",
+      "text": "Esquimalt's DPA 1 guidelines ask designers to avoid disturbing or compacting natural soil, to frame public views rather than block them, to prefer natural topography over blasting or retaining walls, and to aim to meet the Canadian Landscape Standards.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "Avoid disturbing, compacting and removing areas of natural soil",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-dpa1-native-planting",
+      "topic": "other",
+      "text": "Esquimalt's DPA 1 guidelines say new landscaping should be mostly native plants and trees, preferably Coastal Douglas-fir zone species, with 'nature out front' in front yards. Plants should be chosen for site conditions, including wind exposure and sea-spray tolerance.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "New landscaping shall consist predominantly of native plant and tree species.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-pesticide-bylaw",
+      "topic": "other",
+      "text": "Esquimalt's Pesticide Use Reduction Bylaw 2686 regulates and reduces non-essential (cosmetic) pesticide use on lawns, trees, shrubs and flowers on residential and public property. It applies to landscape professionals and lawn care companies as well as residents. Reduced-risk pesticides on the bylaw's list are allowed, and other use needs a permit as a last resort.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/municipal-hall/bylaws/pesticidebylawinfosheet.pdf",
+      "sourceTitle": "Important Notice to Home Owners, Tenants, Gardeners and Landscapers regarding the use of Pesticides (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "applies to all Esquimalt property owners and residents as well as landscape professionals and lawn care companies that do business within the Township of Esquimalt",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "es-boulevard-permit",
+      "topic": "other",
+      "text": "Under Esquimalt's Boulevard Maintenance Bylaw 2860, changing a boulevard needs a Boulevard Alteration Permit. Boulevard shrubs must be drought tolerant and kept under 0.5 m, rocks and gravel need a permit, grass is kept at 15 cm or less, and noxious or invasive plants are not allowed.",
+      "sourceUrl": "https://www.esquimalt.ca/media/file/2019-07-bylaw-2860-boulevard-maintenance-consolidation",
+      "sourceTitle": "Boulevard Maintenance Bylaw 2860, consolidated July 2019 (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "noxious weeds or invasive plants are not permitted",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "es-garry-oak-remnant",
+      "kind": "other",
+      "text": "Esquimalt holds one of Victoria Harbour's last Garry oak sites, the 2.4-acre Matson Conservation Area run by a local land trust, according to the trust's own page. Gardens nearby suit native, invasive-free planting.",
+      "sourceUrl": "https://hat.bc.ca/matson",
+      "sourceTitle": "Matson Conservation Area (Habitat Acquisition Trust)",
+      "sourceType": "secondary",
+      "excerpt": "Victoria Harbour's last Garry oak",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-invasives",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "esquimalt-church-garden-drip-conversion"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Moved a West Bay strata's shrub beds from spray heads to drip and left the boulevard strip in grass kept under the Township's 15 cm limit.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "irrigation",
+    "landscape-installation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Yard and strata maintenance for older lots with mature hedges and small lawns.",
-    "landscape-installation": "Bed renewals and planting for homes, stratas and community gardens.",
-    "irrigation": "Spray-to-drip conversions and repairs for homes, stratas and institutional grounds.",
-    "tree-vegetation": "Tree and hedge work with a check of Esquimalt's tree permit rules."
+    "grounds-maintenance": "Older Esquimalt lots with mature hedges and small lawns need steady care, and lawn-care companies working there follow the Township's pesticide bylaw too.",
+    "landscape-installation": "New planting inside DPA 1 leans on Coastal Douglas-fir zone natives and 'nature out front' in the front yard.",
+    "irrigation": "Converting spray heads to drip suits the Township's small beds and its drought-tolerant boulevard shrubs, which the bylaw keeps under 0.5 m.",
+    "tree-vegetation": "Neighbours may prune overhanging branches under about 10 cm in Esquimalt, while larger limbs and any protected tree need a Township permit."
   },
+  "neighbours": [
+    "victoria",
+    "view-royal"
+  ],
   "featuredProject": "esquimalt-church-garden-drip-conversion",
-  "image": "area-esquimalt"
+  "image": "area-esquimalt",
+  "intro": [
+    "Esquimalt is compact and close to the water, from older homes near Saxe Point and West Bay to stratas in the village and lots on the Gorge. Its Natural Environment permit area covers much new landscaping and asks for mostly native plants chosen for wind and sea spray.",
+    "Trees are protected in the Township from 30 cm across, and arbutus, Garry oak and Pacific dogwood from just 4 cm. Along the Gorge, the first 7.5 m from the high-water mark is kept as natural as possible, and new buildings stay 20 m back.",
+    "Spray-to-drip work and system repairs fall under [irrigation](/services/irrigation/), native replanting under [landscape installation](/services/landscape-installation/), and an Esquimalt address can go straight to a [free quote](/free-quote/)."
+  ],
+  "localNotes": [
+    {
+      "text": "Esquimalt's Tree Protection Bylaw, 2022, 3076 protects any tree 30 cm or more in diameter at breast height (1.4 m). It also protects native Douglas-fir, grand fir and western redcedar once 4 m tall, and arbutus, bigleaf maple, Garry oak, Pacific dogwood and Pacific yew from 4 cm DBH. Trees on steep slopes, wildlife and nest trees, and replacement trees are protected too.",
+      "sourceUrl": "https://www.esquimalt.ca/media/file/tree-protection-bylaw-2022-no-3076",
+      "verify": true
+    },
+    {
+      "text": "Esquimalt's DPA 1 guidelines ask that land within 7.5 m of the Gorge Waterway's high-water mark be kept as natural as possible, and restored with native trees and plants where it has been altered.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "verify": true
+    },
+    {
+      "text": "Esquimalt's DPA 1 guidelines say new landscaping should be mostly native plants and trees, preferably Coastal Douglas-fir zone species, with 'nature out front' in front yards. Plants should be chosen for site conditions, including wind exposure and sea-spray tolerance.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "verify": true
+    },
+    {
+      "text": "Under Esquimalt's Boulevard Maintenance Bylaw 2860, changing a boulevard needs a Boulevard Alteration Permit. Boulevard shrubs must be drought tolerant and kept under 0.5 m, rocks and gravel need a permit, grass is kept at 15 cm or less, and noxious or invasive plants are not allowed.",
+      "sourceUrl": "https://www.esquimalt.ca/media/file/2019-07-bylaw-2860-boulevard-maintenance-consolidation",
+      "verify": true
+    }
+  ]
 }
