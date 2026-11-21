@@ -40,3 +40,7 @@ Changes ia needs in files it does not own, plus notes for the streams its checks
 ## t-editorial / t-projects / t-company (W3)
 - To keep the W1 split byte-identical, pages still show dates through `_shared.mjs` `fmtDate()` ("November 19, 2026"). Switch them to `lib/dates.mjs` `formatDate()` / `timeEl()` ("19 November 2026", CONTRACT §6).
 - `/process/` is a stub. It renders `pages/process.json` (overview, tracks, guarantee) when the file exists and `PROCESS_STUB` otherwise.
+
+## build (W1): integration notes from a throwaway merge of w1/build 8e32a95 into w1/ia (not committed)
+- Everything works together. The module graph emits `main`, `living` and `quote` on /free-quote/. `check-links --strict-redirects` passes through the new serve.mjs. All 24 `@integration` redirect tests pass, and so do 101 unit tests and 58 e2e tests. `check-all` is red only on check-content, which reports the content and areas-content files before those streams merge.
+- `tests/unit/build-dist.test.mjs` `#route-shape` patches `site/src/pages/routes.mjs` by replacing `\n  return R;`. The frozen aggregator keeps `R`, `env`, `layout` and `html` in scope before that line so the test still works. A sturdier version would patch a family file (e.g. append a route in `site/src/pages/styleguide.mjs` on the scratch copy) instead of the aggregator.

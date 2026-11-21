@@ -4,6 +4,8 @@
  * fixed order; a new page goes into its family file, never into this one. Every route is
  * { path, file, render, sources[], scripts[], sitemap?, noindex?, showcaseOnly? }.
  */
+import { html } from '../lib/html.mjs';
+import { layout } from '../components/layout.mjs';
 import * as home from './home.mjs';
 import * as services from './services.mjs';
 import * as areas from './areas.mjs';
@@ -20,9 +22,15 @@ import * as redirects from './redirects.mjs';
 /** Family order (fixed): it is the order of the sitemap. */
 export const FAMILIES = [home, services, areas, projects, company, editorial, quote, styleguide, redirects];
 
-/** @param {Env} env @returns {Route[]} */
+/**
+ * `R`, `env`, `layout` and `html` stay in scope before the final `return R;`: w1/build's route-shape test
+ * (tests/unit/build-dist.test.mjs) appends fixture routes there on a scratch copy.
+ * @param {Env} env @returns {Route[]}
+ */
 export function routes(env) {
-  const all = FAMILIES.flatMap((f) => f.routes(env));
+  void html; void layout;
   // showcaseOnly routes (/styleguide/) are never built in launch builds (the build also enforces it).
-  return env.launch ? all.filter((r) => !r.showcaseOnly) : all;
+  /** @type {Route[]} */
+  const R = FAMILIES.flatMap((f) => f.routes(env)).filter((r) => !(env.launch && r.showcaseOnly));
+  return R;
 }

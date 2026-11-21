@@ -17,7 +17,9 @@ const REPO = join(SITE, '..');
 /** Run a tool. @param {string} tool @param {string[]} args @param {Record<string, string>} [env] */
 function run(tool, args, env = {}) {
   const r = spawnSync(process.execPath, [`tools/${tool}.mjs`, ...args], { cwd: SITE, encoding: 'utf8', env: { ...process.env, SITE_MODE: '', ...env } });
-  return { code: r.status, out: `${r.stdout}${r.stderr}` };
+  // One line format for both report() versions: the seed's "path: [rule] message" and w1/build's "[rule] path: message".
+  const out = `${r.stdout}${r.stderr}`.replace(/^(\s*- )\[([\w-]+)\] (\S+?): /gm, '$1$3: [$2] ');
+  return { code: r.status, out };
 }
 /** @param {string} dir @param {Record<string, string>} files */
 function writeTree(dir, files) {

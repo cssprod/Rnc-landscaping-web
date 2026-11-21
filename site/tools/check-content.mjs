@@ -127,6 +127,9 @@ function run() {
     for (const a of areas) pages.add(`/areas/${a.slug}/`);
     for (const p of projects) pages.add(`/projects/${p.slug}/`);
     for (const r of resources) pages.add(`/resources/${r.slug}/`);
+    /** content/pages/<name>.json → its C1 URL (also covers a checkout without .orchestra/url-map.json). */
+    const PAGE_URL = /** @type {Record<string, string>} */ ({ home: '/', portfolio: '/projects/', quote: '/free-quote/', 404: '/404.html' });
+    for (const [f] of docs) if (f.startsWith('pages/')) { const n = basename(f, '.json'); pages.add(PAGE_URL[n] || `/${n}/`); }
     const retired = new Set(urlMap ? [...urlMap.entries, ...(urlMap.aliases || [])].filter((e) => e.status === 301).map((e) => e.old) : []);
     const pending = new Set([siteJson?.capabilityStatement].filter(Boolean));
     let retiredLinks = 0;
