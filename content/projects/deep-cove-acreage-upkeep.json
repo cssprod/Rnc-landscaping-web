@@ -1,35 +1,49 @@
 {
   "slug": "deep-cove-acreage-upkeep",
+  "sample": true,
   "title": "Acreage upkeep for a Deep Cove property",
   "service": "grounds-maintenance",
   "area": "north-saanich",
   "clientType": "Homeowner",
   "seo": {
     "title": "Sample project: Deep Cove acreage upkeep | RNC",
-    "description": "Sample project: monthly acreage upkeep in Deep Cove, North Saanich: field mowing, hedge trimming and blackberry control on one schedule. Get a free quote."
+    "description": "Sample project: monthly upkeep of a Deep Cove acreage in North Saanich, with field mowing, hedge trimming and blackberry control on one plan."
   },
   "summary": "Monthly upkeep of lawns, long grass, hedges and beds on a two-acre lot.",
+  "season": "Year-round",
+  "duration": "Ongoing: monthly visits",
   "scope": [
     "Lawn mowing near the house",
     "Rough mowing of field edges",
     "Laurel and cedar hedge trimming",
     "Blackberry control along the fence line"
   ],
-  "duration": "Ongoing, monthly visits",
-  "story": [
-    "The owners travel for part of the year and wanted the property kept up while they were away.",
-    "We set monthly visits with extra spring mowing, kept blackberry off the fence line and sent photos after each visit.",
-    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [North Saanich](/areas/north-saanich/), or [get a free quote](/quote/)."
+  "tags": [
+    "acreage",
+    "recurring-visits",
+    "hedges",
+    "blackberry-control"
+  ],
+  "challenge": "The owners travel for part of the year and wanted the two-acre property kept to the same standard while they were away.",
+  "approach": [
+    "We set monthly visits, with extra mowing in spring when the grass grows fastest. Each visit covered the lawn near the house, the field edges and the hedges, and kept blackberry off the fence line.",
+    "After every visit the owners got photos and a short note, so they could see the property without being there."
   ],
   "result": "A property kept to a set standard while the owners were away.",
+  "plantPalette": [],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-grounds-maintenance-before",
     "after": "proj-grounds-maintenance-4",
     "gallery": [
       "svc-grounds-maintenance-after",
       "svc-grounds-maintenance-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-deep-cove-acreage-upkeep-art"
+  },
+  "story": [
+    "The owners travel for part of the year and wanted the two-acre property kept to the same standard while they were away.",
+    "We set monthly visits, with extra mowing in spring when the grass grows fastest. Each visit covered the lawn near the house, the field edges and the hedges, and kept blackberry off the fence line.",
+    "After every visit the owners got photos and a short note, so they could see the property without being there."
+  ]
 }

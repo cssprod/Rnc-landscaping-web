@@ -1,35 +1,49 @@
 {
   "slug": "langford-retail-centre-irrigation-repair",
+  "sample": true,
   "title": "Irrigation repair for a Langford retail centre",
   "service": "irrigation",
   "area": "langford",
   "clientType": "Commercial",
   "seo": {
     "title": "Sample project: Langford retail irrigation | RNC",
-    "description": "Sample project: irrigation repair for a Langford retail centre's parking islands, scheduled before store hours, with a written record of fixes. Free quote."
+    "description": "Sample project: leak tracing and valve and drip repairs in a Langford retail centre's planters, done before store hours."
   },
   "summary": "Leak and coverage repairs across parking-island planters.",
+  "season": "Summer",
+  "duration": "3 mornings",
   "scope": [
     "Leak tracing",
     "Valve replacement",
     "Drip line repairs in planters",
     "Written repair record"
   ],
-  "duration": "3 mornings",
-  "story": [
-    "The property manager saw water running across the lot on watering mornings.",
-    "We traced the leaks to a failed valve and damaged drip lines, worked before store hours and sent a written record of each repair.",
-    "Read more about [irrigation](/services/irrigation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+  "tags": [
+    "commercial",
+    "leak-repair",
+    "drip-irrigation",
+    "written-records"
+  ],
+  "challenge": "The property manager saw water running across the parking lot on watering mornings.",
+  "approach": [
+    "We traced the leaks to a failed valve and damaged drip lines in the parking-island planters.",
+    "Repairs were done before store hours, and the property manager got a written record of each repair."
   ],
   "result": "Leaks fixed, with a record of what was replaced.",
+  "plantPalette": [],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-4",
     "gallery": [
       "svc-irrigation-after",
       "svc-irrigation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-langford-retail-centre-irrigation-repair-art"
+  },
+  "story": [
+    "The property manager saw water running across the parking lot on watering mornings.",
+    "We traced the leaks to a failed valve and damaged drip lines in the parking-island planters.",
+    "Repairs were done before store hours, and the property manager got a written record of each repair."
+  ]
 }

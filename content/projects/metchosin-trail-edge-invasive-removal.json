@@ -1,14 +1,17 @@
 {
   "slug": "metchosin-trail-edge-invasive-removal",
+  "sample": true,
   "title": "Trail-edge invasive removal in Metchosin",
   "service": "tree-vegetation",
   "area": "metchosin",
   "clientType": "Public sector",
   "seo": {
     "title": "Sample project: Metchosin invasive removal | RNC",
-    "description": "Sample project: English ivy and blackberry removed along a Metchosin trail edge to a written plan, with nesting checks and proper disposal. Get a free quote."
+    "description": "Sample project: English ivy and blackberry removed along a Metchosin trail edge outside nesting season, with work notes for the client."
   },
   "summary": "Ivy and blackberry removed along a public trail edge to a written plan.",
+  "season": "Fall",
+  "duration": "2 weeks",
   "scope": [
     "Nesting check before work",
     "Ivy removal from trunks and ground",
@@ -16,21 +19,32 @@
     "Disposal to approved site",
     "Work notes to the client"
   ],
-  "duration": "2 weeks",
-  "story": [
-    "Ivy was climbing trees along a trail edge and blackberry was narrowing the path.",
-    "We timed work outside the main nesting period, cut ivy at the base of trunks, pulled ground ivy and blackberry, and kept work notes for the client.",
-    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Metchosin](/areas/metchosin/), or [get a free quote](/quote/)."
+  "tags": [
+    "invasive-plants",
+    "english-ivy",
+    "blackberry",
+    "public-sector"
+  ],
+  "challenge": "English ivy was climbing the trees along a trail edge, and Himalayan blackberry was narrowing the path.",
+  "approach": [
+    "We timed the work outside the main nesting season, then cut ivy at the base of the trunks and pulled ground ivy and blackberry along the edge.",
+    "Invasive material went to an approved disposal site, and the client received work notes for its records."
   ],
   "result": "A wider trail edge and trees free of ivy, documented for the client.",
+  "plantPalette": [],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-3",
     "gallery": [
       "svc-tree-vegetation-after",
       "svc-tree-vegetation-detail-2"
-    ]
-  }
+    ],
+    "art": "proj-metchosin-trail-edge-invasive-removal-art"
+  },
+  "story": [
+    "English ivy was climbing the trees along a trail edge, and Himalayan blackberry was narrowing the path.",
+    "We timed the work outside the main nesting season, then cut ivy at the base of the trunks and pulled ground ivy and blackberry along the edge.",
+    "Invasive material went to an approved disposal site, and the client received work notes for its records."
+  ]
 }

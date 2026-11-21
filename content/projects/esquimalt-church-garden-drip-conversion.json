@@ -1,34 +1,48 @@
 {
   "slug": "esquimalt-church-garden-drip-conversion",
+  "sample": true,
   "title": "Drip conversion for an Esquimalt church garden",
   "service": "irrigation",
   "area": "esquimalt",
   "clientType": "Institutional",
   "seo": {
     "title": "Sample project: Esquimalt drip conversion | RNC",
-    "description": "Sample project: spray heads in an Esquimalt church garden converted to drip irrigation for beds and shrubs, with a simple controller. Request a free quote."
+    "description": "Sample project: spray heads in an Esquimalt church garden replaced with drip lines and a simple controller the volunteers can run themselves."
   },
   "summary": "Spray heads in shrub beds converted to drip lines for a volunteer-run garden.",
+  "season": "Spring",
+  "duration": "3 days",
   "scope": [
     "Spray to drip conversion in four beds",
     "New controller",
     "Volunteer walkthrough"
   ],
-  "duration": "3 days",
-  "story": [
-    "Volunteers were hand-adjusting spray heads that soaked the walkways.",
-    "We converted the beds to drip, installed a simple controller and showed volunteers how to pause it for rain.",
-    "Read more about [irrigation](/services/irrigation/), see our work in [Esquimalt](/areas/esquimalt/), or [get a free quote](/quote/)."
+  "tags": [
+    "drip-irrigation",
+    "water-efficiency",
+    "volunteer-run",
+    "nonprofit"
+  ],
+  "challenge": "Volunteers were hand-adjusting spray heads in the shrub beds, and the spray was soaking the walkways.",
+  "approach": [
+    "We converted four beds from spray heads to drip lines, so water goes to the roots instead of the paths.",
+    "We installed a simple controller and walked the volunteers through it, including how to pause watering after rain."
   ],
   "result": "Water goes to the plants, not the paths, and volunteers can run the system.",
+  "plantPalette": [],
   "testimonial": "facilities-volunteer-esquimalt",
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-2",
     "gallery": [
       "svc-irrigation-after",
       "svc-irrigation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-esquimalt-church-garden-drip-conversion-art"
+  },
+  "story": [
+    "Volunteers were hand-adjusting spray heads in the shrub beds, and the spray was soaking the walkways.",
+    "We converted four beds from spray heads to drip lines, so water goes to the roots instead of the paths.",
+    "We installed a simple controller and walked the volunteers through it, including how to pause watering after rain."
+  ]
 }
