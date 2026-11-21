@@ -2,14 +2,13 @@
   "slug": "north-saanich",
   "name": "North Saanich",
   "seo": {
-    "title": "Landscaping in North Saanich, BC | RNC Landscaping",
-    "description": "Acreage and garden maintenance, landscape projects, irrigation and tree work in North Saanich, with tree permit checks before removal. Get a free quote."
+    "title": "Landscaping in North Saanich, BC — Acreage & Trees | RNC",
+    "description": "Acreage upkeep, tree work, irrigation and garden projects for North Saanich farms and waterfront homes, from Deep Cove and Dean Park to Lands End."
   },
   "h1": "Landscaping in North Saanich",
-  "intro": [
-    "North Saanich has acreages, hobby farms and waterfront homes from Deep Cove to Lands End, along with townhouse stratas near Dean Park.",
-    "The Tree Protection Bylaw requires a permit to remove regulated trees, which can be smaller in environmental and steep-slope areas. Topping is prohibited. Permits are reviewed by staff and must be posted before work, so plan ahead. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Nearly 35% of North Saanich is in the Agricultural Land Reserve, and the OCP aims to keep its rural, agricultural and marine character, so hobby farms and acreages sit beside waterfront lots in Deep Cove, Curteis Point and Lands End. Every lot within 15 m of the ocean falls in the Marine Uplands and Foreshore permit area.",
+    "The District regulates trees from 20 cm across, and arbutus, Garry oak and shore pine from 10 cm; topping is prohibited, and permits take about two to three weeks once an application is complete. Dean Park, where most of the District's FireSmart assessments took place, allows no burning."
   ],
   "neighbourhoods": [
     "Deep Cove",
@@ -26,29 +25,279 @@
     "hobby farms",
     "townhouse stratas"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "ns-tree-bylaw-1548",
+      "topic": "trees",
+      "text": "North Saanich adopted Tree Protection Bylaw 1548 on October 3, 2022, replacing Bylaw 935 (1999). Removing any tree it regulates needs a permit.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/trees",
+      "sourceTitle": "Trees | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "The District has adopted a new Tree Protection Bylaw that came into effect on October 3, 2022.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "North Saanich's Tree Protection Bylaw No. 1548 requires a permit to remove any regulated tree (generally 20 cm diameter or more, smaller for arbutus, Garry oak, Pacific dogwood, yew and shore pine, plus trees in environmental or steep-slope areas). Topping is prohibited; best-practice pruning needs no permit. Staff review takes about 2-3 weeks and the permit must be posted 48 hours before work.",
-      "sourceUrl": "https://www.northsaanich.ca/node/51",
-      "verify": true
+      "id": "ns-tree-20cm",
+      "topic": "trees",
+      "text": "In North Saanich a regulated tree is generally one 20 cm or more in diameter at breast height (measured 1.4 m above grade), with smaller sizes for the protected native species listed below. Significant trees are those 60 cm or more. Staff inspect before a permit is issued and may require replacement trees.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/NS-Residential-Tree-Permit-Guide-Web-Final-V1.pdf",
+      "sourceTitle": "Residential Tree Permit Guide (District of North Saanich, November 2024)",
+      "sourceType": "official",
+      "excerpt": "A tree with a D.B.H. of 20 cm or greater",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "ns-tree-protected-10cm",
+      "topic": "trees",
+      "text": "North Saanich protects arbutus, Garry oak, Pacific dogwood, Pacific (western) yew and shore or lodgepole pine from 10 cm DBH, and any tree from 10 cm DBH growing in an environmental or steep-slope Development Permit Area. Nesting trees, replacement trees and District trees of any size are also protected. A protected tree needs an acceptable reason for removal (for example dead or dying, within 2 m of a foundation, invasive, or needed for a principal building) and cannot be removed under the annual allowance.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/trees",
+      "sourceTitle": "Trees | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "Tree with a D.B.H. of 10 cm or greater growing in an environmental or steep slope Development Permit Area (DPA)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-tree-process",
+      "topic": "trees",
+      "text": "North Saanich tree permits take about 2-3 weeks of staff review once the application is complete. Do not book the work before the permit is issued, and post the permit on the property at least 48 hours before cutting. Where replacement trees are required (generally two per tree removed, three per significant tree), the owner pays a refundable security and notifies the District once they are planted.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/trees",
+      "sourceTitle": "Trees | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "Once your completed application is submitted anticipate 2-3 weeks for staff review and permit issuance. Do not schedule a contractor before obtaining the permit.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-tree-topping",
+      "topic": "trees",
+      "text": "Topping is prohibited under North Saanich's Tree Protection Bylaw. If a tree in imminent danger of falling is cut before a permit is issued, the owner must notify the District and file a retroactive application; under section 5 the cut must be reported by the next business day and the tree left on the lot until the District has visited.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/trees",
+      "sourceTitle": "Trees | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "Topping trees is not an acceptable arboricultural practice and is prohibited in bylaws throughout the region, including in North Saanich’s current Tree Protection Bylaw.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-tree-pruning-damage",
+      "topic": "trees",
+      "text": "North Saanich allows pruning without a permit (for example crown lifting or window pruning) when it follows sound arboricultural practice, and the bylaw does not regulate hedge pruning. Pruning that counts as 'Damage' under Bylaw 1548 needs a permit: topping, removing more than 25% of a tree's live crown in any 12-month period, or lift pruning that leaves the live crown at less than 50% of the tree's height.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/Tree-Protection-Bylaw-1548.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 1548, 2022 (District of North Saanich)",
+      "sourceType": "official",
+      "excerpt": "Removing more than twenty five (25) percent of the live Crown of a Tree in any twelve (12) month period;",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-tree-alr-exemption",
+      "topic": "trees",
+      "text": "North Saanich's tree bylaw does not apply to trees cut in the Agricultural Land Reserve for an agricultural use, but only if the owner first files a commissioned affidavit and an arborist report with the District showing the farm use cannot go elsewhere on the lot.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/Tree-Protection-Bylaw-1548.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 1548, 2022 (District of North Saanich)",
+      "sourceType": "official",
+      "excerpt": "Trees that are Cut or Removed within the Agricultural Land Reserve established under the Agricultural Land Commission Act, provided that the Owner files with the District a commissioned affidavit",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-dpas",
+      "topic": "other",
+      "text": "North Saanich's 2025 OCP (Bylaw 1587, section 5.10) sets five Development Permit Areas: DPA 1 Marine Uplands and Foreshore, DPA 2 Creeks, Wetlands, Riparian Areas and Significant Water Resources, DPA 3 Sensitive Ecosystems, DPA 4 Steep Slopes, and DPA 5 Commercial, Industrial and Multi-Family. Development and site alteration in them may need a development permit, and a property can be in more than one.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/development/development-permits",
+      "sourceTitle": "Development Permits | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "The District has recently adopted a new Official Community Plan that includes five Development Permit Areas (DPAs).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-dpa-extent",
+      "topic": "other",
+      "text": "North Saanich's Marine Uplands and Foreshore DPA covers all land within 15 m of the ocean's natural boundary (measured both landward and seaward), plus Queen Mary Bay, Gullhaven, Tsehum Harbour and Lagoon, and marinas. Its Steep Slopes DPA covers slopes over 30% across at least a 6 m run, plus land within 10 m of the top or toe of such slopes.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/North-Saanich-Official-Community-Plan-Bylaw-No.-1587-2025-1.pdf",
+      "sourceTitle": "Official Community Plan Bylaw No. 1587 (District of North Saanich, April 2025)",
+      "sourceType": "official",
+      "excerpt": "All lands within 15 metres, measured horizontally in both landward and seaward directions, from the natural boundary of the ocean",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-dpa-maintenance-exempt",
+      "topic": "other",
+      "text": "In North Saanich's riparian (DPA 2), sensitive ecosystem (DPA 3) and steep slope (DPA 4) areas, routine maintenance of existing lawns, landscaped areas and pathways needs no development permit, but redeveloping decks, hardscaped patios or non-native landscaped areas is not exempt. In the foreshore area (DPA 1), gardening and yard maintenance such as mowing, pruning, planting and minor soil disturbance that does not change the land's contours is exempt. Invasive removal is exempt in DPA 2 and 3 only by hand, without power tools, with the area replanted in native species.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/North-Saanich-Official-Community-Plan-Bylaw-No.-1587-2025-1.pdf",
+      "sourceTitle": "Official Community Plan Bylaw No. 1587 (District of North Saanich, April 2025)",
+      "sourceType": "official",
+      "excerpt": "Routine maintenance of existing lawns, landscaped areas, and pathways but does not include the redevelopment of existing decks, hardscaped patios, or non-native landscaped areas",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-pesticide-policy",
+      "topic": "other",
+      "text": "North Saanich encourages owners to reduce or stop cosmetic pesticide use, and says it has eliminated pesticide use on municipal property for over a decade. This review did not confirm whether a residential pesticide bylaw applies, so check with the District before advising.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/agriculture-environment/pesticide-use",
+      "sourceTitle": "Pesticide Use | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "encourages property owners to reduce or eliminate the cosmetic use of pesticides on their properties",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-burning-season",
+      "topic": "burning",
+      "text": "Any outdoor burning in North Saanich needs a permit bought from the North Saanich Fire Department, and burning is allowed only on scheduled burning days in the season (open with a permit from November 5, 2026 for 2026-2027). No burning is allowed in the Dean Park area, other than outdoor fire appliances. Check the District's current calendar before burning.",
+      "sourceUrl": "https://www.northsaanich.ca/outdoor-burning",
+      "sourceTitle": "Burning in North Saanich | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "Any outdoor burning in North Saanich requires the purchase of a permit from the North Saanich Fire Department",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-burning-rules",
+      "topic": "burning",
+      "text": "North Saanich's burning regulations (September 2024) allow open burning only on the first and third Thursday, Friday and Saturday of each month in the season, sunrise to sunset. Piles up to 10 x 10 x 10 ft must be at least 25 ft from a property line and 50 ft from structures; larger machine-stacked piles need 50 ft and 100 ft and a 'Good' venting index. Leaves, green grass and weeds may not be burned.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/Burning-Regulations.pdf",
+      "sourceTitle": "Burning Regulations (District of North Saanich, September 2024)",
+      "sourceType": "official",
+      "excerpt": "Open air burning shall only take place on the first and third consecutive Thursday, Friday, and Saturday during the burning season from sunrise to sunset.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-green-waste",
+      "topic": "other",
+      "text": "North Saanich's Green Waste Facility (10180 Littlewood Road) is open on select Thursdays and most Saturdays, 8 am to noon. It takes clean branches, grass clippings, garden debris and hand-loadable stumps, but not wood waste or loads with rocks or soil. Contractors must show the green waste came from a North Saanich property, for example with a letter from the owner.",
+      "sourceUrl": "https://www.northsaanich.ca/resident-services/green-waste",
+      "sourceTitle": "Green Waste | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "Contractors must provide proof that the green waste came from a North Saanich property, for example, a letter from the property owner",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-noise-hours",
+      "topic": "other",
+      "text": "North Saanich's Noise Bylaw 1383 (2015) bars operating any machine or engine in a way that disturbs neighbours except Monday to Friday 7 am to 7 pm (not on statutory holidays) and Saturday 8 am to 4 pm It lists no permitted hours on Sundays.",
+      "sourceUrl": "https://www.northsaanich.ca/sites/default/files/2026-06/1383-North-Saanich-Noise-Bylaw-No.-1383-2015.pdf",
+      "sourceTitle": "Noise Bylaw No. 1383 (2015) (District of North Saanich)",
+      "sourceType": "official",
+      "excerpt": "Monday to Friday inclusive between the hours of 7:00 a.m. and 7:00 p.m. of each day",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "ns-alr-rural",
+      "kind": "lot-types",
+      "text": "Nearly 35% of North Saanich is in the Agricultural Land Reserve, and its OCP aims to keep the community's rural, agricultural and marine character. Acreages and hobby farms are typical lot types.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/agriculture-environment",
+      "sourceTitle": "Agriculture & Environment | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "nearly 35% of the District is within the Agricultural Land Reserve (ALR)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-water-supply",
+      "kind": "water-supply",
+      "text": "North Saanich's municipal water comes from the CRD-operated Saanich Peninsula Water System and runs through District water mains to a meter at each property line. The District applies the CRD Stage 1 watering schedule from May 1 to September 30, while acreages on private wells sit outside it.",
+      "sourceUrl": "https://www.northsaanich.ca/resident-services/utilities-taxes/water-sewer-drainage",
+      "sourceTitle": "Water, Sewer & Drainage | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "The District's municipal water is supplied through the Saanich Peninsula Water System, which is operated by the Capital Regional District (CRD).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-firesmart",
+      "kind": "other",
+      "text": "North Saanich has a Community Wildfire Protection Plan (first prepared in 2011, revised in 2021), and its Fire Department arranges FireSmart home and property assessments. More than 50 assessments were done in 2018-2019, mostly in Dean Park, and BC Parks has done fuel work in John Dean Provincial Park.",
+      "sourceUrl": "https://www.northsaanich.ca/resident-services/fire-hall/firesmart-wildfire-prevention",
+      "sourceTitle": "FireSmart Wildfire Prevention | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "The District has completed over 50 FireSmart home and property assessments over the past two years. A majority of these assessments were located in the Dean Park neighbourhood.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ns-wildlife-invasives",
+      "kind": "other",
+      "text": "North Saanich asks residents to put away garbage, birdseed, compost and pet food and to keep fallen fruit off the ground to avoid wildlife conflicts. The District is a member of the Capital Region Invasive Species Partnership (CRISP); invasive plants on private land are reported to CRISP.",
+      "sourceUrl": "https://www.northsaanich.ca/lands-planning/agriculture-environment/wildlife-invasive-species",
+      "sourceTitle": "Wildlife & Invasive Species | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "put garbage, birdseed, compost and pet food away and to keep fruit from trees off the ground",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "deep-cove-acreage-upkeep"
+    },
+    {
+      "kind": "job-note",
+      "service": "grounds-maintenance",
+      "text": "Timed a Deep Cove hobby farm's hedgerow cleanup around the review of a tree permit for the same lot, and posted the permit 48 hours before the cut.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Acreage upkeep: lawns, rough mowing, hedges and fence lines.",
-    "landscape-installation": "Gardens for waterfront and rural homes, with deer and wind in mind.",
-    "irrigation": "Irrigation for large lawns and beds, including drip for hedgerows.",
-    "tree-vegetation": "Removals timed around permit review, and best-practice pruning."
+    "grounds-maintenance": "Contractors taking green waste to the Littlewood Road facility need proof the load came from a North Saanich property, such as a letter from the owner.",
+    "landscape-installation": "Routine garden work in the foreshore area is exempt, but redeveloping patios or non-native landscaped areas in North Saanich's riparian and slope permit areas is not.",
+    "irrigation": "Most of the District takes CRD water through mains to a meter at the property line, while acreages on private wells plan irrigation around well supply.",
+    "tree-vegetation": "Removing more than 25% of a tree's live crown in a year counts as damage under Bylaw 1548, so even pruning can need a permit in North Saanich."
   },
+  "neighbours": [
+    "sidney",
+    "central-saanich"
+  ],
   "featuredProject": "deep-cove-acreage-upkeep",
-  "image": "area-north-saanich"
+  "image": "area-north-saanich",
+  "intro": [
+    "Nearly 35% of North Saanich is in the Agricultural Land Reserve, and the OCP aims to keep its rural, agricultural and marine character, so hobby farms and acreages sit beside waterfront lots in Deep Cove, Curteis Point and Lands End. Every lot within 15 m of the ocean falls in the Marine Uplands and Foreshore permit area.",
+    "The District regulates trees from 20 cm across, and arbutus, Garry oak and shore pine from 10 cm; topping is prohibited, and permits take about two to three weeks once an application is complete. Dean Park, where most of the District's FireSmart assessments took place, allows no burning."
+  ],
+  "localNotes": [
+    {
+      "text": "In North Saanich a regulated tree is generally one 20 cm or more in diameter at breast height (measured 1.4 m above grade), with smaller sizes for the protected native species listed below. Significant trees are those 60 cm or more. Staff inspect before a permit is issued and may require replacement trees.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/NS-Residential-Tree-Permit-Guide-Web-Final-V1.pdf",
+      "verify": true
+    },
+    {
+      "text": "North Saanich allows pruning without a permit (for example crown lifting or window pruning) when it follows sound arboricultural practice, and the bylaw does not regulate hedge pruning. Pruning that counts as 'Damage' under Bylaw 1548 needs a permit: topping, removing more than 25% of a tree's live crown in any 12-month period, or lift pruning that leaves the live crown at less than 50% of the tree's height.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/Tree-Protection-Bylaw-1548.pdf",
+      "verify": true
+    },
+    {
+      "text": "In North Saanich's riparian (DPA 2), sensitive ecosystem (DPA 3) and steep slope (DPA 4) areas, routine maintenance of existing lawns, landscaped areas and pathways needs no development permit, but redeveloping decks, hardscaped patios or non-native landscaped areas is not exempt. In the foreshore area (DPA 1), gardening and yard maintenance such as mowing, pruning, planting and minor soil disturbance that does not change the land's contours is exempt. Invasive removal is exempt in DPA 2 and 3 only by hand, without power tools, with the area replanted in native species.",
+      "sourceUrl": "https://www.northsaanich.ca/wp-content/uploads/North-Saanich-Official-Community-Plan-Bylaw-No.-1587-2025-1.pdf",
+      "verify": true
+    },
+    {
+      "text": "North Saanich's Green Waste Facility (10180 Littlewood Road) is open on select Thursdays and most Saturdays, 8 am to noon. It takes clean branches, grass clippings, garden debris and hand-loadable stumps, but not wood waste or loads with rocks or soil. Contractors must show the green waste came from a North Saanich property, for example with a letter from the owner.",
+      "sourceUrl": "https://www.northsaanich.ca/resident-services/green-waste",
+      "verify": true
+    }
+  ]
 }

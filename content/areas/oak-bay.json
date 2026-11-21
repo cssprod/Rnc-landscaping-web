@@ -2,14 +2,13 @@
   "slug": "oak-bay",
   "name": "Oak Bay",
   "seo": {
-    "title": "Landscaping & Garden Care in Oak Bay, BC | RNC",
-    "description": "Garden maintenance, landscape renewal, irrigation and tree care for Oak Bay homes and estates, with deer-aware planting and permit checks. Get a free quote."
+    "title": "Landscaping in Oak Bay, BC — Gardens & Trees | RNC",
+    "description": "Garden renewals, tree care, irrigation and upkeep for Oak Bay homes, from Uplands estates to the Prospect heritage area, planned with deer in mind."
   },
   "h1": "Landscaping and garden care in Oak Bay",
-  "intro": [
-    "Oak Bay has large character lots in Uplands and South Oak Bay, estate gardens with mature trees, condo stratas and the village frontages along Oak Bay Avenue.",
-    "Deer are a real factor here. Oak Bay suggests deer-resistant plants, repaired fencing and barriers around accent plants and fruit trees, and we plan new planting with that in mind. Protected trees need a Municipal Arborist permit before cutting. See [landscape installation](/services/landscape-installation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Oak Bay gardens sit on character lots in the Uplands, South Oak Bay and the Prospect Heritage Conservation Area, where District guidelines shape fences, driveways and planting. Deer move through all of it, and the District's flyer suggests fencing selected beds and rotating repellents.",
+    "The tree bylaw protects six native species from 1 m tall and any tree over 30 cm across, and removing living oak branches over 5 cm counts as pruning that needs a permit. Leaf blowers, electric ones included, run only within set hours on weekdays and weekends."
   ],
   "neighbourhoods": [
     "Uplands",
@@ -25,29 +24,200 @@
     "condo stratas",
     "village commercial frontages"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
-      "text": "In Oak Bay, no protected tree may be cut down or damaged unless authorized by a Municipal Arborist permit under the Tree Protection Bylaw or by a development permit. Check the bylaw for which trees are protected.",
+      "id": "ob-tree-permit",
+      "topic": "trees",
+      "text": "Under Oak Bay's Tree Protection Bylaw 4742 (consolidated March 10, 2025 to include Bylaws 4759 and 4893), no protected tree may be cut down or damaged without a permit from the Municipal Arborist or a development permit.",
       "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
-      "verify": true
+      "sourceTitle": "Trees | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "No protected tree shall be cut down or damaged unless authorized by: a permit issued by the Municipal Arborist under this Bylaw; or development permit issued by the Municipality.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "ob-tree-protected-def",
+      "topic": "trees",
+      "text": "Oak Bay protects six native species, Garry oak, arbutus, Pacific yew, black hawthorn, shore pine and Pacific dogwood, once the trunk is over 4 cm across at the root collar or the tree is over 1 m tall. It also protects any tree over 30 cm DBH, plus nest trees, replacement trees, covenant trees and trees counted toward a lot's canopy target.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "which has either a basal diameter greater than 4 centimetres or a height above the point of germination in excess of 1 metre",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-tree-pruning",
+      "topic": "trees",
+      "text": "Oak Bay's bylaw also covers pruning. Removing living branches over 5 cm in diameter from the six listed native species, or over 10 cm from any other protected tree, counts as pruning and needs a permit. Heavy limb work on an oak needs a check first.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "remove living branches of a protected tree, which for a tree described in subsection 1 (a) to (f) of the definition of “protected tree” are greater than 5 centimetres",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-tree-deposit",
+      "topic": "trees",
+      "text": "Oak Bay's tree work permit form says each tree removed needs a replacement tree in a location the Manager of Parks Services approves. The replacement is backed by a per-tree security deposit held for one year from the permit date.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/4742_TreeProtectionBylaw_2022.pdf",
+      "sourceTitle": "Bylaw No. 4742 Tree Work Application and Permit form (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "a replacement tree is required for each tree removed in locations approved by the Manager of Parks Services",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-uplands-guidelines",
+      "topic": "other",
+      "text": "John Charles Olmsted planned the Uplands in 1907–08. There, Oak Bay's Advisory Design Panel reviews proposed buildings, additions and alterations against the Uplands Design Guidelines. Its landscaping checklist covers fencing and screening, native plants, significant trees, hard landscaping and driveways, and landscaping is expected to respect the 'residential park' setting.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/04/Uplands-Design-Guidelines-Brochure.pdf",
+      "sourceTitle": "Uplands Design Guidelines brochure (District of Oak Bay, 2025)",
+      "sourceType": "official",
+      "excerpt": "Landscaping features should respect the residential park atmosphere of the Uplands.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-prospect-hca",
+      "topic": "other",
+      "text": "Oak Bay's Prospect Heritage Conservation Area covers York Place, San Carlos Avenue, Prospect Place, Broom Road and parts of Beach Drive and Oak Bay Avenue. The District describes it as a significant cultural landscape on sloped ground facing the Oak Bay beachfront.",
+      "sourceUrl": "https://www.oakbay.ca/building-infrastructure/planning/heritage-area/",
+      "sourceTitle": "What is a Heritage Conservation Area? | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "The area is a significant cultural landscape with a sloped topography, narrow scenic roads, significant architecturally designed houses and a location fronting the Oak Bay beachfront.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-prospect-hap",
+      "topic": "other",
+      "text": "Inside Oak Bay's Prospect Heritage Conservation Area, every owner needs a Heritage Alteration Permit for substantial changes. The HCA's landscape guidelines apply to the whole neighbourhood, private and public land alike.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/appendix-a-prospect-heritage-conservation-area-guidelines.pdf",
+      "sourceTitle": "The Prospect Heritage Conservation Area Guidelines, Appendix A (District of Oak Bay, 24 Feb 2020)",
+      "sourceType": "official",
+      "excerpt": "The owners of all properties within the HCA boundary require Heritage Alteration Permits (HAP) when they wish to make substantial changes to their properties.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-prospect-landscape",
+      "topic": "other",
+      "text": "The Prospect HCA guidelines favour stone, wood and wrought iron, permeable driveways, and terraced retaining walls with planting. They advise against artificial turf, pressure-treated timber retaining walls, asphalt, chain-link fences, cultured stone and stamped concrete.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/appendix-a-prospect-heritage-conservation-area-guidelines.pdf",
+      "sourceTitle": "The Prospect Heritage Conservation Area Guidelines, Appendix A (District of Oak Bay, 24 Feb 2020)",
+      "sourceType": "official",
+      "excerpt": "Existing heritage landscape materials on private and public land should be conserved and celebrated.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-pesticide-bylaw",
+      "topic": "other",
+      "text": "Under Oak Bay's 2011 Pesticide Regulation Bylaw (4518), no one may use a pesticide to keep up outdoor trees, shrubs, flowers, other ornamental plants or turf on private or public land, though listed permitted pesticides are among its exemptions. A permit is possible when an infestation threatens a sensitive ecosystem or will cause significant economic loss.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4518-pesticide-regulation-2011.pdf",
+      "sourceTitle": "Pesticide Regulation Bylaw, 2011, No. 4518 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "no person may apply or otherwise use a pesticide for the purpose of maintaining outdoor trees, shrubs, flowers, other ornamental plants and turf, on private land or public land",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-leafblower-hours",
+      "topic": "other",
+      "text": "Oak Bay's Anti-Noise Bylaw bans running any leaf blower, electric or gas, outside 9 am–5 pm on weekends and holidays, or outside 8 am–8 pm on weekdays.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/Noise-Bylaw.pdf",
+      "sourceTitle": "Anti-Noise Bylaw, 1977 (No. 3210), consolidated up to July 27, 2026 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "on Saturday, Sunday or a holiday, the operation of a leaf blower at a time outside the hours of 9:00 a.m. to 5:00 p.m.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "ob-deer-project",
+      "kind": "deer",
+      "text": "Deer are a constant garden factor in Oak Bay. Through its Urban Deer Project with HERD Wildlife Management, the District gave immunocontraceptive to female deer across Oak Bay, on public and private land, from early September to the end of October 2026.",
+      "sourceUrl": "https://www.oakbay.ca/community-culture/pets-wildlife/urban-deer/",
+      "sourceTitle": "Urban Deer | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "will be administering immuno-contraceptive (IC) to female deer throughout Oak Bay this fall (2026)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "ob-deer-garden",
+      "kind": "deer",
+      "text": "Oak Bay's deer flyer suggests sprays, fences and/or deer-resistant planting, fencing selected beds, and alternating repellents, because deer get used to the same repellent over time.",
+      "sourceUrl": "https://www.oakbay.ca/sites/default/files/OakBayDeer%20Info%20Flyer%20MAY%203%202017.pdf",
+      "sourceTitle": "Oak Bay Deer info flyer (District of Oak Bay, May 2017)",
+      "sourceType": "official",
+      "excerpt": "Deer can become accustomed to the same repellent over time, and eventually ignore it.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "oak-bay-front-garden-renewal"
+    },
+    {
+      "kind": "job-note",
+      "service": "landscape-installation",
+      "text": "Swapped a South Oak Bay lawn edge for a fenced bed of deer-resistant shrubs, with two repellents alternated through the first season.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "landscape-installation",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Detailed bed care, hedge work and seasonal cleanups for established and estate gardens.",
-    "landscape-installation": "Garden renewals with deer-resistant planting, stone paths and drip irrigation.",
-    "irrigation": "Drip and spray systems adjusted to protect heritage stonework and mature beds.",
-    "tree-vegetation": "Pruning and removals only after Oak Bay's tree permit rules have been checked."
+    "grounds-maintenance": "Estate and heritage gardens in Oak Bay need detailed bed and hedge care, with blowers kept to the Anti-Noise Bylaw's hours.",
+    "landscape-installation": "Renewals in the Uplands or the Prospect area follow guidelines that favour stone, wood and permeable driveways over asphalt and stamped concrete.",
+    "irrigation": "Drip lines suit deer-fenced beds and the terraced, sloped gardens of the Prospect area.",
+    "tree-vegetation": "Each tree removed under an Oak Bay permit needs a replacement and a security deposit held for a year, so removals are planned with the replacement spot in mind."
   },
+  "neighbours": [
+    "victoria",
+    "saanich"
+  ],
   "featuredProject": "oak-bay-front-garden-renewal",
-  "image": "area-oak-bay"
+  "image": "area-oak-bay",
+  "intro": [
+    "Oak Bay gardens sit on character lots in the Uplands, South Oak Bay and the Prospect Heritage Conservation Area, where District guidelines shape fences, driveways and planting. Deer move through all of it, and the District's flyer suggests fencing selected beds and rotating repellents.",
+    "The tree bylaw protects six native species from 1 m tall and any tree over 30 cm across, and removing living oak branches over 5 cm counts as pruning that needs a permit. Leaf blowers, electric ones included, run only within set hours on weekdays and weekends."
+  ],
+  "localNotes": [
+    {
+      "text": "Oak Bay protects six native species, Garry oak, arbutus, Pacific yew, black hawthorn, shore pine and Pacific dogwood, once the trunk is over 4 cm across at the root collar or the tree is over 1 m tall. It also protects any tree over 30 cm DBH, plus nest trees, replacement trees, covenant trees and trees counted toward a lot's canopy target.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "verify": true
+    },
+    {
+      "text": "Oak Bay's bylaw also covers pruning. Removing living branches over 5 cm in diameter from the six listed native species, or over 10 cm from any other protected tree, counts as pruning and needs a permit. Heavy limb work on an oak needs a check first.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "verify": true
+    },
+    {
+      "text": "Inside Oak Bay's Prospect Heritage Conservation Area, every owner needs a Heritage Alteration Permit for substantial changes. The HCA's landscape guidelines apply to the whole neighbourhood, private and public land alike.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/appendix-a-prospect-heritage-conservation-area-guidelines.pdf",
+      "verify": true
+    },
+    {
+      "text": "Oak Bay's deer flyer suggests sprays, fences and/or deer-resistant planting, fencing selected beds, and alternating repellents, because deer get used to the same repellent over time.",
+      "sourceUrl": "https://www.oakbay.ca/sites/default/files/OakBayDeer%20Info%20Flyer%20MAY%203%202017.pdf",
+      "verify": true
+    }
+  ]
 }

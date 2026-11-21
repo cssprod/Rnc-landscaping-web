@@ -2,14 +2,13 @@
   "slug": "view-royal",
   "name": "View Royal",
   "seo": {
-    "title": "Landscaping in View Royal, BC | RNC Landscaping",
-    "description": "Grounds maintenance, landscape projects, irrigation and tree care for View Royal homes and stratas, with tree bylaw checks before work. Get a free quote."
+    "title": "Landscaping in View Royal, BC — Irrigation & Trees | RNC",
+    "description": "Irrigation checks, tree work, grounds care and planting for View Royal homes and stratas, from Portage Inlet to the Mill Hill wildfire interface."
   },
   "h1": "Landscaping in View Royal, BC",
-  "intro": [
-    "View Royal includes waterfront homes on Portage Inlet, family homes in Helmcken and Atkins, townhouse stratas and healthcare and institutional grounds.",
-    "View Royal's bylaw protects species including shore pine and trees with raptor, osprey or heron nests. Most removals or alterations need a permit. See [irrigation](/services/irrigation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "View Royal runs from waterfront homes on Portage Inlet to townhouse stratas beside Mill Hill and Thetis Lake regional parks, part of a wildland-urban interface that burned in July 2020. FireSmart clearance and plant choice around the house are part of yard planning in the Town.",
+    "The tree bylaw lists ten protected species, shore pine among them, and needs a permit to cut any tree within 30 m of a watercourse or on a 2:1 slope. The Town's web pages and its consolidated bylaw differ on the size threshold, 30 cm against 20 cm, so confirm it with the Town before planning a removal."
   ],
   "neighbourhoods": [
     "Portage Inlet",
@@ -25,29 +24,182 @@
     "townhouse stratas",
     "healthcare and institutional grounds"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "vr-tree-species",
+      "topic": "trees",
+      "text": "View Royal's Tree Protection Bylaw 1069, 2022 protects ten species: Garry oak, arbutus, Pacific dogwood, Pacific yew, Douglas-fir, grand fir, bigleaf maple, Sitka spruce, western redcedar and shore pine. Shore pine was added in the 2022 update, along with nest trees and trees kept under subdivision, development or building permits.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "sourceTitle": "Tree Protection Bylaw | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Shore Pine has been added as a protected species",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "View Royal's Tree Protection Bylaw No. 1069 (2022) protects species including shore pine, replacement trees, trees with raptor, osprey or heron nests, trees kept as a permit condition and Town trees. Removing or altering protected trees generally needs a Tree Removal or Alteration Permit; pruning branches up to 10 cm by an ISA certified arborist is exempt, and emergency removals need notice with photos by the next business day.",
-      "sourceUrl": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
-      "verify": true
+      "id": "vr-tree-30cm",
+      "topic": "trees",
+      "text": "View Royal's consolidated Tree Protection Bylaw (1069, as amended by Bylaw 1145) protects any tree over 20 cm in diameter, measured 1.3 m above the highest ground at its base. The Town's tree permit web pages still say 30 cm, so confirm the size with the Town before quoting it.",
+      "sourceUrl": "https://www.viewroyal.ca/assets/Town~Hall/Bylaws/1069%20-%20Tree%20Protection%20Bylaw.pdf",
+      "sourceTitle": "Bylaw No. 1069, as amended by Bylaw No. 1145, consolidated for convenience (Town of View Royal)",
+      "sourceType": "official",
+      "excerpt": "any Tree having a diameter greater than 20 centimeters D.B.H.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "vr-tree-permit",
+      "topic": "trees",
+      "text": "View Royal requires a tree permit to remove or alter a protected tree. The 2024 application form points to section 5.3.2 of Bylaw 1069.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/permits-inspections/TreeRemoval.html",
+      "sourceTitle": "Tree Removal or Alterations | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Tree Permits are required for the removal or alteration of trees designated as a Protected Tree.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-tree-watercourse-slope",
+      "topic": "trees",
+      "text": "In View Royal, cutting or altering any tree within 30 m of a watercourse needs a tree permit; the 2022 bylaw raised this from 15 m. So does cutting or altering any tree on a steep slope (2:1 or steeper) or removing its stumps and roots.",
+      "sourceUrl": "https://www.viewroyal.ca/assets/Town~Hall/Bylaws/1069%20-%20Tree%20Protection%20Bylaw.pdf",
+      "sourceTitle": "Bylaw No. 1069, as amended by Bylaw No. 1145, consolidated for convenience (Town of View Royal)",
+      "sourceType": "official",
+      "excerpt": "No person shall Cut or Alter a Tree within 30 meters of a Watercourse without a Tree Permit.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-tree-pruning-exempt",
+      "topic": "trees",
+      "text": "In View Royal, pruning a protected tree's branches up to 10 cm no longer needs a permit, provided an ISA certified arborist does the work.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "sourceTitle": "Tree Protection Bylaw | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Pruning/altering the branch of a protected tree up to 10 cm no longer requires a permit provided the work is completed by an ISA certified arborist",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-shoreline-setback",
+      "topic": "other",
+      "text": "View Royal's Official Community Plan (Bylaw 1180, 2026) applies a 15 m setback to shorelines and a 30 m setback to watercourses, including streams, creeks and lakes. The Zoning Bylaw also regulates buildings and structures within 15 m of freshwater streams and of the shorelines of Esquimalt Harbour, Portage Inlet and the Millstream and Craigflower creek estuaries.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/community-planning/environmental-regulations.html",
+      "sourceTitle": "Environmental Regulations | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "A 15 metre setback is applied to shorelines, and a 30 metre setback applies to watercourses, including streams, creaks, and lakes.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-watercourse-dpa",
+      "topic": "other",
+      "text": "In View Royal, development on land inside an Environmental Protection and Natural Hazard Development Permit Area (set in OCP Bylaw 1180, 2026) needs a development permit. Work near protected watercourses may also need a Riparian Area Assessment under the provincial Riparian Areas Protection Regulation.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/Land_Development/development-permits.html",
+      "sourceTitle": "Development Permits | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Development Permits for a development near protected water courses may require a Riparian Area Assessment, in compliance with the Provincial Riparian Areas Protection Regulation.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "vr-wildland-interface",
+      "kind": "other",
+      "text": "Parts of View Royal lie in a Wildland Urban Interface beside Mill Hill and Thetis Lake regional parks, an area that burned in the Mill Hill wildfire of July 2020. The Town completed a Community Wildfire Resiliency Plan in January 2025.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/whats-happening/new/2026-latest-news/view-royal-strata-becomes-first-firesmart-recognized-neighbourhood-in-greater-victoria.html",
+      "sourceTitle": "View Royal Strata Becomes First FireSmart Recognized Neighbourhood in Greater Victoria (Town of View Royal, 2026)",
+      "sourceType": "official",
+      "excerpt": "The neighbourhood lies within View Royal’s Wildland Urban Interface, an area that has experienced wildfire in the past, including the Mill Hill wildfire in July 2020.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-firesmart-assessments",
+      "kind": "other",
+      "text": "View Royal Fire Rescue offers free FireSmart home assessments (firesmart@viewroyal.ca, 250-479-7322), with an on-site visit and a written report, and links to the FireSmart BC landscaping and plant guides. Plant choice and clearance around the house are a real local concern.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/municipal/emergency-services/fire-department/firesmart.html",
+      "sourceTitle": "FireSmart | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Request a FREE FireSmart Home Assessment to receive an on-site evaluation of your home and a report with recommendations on the next steps to FireSmart your home and property.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "vr-strata-proof",
+      "kind": "other",
+      "text": "Stonecliffe, a 43-unit townhome strata near Mill Hill (not an RNC project), earned FireSmart Recognized Neighbourhood status in December 2025, the first in Greater Victoria according to the Town, and received its sign in January 2026. In June 2025 more than 20 residents cleared branches, Scotch broom and yard debris there.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/whats-happening/new/2026-latest-news/view-royal-strata-becomes-first-firesmart-recognized-neighbourhood-in-greater-victoria.html",
+      "sourceTitle": "View Royal Strata Becomes First FireSmart Recognized Neighbourhood in Greater Victoria (Town of View Royal, 2026)",
+      "sourceType": "official",
+      "excerpt": "Stonecliffe’s efforts earned the strata a FireSmart Wildfire Community Preparedness Day Award and ultimately led to its successful application for FireSmart Recognized Neighbourhood status in December 2025.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "view-royal-townhouse-irrigation-audit"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Cleared broom and dry debris from a Helmcken backyard on a slope, leaving every tree standing until the Town said which ones needed a permit.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "irrigation",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Recurring care for townhouse stratas and family homes.",
-    "landscape-installation": "Planting near the inlet and on sloped lots, with drainage in mind.",
-    "irrigation": "Zone checks, repairs and maps for strata and home systems.",
-    "tree-vegetation": "Tree work planned around View Royal's protected species and nest trees."
+    "grounds-maintenance": "Townhouse stratas near the regional parks need regular cleanup of branches, broom and yard debris to keep the ground around their buildings FireSmart.",
+    "landscape-installation": "Planting on Portage Inlet lots has to respect the 15 m shoreline setback in View Royal's 2026 OCP.",
+    "irrigation": "Zone checks and repairs keep older View Royal strata systems watering only the beds and lawns they were built for.",
+    "tree-vegetation": "Branch pruning up to 10 cm skips the Town's permit only when an ISA certified arborist does it, so the permit question is settled before any cut."
   },
+  "neighbours": [
+    "esquimalt",
+    "saanich",
+    "langford",
+    "colwood",
+    "highlands"
+  ],
   "featuredProject": "view-royal-townhouse-irrigation-audit",
-  "image": "area-view-royal"
+  "image": "area-view-royal",
+  "intro": [
+    "View Royal runs from waterfront homes on Portage Inlet to townhouse stratas beside Mill Hill and Thetis Lake regional parks, part of a wildland-urban interface that burned in July 2020. FireSmart clearance and plant choice around the house are part of yard planning in the Town.",
+    "The tree bylaw lists ten protected species, shore pine among them, and needs a permit to cut any tree within 30 m of a watercourse or on a 2:1 slope. The Town's web pages and its consolidated bylaw differ on the size threshold, 30 cm against 20 cm, so confirm it with the Town before planning a removal."
+  ],
+  "localNotes": [
+    {
+      "text": "View Royal's Tree Protection Bylaw 1069, 2022 protects ten species: Garry oak, arbutus, Pacific dogwood, Pacific yew, Douglas-fir, grand fir, bigleaf maple, Sitka spruce, western redcedar and shore pine. Shore pine was added in the 2022 update, along with nest trees and trees kept under subdivision, development or building permits.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "verify": true
+    },
+    {
+      "text": "In View Royal, cutting or altering any tree within 30 m of a watercourse needs a tree permit; the 2022 bylaw raised this from 15 m. So does cutting or altering any tree on a steep slope (2:1 or steeper) or removing its stumps and roots.",
+      "sourceUrl": "https://www.viewroyal.ca/assets/Town~Hall/Bylaws/1069%20-%20Tree%20Protection%20Bylaw.pdf",
+      "verify": true
+    },
+    {
+      "text": "View Royal's Official Community Plan (Bylaw 1180, 2026) applies a 15 m setback to shorelines and a 30 m setback to watercourses, including streams, creeks and lakes. The Zoning Bylaw also regulates buildings and structures within 15 m of freshwater streams and of the shorelines of Esquimalt Harbour, Portage Inlet and the Millstream and Craigflower creek estuaries.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/community-planning/environmental-regulations.html",
+      "verify": true
+    },
+    {
+      "text": "View Royal Fire Rescue offers free FireSmart home assessments (firesmart@viewroyal.ca, 250-479-7322), with an on-site visit and a written report, and links to the FireSmart BC landscaping and plant guides. Plant choice and clearance around the house are a real local concern.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/municipal/emergency-services/fire-department/firesmart.html",
+      "verify": true
+    }
+  ]
 }

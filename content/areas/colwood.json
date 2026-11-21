@@ -2,14 +2,13 @@
   "slug": "colwood",
   "name": "Colwood",
   "seo": {
-    "title": "Landscaping & Grounds Care in Colwood, BC | RNC",
-    "description": "Landscaping, lawn and bed care, irrigation and tree work for Colwood homes and stratas, including Royal Bay, with permit checks. Request a free quote."
+    "title": "Landscaping in Colwood, BC — Yards & Grounds Care | RNC",
+    "description": "Landscape installation, grounds care, irrigation and tree work for Colwood homes and stratas, from Royal Bay new builds to Esquimalt Lagoon."
   },
   "h1": "Landscaping and grounds care in Colwood",
-  "intro": [
-    "Colwood mixes new homes in Royal Bay and Latoria with older lots near the lagoon and Colwood Corners, plus townhouse stratas and commercial frontages.",
-    "Colwood's Urban Forest Bylaw protects native species at small sizes and needs a Tree Management Permit for removal. Pruning inside stated limits does not need one. We check which side of that line your work falls on. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Much of Colwood's new housing is in Royal Bay, on land with a century-long history as a gravel operation, so many backyards start from bare new-build ground. Older lots sit near Esquimalt Lagoon, a federal migratory bird sanctuary bordered by old coastal Douglas-fir forest.",
+    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. In Colwood even a young arbutus or Garry oak can be protected: for those two, and for Pacific dogwood and Pacific yew, the threshold is 2 m in height or 4 cm in trunk diameter."
   ],
   "neighbourhoods": [
     "Royal Bay",
@@ -26,29 +25,235 @@
     "townhouse stratas",
     "commercial frontages"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "colwood-tree-permit",
+      "topic": "trees",
+      "text": "Removing a protected tree in Colwood needs a Tree Management Permit under Urban Forest Bylaw 1735. You apply online with a Tree Site Plan (five or fewer trees) or a Tree Management Plan, plus photos.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "If the tree you are planning to remove is a protected tree, you will need to obtain a Tree Management Permit.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Colwood's Urban Forest Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm; and any tree over 60 cm or identified as retained, replacement or wildlife tree. Removal needs a Tree Management Permit; pruning within stated limits (keep at least 50% live crown, no more than 25% removed per season) and some hedge work do not.",
-      "sourceUrl": "https://www.colwood.ca/node/5090",
-      "verify": true
+      "id": "colwood-protected-trees",
+      "topic": "trees",
+      "text": "Colwood protects arbutus, Garry oak, Pacific dogwood and Pacific yew at 2 m tall or 4 cm in diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm in diameter; any tree over 60 cm in diameter at chest height; and retained, replacement and wildlife trees.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "Pacific Yew (2m or greater in height OR 4cm or greater in diameter) Douglas Fir (30cm diameter or more)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "colwood-tree-plan-5-trees",
+      "topic": "trees",
+      "text": "A Colwood tree permit application needs a Tree Site Plan or Tree Management Plan plus photos; removing more than five protected trees needs a Tree Management Plan by a qualified professional.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "If you are cutting more than five protected trees, you will need to provide a Tree Management Plan prepared by a qualified professional.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-tree-replacement",
+      "topic": "trees",
+      "text": "Colwood replacement trees go on the same lot: one for each tree when one to five are removed, two for each when more than five are removed. They must be at least 1.5 m tall and native to the Coastal Douglas-fir zone. A per-tree security deposit is refunded after the tree survives a year, or a cash-in-lieu payment applies if trees cannot be planted on the lot.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "When removing one to five trees, they must be replaced at a 1:1 ratio. When removing more than five trees, they must be replaced at a 2:1 ratio.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-pruning-hedge-exempt",
+      "topic": "trees",
+      "text": "Routine pruning in Colwood that follows sound arboricultural practice is exempt from the permit. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "removal of more than 25% of the crown in one season, topping, or pruning or removal of a structural root within the critical root zone.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-steep-slopes",
+      "topic": "other",
+      "text": "Colwood's Hillside development permit guidelines (posted OCP text marked DRAFT, so check the version in force with the City) say to avoid tree removal on steep slopes, re-vegetate exposed soil on steep slopes with plants native to the Coastal Douglas-fir zone, avoid fast-growing non-native plants for holding soil, and keep windfirm treed buffers between lots.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/plans-reports/ocp/ocp-toc/22.%20Hillside%20Environmental%20DPA-2.pdf",
+      "sourceTitle": "22. Hillside Environmental DPA (Colwood OCP, DRAFT text)",
+      "sourceType": "official",
+      "excerpt": "Avoid tree removal on steep slopes. Trees intercept precipitation and reduce stormwater runoff volumes, protect soils from erosion",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-shoreline-lagoon-dpa",
+      "topic": "other",
+      "text": "Colwood's riparian and marine-shoreline development permit guidelines (posted OCP text marked DRAFT; a 2025 amendment rewrote the riparian guidelines, so check with the City) treat the shoreline as running from the low-tide mark to 11 m above sea level. They set a natural buffer of at least 30 m upland from the natural boundary, do not support shoreline hardening, and keep new structures, including docks, out of the Esquimalt Lagoon Migratory Bird Sanctuary, which includes 100 m from the lagoon's natural boundary.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/plans-reports/ocp/ocp-toc/20.%20Riparian%20Areas%20and%20Marine%20Shorelines%20Environmental%20DPA%20rev.pdf",
+      "sourceTitle": "20. Riparian Areas and Marine Shorelines Environmental DPA (Colwood OCP, DRAFT text)",
+      "sourceType": "official",
+      "excerpt": "New structures, including docks, may not be located within the Esquimalt Lagoon Migratory Bird Sanctuary which includes 100 m from the present natural boundary of the Lagoon.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-no-open-burning",
+      "topic": "burning",
+      "text": "Open burning is not allowed in Colwood at any time: no open yard, beach, camp, land-clearing, demolition or construction-waste fires, so yard debris is chipped or hauled (the City runs a Branch Drop Off). Factory-made outdoor wood-burning appliances with a firebox no larger than 24 by 24 inches are allowed at least 20 ft from buildings, fences, property lines and vegetation, except when the fire rating is High or Extreme.",
+      "sourceUrl": "https://www.colwood.ca/community-services/safety/fire",
+      "sourceTitle": "Fire - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "The City of Colwood prohibits all open yard fires, beach fires and camp fires as well as land clearing, demolition and construction waste fires.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-pesticide-bylaw",
+      "topic": "other",
+      "text": "Colwood's Pesticide Use Bylaw generally bars pesticides on lawns, trees, shrubs, flowers and other ornamental plants at homes, duplexes, townhouses, apartments and condominiums. Listed lower-risk products are allowed without a permit, and a permit may be issued for invasive species, noxious weeds or infestations that threaten a sensitive ecosystem. Commercial, institutional and industrial properties in Colwood sit outside this bylaw.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/pesticides",
+      "sourceTitle": "Pesticides - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "Pesticide use is generally NOT permitted on lawns and gardens in Colwood",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-boulevards",
+      "topic": "other",
+      "text": "In Colwood, the property owner maintains the boulevard between the lot and the street or sidewalk, keeping grass trimmed and litter cleared. The City asks owners to contact it before changing a boulevard, since plantings or structures are usually not possible over underground utilities.",
+      "sourceUrl": "https://www.colwood.ca/transportation-infrastructure/transportation-planning/road-network/boulevards",
+      "sourceTitle": "Boulevards - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "maintenance of the boulevard between your property and the street or sidewalk in Colwood is the responsibility of the property owner.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-blasting",
+      "topic": "other",
+      "text": "In Colwood, removing more than 200 cubic metres of soil or rock off site needs a Blasting Permit and a Soil Deposit Permit (Blasting Bylaw 272). Blasters must notify everyone within 300 m, and blasting is limited to Monday-Thursday 8:30 am-4 pm and Friday 8:30 am-3 pm, with none on weekends or holidays.",
+      "sourceUrl": "https://www.colwood.ca/transportation-infrastructure/blasting-dust-control",
+      "sourceTitle": "Blasting & Dust Control - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "If a company or developer intends to remove soil and/or rock off site that exceeds 200 cubic meters, a Blasting Permit and Soil Deposit Permit are required",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "colwood-invasive-branch-dropoff",
+      "kind": "other",
+      "text": "Colwood's Branch Drop Off accepts Scotch broom, English ivy, English holly, Himalayan blackberry, English hawthorn and periwinkle. The City flags poison hemlock, giant hogweed, Japanese knotweed and blessed milk thistle as common culprits.",
+      "sourceUrl": "https://www.colwood.ca/parks-recreation-culture/parks-trails/parks-maintenance/invasive-species",
+      "sourceTitle": "Invasive Species - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "Know what you can bring to Colwood Branch Drop Off: We CAN ACCEPT: Scotch Broom, English Ivy, English Holly, Himalayan Blackberry, English Hawthorn and Periwinkle.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-firesmart",
+      "kind": "other",
+      "text": "Colwood offers free FireSmart home assessments to residents through a FireSmart coordinator, with the focus on the Home Ignition Zone, the 30 m around a home.",
+      "sourceUrl": "https://www.colwood.ca/community-services/safety/emergency-management/firesmart",
+      "sourceTitle": "FireSmart - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "The area within 30 metres of your home is called the Home Ignition Zone.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-royal-bay-reclamation",
+      "kind": "lot-types",
+      "text": "Royal Bay has a century-long history as a gravel operation that was one of the region's largest industrial sites, so many Royal Bay yards are new builds on former pit land.",
+      "sourceUrl": "https://www.colwood.ca/community-services/neighbourhoods",
+      "sourceTitle": "Neighbourhoods - City of Colwood",
+      "sourceType": "official",
+      "excerpt": "The area has a century-long history as a gravel operation that was one of the region's largest industrial sites and major employers.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "colwood-esquimalt-lagoon-mbs",
+      "kind": "other",
+      "text": "Esquimalt Lagoon is a federally designated Migratory Bird Sanctuary managed by the Canadian Wildlife Service, bordered by some of the oldest coastal Douglas-fir forest left in the Victoria area. Waterfront yards nearby sit beside protected habitat.",
+      "sourceUrl": "https://www.crd.ca/environment/stormwater-watersheds-harbours/harbours/esquimalt-lagoon",
+      "sourceTitle": "Esquimalt Lagoon - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The lagoon is also bordered by some of the oldest coastal Douglas fir forest remaining in the Victoria area.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "royal-bay-backyard-patio"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Hauled a Latoria yard's broom and holly prunings to the Colwood Branch Drop Off instead of stacking a pile no one could burn.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "landscape-installation",
+    "grounds-maintenance"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Lawn and bed care for new subdivisions and stratas.",
-    "landscape-installation": "Finishing bare new-build yards with grading, patios, walls and planting.",
-    "irrigation": "New systems for new lawns, and seasonal service for established ones.",
-    "tree-vegetation": "Pruning within Colwood's limits, and removals after permit checks."
+    "grounds-maintenance": "Colwood owners maintain the boulevard between the lot and the street, so regular visits include trimming that strip and clearing litter.",
+    "landscape-installation": "New-build yards on former pit land often need grading, retaining and planting, and moving more than 200 cubic metres of rock or soil off site needs City permits.",
+    "irrigation": "New lawns and beds in Colwood's subdivisions need systems set up from scratch and tuned to the lawn days for each address.",
+    "tree-vegetation": "Hedges of five or more trees under 5 m tall can be pruned or removed in Colwood without a permit, while protected trees need a Tree Management Permit."
   },
+  "neighbours": [
+    "langford",
+    "view-royal",
+    "metchosin"
+  ],
   "featuredProject": "royal-bay-backyard-patio",
-  "image": "area-colwood"
+  "image": "area-colwood",
+  "intro": [
+    "Much of Colwood's new housing is in Royal Bay, on land with a century-long history as a gravel operation, so many backyards start from bare new-build ground. Older lots sit near Esquimalt Lagoon, a federal migratory bird sanctuary bordered by old coastal Douglas-fir forest.",
+    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. In Colwood even a young arbutus or Garry oak can be protected: for those two, and for Pacific dogwood and Pacific yew, the threshold is 2 m in height or 4 cm in trunk diameter."
+  ],
+  "localNotes": [
+    {
+      "text": "Colwood protects arbutus, Garry oak, Pacific dogwood and Pacific yew at 2 m tall or 4 cm in diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm in diameter; any tree over 60 cm in diameter at chest height; and retained, replacement and wildlife trees.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "verify": true
+    },
+    {
+      "text": "Routine pruning in Colwood that follows sound arboricultural practice is exempt from the permit. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
+      "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
+      "verify": true
+    },
+    {
+      "text": "Open burning is not allowed in Colwood at any time: no open yard, beach, camp, land-clearing, demolition or construction-waste fires, so yard debris is chipped or hauled (the City runs a Branch Drop Off). Factory-made outdoor wood-burning appliances with a firebox no larger than 24 by 24 inches are allowed at least 20 ft from buildings, fences, property lines and vegetation, except when the fire rating is High or Extreme.",
+      "sourceUrl": "https://www.colwood.ca/community-services/safety/fire",
+      "verify": true
+    },
+    {
+      "text": "Colwood's Branch Drop Off accepts Scotch broom, English ivy, English holly, Himalayan blackberry, English hawthorn and periwinkle. The City flags poison hemlock, giant hogweed, Japanese knotweed and blessed milk thistle as common culprits.",
+      "sourceUrl": "https://www.colwood.ca/parks-recreation-culture/parks-trails/parks-maintenance/invasive-species",
+      "verify": true
+    }
+  ]
 }

@@ -2,14 +2,13 @@
   "slug": "central-saanich",
   "name": "Central Saanich",
   "seo": {
-    "title": "Landscaping in Central Saanich, BC | RNC Landscaping",
-    "description": "Grounds care, landscape installs, irrigation and tree work in Central Saanich, from Brentwood Bay to Saanichton, with permit checks. Get a free quote."
+    "title": "Landscaping in Central Saanich, BC — Grounds & Trees | RNC",
+    "description": "Grounds care, tree work, irrigation and planting for Central Saanich homes, farms and Keating business parks, from Brentwood Bay to Saanichton."
   },
   "h1": "Landscaping in Central Saanich",
-  "intro": [
-    "Central Saanich runs from the village streets of Brentwood Bay and Saanichton to farmland and the Keating industrial area. We work on homes, townhouse stratas, rural properties and commercial sites.",
-    "The District protects dogwood, arbutus, Garry oak, Pacific yew, shore pine and trembling aspen, and any tree over 0.6 m in diameter. In the Erosion District, removing any tree needs an engineering permit and a geotechnical report. See [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Central Saanich is mostly farmland: 61% of the District is in the Agricultural Land Reserve and 18% inside the Urban Containment Boundary, so village lots in Brentwood Bay and Saanichton sit close to working fields. The Keating area adds business parks with frontages and parking islands to keep up.",
+    "Under the 2021 Tree Management Bylaw, most trees 30 cm or more across (other than hedges) need a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected."
   ],
   "neighbourhoods": [
     "Brentwood Bay",
@@ -24,29 +23,191 @@
     "townhouse stratas",
     "industrial and commercial sites in Keating"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "cs-tree-30cm",
+      "topic": "trees",
+      "text": "Under Central Saanich's Tree Management Bylaw 2065 (adopted June 28, 2021), any tree 30 cm or more in diameter at breast height is a 'permit tree', except trees planted as a hedge. Removing one needs a permit, even if the tree is dead or dying. To get the diameter, divide the circumference at breast height by 3.14.",
+      "sourceUrl": "https://www.centralsaanich.ca/home-property-development/tree-removal-and-planting",
+      "sourceTitle": "Trees (Tree Removal and Planting) | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Trees greater than 30 cm diameter at breast height. To calculate diameter, measure the circumference of the tree at breast height and divide by 3.14.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Central Saanich protects dogwood, arbutus, Garry oak, Pacific yew, shore pine and trembling aspen, nesting trees, permit-retained trees and any tree over 0.6 m diameter. Pruning or removing a protected tree needs an application with a site plan (an arborist report may be required); removing any tree in the Erosion District needs an Engineering permit and geotechnical report.",
-      "sourceUrl": "https://www.centralsaanich.ca/node/256",
-      "verify": true
+      "id": "cs-tree-pruning",
+      "topic": "trees",
+      "text": "In Central Saanich, pruning branches over 10 cm in diameter from a permit tree needs a tree permit unless a certified arborist does the pruning.",
+      "sourceUrl": "https://www.centralsaanich.ca/home-property-development/tree-removal-and-planting",
+      "sourceTitle": "Trees (Tree Removal and Planting) | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Pruning of branches of any Permit Tree that are more than 10 cm in diameter requires a tree permit",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "cs-tree-species",
+      "topic": "trees",
+      "text": "Central Saanich protects Garry oak, arbutus, Pacific dogwood, Pacific yew, shore pine and trembling aspen once they are over 50 cm tall. Trees of any size are protected in the Erosion District, in Environmentally Sensitive Areas and on District land.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
+      "sourceTitle": "Central Saanich Tree Management Bylaw No. 2065, 2021 (District of Central Saanich)",
+      "sourceType": "official",
+      "excerpt": "“Protected Species” means a tree over 50 centimeters in height of the following species:",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-tree-replacement",
+      "topic": "trees",
+      "text": "Central Saanich's 2021 bylaw requires up to three replacement trees for each protected tree removed. The District's tree page says replacements are needed when a lot falls below its Tree Density Target, and a landscape surety deposit is held for one year after planting.",
+      "sourceUrl": "https://www.centralsaanich.ca/our-community/news/central-saanich-updates-tree-management-bylaw",
+      "sourceTitle": "Central Saanich Updates Tree Management Bylaw (District of Central Saanich news)",
+      "sourceType": "official",
+      "excerpt": "a mandate that when a protected tree is removed it is replaced with up to three trees to enable the canopy to grow back quicker",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-erosion-district",
+      "topic": "other",
+      "text": "Central Saanich has a mapped Erosion District (Schedule F of the tree bylaw) where trees of any size are protected. Removing them can require a professional engineer's report certifying the cutting will not create a flooding or erosion danger.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
+      "sourceTitle": "Central Saanich Tree Management Bylaw No. 2065, 2021 (District of Central Saanich)",
+      "sourceType": "official",
+      "excerpt": "a report from a Registered professional engineer be provided certifying that the proposed cutting of trees will not create a danger from flooding or erosion",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-tree-fees-emergency",
+      "topic": "trees",
+      "text": "Central Saanich charges no permit fee to remove a hazardous tree when there is no development application; other removals carry a fee. Its bylaw also allows emergency removal of a high-hazard tree before a permit is issued.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/documents/tree_application.pdf",
+      "sourceTitle": "Tree Cutting / Pruning Application (District of Central Saanich)",
+      "sourceType": "official",
+      "excerpt": "Section 5 (3) of the Tree Management Bylaw allows for EMERGENCY removal of a high hazard tree BEFORE obtaining a permit",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-alr-tree-exemption",
+      "topic": "trees",
+      "text": "Tree removal on Agricultural Land Reserve land in Central Saanich needs no tree permit, but the owner must give a written statement that the trees are being removed for agricultural use.",
+      "sourceUrl": "https://www.centralsaanich.ca/home-property-development/tree-removal-and-planting",
+      "sourceTitle": "Trees (Tree Removal and Planting) | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Tree removal on lands within the ALR remains exempt from the requirement for a permit. However, a written statement from the owner … is now required.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-burning",
+      "topic": "burning",
+      "text": "In Central Saanich all outdoor burning except small recreational fires needs a fire department permit. Open burning is limited to October 16 to May 15, on days with a 'Good' or 'Fair' venting forecast. Yard-waste piles may be at most 1 m by 1 m, with branches no thicker than 3 cm, set 7.5 m from buildings, fences, property lines and trees.",
+      "sourceUrl": "https://www.centralsaanich.ca/programs-services/fire/burning-information",
+      "sourceTitle": "Burning | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Domestic Yard Waste Fires maximum pile size is one meter high by one meter wide",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-pesticide-public",
+      "topic": "other",
+      "text": "Central Saanich's Pesticide Use Control Bylaw 1688 (2010) prohibits cosmetic pesticide use on public land in the District. Its prohibition is written for land vested in the District, and the District uses natural controls on public property.",
+      "sourceUrl": "https://www.centralsaanich.ca/our-community/natural-environment",
+      "sourceTitle": "Natural Environment | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Pesticide use is prohibited, by bylaw no. 1688, on any public land in Central Saanich.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "cs-alr-share",
+      "kind": "lot-types",
+      "text": "Central Saanich is mostly farmland: 61% of its land is in the Agricultural Land Reserve and 18% is inside the Urban Containment Boundary, so many properties sit beside working fields.",
+      "sourceUrl": "https://www.centralsaanich.ca/our-community/official-community-plan/central-saanich-today",
+      "sourceTitle": "Central Saanich Today | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "61% – the portion of District land within the provincial Agricultural Land Reserve",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "cs-aquifers",
+      "kind": "wells",
+      "text": "Provincial groundwater mapping describes Saanich Peninsula aquifers as a significant source of water for farm irrigation, so a farm-edge property's supply in Central Saanich is checked before irrigation is planned.",
+      "sourceUrl": "https://www.env.gov.bc.ca/wsd/plan_protect_sustain/groundwater/aquifers/aquifers_crd/aquif_crd.html",
+      "sourceTitle": "Aquifers of the Capital Regional District (BC Water Protection & Sustainability Branch)",
+      "sourceType": "official",
+      "excerpt": "aquifers on the Saanich Peninsula are also significant sources of water for agricultural irrigation",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "keating-business-park-grounds-maintenance"
+    },
+    {
+      "kind": "job-note",
+      "service": "grounds-maintenance",
+      "text": "Chipped a Saanichton orchard's winter prunings on site rather than piling them, since District burn piles are capped at 1 m by 1 m and need a fire permit.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Grounds care for business parks in Keating, village homes and stratas.",
-    "landscape-installation": "Planting and hardscape for village lots and rural homes.",
-    "irrigation": "Irrigation repairs and seasonal service for homes and commercial sites.",
-    "tree-vegetation": "Tree work with protected species and the Erosion District checked first."
+    "grounds-maintenance": "Keating business parks and Brentwood Bay stratas need scheduled frontage and bed care through the growing season.",
+    "landscape-installation": "Replanting after a removal in Central Saanich can mean up to three new trees per protected tree, held by a surety for a year after planting.",
+    "irrigation": "On a farm-edge lot near Saanichton or Keating, where the water comes from is confirmed before any sprinkler zones are drawn up.",
+    "tree-vegetation": "Pruning branches over 10 cm on a permit tree needs a permit unless a certified arborist does it, and the District's form says not to book a tree contractor before the permit is issued."
   },
+  "neighbours": [
+    "north-saanich",
+    "saanich"
+  ],
   "featuredProject": "keating-business-park-grounds-maintenance",
-  "image": "area-central-saanich"
+  "image": "area-central-saanich",
+  "intro": [
+    "Central Saanich is mostly farmland: 61% of the District is in the Agricultural Land Reserve and 18% inside the Urban Containment Boundary, so village lots in Brentwood Bay and Saanichton sit close to working fields. The Keating area adds business parks with frontages and parking islands to keep up.",
+    "Under the 2021 Tree Management Bylaw, most trees 30 cm or more across (other than hedges) need a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected."
+  ],
+  "localNotes": [
+    {
+      "text": "Under Central Saanich's Tree Management Bylaw 2065 (adopted June 28, 2021), any tree 30 cm or more in diameter at breast height is a 'permit tree', except trees planted as a hedge. Removing one needs a permit, even if the tree is dead or dying. To get the diameter, divide the circumference at breast height by 3.14.",
+      "sourceUrl": "https://www.centralsaanich.ca/home-property-development/tree-removal-and-planting",
+      "verify": true
+    },
+    {
+      "text": "Central Saanich protects Garry oak, arbutus, Pacific dogwood, Pacific yew, shore pine and trembling aspen once they are over 50 cm tall. Trees of any size are protected in the Erosion District, in Environmentally Sensitive Areas and on District land.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
+      "verify": true
+    },
+    {
+      "text": "Central Saanich has a mapped Erosion District (Schedule F of the tree bylaw) where trees of any size are protected. Removing them can require a professional engineer's report certifying the cutting will not create a flooding or erosion danger.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
+      "verify": true
+    },
+    {
+      "text": "In Central Saanich all outdoor burning except small recreational fires needs a fire department permit. Open burning is limited to October 16 to May 15, on days with a 'Good' or 'Fair' venting forecast. Yard-waste piles may be at most 1 m by 1 m, with branches no thicker than 3 cm, set 7.5 m from buildings, fences, property lines and trees.",
+      "sourceUrl": "https://www.centralsaanich.ca/programs-services/fire/burning-information",
+      "verify": true
+    }
+  ]
 }

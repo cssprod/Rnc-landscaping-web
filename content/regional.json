@@ -1,0 +1,111 @@
+{
+  "blocks": [
+    {
+      "id": "crd-watering",
+      "heading": "CRD Stage 1 watering schedule (May 1 to September 30)",
+      "text": "Properties on the CRD's regional water supply follow Stage 1 of Water Conservation Bylaw No. 4099 from May 1 to September 30 every year. Lawns may be watered two days a week by address (even numbers on Wednesday and Saturday, odd numbers on Thursday and Sunday), 4 to 10 am or 7 to 10 pm by any method, or 12:01 to 10 am or 7 to 10 pm with timed or automatic irrigation. Trees, shrubs, flowers and vegetable gardens may be sprinkled any day in the same morning and evening windows, and hand watering or drip irrigation is allowed any day, any time. Stratas and other multi-unit complexes use the complex's street address, and new sod or seed needs no permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "sourceTitle": "Regional Watering Schedule - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "all"
+      ]
+    },
+    {
+      "id": "crd-water-systems",
+      "heading": "Who is on CRD water",
+      "text": "The CRD's Juan de Fuca Water Distribution System supplies Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and East Sooke, and the Saanich Peninsula Water Distribution System supplies Central Saanich, Sidney and North Saanich. Properties that are not connected, such as those on private wells, are outside the CRD watering schedule.",
+      "sourceUrl": "https://www.crd.ca/programs-services/water/drinking-water-systems",
+      "sourceTitle": "Drinking Water Systems - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The Juan de Fuca Water Distribution System provides drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and electoral area East Sooke.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "colwood",
+        "langford",
+        "metchosin",
+        "view-royal",
+        "sooke",
+        "highlands",
+        "central-saanich",
+        "sidney",
+        "north-saanich"
+      ]
+    },
+    {
+      "id": "crd-invasives",
+      "heading": "Disposing of invasive plants",
+      "text": "Invasive plants can go to Hartland Landfill in bags marked 'Invasive Species' or in covered loads. Knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs. The CRD's Regional Invasive Species Program lists priority species including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "sourceTitle": "Invasive Species - Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "all"
+      ]
+    },
+    {
+      "id": "bc-riparian",
+      "heading": "Work near streams and wetlands",
+      "text": "B.C.'s Riparian Areas Protection Regulation applies across the Capital Regional District except the City of Victoria and Esquimalt. Residential, commercial or industrial work within 30 m of a fish-bearing stream, lake, wetland or ditch, including removing or altering plants and disturbing soil, can need a Qualified Environmental Professional's assessment, and each local government sets how it applies through permit areas or bylaws. Amendments to the regulation take effect January 1, 2027.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-fish-habitat/riparian-areas-regulations/rar-brochure-2016_final_web.pdf",
+      "sourceTitle": "Riparian Areas Regulation brochure (Province of B.C., 2016)",
+      "sourceType": "official",
+      "excerpt": "within 30 metres of a watercourse, even if that watercourse is not on your property,",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "saanich",
+        "oak-bay",
+        "langford",
+        "colwood",
+        "view-royal",
+        "sooke",
+        "central-saanich",
+        "north-saanich",
+        "sidney",
+        "highlands",
+        "metchosin"
+      ]
+    },
+    {
+      "id": "bc-bird-nests",
+      "heading": "Bird nests and tree work",
+      "text": "Section 34 of B.C.'s Wildlife Act makes it an offence to take, injure, molest or destroy a bird or its egg, the nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl (protected even when not in use), or any other bird's nest while it holds a bird or egg. Trees are checked for nests before felling or heavy pruning, especially in spring and summer.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf",
+      "sourceTitle": "Migratory Birds and Breeding Birds: Federal and Provincial Legislation (BC Timber Sales, March 2024)",
+      "sourceType": "official",
+      "excerpt": "possesses, takes, injures, molests or destroys: a) A bird or its egg, b) The nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "all"
+      ]
+    },
+    {
+      "id": "bc-private-wells",
+      "heading": "Gardens on private wells",
+      "text": "The Province advises owners of private wells to conserve water year-round, including through drought-friendly landscaping. It also suggests following local watering restrictions, checking nearby observation wells in the same aquifer, and collecting rainwater for gardens.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-wells/bc_gov_drywellbrochure.pdf",
+      "sourceTitle": "What to do if your well goes dry (Province of BC brochure)",
+      "sourceType": "official",
+      "excerpt": "This should be done year-round and can include using less water, using low-water appliances, and drought-friendly landscaping.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "appliesTo": [
+        "saanich",
+        "sooke",
+        "central-saanich",
+        "north-saanich",
+        "highlands",
+        "metchosin"
+      ]
+    }
+  ]
+}
