@@ -1,0 +1,109 @@
+{
+  "slug": "sooke",
+  "name": "Sooke",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "sooke-tree-bylaw-status",
+      "kind": "rule",
+      "unique": true,
+      "text": "We could not confirm whether Sooke has adopted a municipal tree bylaw; the District surveyed residents on a proposed tree management bylaw in 2020. Check with the District of Sooke before removing large trees.",
+      "sourceUrl": "https://www.sookenewsmirror.com/news/sooke-survey-collects-thoughts-on-tree-bylaw/",
+      "sourceTitle": "Sooke survey collects thoughts on tree bylaw - Sooke News Mirror",
+      "excerpt": "Sooke council is working on a bylaw to regulate tree management.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. This is a status note, NOT a claim that no bylaw exists. Link residents to the District (sooke.ca) for current rules."
+    },
+    {
+      "id": "sooke-ocp-800-dpas",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sooke adopted a new Official Community Plan (Bylaw No. 800) on December 8, 2025. Reporting on the draft said it set out 10 development permit areas, including a foreshore area, so waterfront and sensitive sites may need a permit before land alteration.",
+      "sourceUrl": "https://sooke-012-ca.govstack.com/media/wa2dwxxg/ocp-bylaw-no-800-2022-adopted-08-dec-2025.pdf",
+      "sourceTitle": "OCP Bylaw No. 800, 2022 (adopted 08 Dec 2025) - District of Sooke",
+      "excerpt": "nearly 18 months of collaborative engagement with the residents of Sooke",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The '10 DPAs including the foreshore' count comes from Capital Daily's report on the DRAFT plan (https://capitaldaily.ca/news/sooke-homeowners-irked-by-districts-draft-community-plan); confirm against the adopted bylaw."
+    },
+    {
+      "id": "sooke-backyard-burning",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sooke has allowed backyard burning of branches, leaves and prunings only from November 1 to April 30, on days when the venting index is 'Good', with full bans when fire danger is high. The District's burning page (sooke.ca/burning) is the authority.",
+      "sourceUrl": "https://islandsocialtrends.ca/?p=163851",
+      "sourceTitle": "Island Social Trends - Sooke burning season",
+      "excerpt": "branches, leaves, and prunings",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Excerpt is snippet wording. Undated; confirm the season dates on sooke.ca/burning."
+    },
+    {
+      "id": "sooke-firesmart",
+      "kind": "condition",
+      "unique": true,
+      "text": "Sooke sits at the wildland-urban edge, and the District has offered free FireSmart home assessments through sooke.ca/firesmart (or the fire hall, 250-642-5422), which often lead to clearing brush and limbing trees near homes.",
+      "sourceUrl": "https://vancouverisland.ctvnews.ca/sooke-offering-free-assessments-to-help-residents-mitigate-wildfire-risk-1.5767982",
+      "sourceTitle": "Sooke offering free assessments to help residents mitigate wildfire risk - CTV News",
+      "excerpt": "The virtual info sessions and home assessments can be booked online at sooke.ca/firesmart.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Article likely 2022; program current status not confirmed."
+    },
+    {
+      "id": "sooke-scotch-broom",
+      "kind": "condition",
+      "unique": true,
+      "text": "Scotch broom is said to have reached Vancouver Island through an 1851 Sooke garden, and it still crowds rural Sooke lots; the District has run an annual broom drop-off at its parks yard.",
+      "sourceUrl": "https://www.pressreader.com/canada/times-colonist/20240505/281981792670376",
+      "sourceTitle": "Sooke wants you to pull some broom - Times Colonist (May 5, 2024)",
+      "excerpt": "Sooke wants you to pull some broom",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Excerpt is the headline. 2024 drop-off details; confirm the current year."
+    },
+    {
+      "id": "sooke-water-edges",
+      "kind": "condition",
+      "unique": true,
+      "text": "Most of Sooke is on CRD piped water, but some rural properties beyond the mains rely on wells or hauled water. Council has backed extending service to about 75 Otter Point Road properties, so confirm a property's supply before planning irrigation.",
+      "sourceUrl": "https://www.sookenewsmirror.com/news/sooke-council-backs-water-service-extension/",
+      "sourceTitle": "Sooke council backs water service extension - Sooke News Mirror",
+      "excerpt": "Sooke council backed extending municipal water to about 75 properties on Otter Point Road",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Excerpt is snippet wording; undated; extension status unknown. Some Otter Point properties may be in the Juan de Fuca Electoral Area, not the District."
+    },
+    {
+      "id": "sooke-whiffin-spit",
+      "kind": "condition",
+      "unique": true,
+      "text": "Whiffin Spit, a narrow sandspit that almost encloses Sooke Harbour and Sooke Basin, has needed breakwater repairs, which shows how exposed Sooke's waterfront lots are to storms and wind.",
+      "sourceUrl": "https://en.wikipedia.com/wiki/Sooke_Basin",
+      "sourceTitle": "Sooke Basin - Wikipedia",
+      "excerpt": "Whiffin Spit is a narrow sandspit that almost landlocks Sooke Harbour and Sooke Basin.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing (Wikipedia). The 'exposure' interpretation is ours; soften if used."
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm. Sooke is served by the CRD's Juan de Fuca Water Distribution system; properties not connected are not covered.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    }
+  ],
+  "gaps": [
+    "Tree bylaw: no adopted Sooke tree bylaw found in search; do NOT claim none exists. Contact page: https://sooke.ca (District of Sooke).",
+    "Adopted OCP Bylaw 800 DPA list (riparian, foreshore, steep slope, wildfire) not read; sooke-012-ca.govstack.com not reachable from this session.",
+    "Deer, salt spray and soils: no official source found.",
+    "Sooke rainfall: third-party climate sites give 1,250-1,820 mm with dry summers, conflicting and unsourced, so not used."
+  ]
+}

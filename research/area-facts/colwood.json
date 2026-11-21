@@ -1,0 +1,132 @@
+{
+  "slug": "colwood",
+  "name": "Colwood",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "colwood-tree-permit",
+      "kind": "rule",
+      "unique": true,
+      "text": "Removing a protected tree in Colwood needs a Tree Management Permit under Urban Forest Bylaw No. 1735.",
+      "sourceUrl": "https://www.colwood.ca/node/5090",
+      "sourceTitle": "Tree Permits - City of Colwood",
+      "excerpt": "If the tree you are planning to remove is a protected tree, you will need to obtain a Tree Management Permit.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "colwood-protected-30cm",
+      "kind": "rule",
+      "unique": true,
+      "text": "Colwood's Urban Forest Bylaw rack card treats trees 30 cm (12 in) in diameter or more as protected; significantly altering one also needs a permit.",
+      "sourceUrl": "https://colwood.ca/sites/default/files/2024-06/rack-card-urban-forest-bylaw.pdf",
+      "sourceTitle": "Urban Forest Bylaw rack card (City of Colwood)",
+      "excerpt": "If you would like to remove or significantly alter a protected tree you will need a permit.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Smaller species-specific thresholds (Garry oak, arbutus etc.) in research/areas.json were not re-confirmed this session."
+    },
+    {
+      "id": "colwood-tree-plan-5-trees",
+      "kind": "rule",
+      "unique": true,
+      "text": "A Colwood tree permit application needs a Tree Site Plan or Tree Management Plan plus photos; removing more than five protected trees needs a Tree Management Plan by a qualified professional.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/trees/2017 October 4 Tree Management Permit Application City of Colwood.pdf",
+      "sourceTitle": "Tree Management Permit Application (City of Colwood, 2017)",
+      "excerpt": "If you are cutting more than five protected trees, you will need to provide a Tree Management Plan prepared by a qualified professional.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. 2017 document; current online application may differ."
+    },
+    {
+      "id": "colwood-steep-slopes",
+      "kind": "rule",
+      "unique": true,
+      "text": "Colwood's hillside and natural-hazard guidelines say to avoid development on slopes over 30%, discourage tree removal on steep slopes, and ask for exposed soil to be replanted with native Coastal Douglas-fir zone plants.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/plans-reports/ocp/ocp-toc/22.%20Hillside%20Environmental%20DPA-2.pdf",
+      "sourceTitle": "22. Hillside Environmental DPA (Colwood OCP)",
+      "excerpt": "Development on slopes over 30% must be avoided",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Some OCP excerpts are from draft text; confirm against consolidated OCP Bylaw No. 1700."
+    },
+    {
+      "id": "colwood-shoreline-lagoon-dpa",
+      "kind": "rule",
+      "unique": true,
+      "text": "Colwood's riparian and marine-shoreline development permit area covers shoreline land up to 11 m above sea level, does not support shoreline hardening, and keeps structures out of the 100 m Esquimalt Lagoon sanctuary buffer.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/plans-reports/ocp/ocp-toc/20.%20Riparian%20Areas%20and%20Marine%20Shorelines%20Environmental%20DPA%20rev.pdf",
+      "sourceTitle": "20. Riparian Areas and Marine Shorelines Environmental DPA (Colwood OCP)",
+      "excerpt": "Riparian Areas and Marine Shorelines Environmental DPA",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The PDF is labelled DRAFT and a 2023 amendment proposed splitting it; confirm what is in force. Excerpt is the section title."
+    },
+    {
+      "id": "colwood-garry-oak",
+      "kind": "condition",
+      "unique": true,
+      "text": "Colwood's drier sites are Garry oak country; those ecosystems hold a high share of the region's rare species and fall under its Sensitive Ecosystems guidelines.",
+      "sourceUrl": "https://www.colwood.ca/sites/default/files/plans-reports/ocp/ocp-toc/21.%20Sensitive%20Ecosystems%20Environmental%20DPA.pdf",
+      "sourceTitle": "21. Sensitive Ecosystems Environmental DPA (Colwood OCP)",
+      "excerpt": "Garry oak ecosystems dominate other drier areas of Colwood",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "colwood-no-open-burning",
+      "kind": "rule",
+      "unique": true,
+      "text": "Open burning is not allowed in Colwood at any time, so yard debris is hauled rather than burned; certified outdoor wood appliances (firebox no larger than 24 by 24 in) are allowed except when the fire rating is high or extreme.",
+      "sourceUrl": "https://colwood.ca/node/140",
+      "sourceTitle": "Burning regulations - City of Colwood",
+      "excerpt": "Outdoor wood burning appliances are permitted EXCEPT when the fire rating is HIGH or EXTREME",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Outdoor Burning Restriction and Regulation Bylaw No. 931."
+    },
+    {
+      "id": "colwood-royal-bay-reclamation",
+      "kind": "condition",
+      "unique": true,
+      "text": "Royal Bay was a gravel operation from 1910 to 2009, and the City says the neighbourhood is still being reclaimed under a provincial Mine Reclamation Plan, so new yards there are often built on reworked sand and gravel.",
+      "sourceUrl": "https://www.colwood.ca/node/6830",
+      "sourceTitle": "Royal Bay - City of Colwood",
+      "excerpt": "continues to be reclaimed, repaired and restored as per the Mine Reclamation Plan",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The 'reworked sand and gravel' soil inference is not stated by the City; soften or verify on site."
+    },
+    {
+      "id": "colwood-esquimalt-lagoon-mbs",
+      "kind": "condition",
+      "unique": true,
+      "text": "Esquimalt Lagoon became a federal Migratory Bird Sanctuary in 1931, and the sanctuary includes about 100 m of the land around it, so waterfront yards near the lagoon sit beside protected habitat.",
+      "sourceUrl": "https://www.canada.ca/en/environment-climate-change/services/migratory-bird-sanctuaries/locations/esquimalt-lagoon.html",
+      "sourceTitle": "Esquimalt Lagoon Migratory Bird Sanctuary - Government of Canada",
+      "excerpt": "the lagoon and surrounding 100m of land",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Which source gave the 1931 date and the 100 m wording was unclear in the snippet; confirm on the federal page."
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    }
+  ],
+  "gaps": [
+    "Could not fetch colwood.ca: species-specific thresholds, pruning and hedge exemptions, and the replacement ratio (two per tree on the rack card, from snippet) not confirmed.",
+    "Which OCP DPA text is in force (draft section 20 or consolidated section 17) not confirmed.",
+    "Deer and wind/salt exposure on the Royal Bay and Lagoon frontage: no official source found."
+  ]
+}

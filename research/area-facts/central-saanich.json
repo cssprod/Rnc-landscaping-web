@@ -1,0 +1,121 @@
+{
+  "slug": "central-saanich",
+  "name": "Central Saanich",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "cs-tree-30cm",
+      "kind": "rule",
+      "text": "Under Central Saanich's Tree Management Bylaw (adopted June 2021), removing a tree more than 30 cm in diameter at breast height needs a permit. To get the diameter, divide the circumference by 3.14.",
+      "sourceUrl": "https://centralsaanich.ca/trees",
+      "sourceTitle": "Trees | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "trees greater than 30 cm (12\") diameter at breast height",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); CONFLICT: centralsaanich.ca/node/256 still shows 0.6 m. The current content file uses 0.6 m and should be checked"
+    },
+    {
+      "id": "cs-tree-species",
+      "kind": "rule",
+      "text": "Central Saanich also protects arbutus, Pacific dogwood, Pacific yew and Garry oak as species, and its older tree page adds shore pine and nesting trees.",
+      "sourceUrl": "https://centralsaanich.ca/trees",
+      "sourceTitle": "Trees | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "Arbutus, Pacific Dogwood, Pacific Yew, Garry Oak",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "cs-tree-replacement",
+      "kind": "rule",
+      "text": "When a protected tree is removed in Central Saanich, the 2021 bylaw requires up to three replacement trees.",
+      "sourceUrl": "https://letstalkcentralsaanich.ca.engagementhq.com/treebylaw/news_feed/tree-management-bylaw-adopted-june-29-2021",
+      "sourceTitle": "Tree Management Bylaw adopted June 29, 2021 (Let's Talk Central Saanich)",
+      "sourceType": "official",
+      "excerpt": "when a protected tree is removed it is replaced with up to three trees",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "cs-erosion-district",
+      "kind": "rule",
+      "text": "Central Saanich has a mapped Erosion District where removing a tree needs an Engineering permit, with a site plan and a geotechnical engineer's report. The District says this can mean two permits, one from Planning and one from Engineering.",
+      "sourceUrl": "https://www.centralsaanich.ca/node/256",
+      "sourceTitle": "Trees on private property | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "a site plan locating all buildings, structures and trees as well as a geotechnical engineer's report",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "cs-tree-fees-emergency",
+      "kind": "rule",
+      "text": "Central Saanich charges $75 plus $25 per tree (up to $200) to remove non-hazardous trees, and nothing for a hazardous tree with no development application. The bylaw allows emergency removal of a high-hazard tree before a permit.",
+      "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/documents/tree_application.pdf",
+      "sourceTitle": "Tree permit application (District of Central Saanich)",
+      "sourceType": "official",
+      "excerpt": "allows for EMERGENCY removal of a high hazard tree BEFORE obtaining a permit",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); fee figures came from the bylaw page snippet, so confirm them"
+    },
+    {
+      "id": "cs-alr-share",
+      "kind": "condition",
+      "text": "Central Saanich is mostly farmland: 61% of its land is in the Agricultural Land Reserve and 18% is inside the Urban Containment Boundary. Many properties border working fields around Saanichton and Island View.",
+      "sourceUrl": "https://www.centralsaanich.ca/node/2914",
+      "sourceTitle": "Central Saanich Today | District of Central Saanich",
+      "sourceType": "official",
+      "excerpt": "61%",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt is the figure only, and the place names are our framing"
+    },
+    {
+      "id": "cs-aquifers",
+      "kind": "condition",
+      "text": "Central Saanich sits over named groundwater aquifers, including the Hagan aquifer at Saanichton and the Keating aquifer. Peninsula aquifers are a significant irrigation source for farms.",
+      "sourceUrl": "https://www.env.gov.bc.ca/wsd/plan_protect_sustain/groundwater/aquifers/aquifers_crd/aquif_crd.html",
+      "sourceTitle": "Aquifers of the Capital Regional District (BC Water Protection & Sustainability Branch)",
+      "sourceType": "official",
+      "excerpt": "aquifers on the Saanich Peninsula are also significant sources of water for agricultural irrigation",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "cs-deer-pilot",
+      "kind": "condition",
+      "text": "Deer damage to crops is a known issue in Central Saanich. It hosted the CRD's rural deer-management pilot from 2013, which included crop-damage inspections on local farms.",
+      "sourceUrl": "https://www.timescolonist.com/local-news/stay-out-of-the-deer-control-business-staff-advise-crd-4624889",
+      "sourceTitle": "Stay out of the deer control business, staff advise CRD (Times Colonist)",
+      "sourceType": "secondary",
+      "excerpt": "one in Central Saanich and one in Oak Bay",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "secondary source; from search snippet; news report, older"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "THRESHOLD CONFLICT: centralsaanich.ca/node/256 lists 'larger than 0.6m (2')' while centralsaanich.ca/trees and the 2021 adoption notice say 30 cm. content/areas/central-saanich.json currently says 0.6 m, so a human should confirm before publishing.",
+    "Pesticide Bylaw No. 1688: the snippet only showed public-land wording, so its effect on private yards is unconfirmed. See https://www.centralsaanich.ca/sites/default/files/2023-05/1688_pesticide_use.pdf.",
+    "Where the Erosion District boundary runs (for example, Saanich Inlet slopes near Brentwood Bay): map not retrieved.",
+    "centralsaanich.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}

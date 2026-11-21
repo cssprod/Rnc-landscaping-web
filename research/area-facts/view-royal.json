@@ -1,0 +1,121 @@
+{
+  "slug": "view-royal",
+  "name": "View Royal",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "vr-tree-species",
+      "kind": "rule",
+      "text": "View Royal's Tree Protection Bylaw No. 1069 protects Garry oak, arbutus, Pacific dogwood, Pacific yew, Douglas-fir, grand fir and bigleaf maple. Shore pine was added in the 2022 update.",
+      "sourceUrl": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "sourceTitle": "Tree Protection Bylaw | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Shore Pine has been added as a protected species",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-tree-30cm",
+      "kind": "rule",
+      "text": "In View Royal any tree over 30 cm in diameter is protected, measured 1.3 m above the highest ground at the trunk.",
+      "sourceUrl": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
+      "sourceTitle": "Tree Protection Bylaw | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "any tree having a diameter greater than 30cm D.B.H.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-tree-permit",
+      "kind": "rule",
+      "text": "View Royal requires a tree permit to remove or alter a protected tree. The 2024 application form points to section 5.3.2 of Bylaw 1069.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/permits-inspections/TreeRemoval.html",
+      "sourceTitle": "Tree Removal or Alterations | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "Tree Permits are required for the removal or alteration of trees designated as a Protected Tree",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-shoreline-setback",
+      "kind": "rule",
+      "text": "View Royal requires a 15 m setback for buildings and structures from freshwater streams and from the shorelines of Esquimalt Harbour, Portage Inlet and the Millstream and Craigflower creek estuaries.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/business/community-planning/environmental-regulations.html",
+      "sourceTitle": "Environmental Regulations | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "15m required setback for buildings and structures from the natural boundary of freshwater streams and the shoreline of Esquimalt Harbour, Portage Inlet",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-watercourse-dpa",
+      "kind": "rule",
+      "text": "Work near protected watercourses in View Royal falls in a Natural Watercourse and Shoreline Areas Development Permit Area. It may need a Riparian Area Assessment under the provincial regulation.",
+      "sourceUrl": "https://viewroyal.ca/EN/main/business/Land_Development/development-permits.html",
+      "sourceTitle": "Development Permits | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "may require a Riparian Area Assessment, in compliance with the Provincial Riparian Areas Protection Regulation",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-wildland-interface",
+      "kind": "condition",
+      "text": "Parts of View Royal sit in a wildland-urban interface beside Thetis Lake and Mill Hill regional parks, where a wildfire burned in July 2020. Homes near Thetis Lake are priority areas for fuel reduction.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/meta/new/2026-latest-news/view-royal-strata-becomes-first-firesmart-recognized-neighbourhood-in-greater-victoria.html",
+      "sourceTitle": "View Royal Strata Becomes First FireSmart Recognized Neighbourhood in Greater Victoria (Town of View Royal, 2026)",
+      "sourceType": "official",
+      "excerpt": "an area that has experienced wildfire in the past, including the Mill Hill wildfire in July 2020",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-firesmart-assessments",
+      "kind": "condition",
+      "text": "View Royal Fire offers free FireSmart home assessments (firesmart@viewroyal.ca, 250-479-7322) and links to FireSmart landscaping guides. That makes plant choice and clearance around the house a real local concern.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/main/municipal/emergency-services/fire-department/firesmart.html",
+      "sourceTitle": "FireSmart | Town of View Royal",
+      "sourceType": "official",
+      "excerpt": "contact View Royal FireSmart at firesmart@viewroyal.ca or call 250-479-7322 to book your FREE assessment",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vr-strata-proof",
+      "kind": "condition",
+      "text": "In February 2026 the 43-unit Stonecliffe townhome strata near Mill Hill became the first FireSmart-recognised neighbourhood in Greater Victoria, after resident clean-up projects.",
+      "sourceUrl": "https://www.viewroyal.ca/EN/meta/new/2026-latest-news/view-royal-strata-becomes-first-firesmart-recognized-neighbourhood-in-greater-victoria.html",
+      "sourceTitle": "View Royal Strata Becomes First FireSmart Recognized Neighbourhood in Greater Victoria (Town of View Royal, 2026)",
+      "sourceType": "official",
+      "excerpt": "first Greater Victoria neighbourhood to earn FireSmart Canada Neighbourhood Recognition",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool, so confirm exact wording"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "Pesticide bylaw: none surfaced in search, and View Royal's bylaw list did not show one. That does not mean none exists. Check https://www.viewroyal.ca/EN/main/town/bylaws/bylawsmunicipal.html.",
+    "Species-specific size thresholds for small Garry oak or arbutus under Bylaw 1069 were not visible.",
+    "Deer, soils and exposure specific to View Royal: no official source found.",
+    "viewroyal.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}

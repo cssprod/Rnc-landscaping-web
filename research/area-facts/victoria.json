@@ -1,0 +1,110 @@
+{
+  "slug": "victoria",
+  "name": "Victoria",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "vic-tree-30cm",
+      "kind": "rule",
+      "text": "Victoria's Tree Protection Bylaw protects private trees over 30 cm in diameter, and hedges where any single stem is over 30 cm.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Tree Protection Bylaw: info sheet for property owners (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "Protected trees include: ... a tree with a diameter over 30 cm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vic-tree-slope-watercourse",
+      "kind": "rule",
+      "text": "In Victoria a tree of any size is protected if it grows on a slope steeper than 33 per cent over 10 metres, or within 15 metres of a watercourse. Removal applications in those spots need a setback survey.",
+      "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
+      "sourceTitle": "Tree Protection Bylaw: info sheet for property owners (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "A tree of any size that is within 15 metres of the natural boundary of a watercourse",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vic-tree-native-height",
+      "kind": "rule",
+      "text": "Victoria protects some native species, Garry oak among them, once they are over 50 cm tall, so even young oaks in a bed can be protected. Confirm the full species list with the City before you remove anything.",
+      "sourceUrl": "https://www.victoria.ca/media/file/residential-info-sheetpdf",
+      "sourceTitle": "Residential info sheet: Tree Protection Bylaw (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "over 50 cm in height measured above natural grade",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); snippet fragmentary, species list not fully visible"
+    },
+    {
+      "id": "vic-tree-permit-scope",
+      "kind": "rule",
+      "text": "In Victoria you may need a tree permit to prune or remove a protected tree, or to work in its root zone, for example when digging for a patio, wall or irrigation line. Questions go to treepermits@victoria.ca.",
+      "sourceUrl": "https://www.victoria.ca/node/162",
+      "sourceTitle": "Tree Protection Bylaw | City of Victoria",
+      "sourceType": "official",
+      "excerpt": "a permit may be required to prune, remove, or work in the protected root zone of a protected tree",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vic-boulevard-gardens",
+      "kind": "rule",
+      "text": "Victoria lets residents plant the boulevard in front of their home without pre-approval, as long as they follow the City's Boulevard Gardening Guidelines. Paving or graveling the boulevard is not allowed, and you must contact Parks before digging.",
+      "sourceUrl": "https://victoria.ca/media/file/boulevard-gardening-guidelines",
+      "sourceTitle": "Boulevard Gardening Guidelines (City of Victoria)",
+      "sourceType": "official",
+      "excerpt": "Paving over, laying down gravel or similar activities are considered alterations to the boulevard and are not permitted.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "vic-gorge-guidelines",
+      "kind": "rule",
+      "text": "On Victoria lots along the Gorge Waterway and Victoria Arm, a City design guideline (Schedule 2K of the Victoria 2050 OCP) allows fill, seawalls and shoring only under certain conditions.",
+      "sourceUrl": "https://www.victoria.ca/media/file/victoria-arm-gorge-waterway-guidelines-2025",
+      "sourceTitle": "Victoria Arm - Gorge Waterway Design Guidelines (2025)",
+      "sourceType": "official",
+      "excerpt": "applicants must show how a proposal meets the special conditions and objectives",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); landscaping provisions not visible in snippet"
+    },
+    {
+      "id": "vic-salt-spray",
+      "kind": "condition",
+      "text": "Victoria's exposed waterfront gardens, such as those along Dallas Road and in James Bay, take salt spray and wind. Local gardeners report shrubs and trees scorched every year, so seaside beds need salt-tolerant plants.",
+      "sourceUrl": "https://forums.botanicalgarden.ubc.ca/threads/oceanfront-plants.73692/",
+      "sourceTitle": "Oceanfront Plants (UBC Botanical Garden forums, Victoria gardener thread)",
+      "sourceType": "secondary",
+      "excerpt": "plants and trees become fried every year from the salt spray",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "secondary source; from search snippet; anecdotal; street names are our framing, not the source's"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "Gas-powered leaf blower rules: a council motion and a noise bylaw amendment were reported in older news items, but nothing confirmed an adopted ban. Check the City's noise bylaw page.",
+    "Full list of native species protected by height, and current permit fees: the residential info sheet snippet was cut off. See https://www.victoria.ca/node/162.",
+    "Landscaping rules inside the Gorge Waterway guideline (Schedule 2K) were not visible. Read the PDF before quoting it on the page.",
+    "Soils and drainage specific to Victoria neighbourhoods: no official source found.",
+    "None of these pages could be fetched in this session (victoria.ca blocked), so reviewedOn is null on every fact."
+  ]
+}

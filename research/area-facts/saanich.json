@@ -1,0 +1,134 @@
+{
+  "slug": "saanich",
+  "name": "Saanich",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "sa-tree-native-small",
+      "kind": "rule",
+      "text": "Saanich protects arbutus, Garry oak, Pacific dogwood and Pacific yew once they reach 2 m tall or 4 cm in diameter, which is far smaller than most neighbouring bylaws.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Bylaw Overview (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Arbutus, Garry Oak, Pacific Dogwood, and Pacific Yew ... at least 2m tall or 4cm in diameter",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "sa-tree-large",
+      "kind": "rule",
+      "text": "In Saanich, Douglas-fir, bigleaf maple and western redcedar are protected from 30 cm in diameter, and any other tree from 60 cm. Dead or dying protected trees still need a permit.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Bylaw Overview (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Any other tree with a diameter of 60cm or more",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "sa-tree-steep-slope",
+      "kind": "rule",
+      "text": "On Saanich lots inside a mapped Steep Slope Area, a permit may be needed for trees as small as 10 cm in diameter or 5 m tall.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Bylaw Overview (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "10 cm or more in diameter, or 5 metres in height, that are growing in a Steep Slope Area",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); exact Saanich document for this line not confirmed"
+    },
+    {
+      "id": "sa-tree-bylaw-review",
+      "kind": "rule",
+      "text": "Saanich is rewriting its tree bylaw. Until a new bylaw passes, the existing 2014 bylaw (No. 9272) still applies, and the June 2026 update says replacement planting will still be required.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Q&A-Tree-Bylaw-project-update-June-2026.pdf",
+      "sourceTitle": "Q&A: Tree Bylaw project update, June 2026 (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "the existing Tree Protection Bylaw will continue to apply until a revised bylaw passes",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "sa-streamside-dpa",
+      "kind": "rule",
+      "text": "Saanich's Streamside Development Permit Area covers land within 30 m of streams, ditches, ponds, wetlands and lakes. Work inside it may need a Streamside Development Permit, and Saanich suggests talking to Environmental Services (250-475-5471) first.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/environmental-planning/streamside-development-permit-area.html",
+      "sourceTitle": "Streamside Development Permit Area | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "applies to all streams, ditches, ponds, wetlands and lakes",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); whether ordinary landscaping in the SDPA needs a permit was not confirmed"
+    },
+    {
+      "id": "sa-pesticide-bylaw",
+      "kind": "rule",
+      "text": "Saanich's Pesticide Bylaw generally bans pesticides for lawns, trees, shrubs and flowers on residential land. A permit needs a certified applicator, and dandelions usually don't qualify.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/pesticide-reduction/pesticides-bylaw.html",
+      "sourceTitle": "Pesticide Bylaw | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "usually the control of broadleaf weeds like dandelions do NOT meet the above conditions",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "sa-boulevard-permit",
+      "kind": "rule",
+      "text": "Owners must maintain the boulevard beside their Saanich property, and landscaping it needs a Boulevard Permit. Fences, rocks, retaining walls, hedges and parking pads are not accepted on a boulevard.",
+      "sourceUrl": "https://saanich.ca/EN/main/local-government/departments/engineering-department/boulevards.html",
+      "sourceTitle": "Boulevard Maintenance and Planting Tips | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "Fences, individual rocks, parking areas, retaining walls and hedges on a boulevard do not qualify as acceptable landscaping features.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "sa-urban-rural-split",
+      "kind": "condition",
+      "text": "Saanich is split by an Urban Containment Boundary. Outside it, around Prospect Lake and Blenkinsop for example, lots stay large and rural with rural servicing standards, so acreage and farm-edge properties are common.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Planning/plans/Rural_lap_web.pdf",
+      "sourceTitle": "Rural Saanich Local Area Plan (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "maintain large lot sizes, rural residential and agricultural land uses, and rural servicing standards outside the Urban Containment Boundary",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); neighbourhood examples are our framing"
+    },
+    {
+      "id": "sa-pulling-together",
+      "kind": "condition",
+      "text": "Invasive plants are a constant pressure in Saanich. The Pulling Together programme has more than 200 volunteers removing English ivy, Scotch broom and Himalayan blackberry in 44 parks and natural areas.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/parks-recreation-community/parks/natural-areas/volunteer-for-pulling-together.html",
+      "sourceTitle": "Volunteer for Pulling Together | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "unites over 200 volunteers across 44 parks and natural areas",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "Well-water dependence outside the Urban Containment Boundary: no source confirmed which rural Saanich lots are on wells.",
+    "Exact boulevard plant height limits (Bylaw No. 9487) were not visible in search results.",
+    "Whether ordinary landscaping (not building) inside the Streamside DPA needs a permit: confirm with Saanich Environmental Services.",
+    "The new tree bylaw may change the thresholds above. Re-check at publish time.",
+    "saanich.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}

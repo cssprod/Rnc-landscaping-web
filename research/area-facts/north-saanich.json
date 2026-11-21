@@ -1,0 +1,134 @@
+{
+  "slug": "north-saanich",
+  "name": "North Saanich",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "ns-tree-bylaw-1548",
+      "kind": "rule",
+      "text": "North Saanich adopted Tree Protection Bylaw No. 1548 on October 3, 2022, replacing Bylaw No. 935. Removing any tree it regulates needs a permit.",
+      "sourceUrl": "https://www.northsaanich.ca/node/51",
+      "sourceTitle": "Tree Protection | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "A tree permit is required to remove any trees regulated by the District's Tree Protection Bylaw No. 1548.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ns-tree-20cm",
+      "kind": "rule",
+      "text": "In North Saanich a regulated tree is generally one 20 cm or more in diameter at breast height, plus certain protected species at smaller sizes. Staff may inspect and require replacement trees.",
+      "sourceUrl": "https://northsaanich.ca/wp-content/uploads/NS-Residential-Tree-Permit-Guide-Web-Final-V1.pdf",
+      "sourceTitle": "Residential Tree Permit Guide (District of North Saanich)",
+      "sourceType": "official",
+      "excerpt": "a tree with a D.B.H. of 20 cm or greater",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ns-tree-topping",
+      "kind": "rule",
+      "text": "North Saanich's tree bylaw prohibits topping. If a tree is cut before a permit is issued, the owner must notify the District and file a retroactive application.",
+      "sourceUrl": "https://northsaanich.ca/wp-content/uploads/NS-Residential-Tree-Permit-Guide-Web-Final-V1.pdf",
+      "sourceTitle": "Residential Tree Permit Guide (District of North Saanich)",
+      "sourceType": "official",
+      "excerpt": "Topping is prohibited",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool"
+    },
+    {
+      "id": "ns-dpas",
+      "kind": "rule",
+      "text": "North Saanich's Development Permit Areas include Marine Uplands and Foreshore (DPA 1), Sensitive Ecosystems (DPA 3) and Steep Slopes (DPA 4), set out in section 5.10 of the 2025 OCP (Bylaw No. 1587). Waterfront and hillside work can need a DP.",
+      "sourceUrl": "https://northsaanich.ca/business-development/development-applications/development-permit/",
+      "sourceTitle": "Development Permits | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "1: Marine Uplands and Foreshore; DPA No. 3: Sensitive Ecosystems; DPA No. 4: Steep Slopes",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ns-alr-rural",
+      "kind": "condition",
+      "text": "Nearly 35% of North Saanich is in the Agricultural Land Reserve, and its OCP aims to keep the community's rural, agricultural and marine character. Acreages and hobby farms are typical lot types.",
+      "sourceUrl": "https://northsaanich.ca/your-community/agriculture-land-security/",
+      "sourceTitle": "Agriculture & Land Security | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "nearly 35% of the District is within the Agricultural Land Reserve (ALR)",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ns-groundwater-levels",
+      "kind": "condition",
+      "text": "North Saanich has provincial groundwater observation wells. In the October 2026 report, a bedrock well there was at the low end of its historical range, which matters to properties on private wells.",
+      "sourceUrl": "https://bcrfc.env.gov.bc.ca/Real-time_Data/Drought_regional_statistics/West_Coast_Groundwater_Report.html",
+      "sourceTitle": "West Coast Groundwater Report (BC River Forecast Centre)",
+      "sourceType": "official",
+      "excerpt": "a crystalline bedrock well reads at the low end of its historical range",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool, and the report changes over time"
+    },
+    {
+      "id": "ns-water-supply",
+      "kind": "condition",
+      "text": "North Saanich runs its own water mains, fed by bulk CRD water through the Saanich Peninsula system, and CRD lawn-watering schedules apply on that supply. Properties on private wells follow provincial well guidance instead.",
+      "sourceUrl": "https://www.northsaanich.ca/node/58",
+      "sourceTitle": "Water Conservation | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "watering schedules are in effect within the District of North Saanich",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool"
+    },
+    {
+      "id": "prov-private-well-drought",
+      "kind": "regional",
+      "text": "Provincial (BC): owners with private wells are advised to conserve water year-round, follow local watering restrictions, use drought-friendly landscaping and check nearby observation wells in the same aquifer.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-wells/bc_gov_drywellbrochure.pdf",
+      "sourceTitle": "What to do if your well goes dry (Province of BC brochure)",
+      "sourceType": "official",
+      "excerpt": "This should be done year-round and can include using less water, using low-water appliances, and drought-friendly landscaping.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ns-pesticide-policy",
+      "kind": "rule",
+      "text": "North Saanich encourages owners to reduce or stop cosmetic pesticide use. Search found no residential pesticide bylaw, so confirm with the District.",
+      "sourceUrl": "https://www.northsaanich.ca/node/57",
+      "sourceTitle": "Pesticide Use | District of North Saanich",
+      "sourceType": "official",
+      "excerpt": "encourages property owners to reduce or eliminate the cosmetic use of pesticides on their properties",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "The claim in research/areas.json that trees are regulated from 10 cm in environmental and steep-slope DPAs could not be confirmed (a summary said protected species start at 10 cm, but no clear source). Check Bylaw 1548 and OCP s.5.10.",
+    "Which North Saanich parcels are on private wells and which are on municipal water: the service area map was not retrieved.",
+    "Deer pressure on North Saanich farms: only regional and older CRD material found.",
+    "Pesticide bylaw: none found in search. That does not mean none exists; see https://www.northsaanich.ca/local-government/bylaws-policies.",
+    "northsaanich.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}

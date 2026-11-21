@@ -1,0 +1,109 @@
+{
+  "slug": "langford",
+  "name": "Langford",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "langford-tree-bylaw-2269",
+      "kind": "rule",
+      "unique": true,
+      "text": "Langford regulates tree cutting on private property under Tree Protection Bylaw No. 2269, and in most cases needs a certified arborist's report before it issues a Tree Cutting Permit.",
+      "sourceUrl": "https://langford.ca/residents/resident-resources/tree-removal/",
+      "sourceTitle": "Tree Removal - City of Langford",
+      "excerpt": "In most cases the City will require a report from a certified arborist before issuing a Tree Cutting Permit.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "langford-tree-replacement",
+      "kind": "rule",
+      "unique": true,
+      "text": "A protected tree removed in Langford must be replaced; the replacement ratio was not in the search results.",
+      "sourceUrl": "https://langford.ca/residents/resident-resources/tree-removal/",
+      "sourceTitle": "Tree Removal - City of Langford",
+      "excerpt": "If you remove a protected tree, you will be required to replace it.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "langford-env-hazard-dpa",
+      "kind": "rule",
+      "unique": true,
+      "text": "Steep slopes, sensitive ecosystems, riparian areas and urban forest are covered by Langford's Environmental Protection & Hazard Area development permit guidelines, which also govern tree and vegetation removal in those areas.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/04/Environmental-Development-Permit-Areas.pdf",
+      "sourceTitle": "Environmental Protection & Hazard Area Development Permit Area Guidelines (City of Langford)",
+      "excerpt": "Environmental Protection & Hazard Area Development Permit Area Guidelines",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Lake-specific (Langford Lake, Florence Lake) policies not found."
+    },
+    {
+      "id": "langford-community-standards",
+      "kind": "rule",
+      "unique": true,
+      "text": "Langford's Community Standards Bylaw No. 2255 (adopted May 19, 2026) treats overgrown grass over 30 cm and noxious weeds as unsightly, so rental and vacant lots need regular mowing.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2026/05/Community-Standards-Bylaw-No.-2255-2026-Online-1.pdf",
+      "sourceTitle": "Community Standards Bylaw No. 2255 (City of Langford)",
+      "excerpt": "overgrown grass over 30 centimetres, Noxious Weeds",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The PDF text came through fragmented; confirm the definition and the noxious-weed list."
+    },
+    {
+      "id": "langford-landscape-standards",
+      "kind": "rule",
+      "unique": true,
+      "text": "New-build landscaping in Langford is shaped by Zoning Bylaw No. 300 section 3.21 (landscaping and screening), Schedule 14 boulevard standards in Servicing Bylaw No. 1000 and the City's Landscape Policy, which development permit plans must follow.",
+      "sourceUrl": "https://langford.ca/wp-content/uploads/2023/04/Bylaw-1000-Consolidated-20231026_Updated.pdf",
+      "sourceTitle": "Subdivision and Development Servicing Bylaw No. 1000 (City of Langford)",
+      "excerpt": "Schedule 14 Boulevard Landscape Standards",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "langford-rock-blasting",
+      "kind": "condition",
+      "unique": true,
+      "text": "Rock is close to the surface across much of Langford, and the City posts frequent blasting advisories for new subdivisions and roads (for example Langford Heights on Millstream Road and Centre Mountain), so new-build yards often start on blasted rock and imported fill.",
+      "sourceUrl": "https://langford.ca/advisories/blasting-langford-heights-millstream-road-expires-october-2024/",
+      "sourceTitle": "Blasting - Langford Heights, Millstream Road (City of Langford advisory)",
+      "excerpt": "blasting langford heights millstream road expires october 2024",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Excerpt is the advisory title/slug. 'Rock close to surface' is an inference from the blasting record, not a City statement; rephrase as needed."
+    },
+    {
+      "id": "langford-burning-half-acre",
+      "kind": "rule",
+      "unique": true,
+      "text": "In Langford, open burning has been allowed only in set months, with a permit from the Langford Fire Department, and only on lots of half an acre or more.",
+      "sourceUrl": "https://www.goldstreamgazette.com/news/open-burning-permitted-this-month-in-langford/",
+      "sourceTitle": "Open burning permitted this month in Langford - Goldstream Gazette",
+      "excerpt": "burning permits will only be issued to residents with a lot size of a half acre or greater",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Article undated; permitted months not confirmed."
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    }
+  ],
+  "gaps": [
+    "Could not fetch langford.ca: Bylaw 2269 protected-tree definition, size threshold, species list and replacement ratio not confirmed. The 20 cm threshold in the old FAQ applied to interim Bylaws 2117/2118 and may be out of date.",
+    "Langford Lake / Florence Lake riparian or lake-specific policies not found.",
+    "Deer, soils and wildfire-interface (Bear Mountain) conditions: no official source found.",
+    "Current open-burning months and bylaw number not confirmed."
+  ]
+}

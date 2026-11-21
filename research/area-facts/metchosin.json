@@ -1,0 +1,134 @@
+{
+  "slug": "metchosin",
+  "name": "Metchosin",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "metchosin-tree-bylaw",
+      "kind": "rule",
+      "unique": true,
+      "text": "Metchosin's Tree Management Bylaw regulates tree removal because Council wants continuous tree cover kept; the District's tree cutting permit page is the starting point.",
+      "sourceUrl": "https://www.metchosin.ca/node/485",
+      "sourceTitle": "Tree Cutting Permits - District of Metchosin",
+      "excerpt": "Council believes that maintaining continuous tree cover in Metchosin important to the community and the region",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "metchosin-10-per-acre",
+      "kind": "rule",
+      "unique": true,
+      "text": "Local reporting says Metchosin's bylaw lets owners cut up to 10 trees per acre, that any tree on the protected list (featuring Garry oak) needs a permit, and that fines were raised to $10,000 per violation.",
+      "sourceUrl": "https://www.goldstreamgazette.com/community/metchosin-tree-fines-spike/",
+      "sourceTitle": "Metchosin tree fines spike - Goldstream Gazette",
+      "excerpt": "you can still cut down 10 trees per acre",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "SECONDARY source (news/third-party), from search snippet; confirm with the municipality before publishing. Undated. Protected-species list at https://www.metchosin.ca/node/521 not read."
+    },
+    {
+      "id": "metchosin-burning",
+      "kind": "rule",
+      "unique": true,
+      "text": "Metchosin allows backyard burning of dry leaves, trimmings and yard debris from the same property only between 6 am and 6 pm. Debris over 10 cm needs a written permit from the Metchosin Fire Department, burning is limited to two days in a row on suitable venting days, and beach fires are prohibited.",
+      "sourceUrl": "https://www.metchosin.ca/node/448",
+      "sourceTitle": "Burning Regulations - District of Metchosin",
+      "excerpt": "under 10 cm in diameter",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Excerpt is snippet wording. Season (older reports: Oct 1 to May 31) not confirmed; Fire Dept 250-478-1307."
+    },
+    {
+      "id": "metchosin-dpas",
+      "kind": "rule",
+      "unique": true,
+      "text": "Metchosin's development permit areas are the Village Centre, Shoreline Slopes and Bilston Floodplain, so waterfront-bluff and Bilston Creek floodplain lots need a check before land alteration.",
+      "sourceUrl": "https://www.metchosin.ca/node/498",
+      "sourceTitle": "Development Permits - District of Metchosin",
+      "excerpt": "include the Village Centre Development Permit Area, Shoreline Slopes Development Permit Area, Bilston Floodplain Development Permit Area",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The OCP (Bylaw 258, consolidated Apr 2025) also lists a Centre Mountain DPA; the web page may be out of date."
+    },
+    {
+      "id": "metchosin-sensitive-areas",
+      "kind": "rule",
+      "unique": true,
+      "text": "Metchosin's OCP gives Council responsibility for the sensitive areas on Map 4 and for unmapped sensitive areas, with riparian policies in section 2.3.9 ('Sensitive Environments in Metchosin').",
+      "sourceUrl": "https://metchosin.ca/sites/metchosin.ca/files/2024-11/11%2026%202024%20MEASC%20Agenda%20Pkg.pdf",
+      "sourceTitle": "Environmental Advisory Select Committee agenda package, Nov 26 2024 (District of Metchosin)",
+      "excerpt": "Council has responsibility for the sensitive area indicated on Map 4 and other sensitive areas not specifically shown on that map",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "metchosin-alr",
+      "kind": "condition",
+      "unique": true,
+      "text": "Metchosin has 1,658 ha (4,211 acres) in the Agricultural Land Reserve plus many large rural properties, so work here is often on farm edges, hedgerows, pasture and acreage.",
+      "sourceUrl": "https://metchosin.ca/sites/metchosin.ca/files/2024-09/Metchosin%20Ag%20Plan_FINAL.pdf",
+      "sourceTitle": "Metchosin Agricultural Area Plan (Final, 2024)",
+      "excerpt": "1,658 ha (4,211 acres) of land in the Agricultural Land Reserve",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "metchosin-wells",
+      "kind": "condition",
+      "unique": true,
+      "text": "Many Metchosin properties rely on wells drawing on Aquifer 606, though parts of the District are on CRD piped water; well owners are responsible for testing and maintenance.",
+      "sourceUrl": "https://www.env.gov.bc.ca/wsd/plan_protect_sustain/groundwater/aquifers/aquifers_crd/pdfs/aquif_crd.pdf",
+      "sourceTitle": "Aquifers of the Capital Regional District (Province of B.C.)",
+      "excerpt": "there is thought to be a greater reliance upon wells for domestic water sources in Sooke, Metchosin, and the Western Communities",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm. Many Metchosin properties are on wells; the rules apply only where connected.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    },
+    {
+      "id": "regional-bc-rapr",
+      "kind": "regional",
+      "unique": false,
+      "text": "Under B.C.'s Riparian Areas Protection Regulation, the assessment area for a stream is a 30 m strip on each side measured from the high water mark; where a local government applies it, work in that strip can need a Qualified Environmental Professional's report.",
+      "sourceUrl": "https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/riparian-areas-regulation",
+      "sourceTitle": "Riparian Areas Protection Regulation (RAPR) - Province of B.C.",
+      "excerpt": "The former Riparian Areas Regulation was amended on November 1, 2019 and became the Riparian Areas Protection Regulation.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Provincial rule: shared regional block."
+    },
+    {
+      "id": "regional-bc-wildlife-act-nests",
+      "kind": "regional",
+      "unique": false,
+      "text": "B.C.'s Wildlife Act (section 34) protects occupied bird nests, and eagle, osprey, heron and some other nests year-round, so trees are checked for active nests before felling or heavy pruning, especially in spring and summer.",
+      "sourceUrl": "https://www2.gov.bc.ca/gov/content/transportation/transportation-infrastructure/engineering-standards-guidelines/environmental-management/reference-documents/environmental-regulatory-compliance/wildlife",
+      "sourceTitle": "Wildlife - Environmental regulatory compliance (Province of B.C.)",
+      "excerpt": "The protection for eagle and heron nests applies even outside of the breeding season.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Provincial rule: shared regional block."
+    }
+  ],
+  "gaps": [
+    "Could not fetch metchosin.ca: protected-species list and size thresholds (node/521), permit fees and current fines not confirmed.",
+    "Burning season dates not confirmed.",
+    "Shoreline Slopes DPA guidelines (OCP s.2.16) not read; 2013 Shoreline Protection Plan referenced but not read.",
+    "Deer pressure on farms and gardens: no Metchosin-specific official source found.",
+    "Wildfire interface / FireSmart program for Metchosin not searched in depth."
+  ]
+}

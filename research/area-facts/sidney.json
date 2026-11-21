@@ -1,0 +1,122 @@
+{
+  "slug": "sidney",
+  "name": "Sidney",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "sidney-tree-bylaw-scope",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sidney's Tree Preservation Bylaw (No. 2138) protects listed native species, replacement trees, trees required by a development permit, trees in environmental development permit areas, Town trees and any tree over 60 cm in diameter.",
+      "sourceUrl": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
+      "sourceTitle": "Tree Preservation Bylaw - Town of Sidney",
+      "excerpt": "any tree having a diameter greater than 60 cm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "sidney-tree-permit-trigger",
+      "kind": "rule",
+      "unique": true,
+      "text": "On private land, removing, extensively pruning or topping a protected tree may need a Tree Removal Permit from the Town's Parks Department (250-656-1034).",
+      "sourceUrl": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
+      "sourceTitle": "Tree Preservation Bylaw - Town of Sidney",
+      "excerpt": "to remove, extensively prune, or top an existing tree located on private property, you may require a Tree Removal Permit",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "sidney-tree-replacement-fee",
+      "kind": "rule",
+      "unique": true,
+      "text": "Sidney's 2025 tree permit application covers both pruning and removal of protected trees and refers to $750 per tree in connection with replacement trees, planted on the property or paid as a fee in lieu.",
+      "sourceUrl": "https://www.sidney.ca/wp-content/uploads/Tree-Permit-Application-2025_REV.pdf",
+      "sourceTitle": "Tree Permit Application 2025 (Town of Sidney)",
+      "excerpt": "$750.00 per tree",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. The snippet does not make clear whether $750 is a security, a fee in lieu, or both."
+    },
+    {
+      "id": "sidney-esa-dpa",
+      "kind": "rule",
+      "unique": true,
+      "text": "Properties inside Sidney's Environmentally Sensitive Area development permit areas, which take in creeks, shorelines and upland forest, need an approved development permit before landscaping that significantly affects the land or water.",
+      "sourceUrl": "https://www.sidney.ca/planning-building/community-planning/environmentally-sensitive-development-permit-areas/",
+      "sourceTitle": "Environmentally Sensitive Areas - Town of Sidney",
+      "excerpt": "need an approved Development Permit before any construction or landscaping that significantly affects the land or water",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "sidney-reay-mermaid-creek",
+      "kind": "condition",
+      "unique": true,
+      "text": "Reay Creek and Mermaid Creek carry fish habitat and help filter stormwater, so lots next to them may also fall under the Province's riparian rules.",
+      "sourceUrl": "https://www.sidney.ca/planning-building/community-planning/environmentally-sensitive-development-permit-areas/",
+      "sourceTitle": "Environmentally Sensitive Areas - Town of Sidney",
+      "excerpt": "Properties around Mermaid Creek and Reay Creek may be subject to the Province's Riparian Areas Protection Regulation.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "sidney-boulevard-bylaw",
+      "kind": "rule",
+      "unique": true,
+      "text": "Under Sidney's Boulevard Maintenance Bylaw (No. 1738), the owner keeps the boulevard in front of the property neat and the grass cut; the Town can order an unsightly boulevard tidied and charge for doing the work.",
+      "sourceUrl": "https://sidney.ca/wp-content/uploads/1738-Boulevard-Maintenance-Bylaw.pdf",
+      "sourceTitle": "Boulevard Maintenance Bylaw No. 1738 (Town of Sidney)",
+      "excerpt": "keeping the boulevard in a neat condition",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Bylaw dated 2002; check for amendments. Excerpt is the snippet's wording and may be paraphrased."
+    },
+    {
+      "id": "sidney-no-wood-burning",
+      "kind": "rule",
+      "unique": true,
+      "text": "Wood burning, including yard and land-clearing burning, is not allowed in Sidney; prunings go to yard-waste collection or drop-off instead. Propane and charcoal fire pits are permitted.",
+      "sourceUrl": "https://sidney.ca/?p=2028",
+      "sourceTitle": "Sidney Fire Department - Town of Sidney",
+      "excerpt": "Wood burning within the Town of Sidney is not permitted.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "sidney-yard-waste-collection",
+      "kind": "condition",
+      "unique": true,
+      "text": "Sidney collects yard waste curbside twice a month through its contractor, in kraft bags or open cans of up to 80 L and 20 kg each; there is no yard-waste pickup for commercial units.",
+      "sourceUrl": "https://www.sidney.ca/?p=1994",
+      "sourceTitle": "Yard and garden waste collection - Town of Sidney",
+      "excerpt": "items for yard waste collection must be placed curbside prior to 7:00 am on collection days",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Limits also from Collection and Disposal of Refuse Bylaw No. 2259 snippet."
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    }
+  ],
+  "gaps": [
+    "Could not fetch sidney.ca: exact protected-species list, permit fees and exemption sections of Bylaw 2138 not read this session. See https://www.sidney.ca/wp-content/uploads/Tree-Preservation-Bylaw-No.pdf",
+    "Salt-spray/exposure and soils: no official source found. The Saanich Peninsula rain-shadow claim was found only on Wikipedia (tagged 'citation needed'), so it is not used.",
+    "Deer: no Town of Sidney deer program found; the Sidney Island deer project is a different place (Gulf Islands NP Reserve) and must not be used.",
+    "Shoal Harbour Migratory Bird Sanctuary / Roberts Bay shoreline guidelines: not confirmed from an official page.",
+    "Confirm that the CRD water conservation bylaw applies to Sidney addresses (Saanich Peninsula water)."
+  ]
+}

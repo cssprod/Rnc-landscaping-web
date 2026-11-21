@@ -1,0 +1,132 @@
+{
+  "slug": "highlands",
+  "name": "Highlands",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "highlands-tree-bylaw-10",
+      "kind": "rule",
+      "unique": true,
+      "text": "Highlands' Tree Management Bylaw No. 10 (1994) needs a tree cutting permit to remove a protected tree or any tree near a watercourse, lake or steep slope, and prohibits cutting a significant tree.",
+      "sourceUrl": "https://www.highlands.ca/node/133",
+      "sourceTitle": "Tree cutting - District of Highlands",
+      "excerpt": "cutting down a significant tree is strictly prohibited",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "highlands-protected-species",
+      "kind": "rule",
+      "unique": true,
+      "text": "The District lists Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara and manzanita as protected trees.",
+      "sourceUrl": "https://www.highlands.ca/node/133",
+      "sourceTitle": "Tree cutting - District of Highlands",
+      "excerpt": "Under the Tree Management Bylaw protected trees are:",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. One snippet listed only Garry oak; size thresholds (e.g. Douglas-fir over 60 cm, any tree over 80 cm, in research/areas.json) not re-confirmed."
+    },
+    {
+      "id": "highlands-dpas",
+      "kind": "rule",
+      "unique": true,
+      "text": "Building or subdividing inside Highlands' Steep Slopes, Water and Riparian, or Sensitive Vegetation development permit areas needs a development permit first; what is on the ground decides whether a lot is in one.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/Development%20Permit%201-5%20-%20Jan%202024_202401251135368466.pdf",
+      "sourceTitle": "Development Permit Areas 1-5 (District of Highlands, Jan 2024)",
+      "excerpt": "DP Area #1 - Steep Slopes, DP Area #2 - Water and Riparian Areas, DP Area #3 - Sensitive Vegetation",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "highlands-wells-aquifer",
+      "kind": "condition",
+      "unique": true,
+      "text": "Most Highlands homes draw drinking water from private wells in a bedrock aquifer (BC Aquifer #680), so irrigation is planned around well yield. CRD watering rules apply only to the few connected properties.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/District%20of%20Highlands%20Groundwater%20Protection%20-%20Final%20Work%20Plan%20and%20Implementation%20Report.pdf",
+      "sourceTitle": "Groundwater Protection - Final Work Plan and Implementation Report (District of Highlands)",
+      "excerpt": "the majority of residents in the District obtain their drinking water from private wells that tap into the local bedrock aquifer",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+    },
+    {
+      "id": "highlands-iron-wells",
+      "kind": "condition",
+      "unique": true,
+      "text": "Many Highlands wells are high in iron, which can stain paving, siding and plants watered by sprinklers; the District advises testing tap water at least yearly.",
+      "sourceUrl": "https://www.highlands.ca/node/150",
+      "sourceTitle": "Groundwater - District of Highlands",
+      "excerpt": "many wells in the Highlands are high in iron",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Staining is our inference, not a District statement; which Highlands page holds the iron sentence was unclear in the snippet."
+    },
+    {
+      "id": "highlands-burning-permits",
+      "kind": "rule",
+      "unique": true,
+      "text": "Highlands has no open burning season: a free permit is required for every open burn, all year, and fires larger than a campfire are allowed only when the venting index is 'Good'.",
+      "sourceUrl": "https://www.highlands.ca/node/149",
+      "sourceTitle": "Burning Permits - District of Highlands",
+      "excerpt": "permits are mandatory year-round and are free of charge",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. One page cites Bylaw No. 264, another the Fire Control and Protection Bylaw No. 474, 2025; confirm the current bylaw."
+    },
+    {
+      "id": "highlands-firesmart-wui",
+      "kind": "condition",
+      "unique": true,
+      "text": "Highlands homes sit among forest at the wildland-urban interface. The District has a Community Wildfire Protection Plan (2009) and offers free FireSmart home assessments, which often lead to fuel reduction around buildings.",
+      "sourceUrl": "https://www.highlands.ca/node/105",
+      "sourceTitle": "FireSmart Program - District of Highlands",
+      "excerpt": "a free home assessment with no obligation",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. CWPP: https://www.highlands.ca/sites/31/files/2025-02/Highlands_CWPP%20-%20r.pdf (Blackwell, Dec 2009)."
+    },
+    {
+      "id": "highlands-wells-proof",
+      "kind": "condition",
+      "unique": true,
+      "text": "Groundwater in Highlands also serves the Hanington Estates subdivision, and Bear Mountain Golf Course irrigation draws on Highlands wells.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/2018%20GW%20Monitoring%20Report-31JUL_19.pdf",
+      "sourceTitle": "2018 Groundwater Level Monitoring Report (District of Highlands)",
+      "excerpt": "Hanington Estates subdivision is served by groundwater wells",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. From the 2018 report; may have changed."
+    },
+    {
+      "id": "regional-crd-stage1-watering",
+      "kind": "regional",
+      "unique": false,
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm. Most Highlands homes are on private wells and only some areas are connected, so check before applying it.",
+      "sourceUrl": "https://www.crd.ca/node/4919",
+      "sourceTitle": "CRD - Watering schedule",
+      "excerpt": "Any method: 4-10am or 7-10pm",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+    },
+    {
+      "id": "regional-bc-wildlife-act-nests",
+      "kind": "regional",
+      "unique": false,
+      "text": "B.C.'s Wildlife Act (section 34) protects occupied bird nests, and eagle, osprey, heron and some other nests year-round, so trees are checked for active nests before felling or heavy pruning, especially in spring and summer.",
+      "sourceUrl": "https://www2.gov.bc.ca/gov/content/transportation/transportation-infrastructure/engineering-standards-guidelines/environmental-management/reference-documents/environmental-regulatory-compliance/wildlife",
+      "sourceTitle": "Wildlife - Environmental regulatory compliance (Province of B.C.)",
+      "excerpt": "The protection for eagle and heron nests applies even outside of the breeding season.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Provincial rule: shared regional block."
+    }
+  ],
+  "gaps": [
+    "Could not fetch highlands.ca: size thresholds for protected trees and the definition of 'significant tree' not confirmed.",
+    "Deer pressure and soils (thin soil over rock): no official source found.",
+    "Whether the 2009 CWPP has been replaced by a newer Community Wildfire Resiliency Plan not confirmed."
+  ]
+}

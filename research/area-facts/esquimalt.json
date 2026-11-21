@@ -1,0 +1,121 @@
+{
+  "slug": "esquimalt",
+  "name": "Esquimalt",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "es-tree-bylaw-3076",
+      "kind": "rule",
+      "text": "Esquimalt's Tree Protection Bylaw, 2022, No. 3076 protects trees by species and any tree over 30 cm in diameter, measured at breast height (1.4 m).",
+      "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+      "sourceTitle": "Esquimalt Tree Cutting Permit | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "Tree Protection Bylaw, 2022, No. 3076",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); the species list was cut off in the snippet"
+    },
+    {
+      "id": "es-tree-permit-scope",
+      "kind": "rule",
+      "text": "In Esquimalt a tree permit covers removal, pruning, or work in a protected tree's root zone. Applications go to trees@esquimalt.ca, and on building projects the tree permit is handled with the building permit.",
+      "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+      "sourceTitle": "Esquimalt Tree Cutting Permit | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "removal, pruning, or work in the protected root zone",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "es-dpa1-landscaping",
+      "kind": "rule",
+      "text": "Esquimalt's Natural Environment Development Permit Area (DPA 1) covers new buildings, additions over 10 m² and landscaping, with some exceptions. Township-approved ecological restoration is exempt.",
+      "sourceUrl": "https://www.esquimalt.ca/node/277",
+      "sourceTitle": "Environmental Areas | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "applies to new buildings and structures, additions greater than 10 m2, and landscaping (with some exceptions)",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "es-shoreline-setback",
+      "kind": "rule",
+      "text": "Esquimalt does not permit new development within 20 m of the high-water mark of the Gorge Waterway, or within 10 m of the high-water mark of the Strait of Juan de Fuca.",
+      "sourceUrl": "https://www.esquimalt.ca/node/277",
+      "sourceTitle": "Environmental Areas | Township of Esquimalt",
+      "sourceType": "official",
+      "excerpt": "new development is not permitted within 20 metres of the high water mark of the Gorge Waterway, and within 10 m of the high water mark of the Strait",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); an older DPA version cited 7.5 m, so confirm the current figure"
+    },
+    {
+      "id": "es-dpa1-soil-views",
+      "kind": "rule",
+      "text": "Esquimalt's DPA 1 guidelines ask designers to avoid disturbing or compacting natural soil, to frame public views rather than block them, and to meet the Canadian Landscape Standards.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/2026-01/DPA%201%20-%20Natural%20Environment.pdf",
+      "sourceTitle": "DPA 1 - Natural Environment (Township of Esquimalt, posted 2026-01)",
+      "sourceType": "official",
+      "excerpt": "avoid disturbing, compacting and removing areas of natural soil",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "es-pesticide-bylaw",
+      "kind": "rule",
+      "text": "Esquimalt's Pesticide Use Reduction Bylaw No. 2686 bans non-essential pesticide use on residential properties. It applies to landscape professionals and lawn care companies as well as residents.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/municipal-hall/bylaws/pesticidebylawinfosheet.pdf",
+      "sourceTitle": "Important Notice to Home Owners, Tenants, Gardeners (Esquimalt pesticide bylaw info sheet)",
+      "sourceType": "official",
+      "excerpt": "applies to all Esquimalt property owners and residents as well as landscape professionals and lawn care companies",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); sources date from 2008-09, so confirm current text"
+    },
+    {
+      "id": "es-boulevard-permit",
+      "kind": "rule",
+      "text": "Under Esquimalt's Boulevard Maintenance Bylaw No. 2860, changing a boulevard needs a Boulevard Alteration Permit, and noxious or invasive plants are not allowed on it.",
+      "sourceUrl": "https://esquimalt.ca/media/file/2019-07-bylaw-2860-boulevard-maintenance-consolidation",
+      "sourceTitle": "Boulevard Maintenance Bylaw No. 2860, consolidated July 2019 (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "an owner may apply for a Boulevard Alteration Permit",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "es-garry-oak-remnant",
+      "kind": "condition",
+      "text": "Esquimalt holds some of the harbour's last Garry oak habitat, including the 2.4-acre Matson Conservation Area. Gardens nearby suit native, invasive-free planting.",
+      "sourceUrl": "https://hat.bc.ca/matson",
+      "sourceTitle": "Matson Conservation Area (Habitat Acquisition Trust)",
+      "sourceType": "secondary",
+      "excerpt": "Victoria Harbour's last Garry oak",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "secondary source; from search snippet; land-trust page"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "Full species list protected under Bylaw 3076, and any slope rule (a search summary mentioned 30 per cent, unconfirmed): read the bylaw PDF.",
+    "Deer pressure in Esquimalt: no Esquimalt-specific source found.",
+    "Exposure and salt spray at Saxe Point and West Bay: no official source found.",
+    "esquimalt.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}

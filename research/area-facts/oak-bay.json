@@ -1,0 +1,122 @@
+{
+  "slug": "oak-bay",
+  "name": "Oak Bay",
+  "researchedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "ob-tree-permit",
+      "kind": "rule",
+      "text": "Under Oak Bay's Tree Protection Bylaw No. 4742 (amended by No. 4759), no protected tree may be cut down or damaged without a permit from the Municipal Arborist or a development permit.",
+      "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
+      "sourceTitle": "Trees | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "no protected tree shall be cut down or damaged unless authorized by a permit issued by the Municipal Arborist under this Bylaw",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ob-tree-pruning",
+      "kind": "rule",
+      "text": "Oak Bay's bylaw also covers pruning. Its definition sets a 5 cm threshold for the listed species classes and 10 cm for other protected trees, so heavy limb work on an oak needs a check first.",
+      "sourceUrl": "https://Oakbay.ca/sites/default/files/4742_CONSOLIDATED.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, consolidated (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "Prune ... subsections 1 (a) to (f) of the \"protected tree\" definition",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); definition only partly indexed, so confirm what the 5 cm / 10 cm measures"
+    },
+    {
+      "id": "ob-tree-deposit",
+      "kind": "rule",
+      "text": "Oak Bay's tree permit form (revised 10/2022) asks for a $500 security deposit per tree, held for one year from the date the permit is issued.",
+      "sourceUrl": "https://Oakbay.ca/sites/default/files/4742_CONSOLIDATED.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, consolidated (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "a security deposit of $500.00 per tree to be held for a period of one year from the date of issuance of the permit",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); the exact document holding the form was not confirmed"
+    },
+    {
+      "id": "ob-uplands-guidelines",
+      "kind": "rule",
+      "text": "In the Uplands, which John Charles Olmsted planned in 1907 and 1908, Oak Bay's Advisory Design Panel reviews proposals against the Uplands Design Guidelines. Landscaping is expected to respect the area's 'residential park' setting.",
+      "sourceUrl": "https://oakbay.ca/wp-content/uploads/2025/04/Uplands-Design-Guidelines-Brochure.pdf",
+      "sourceTitle": "Uplands Design Guidelines brochure (District of Oak Bay, 2025)",
+      "sourceType": "official",
+      "excerpt": "landscaping should respect the residential park atmosphere of the Uplands",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); which landscape-only projects trigger review was not confirmed"
+    },
+    {
+      "id": "ob-prospect-hca",
+      "kind": "rule",
+      "text": "The Prospect neighbourhood is Oak Bay's first Heritage Conservation Area. Its design guidelines are part of the Official Community Plan, so exterior changes there should be checked against them.",
+      "sourceUrl": "https://www.oakbay.ca/building-infrastructure/planning/heritage-area",
+      "sourceTitle": "What is a Heritage Conservation Area? | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "The Prospect neighbourhood will be Oak Bay's first Heritage Conservation Area.",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked); snippet wording is future tense, so confirm adoption status"
+    },
+    {
+      "id": "ob-gas-equipment-phaseout",
+      "kind": "rule",
+      "text": "In May 2022 Oak Bay council voted to phase out gas-powered leaf blowers, mowers and other garden equipment, with the full ban reported to take effect in 2026. Confirm the current bylaw before relying on it.",
+      "sourceUrl": "https://vancouverisland.ctvnews.ca/oak-bay-votes-to-ban-gas-powered-landscaping-gear-1.5919022",
+      "sourceTitle": "Oak Bay votes to ban gas-powered landscaping gear (CTV News Vancouver Island)",
+      "sourceType": "secondary",
+      "excerpt": "landscaping companies and residential users will have three years to phase out their gas-powered gear",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "secondary source; from search snippet; news report, bylaw text and in-force status not confirmed"
+    },
+    {
+      "id": "ob-deer-project",
+      "kind": "condition",
+      "text": "Deer are a daily garden factor in Oak Bay. The District's Urban Deer Project with HERD Wildlife is giving immunocontraceptive to female deer across Oak Bay in fall 2026.",
+      "sourceUrl": "https://www.oakbay.ca/community-culture/pets-wildlife/urban-deer",
+      "sourceTitle": "Urban Deer | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "will be administering immuno-contraceptive (IC) to female deer throughout Oak Bay this fall (2026)",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "ob-deer-garden",
+      "kind": "condition",
+      "text": "Oak Bay's deer flyer suggests combining sprays, fences and deer-resistant planting, and warns that deer get used to the same repellent over time.",
+      "sourceUrl": "https://Oakbay.ca/sites/default/files/OakBayDeer%20Info%20Flyer%20MAY%203%202017.pdf",
+      "sourceTitle": "Oak Bay Deer info flyer (District of Oak Bay, May 2017)",
+      "sourceType": "official",
+      "excerpt": "deer can become accustomed to the same repellent over time, and eventually ignore it",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    },
+    {
+      "id": "crd-watering-stage1",
+      "kind": "regional",
+      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
+      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
+      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "The watering schedule days only apply to lawns!",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+    }
+  ],
+  "gaps": [
+    "Diameter thresholds in the 'protected tree' definition of Bylaw 4742 were not visible in search results. Read the consolidated PDF before stating sizes.",
+    "Current tree permit fees: only a 2011 news figure was found, and it was not used.",
+    "Whether the gas-equipment phase-out applies to commercial landscapers, and whether it is in force in 2026: only news reports were found.",
+    "Salt spray and exposure on the Oak Bay waterfront (Beach Drive, Uplands): no Oak Bay-specific source found.",
+    "oakbay.ca could not be fetched in this session, so reviewedOn is null on every fact."
+  ]
+}
