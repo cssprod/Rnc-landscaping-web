@@ -2,7 +2,9 @@
 /**
  * Inline SVG sprite: the logo (squircle tile + outlined wordmark) and a small
  * line-icon set drawn on a 24px grid with 1.75px strokes. Every page includes
- * it once at the top of <body>; components reference symbols with <use>.
+ * it once at the top of <body>; components reference symbols with <use>. Ids are namespaced
+ * (icons i-*, the logo and its paint servers logo-*) because the build keeps only the symbols a page references
+ * (src/lib/build/sprite-shake.mjs).
  */
 import { html, raw } from '../lib/html.mjs';
 import { WORD_VIEWBOX, WORD_RNC, WORD_LANDSCAPING, FIR, GROUND } from './brand-paths.mjs';
@@ -67,8 +69,8 @@ export const logo = () => html`<svg class="brand__tile" viewBox="0 0 64 64" aria
 export function sprite() {
   const icons = Object.entries(STROKE).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`).join('');
   const quote = '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M7 17.5c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1S9.1 17.5 7 17.5zm10 0c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1s-1.4 3.2-3.5 3.2z"/></symbol>';
-  const tile = `<symbol id="logo-tile" viewBox="0 0 64 64"><g clip-path="url(#lt-c)"><path d="${TILE}" fill="url(#lt-g)"/><rect width="64" height="64" fill="url(#lt-s)"/><path d="${GROUND}" fill="url(#lt-h)"/><path d="${FIR}" fill="#fff"/></g><path d="${TILE}" fill="none" stroke="#fff" stroke-opacity=".22"/></symbol>`;
+  const tile = `<symbol id="logo-tile" viewBox="0 0 64 64"><g clip-path="url(#logo-c)"><path d="${TILE}" fill="url(#logo-g)"/><rect width="64" height="64" fill="url(#logo-s)"/><path d="${GROUND}" fill="url(#logo-h)"/><path d="${FIR}" fill="#fff"/></g><path d="${TILE}" fill="none" stroke="#fff" stroke-opacity=".22"/></symbol>`;
   const word = `<symbol id="logo-word" viewBox="${WORD_VIEWBOX}"><path d="${WORD_RNC}" fill="currentColor"/><path d="${WORD_LANDSCAPING}" fill="currentColor"/></symbol>`;
-  const defs = `<defs><linearGradient id="lt-g" x1="12" y1="0" x2="52" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A7D55"/><stop offset=".55" stop-color="#1D4A33"/><stop offset="1" stop-color="#0B1F15"/></linearGradient><radialGradient id="lt-s" cx="18" cy="6" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="lt-h" x1="32" y1="43" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7CC596"/><stop offset=".45" stop-color="#3F8A5A"/><stop offset="1" stop-color="#2A6A43"/></linearGradient><clipPath id="lt-c"><path d="${TILE}"/></clipPath></defs>`;
+  const defs = `<defs><linearGradient id="logo-g" x1="12" y1="0" x2="52" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A7D55"/><stop offset=".55" stop-color="#1D4A33"/><stop offset="1" stop-color="#0B1F15"/></linearGradient><radialGradient id="logo-s" cx="18" cy="6" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="logo-h" x1="32" y1="43" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7CC596"/><stop offset=".45" stop-color="#3F8A5A"/><stop offset="1" stop-color="#2A6A43"/></linearGradient><clipPath id="logo-c"><path d="${TILE}"/></clipPath></defs>`;
   return raw(`<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">${defs}${tile}${word}${icons}${quote}</svg>`);
 }

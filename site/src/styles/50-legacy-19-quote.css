@@ -1,0 +1,76 @@
+/* 50-legacy-19-quote.css: legacy slice of the pre-redesign site.css (lines 500–569).
+   Owner: quote. quote form, stepper, fields, choices, ready panel.
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* ================= forms (quote request) ================= */
+.quote-page { position: relative; isolation: isolate; overflow: clip; padding-top: calc(var(--layout-header-h) + clamp(1.5rem, 4vw, 3.5rem)); padding-bottom: calc(var(--space-section) * 0.75); }
+.quote-page__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.quote-page__head { margin-bottom: var(--space-6); }
+.quote-page__head h1 { margin-bottom: var(--space-4); }
+.quote-form { padding: clamp(1.25rem, 3.5vw, 2.5rem); border-radius: var(--radius-2xl); --card-fill: var(--material-thick); }
+.quote-aside { position: sticky; top: calc(var(--layout-header-h) + 16px); overflow: hidden; border-radius: var(--radius-2xl); }
+.quote-aside .media { border-radius: 0; aspect-ratio: 3 / 2 !important; }
+.quote-aside__body { padding: 24px 26px 28px; }
+.quote-aside h2 { font-size: var(--font-size-title-3); }
+.quote-aside h3 { margin-bottom: 10px; font-size: 1rem; }
+.next-steps { list-style: none; display: grid; gap: 14px; margin: 0 0 var(--space-5); padding: 0; }
+.next-steps li { display: flex; align-items: flex-start; gap: 12px; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.next-steps__n { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--color-bg-tint); color: var(--color-brand); font-size: 0.8125rem; font-weight: var(--font-weight-bold); }
+.quote-aside__contact { padding-top: 18px; border-top: 1px solid var(--color-line); }
+.quote-aside__contact p { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
+/* With JS on, the first paint already matches the stepped form (no layout shift when the script runs). */
+html:not(.js) .stepper, .js .filters [data-filters-submit] { display: none; }
+.js .quote-form:not(.is-stepped) .step:not([data-step="0"]), .js .quote-form:not(.is-stepped) [data-submit-row] { display: none; }
+.stepper { list-style: none; display: flex; gap: 4px; margin: 0 0 var(--space-6); padding: 4px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--color-ink) 6%, transparent); }
+.stepper[hidden] { display: none; }
+.stepper li { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; height: 40px; padding: 0 10px; border-radius: var(--radius-pill); color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease), flex-grow var(--dur-base) var(--ease); }
+.stepper__t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stepper li:not(.is-current) { flex: 0 0 auto; padding: 0 7px; }
+.stepper li:not(.is-current) .stepper__t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.stepper li.is-current { flex: 1 1 auto; background: var(--color-bg-elevated); color: var(--color-ink); box-shadow: var(--shadow-1), 0 0 0 0.5px var(--color-line); }
+.stepper li.is-done { color: var(--color-brand); }
+.stepper__n { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: color-mix(in srgb, currentColor 14%, transparent); font-size: 0.75rem; font-variant-numeric: tabular-nums; }
+.stepper li.is-done .stepper__n { background: var(--color-brand); color: var(--color-brand-ink); }
+.step { min-width: 0; margin: 0; padding: 0; border: 0; }
+.step[hidden] { display: none; }
+html:not(.js) .step + .step { margin-top: var(--space-7); padding-top: var(--space-6); border-top: 1px solid var(--color-line); }
+.step__legend { margin-bottom: var(--space-3); padding: 0; font-size: var(--font-size-title-2); font-weight: var(--font-weight-semibold); line-height: 1.15; letter-spacing: -0.022em; }
+.step__count { display: block; margin-bottom: 6px; color: var(--color-brand-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); letter-spacing: 0; }
+.step__intro { color: var(--color-ink-2); }
+.step__nav { display: flex; flex-direction: row-reverse; justify-content: space-between; gap: 12px; margin-top: var(--space-6); }
+.step__nav:empty { display: none; }
+.field { min-width: 0; margin: 0 0 var(--space-5); padding: 0; border: 0; }
+.field > label, .field > legend { display: block; margin-bottom: 8px; padding: 0; font-weight: var(--font-weight-semibold); letter-spacing: -0.012em; }
+.field__help { margin: -2px 0 10px; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+.field__error { display: flex; align-items: center; gap: 6px; margin: 8px 0 0; color: var(--color-error); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); }
+.field__error[hidden] { display: none; }
+input[type=text], input[type=email], input[type=tel], select, textarea { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--color-line-strong); border-radius: var(--radius-m); background: var(--color-bg-elevated); color: var(--color-ink); font: inherit; font-size: 1rem; -webkit-appearance: none; appearance: none; transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+textarea { min-height: 10rem; resize: vertical; line-height: 1.5; }
+input:hover, select:hover, textarea:hover { border-color: var(--color-ink-3); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 1px; border-color: var(--color-focus); box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-focus) 16%, transparent); }
+[aria-invalid="true"] { border-color: var(--color-error) !important; }
+.select { position: relative; }
+.select select { padding-right: 44px; }
+.select .i { position: absolute; top: 50%; right: 14px; translate: 0 -50%; color: var(--color-ink-3); pointer-events: none; }
+.choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: 8px; }
+.choice { position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; margin: 0; padding: 12px 16px; border-radius: var(--radius-m); background: var(--color-bg-elevated); box-shadow: inset 0 0 0 1px var(--color-line-strong); font-weight: var(--font-weight-medium); cursor: pointer; transition: box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease); }
+.choice:hover { box-shadow: inset 0 0 0 1px var(--color-ink-3); }
+.choice input { flex: none; width: 22px; height: 22px; margin: 0; border: 1.5px solid var(--color-line-strong); border-radius: 50%; background: var(--color-bg-elevated) center / 14px no-repeat; -webkit-appearance: none; appearance: none; cursor: pointer; transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+.choice input[type=checkbox] { border-radius: 7px; }
+.choice input:checked { border-color: var(--color-brand); background-color: var(--color-brand); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
+.choice input:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.choice:has(input:checked) { background: color-mix(in srgb, var(--color-brand) 7%, var(--color-bg-elevated)); box-shadow: inset 0 0 0 1.5px var(--color-brand); }
+.choice--check { align-items: flex-start; min-height: 0; padding: 0; background: none; box-shadow: none !important; }
+.has-error .choice { box-shadow: inset 0 0 0 1px var(--color-error); }
+.quote-form__submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: var(--space-6); }
+.quote-form__submit[hidden] { display: none; }
+.quote-form__submit p { margin: 0; }
+.quote-ready h2 { font-size: var(--font-size-title-2); }
+.quote-ready p { color: var(--color-ink-2); }
+.quote-ready:focus { outline: none; }
+.quote-ready__label { display: block; margin: var(--space-5) 0 8px; font-weight: var(--font-weight-semibold); }
+.quote-ready textarea { min-height: 14rem; background: var(--color-bg-grouped); font-size: 0.9375rem; }
+.quote-ready__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+}

@@ -1,0 +1,3 @@
+/* 00-layers.css: the cascade-layer order, lowest priority first (CONTRACT §12). brand/tokens.css is prepended unlayered.
+   The build concatenates site/src/styles/*.css in file-name order into one hashed stylesheet. */
+@layer legacy, reset, base, layout, chrome, components, living, pages, utilities, motion, print;

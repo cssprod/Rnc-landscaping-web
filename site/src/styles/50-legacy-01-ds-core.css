@@ -1,0 +1,44 @@
+/* 50-legacy-01-ds-core.css: legacy slice of the pre-redesign site.css (lines 1–39).
+   Owner: ds-core. header comment, base (reset, body, headings, focus, selection, .i, .vh, .note, skip link); layout (.wrap, .section variants, main).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+/* RNC Landscaping: component styles for the "Liquid Glass" system.
+   Uses only tokens from brand/tokens.json (compiled to custom properties ahead of this file).
+   Layers: base → layout → glass materials → navigation → heroes → components → pages → motion → print. */
+
+/* ================= base ================= */
+:root { interpolate-size: allow-keywords; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--layout-header-h) + 1rem); background: var(--color-bg); }
+body { margin: 0; min-height: 100vh; background: var(--color-bg); color: var(--color-ink); font-family: var(--font-family-sans); font-size: var(--font-size-body); line-height: var(--font-leading-body); letter-spacing: var(--font-tracking-body); font-optical-sizing: auto; font-kerning: normal; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; }
+img, svg, video { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+h1, h2, h3, h4 { margin: 0 0 var(--space-4); color: var(--color-ink); font-weight: var(--font-weight-semibold); line-height: var(--font-leading-title); letter-spacing: var(--font-tracking-title); text-wrap: balance; }
+h1 { font-size: var(--font-size-large-title); font-weight: var(--font-weight-display); line-height: var(--font-leading-display); letter-spacing: var(--font-tracking-display); }
+h2 { font-size: var(--font-size-title-1); }
+h3 { font-size: var(--font-size-title-3); line-height: var(--font-leading-snug); letter-spacing: var(--font-tracking-headline); }
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
+strong { font-weight: var(--font-weight-semibold); }
+a { color: var(--color-brand); text-decoration-line: underline; text-decoration-thickness: 0.07em; text-underline-offset: 0.22em; text-decoration-color: color-mix(in srgb, currentColor 38%, transparent); transition: text-decoration-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2.5px solid var(--color-focus); outline-offset: 3px; border-radius: 6px; }
+main:focus { outline: none; }
+::selection { background: color-mix(in srgb, var(--color-brand-2) 32%, transparent); }
+.i { flex: none; display: inline-block; vertical-align: middle; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.note { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+.skip-link { position: fixed; left: var(--space-4); top: -120px; z-index: var(--z-overlay); padding: 12px 18px; border-radius: var(--radius-pill); background: var(--color-ink); color: var(--color-bg); font-weight: var(--font-weight-semibold); text-decoration: none; }
+.skip-link:focus { top: max(12px, env(safe-area-inset-top)); }
+
+/* ================= layout ================= */
+.wrap { width: 100%; max-width: calc(var(--layout-content-max) + 2 * var(--layout-gutter)); margin-inline: auto; padding-inline: max(var(--layout-gutter), env(safe-area-inset-left)) max(var(--layout-gutter), env(safe-area-inset-right)); }
+.section { position: relative; padding-block: calc(var(--space-section) * 0.5); }
+.section--flush { padding-top: 0; }
+.section--tight { padding-block: calc(var(--space-section) * 0.35); }
+.section--elevated, .bento-band, .quotes-band { margin-block: calc(var(--space-section) * 0.25); padding-block: calc(var(--space-section) * 0.7); }
+.section--elevated { background: var(--color-bg-elevated); }
+.section--elevated .glass-card { --card-fill: var(--color-bg); }
+main > :first-child.section { padding-top: calc(var(--layout-header-h) + var(--space-6)); }
+}

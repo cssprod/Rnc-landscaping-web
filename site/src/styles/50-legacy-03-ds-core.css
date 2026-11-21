@@ -1,0 +1,25 @@
+/* 50-legacy-03-ds-core.css: legacy slice of the pre-redesign site.css (lines 48–66).
+   Owner: ds-core. glass materials (.glass-card, .glass-bar, .icon-tile, @supports fallback).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* ================= glass materials ================= */
+.glass-card { --card-fill: var(--material-regular); position: relative; isolation: isolate; border-radius: var(--radius-xl); background: var(--card-fill); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); box-shadow: var(--glass-shadow); }
+.glass-card::before, .glass-card::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; }
+.glass-card::before { background: var(--glass-sheen); }
+.glass-card::after { background: radial-gradient(320px circle at var(--mx, 50%) var(--my, -20%), rgba(255, 255, 255, 0.32), transparent 62%); opacity: 0; transition: opacity var(--dur-slow) var(--ease); }
+.glass-card:hover::after { opacity: 1; }
+.glass-card--media { --card-fill: var(--material-media); color: #fff; box-shadow: var(--glass-shadow-media); }
+.glass-card--media::before { background: var(--glass-sheen-media); }
+.glass-card--media::after { background: radial-gradient(320px circle at var(--mx, 50%) var(--my, -20%), rgba(255, 255, 255, 0.16), transparent 62%); }
+.glass-bar { border-radius: var(--radius-pill); background: var(--material-regular); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); box-shadow: var(--glass-shadow); }
+.glass-bar--media { background: var(--material-media); box-shadow: var(--glass-shadow-media); color: #fff; }
+.icon-tile { display: inline-grid; place-items: center; width: 48px; height: 48px; margin-bottom: var(--space-5); border-radius: 15px; background: var(--color-bg-tint); color: var(--color-brand); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 0 0 0.5px var(--color-line); }
+.icon-tile--success { background: color-mix(in srgb, var(--color-success) 14%, transparent); color: var(--color-success); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-card, .glass-bar, .mega, .site-nav { --card-fill: var(--color-bg-elevated); background: var(--color-bg-elevated); }
+  .nav-capsule { --capsule-fill: var(--color-bg-elevated); }
+  .glass-card--media, .glass-bar--media, .btn--glass, .tile__glass { background: var(--material-media-strong); }
+}
+}

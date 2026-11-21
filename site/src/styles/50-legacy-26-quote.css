@@ -1,0 +1,16 @@
+/* 50-legacy-26-quote.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: quote. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (max-width: 959.98px) {
+  .quote-page__grid { grid-template-columns: minmax(0, 1fr); }
+  .quote-aside { position: static; }
+}
+@media (max-width: 599.98px) {
+  .step__nav .btn { flex: 1; }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .choice input:checked { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2306140C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E"); }
+}
+}

@@ -1,0 +1,16 @@
+/* 50-legacy-13-t-services.css: legacy slice of the pre-redesign site.css (lines 376–385).
+   Owner: t-services. includes, steps (service template).
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* Services, steps, seasons */
+.includes { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.includes__media { position: sticky; top: calc(var(--layout-header-h) + 16px); display: grid; gap: var(--space-4); }
+.includes__media .media { border-radius: var(--radius-xl); box-shadow: var(--shadow-1); }
+.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); gap: 12px; }
+.step-card { counter-increment: step; padding: 24px; border-radius: var(--radius-l); }
+.step-card h3 { font-size: 1.0625rem; }
+.step-card h3::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 18px; border-radius: 50%; background: var(--color-brand); color: var(--color-brand-ink); font-size: 0.9375rem; font-weight: var(--font-weight-bold); font-variant-numeric: tabular-nums; }
+.step-card p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+}

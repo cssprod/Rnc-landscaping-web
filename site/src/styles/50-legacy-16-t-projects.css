@@ -1,0 +1,28 @@
+/* 50-legacy-16-t-projects.css: legacy slice of the pre-redesign site.css (lines 458–479).
+   Owner: t-projects. spec bar, case study, gallery.
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* Project, article, about */
+.spec-bar { display: flex; flex-wrap: wrap; width: fit-content; max-width: 100%; margin: var(--space-6) 0 0; padding: 6px; border-radius: var(--radius-l); }
+.spec-bar > div { min-width: 8.5rem; padding: 10px 18px; }
+.spec-bar > div + div { border-left: 1px solid var(--color-line); }
+.spec-bar dt { margin-bottom: 2px; color: var(--color-ink-3); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); }
+.spec-bar dd { margin: 0; font-size: var(--font-size-subheadline); font-weight: var(--font-weight-semibold); }
+.spec-bar a { color: var(--color-ink); }
+.case__sample { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: var(--space-4) 0 0; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+.case__visual .media, .article__media .media { border-radius: var(--radius-2xl); box-shadow: var(--shadow-2); }
+.case__visual > .media { aspect-ratio: 16 / 9 !important; }
+.case__body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.case__scope { position: sticky; top: calc(var(--layout-header-h) + 16px); padding: 28px; }
+.case__scope h2 { font-size: var(--font-size-title-3); }
+.case__result { display: flex; gap: 12px; align-items: flex-start; padding: 16px 20px; border-radius: var(--radius-m); background: var(--color-bg-tint); color: var(--color-ink); }
+.case__result .i { margin-top: 0.2em; color: var(--color-brand-2); }
+.case__quote { margin: 0; padding: clamp(2rem, 5vw, 3.5rem); }
+.case__quote blockquote { margin: var(--space-4) 0 var(--space-5); }
+.case__quote p { max-width: 34ch; font-size: clamp(1.5rem, 1.2rem + 1.3vw, 2.25rem); line-height: 1.28; }
+.case__quote figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--space-4); }
+.gallery .media { border-radius: var(--radius-xl); }
+}

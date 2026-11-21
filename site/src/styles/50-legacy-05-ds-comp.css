@@ -1,0 +1,35 @@
+/* 50-legacy-05-ds-comp.css: legacy slice of the pre-redesign site.css (lines 83–111).
+   Owner: ds-comp. buttons, chips, placeholder chips, sample label.
+   Delete by W2 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* ================= buttons and chips ================= */
+.btn { --h: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--h); padding: 0 22px; border: 0; border-radius: var(--radius-pill); font: inherit; font-size: 1rem; font-weight: var(--font-weight-semibold); line-height: 1; letter-spacing: -0.012em; text-decoration: none; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform var(--dur-base) var(--ease-spring), background-color var(--dur-fast) var(--ease), box-shadow var(--dur-base) var(--ease), color var(--dur-fast) var(--ease); }
+.btn:active { transform: scale(0.965); }
+.btn--sm { --h: 40px; padding: 0 16px; font-size: var(--font-size-subheadline); }
+.btn--lg { --h: 56px; padding: 0 28px; font-size: 1.0625rem; }
+.btn--primary { background: var(--color-brand); color: var(--color-brand-ink); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 1px 2px rgba(10, 20, 14, 0.18), 0 10px 24px -10px color-mix(in srgb, var(--color-brand) 70%, transparent); }
+.btn--primary:hover { background: var(--color-brand-hover); }
+.btn--secondary { background: color-mix(in srgb, var(--color-ink) 7%, transparent); color: var(--color-ink); }
+.btn--secondary:hover { background: color-mix(in srgb, var(--color-ink) 11%, transparent); }
+.btn--plain { background: transparent; color: var(--color-brand); padding-inline: 12px; }
+.btn--plain:hover { background: color-mix(in srgb, var(--color-brand) 8%, transparent); }
+.btn--light { position: relative; background: #fff; color: #0E1611; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 12px 28px -12px rgba(0, 0, 0, 0.45); }
+.btn--light:hover { background: #F2F5F1; }
+.btn--glass { position: relative; background: var(--material-media); color: #fff; -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); box-shadow: var(--glass-shadow-media); }
+.btn--glass:hover { background: var(--material-media-strong); }
+.icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; color: inherit; text-decoration: none; background: color-mix(in srgb, currentColor 8%, transparent); transition: background var(--dur-fast) var(--ease); }
+.icon-btn:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+.chip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 15px; border-radius: var(--radius-pill); background: var(--color-bg-elevated); color: var(--color-ink); font-size: var(--font-size-subheadline); font-weight: var(--font-weight-medium); text-decoration: none; box-shadow: 0 0 0 1px var(--color-line), var(--shadow-1); transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-base) var(--ease-spring); }
+a.chip:hover { background: var(--color-bg-tint); color: var(--color-brand); }
+a.chip:active { transform: scale(0.97); }
+.chip.is-current, .chip[aria-current] { background: var(--color-brand); color: var(--color-brand-ink); box-shadow: none; }
+.chip--static { min-height: 32px; padding: 0 12px; font-size: var(--font-size-footnote); background: var(--color-bg-tint); box-shadow: none; }
+
+/* Placeholders and samples (showcase edition) */
+mark.ph { display: inline-block; padding: 0.06em 0.55em; border-radius: var(--radius-pill); background: var(--color-placeholder-bg); color: var(--color-placeholder); font: inherit; font-size: 0.84em; font-weight: var(--font-weight-semibold); letter-spacing: 0.01em; line-height: 1.45; white-space: nowrap; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 28%, transparent); }
+:is(.hero, .deep-band, .cta-band, .site-footer, .glass-card--media, .tile__glass) mark.ph { background: rgba(242, 196, 98, 0.16); color: #F6D27E; box-shadow: inset 0 0 0 1px rgba(242, 196, 98, 0.38); }
+.sample-label { display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--radius-pill); background: var(--color-placeholder-bg); color: var(--color-placeholder); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); letter-spacing: 0.02em; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 28%, transparent); }
+}
