@@ -4,7 +4,6 @@
  * (../content, ../brand, ../media) when they contain files; otherwise the
  * matching fixture in site/fixtures/ is used and the fallback is recorded so a
  * production build can refuse to publish fixture content.
- * (Astro port: these become content collections in src/content/config.ts.)
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -12,6 +11,7 @@ import { join, resolve } from 'node:path';
 const SITE = resolve(new URL('../..', import.meta.url).pathname);
 export const ROOT = resolve(SITE, '..');
 export const paths = {
+  root: ROOT,
   site: SITE,
   content: join(ROOT, 'content'),
   brand: join(ROOT, 'brand'),

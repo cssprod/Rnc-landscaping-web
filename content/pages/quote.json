@@ -1,11 +1,11 @@
 {
-  "_notes": "Four-step form posted to Netlify Forms. 'steps' defines fields; 'messages' covers form-level states. Field names are stable for the sheet columns.",
+  "_notes": "Four-step quote request. The website stores nothing: the last step opens the visitor's own email app with the request written out (mailto), and a copy-able summary is shown in case no email app opens. 'steps' defines fields; 'messages' covers form-level states. Field names are stable.",
   "seo": {
     "title": "Get a Free Landscaping Quote | RNC Landscaping Victoria",
     "description": "Tell us about your property and project in a few short steps and RNC Landscaping will follow up to arrange your free quote anywhere in Greater Victoria."
   },
   "h1": "Get a free quote",
-  "lede": "Four short steps. There is no charge for a quote, and we'll get back to you to talk about your property.",
+  "lede": "Four short steps, then your email app opens with everything written out, ready to send. A quote costs nothing and comes with no obligation.",
   "aside": {
     "image": "quote-aside",
     "heading": "What happens next",
@@ -239,24 +239,9 @@
             "minLength": "Add a few more words so we understand the job (at least 10 characters).",
             "maxLength": "Keep this under 2,000 characters. You can send more detail later."
           }
-        },
-        {
-          "name": "photos",
-          "type": "file",
-          "label": "Photos (optional)",
-          "help": "Up to 3 photos, JPG, PNG or HEIC, up to 8 MB each.",
-          "required": false,
-          "multiple": true,
-          "maxFiles": 3,
-          "maxSizeMB": 8,
-          "accept": "image/jpeg,image/png,image/heic",
-          "errors": {
-            "maxFiles": "You can add up to 3 photos. Remove one to add another.",
-            "maxSize": "This photo is larger than 8 MB. Choose a smaller photo.",
-            "type": "This file type isn't supported. Use JPG, PNG or HEIC."
-          }
         }
-      ]
+      ],
+      "intro": "Photos help a lot: you can attach them to the email before you send it."
     },
     {
       "id": "contact",
@@ -277,13 +262,14 @@
         {
           "name": "email",
           "type": "email",
-          "label": "Email",
-          "required": true,
+          "label": "Email (optional)",
+          "required": false,
           "autocomplete": "email",
           "errors": {
             "required": "Enter your email address.",
             "format": "Enter an email address like name@example.com."
-          }
+          },
+          "help": "We reply to the address you send from. Add another if you prefer."
         },
         {
           "name": "phone",
@@ -322,33 +308,27 @@
           "label": "Strata, company or organization (optional)",
           "required": false,
           "maxLength": 120
-        },
-        {
-          "name": "consent",
-          "type": "checkbox",
-          "label": "I agree that RNC Landscaping may use these details to respond to my request, as described in the [privacy policy](/privacy/).",
-          "required": true,
-          "errors": {
-            "required": "Check this box so we can use your details to respond."
-          }
         }
-      ]
+      ],
+      "intro": "Nothing is sent until you press send in your email app. We use these details only to reply to your request, as set out in the [privacy policy](/privacy/)."
     }
   ],
   "buttons": {
     "next": "Next",
     "back": "Back",
-    "submit": "Send my quote request",
-    "sending": "Sending..."
+    "submit": "Create my email",
+    "copy": "Copy request",
+    "copied": "Copied",
+    "reopen": "Open email again",
+    "restart": "Start over"
   },
   "messages": {
     "errorSummary": "There is a problem with {count} field(s). Fix the items below and try again.",
-    "submitError": "Your request didn't send. Check your connection and try again, or call [PHONE].",
-    "success": {
-      "heading": "Thanks, we have your request",
-      "body": "We'll get back to you to talk about your property and arrange your free quote. If it's urgent, call [PHONE]."
+    "ready": {
+      "heading": "Your email is ready to send",
+      "body": "Your email app should now show your request, addressed to [EMAIL]. Attach any photos, then press send. If nothing opened, copy the request below and email it to us, or call [PHONE]."
     },
-    "noJs": "This form works best with JavaScript on. You can still send it as one page."
+    "noJs": "Without JavaScript, this form opens your email app with your answers as plain text."
   },
   "sections": [
     {

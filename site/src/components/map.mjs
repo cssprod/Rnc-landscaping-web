@@ -6,6 +6,7 @@
  */
 import { html, raw } from '../lib/html.mjs';
 import { site } from '../../site.config.mjs';
+import { icon } from './sprite.mjs';
 
 /** slug -> [polygon points, label x, label y] */
 const TILES = {
@@ -24,31 +25,33 @@ const TILES = {
   'oak-bay': ['430,372 484,364 520,384 528,438 488,452 456,440 460,384', 492, 412],
 };
 
-/** @param {any} data @param {{ current?: string, heading?: string, lede?: string }} [o] */
+/** @param {any} data @param {{ current?: string, heading?: string, lede?: string, id?: string }} [o] */
 export function areaMap(data, o = {}) {
   const name = (/** @type {string} */ a) => data.areas[a]?.name || a;
+  const id = o.id || 'map-h';
   const tiles = site.areas.map((a) => {
     const t = /** @type {[string, number, number]} */ (TILES[/** @type {keyof typeof TILES} */ (a)]);
     const cur = o.current === a;
     return html`<a href="/areas/${a}/" class="map__tile${cur ? ' is-current' : ''}" aria-label="${name(a)}${cur ? ' (this page)' : ''}"${cur ? raw(' aria-current="page"') : ''}>
       <polygon points="${t[0]}"/><text x="${t[1]}" y="${t[2]}" text-anchor="middle">${name(a)}</text></a>`;
   });
-  return html`<section class="area-map wrap" aria-labelledby="map-h">
-  <div class="area-map__text">
-    <h2 id="map-h">${o.heading || 'Where we work'}</h2>
-    <p>${o.lede || 'Thirteen municipalities across the Capital Region, from the Saanich Peninsula to the Sooke Hills. Choose an area to see local notes and projects.'}</p>
-    <ul class="area-map__list">${site.areas.map((a) => html`<li><a href="/areas/${a}/"${o.current === a ? raw(' aria-current="page"') : ''}>${name(a)}</a></li>`)}</ul>
-  </div>
-  <div class="area-map__figure">
-    <svg class="map" viewBox="0 0 540 520" role="group" aria-labelledby="map-title" xmlns="http://www.w3.org/2000/svg">
-      <title id="map-title">Schematic map of the 13 Greater Victoria service areas</title>
-      <path class="map__sea" d="M0 0H540V520H0Z"/>
-      <g class="map__contours" aria-hidden="true" fill="none">${[0, 1, 2, 3, 4].map((i) => raw(`<path d="M${-20 + i * 6} ${470 - i * 24} C ${120 + i * 10} ${520 - i * 30}, ${260} ${480 - i * 28}, ${560} ${500 - i * 30}"/>`))}</g>
-      ${tiles}
-      <text class="map__water" x="150" y="512" aria-hidden="true">Juan de Fuca Strait</text>
-      <text class="map__water" x="520" y="200" aria-hidden="true" transform="rotate(90 520 200)">Haro Strait</text>
-    </svg>
-    <p class="area-map__note">Schematic only, not to scale.</p>
+  return html`<section class="section area-map" aria-labelledby="${id}">
+  <div class="wrap area-map__grid">
+    <div class="area-map__text">
+      <h2 id="${id}">${o.heading || 'Where we work'}</h2>
+      <p class="section-head__lede">${o.lede || 'Thirteen municipalities across the Capital Region, from the Saanich Peninsula to the Sooke Hills. Choose an area to see local notes and projects.'}</p>
+      <ul class="area-map__list">${site.areas.map((a) => html`<li><a class="chip${o.current === a ? ' is-current' : ''}" href="/areas/${a}/"${o.current === a ? raw(' aria-current="page"') : ''}>${o.current === a ? icon('pin', { size: 14 }) : ''}${name(a)}</a></li>`)}</ul>
+    </div>
+    <div class="area-map__figure glass-card">
+      <svg class="map" viewBox="0 0 540 520" role="group" aria-labelledby="${id}-title" xmlns="http://www.w3.org/2000/svg">
+        <title id="${id}-title">Schematic map of the 13 Greater Victoria service areas</title>
+        <g class="map__contours" aria-hidden="true" fill="none">${[0, 1, 2, 3, 4, 5].map((i) => raw(`<path d="M${-20 + i * 6} ${480 - i * 22} C ${120 + i * 10} ${530 - i * 28}, ${260} ${490 - i * 26}, ${560} ${510 - i * 28}"/>`))}</g>
+        ${tiles}
+        <text class="map__water" x="150" y="512" aria-hidden="true">Juan de Fuca Strait</text>
+        <text class="map__water" x="520" y="200" aria-hidden="true" transform="rotate(90 520 200)">Haro Strait</text>
+      </svg>
+      <p class="area-map__note">${icon('compass', { size: 14 })} Schematic only, not to scale.</p>
+    </div>
   </div>
 </section>`;
 }

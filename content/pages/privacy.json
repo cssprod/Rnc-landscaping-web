@@ -2,7 +2,7 @@
   "_notes": "Owner/lawyer to confirm retention period and service-provider list. Draft for legal review. Written with PIPEDA and BC PIPA in mind.",
   "seo": {
     "title": "Privacy Policy (Draft) | RNC Landscaping",
-    "description": "How RNC Landscaping collects, uses and protects personal information from quote requests and this website, including cookieless analytics. Draft for review."
+    "description": "How RNC Landscaping handles personal information from quote requests and emails, including cookieless analytics. Draft for legal review before launch."
   },
   "h1": "Privacy policy",
   "lede": "Draft for legal review. This page has not yet been reviewed by a lawyer and must not be relied on as final.",
@@ -20,7 +20,7 @@
       "id": "collect",
       "heading": "What we collect",
       "body": [
-        "When you request a quote: your name, email, phone (optional), organization (optional), property area and address (optional), project details and any photos you upload. We do not ask for payment information on this website."
+        "When you request a quote, you send us an email from your own email app. It contains what you choose to include: your name, email address, phone (optional), organization (optional), property area and address (optional), project details and any photos you attach. This website does not collect or store what you type into the quote form, and we do not ask for payment information on this website."
       ]
     },
     {
@@ -34,14 +34,14 @@
       "id": "consent",
       "heading": "Consent",
       "body": [
-        "We ask for your consent on the quote form. You can withdraw consent at any time by contacting [EMAIL], subject to legal or contractual limits."
+        "By sending us a request, you agree that we may use the details in it to respond. You can withdraw consent at any time by contacting [EMAIL], subject to legal or contractual limits."
       ]
     },
     {
       "id": "storage",
       "heading": "Where it is stored",
       "body": [
-        "Form submissions are received by our website host and stored in a spreadsheet we use to track requests. These service providers may store data outside Canada, including in the United States, where it may be subject to local laws. A list of these providers is available on request."
+        "Quote requests and messages arrive in our business email account. Our email and website hosting providers may store data outside Canada, including in the United States, where it may be subject to local laws. A list of these providers is available on request."
       ]
     },
     {

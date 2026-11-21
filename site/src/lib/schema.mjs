@@ -1,36 +1,40 @@
 // @ts-check
 /**
  * JSON-LD builders. No Review/AggregateRating is emitted: testimonials are
- * samples until RNC supplies real, consented reviews.
+ * samples until RNC supplies real, consented reviews. Business facts that are
+ * still placeholders are left out rather than published as "[TOKEN]".
  */
 import { site } from '../../site.config.mjs';
-import { tok } from './tokens.mjs';
+import { val } from './tokens.mjs';
 
 /** @typedef {{ origin: string, data: any }} Env */
 
 /** @param {Env} env @param {string} p */
 export const abs = (env, p) => `${env.origin}${p}`;
 
+/** Drop undefined values. @param {Record<string, any>} o */
+const clean = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined));
+
 /** @param {Env} env */
 export function business(env) {
   const areas = site.areas.map((a) => env.data.areas[a]?.name || a);
-  return {
+  return clean({
     '@context': 'https://schema.org',
     '@type': 'LandscapingBusiness',
     '@id': abs(env, '/#business'),
     name: site.name,
-    legalName: tok('LEGAL NAME'),
+    legalName: val('LEGAL NAME'),
     url: abs(env, '/'),
-    logo: abs(env, '/assets/brand/logo.svg'),
-    image: abs(env, '/assets/brand/logo.svg'),
-    telephone: tok('PHONE'),
-    email: tok('EMAIL'),
-    address: { '@type': 'PostalAddress', streetAddress: tok('ADDRESS'), addressRegion: 'BC', addressCountry: 'CA' },
-    openingHours: tok('HOURS'),
+    logo: abs(env, '/assets/brand/logo-mark.svg'),
+    image: abs(env, '/assets/brand/icon-512.png'),
+    telephone: val('PHONE'),
+    email: val('EMAIL'),
+    address: val('ADDRESS') ? { '@type': 'PostalAddress', streetAddress: val('ADDRESS'), addressRegion: 'BC', addressCountry: 'CA' } : { '@type': 'PostalAddress', addressRegion: 'BC', addressCountry: 'CA' },
+    openingHours: val('HOURS'),
     areaServed: areas.map((name) => ({ '@type': 'City', name: `${name}, BC` })),
     knowsAbout: site.services.map((s) => env.data.services[s]?.name || s),
     ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
-  };
+  });
 }
 
 /** @param {Env} env @param {{name:string, path:string}[]} crumbs */

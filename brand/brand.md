@@ -1,68 +1,83 @@
-# RNC Landscaping brand
+# RNC Landscaping brand: "Liquid Glass"
 
-## Mark: "Fir on the outcrop"
-A solid circle (coastal light, a round of cut timber) with a stepped Douglas fir and a low mossy rock outcrop cut out of it. Three ideas in two knocked-out shapes: the region's signature tree, the bare granite and moss of Garry oak country, and ground that is tended rather than wild. Built from straight steps and one curve so it holds at 16 to 32 px and reproduces in one colour (fir green, basalt, or reversed fog white). Files: `logo.svg`, `logo-mark.svg`, `logo-reversed.svg`, `favicon.svg`. Clear space: half the mark's diameter on all sides. Minimum size: 20 px mark, 120 px lockup.
+A calm, coastal identity in the language of Apple's Liquid Glass: content first, full-bleed photography, and translucent glass controls that float above it. Tokens live in `tokens.json` (W3C Design Tokens format) and compile to `tokens.css` with `node brand/build-tokens.mjs`; the site build compiles them on every run. Earlier explorations ("Outcrop", "Field journal") remain in `directions.html` for reference only.
 
-## Palette
-| Name | Hex | Token / role |
-|---|---|---|
-| Sea fog | #F4F5F1 | bg (cool, not cream) |
-| Lichen | #E9ECE4 | surface |
-| Sword fern pale | #DCE1D6 | surface-2 |
-| Basalt | #1F2523 | ink |
-| Wet granite | #4C5652 | ink-muted |
-| Weathered stone | #7D8781 | line (borders, input outlines) |
-| Douglas fir | #2E4A3B | brand, brand text/links |
-| Fir shade | #1C3027 | brand-deep (dark bands, footer) |
-| Camas | #4A3F8F | accent: CTA fill and focus ring only |
-| Success / Error / Placeholder | #2F6B3F / #A3302A / #8A6A00 | status |
+## Mark
+A squircle tile, like an app icon: a stepped Douglas fir standing on a mossy hill, white on a fir-green gradient with a soft specular highlight. The fir echoes the original "Fir on the outcrop" mark; the hill replaces the circle so the mark sits naturally beside Liquid Glass controls and on home screens.
 
-Camas is the violet-blue lily of Garry oak meadows: the one accent, used only for "Get a Free Quote" and focus. On dark bands the CTA gets a 2 px fog-white ring (Camas on Fir shade alone is 1.6:1).
+| File | Use |
+|---|---|
+| `logo.svg` | Lockup: tile + "RNC Landscaping" (outlined Inter Display, bold/medium) on light backgrounds |
+| `logo-reversed.svg` | Same lockup, white wordmark, for dark bands and photos |
+| `logo-mark.svg` | Tile alone (avatars, small spaces) |
+| `favicon.svg` | Flat tile for browser tabs |
+| `icons/apple-touch-icon.png`, `icons/icon-192.png`, `icons/icon-512.png`, `icons/icon-maskable-512.png` | Home-screen and manifest icons |
+
+The website draws the lockup from an inline sprite, so the wordmark takes the text colour of its surroundings (ink on light glass, white over photos). Clear space: half the tile's width on every side. Minimum: 20 px tile, 120 px lockup. Never recolour the tile, redraw the fir, or set the wordmark in live text. Regenerate with `brand/tools/make-logo.mjs` (needs opentype.js and static Inter Display instances; see the file header).
+
+## Colour
+Cool, fog-led neutrals; one brand green family; violet-blue only for focus. Every text pairing meets WCAG 2.2 AA in both appearances.
+
+| Token | Light | Dark | Name and role |
+|---|---|---|---|
+| `color-bg` | #F4F6F2 | #0A0E0C | Sea fog: page |
+| `color-bg-elevated` | #FFFFFF | #131A16 | Cards, inset lists, fields |
+| `color-bg-grouped` | #EBEFE9 | #070A08 | Lichen: sunken areas |
+| `color-bg-tint` | #E3EEE6 | #13241A | Moss mist: chips, icon tiles |
+| `color-ink` | #0E1611 | #EEF2EE | Basalt: text (16.9:1) |
+| `color-ink-2` | #46524A | #B2BDB5 | Wet granite: secondary text (7.5:1) |
+| `color-ink-3` | #5F6B63 | #8D9991 | Weathered stone: tertiary text (4.8:1+) |
+| `color-line-strong` | #7E8982 | #6E7B72 | Field borders (3:1+) |
+| `color-brand` | #1D4A33 | #8ED3A6 | Douglas fir: links, primary buttons |
+| `color-brand-2` | #367A4F | #6CC490 | Fern: icons, highlights |
+| `color-deep` | #0B1F15 | #0C1811 | Fir night: dark bands, footer |
+| `color-focus` | #5A4FCF | #B4ADFF | Camas, the violet-blue lily of Garry oak meadows: focus rings only |
+| `color-placeholder` | #7A5200 on #FFF3D1 | #F2C462 | Placeholder chips for unconfirmed details |
+
+Primary actions are fir-filled capsules on light surfaces and white capsules over photos or dark bands. Secondary actions are tinted "gray" capsules, or dark glass over photos.
+
+## Glass materials
+Named after Apple's material thicknesses, each a translucent fill used with `backdrop-filter: blur(24px) saturate(1.8)`:
+
+| Token | Use |
+|---|---|
+| `material-ultrathin`, `material-thin` | Quiet overlays |
+| `material-regular` | Cards over aurora washes |
+| `material-thick` | Menus, sheets, the quote form |
+| `material-chrome` | The floating navigation capsule |
+| `material-media`, `material-media-strong` | Dark glass over photography (both appearances) |
+
+Glass is built from four layers: the translucent fill and blur; a specular rim (`glass-rim`, an inset top highlight); a hairline edge (`glass-edge`); and a soft sheen gradient (`glass-sheen`). On pointer devices a faint highlight follows the cursor. Glass is only used where something sits behind it (photos, aurora washes, page content under the navigation); flat panels use elevated colour instead. Under `prefers-reduced-transparency` or `prefers-contrast: more` every material turns solid, and nested glass is never a backdrop root (the navigation's glass sits on a pseudo-element so its menus can blur the page).
 
 ## Type
-Display: **Young Serif** (one weight, warm, sturdy, slightly old-world), fallback Georgia. Text: **Figtree** 400/500/600, fallback Segoe UI/system-ui. Scale is a fluid 1.2 ratio from `--step--1` to `--step-5` (body 16 to 18 px, H1 ~40 to 70 px). Sentence case everywhere, no all-caps labels, no eyebrows. Body measure 60 to 72 characters; leading 1.6 body, 1.1 display. Headings in display, everything else in text.
+**Inter** (variable, optical size 14–32) for everything: the Display cut appears automatically at headline sizes, so large titles are tight and crisp and body text stays open. **Newsreader** italic for client quotations only. Both are OFL fonts self-hosted from `brand/fonts/` (latin subsets, 53 KB and 42 KB); a metric-matched Arial fallback keeps layout stable while they load.
 
-## Spacing, shape, elevation, motion
-Space scale 4 to 128 px (`--space-1`..`--space-9`); sections separate with `--space-8`/`--space-9`, never with boxes. Radius has hierarchy: s 3 px (inputs, tags), m 8 px (buttons, small images), l 28 px (hero photo only, with one square corner meeting the ground). Shadows are rare: `--shadow-1` for sticky header, `--shadow-2` for menus/dialogs. Motion: 120/240 ms, one ease; only for user-triggered state changes; zero under reduced motion.
+The ramp follows Apple's text styles and scales fluidly between 360 px and 1440 px viewports:
+
+| Token | Size | Use |
+|---|---|---|
+| `font-size-display` | 42 → 80 px | Home hero |
+| `font-size-large-title` | 36 → 64 px | Page titles |
+| `font-size-title-1` | 30 → 48 px | Section headings |
+| `font-size-title-2` | 24 → 34 px | Sub-sections |
+| `font-size-title-3` | 20 → 24 px | Card titles |
+| `font-size-lede` | 18 → 22 px | Introductions |
+| `font-size-body` | 16 → 17 px | Body |
+| `font-size-subheadline`, `footnote`, `caption` | 15, 13, 12 px | Supporting text |
+
+Tracking tightens as size grows (−0.034 em display to −0.006 em body); leading runs 1.02 display, 1.08 titles, 1.55 body. Headlines use `text-wrap: balance`, paragraphs `pretty`. The build sets curly quotes, apostrophes and en dashes automatically. Sentence case everywhere; no all-caps labels.
+
+## Shape, space, motion
+Concentric corners: 8, 12, 18, 26, 34 and 44 px plus capsules; an inner corner equals the outer corner minus the padding between them. Space runs on a 4 px grid (4 to 112 px) with a fluid section rhythm of 64 to 128 px. Motion uses three curves (standard sheet, ease-out entrance, gentle spring for presses) at 140, 260 and 520 ms. Cards lift into place as they scroll in (transform only, never opacity), buttons compress slightly when pressed, and everything stops under `prefers-reduced-motion`.
+
+## Illustrations
+Where RNC has not supplied a photo yet, the site draws a generated coastal landscape for that slot (`site/src/lib/art.mjs`): sky, low sun, the Olympic Mountains or Gulf Islands, water, and ridges of stepped firs that echo the mark. Each municipality has its own recipe. Illustrations are always labelled "Illustration" or "Photo to come" so nobody mistakes them for RNC's work.
 
 ## Photography
-Overcast or low-angle coastal light (morning, late afternoon); no harsh noon. Real local textures: moss on rock, fir bark, cedar fence, wet stone after rain, Garry oak silhouettes. Frame wide with the ground line low and plenty of sky or negative space for type; details at 4:5 close to hand height. Grade slightly cool, desaturated greens, lifted shadows, no orange-teal, no HDR. People shown working, never posed grinning at camera. Placeholders labelled "photo"; stock labelled "Sample image" in portfolio.
+Overcast or low-angle coastal light; real local textures (moss on rock, fir bark, wet stone, Garry oak silhouettes); ground line low with room for type; slightly cool grade. People shown working, never posed. Stock images carry "Sample image" in portfolio contexts.
 
 ## Voice
 Calm, precise, neighbourly. Avoid: "transform", "oasis", "elevate", "passion", "premier", "best", "#1", "world-class", "dream yard".
 
-## Do / don't
-- Do let one photo lead each page; don't stack cards with shadows.
-- Do use Camas only for the primary CTA; don't use it for headings or decoration.
-- Do left-align text; don't center long paragraphs.
-- Do use the mark alone at small sizes; don't redraw, outline, or add gradients to it.
-- Don't accent a single word in headlines; don't append arrows to buttons.
-
-## Directions
-`directions.html` shows A "Outcrop" (recommended, reflected in tokens.css) and B "Field journal".
-
-## Contrast (generated by `node check-contrast.mjs`)
-Text pairs need 4.5:1, UI/focus 3:1. All pass.
-
-| Foreground | Background | Ratio | Required | Pass |
-|---|---|---|---|---|
-| ink #1F2523 | bg #F4F5F1 | 14.24:1 | 4.5:1 | yes |
-| ink #1F2523 | surface #E9ECE4 | 13.05:1 | 4.5:1 | yes |
-| ink #1F2523 | surface-2 #DCE1D6 | 11.72:1 | 4.5:1 | yes |
-| ink-muted #4C5652 | bg #F4F5F1 | 6.95:1 | 4.5:1 | yes |
-| ink-muted #4C5652 | surface #E9ECE4 | 6.37:1 | 4.5:1 | yes |
-| ink-muted #4C5652 | surface-2 #DCE1D6 | 5.72:1 | 4.5:1 | yes |
-| brand #2E4A3B | bg #F4F5F1 | 8.88:1 | 4.5:1 | yes |
-| brand-ink #F4F5F1 | brand #2E4A3B | 8.88:1 | 4.5:1 | yes |
-| brand-ink #F4F5F1 | brand-deep #1C3027 | 12.77:1 | 4.5:1 | yes |
-| accent-ink #FFFFFF | accent #4A3F8F | 8.75:1 | 4.5:1 | yes |
-| accent #4A3F8F | bg #F4F5F1 | 7.99:1 | 4.5:1 | yes |
-| success #2F6B3F | bg #F4F5F1 | 5.82:1 | 4.5:1 | yes |
-| error #A3302A | bg #F4F5F1 | 6.36:1 | 4.5:1 | yes |
-| error #A3302A | surface #E9ECE4 | 5.83:1 | 4.5:1 | yes |
-| placeholder #8A6A00 | bg #F4F5F1 | 4.63:1 | 4.5:1 | yes |
-| line #7D8781 | bg #F4F5F1 | 3.39:1 | 3:1 | yes |
-| line #7D8781 | surface #E9ECE4 | 3.11:1 | 3:1 | yes |
-| focus #4A3F8F | bg #F4F5F1 | 7.99:1 | 3:1 | yes |
-| focus #4A3F8F | surface-2 #DCE1D6 | 6.58:1 | 3:1 | yes |
-| brand-ink #F4F5F1 | accent #4A3F8F | 7.99:1 | 3:1 | yes |
+## Contrast (generated by `node brand/check-contrast.mjs`)
+Run the script after changing colours; it checks every text and UI pairing above in both appearances.
