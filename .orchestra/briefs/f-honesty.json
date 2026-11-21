@@ -1,0 +1,61 @@
+{
+  "id": "f-honesty",
+  "wave": "w4",
+  "lens": "Honesty auditor — READ-ONLY finder",
+  "branch": null,
+  "base": {
+    "w4": "tag wave-3b-int, then the previous round tip w4/r<n-1>-int"
+  },
+  "port": {
+    "w4": 4476
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w4": []
+  },
+  "forbidden": {
+    "w4": [
+      "**"
+    ]
+  },
+  "readOnly": true,
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/reports/w4/evidence/**",
+    ".orchestra/traceability.json",
+    "DESIGN-DIRECTION.md"
+  ],
+  "context": [
+    "Your base is tag wave-3b-int (round 1) or the previous round tip. Every baseline must be empty when W4 exits."
+  ],
+  "deliverables": [
+    "Scope: invented facts, prices, superlatives, stock under /projects/, samples unlabelled, Review schema, and a REAL swap test across the 78 area pairs.",
+    "Return findings as JSON [{id, severity: Blocker|Major|Minor, page, width, theme, motion, repro, expected, actual, check?, suspectedOwner}] using the CONTRACT §16 severity rules. Write nothing; w4-triage records your findings."
+  ],
+  "acceptance": [],
+  "providesRules": [],
+  "gates": {
+    "w4": [
+      "Read the evidence pack; run nothing that writes to the repository."
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "n/a (finder)",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": "none (read-only: put everything in your returned findings)"
+}

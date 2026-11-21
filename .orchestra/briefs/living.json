@@ -5,6 +5,14 @@
   "branch": [
     "w2/living"
   ],
+  "base": {
+    "w2": "tag wave-1-int"
+  },
+  "port": {
+    "w2": 4424
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
   "owns": {
     "w2": [
       "site/src/lib/{art,images}.mjs",
@@ -24,70 +32,137 @@
       ".orchestra/requests/living.md"
     ]
   },
-  "forbidden": [
-    "CONTRACT.md",
-    "site/src/lib/head-scripts.mjs",
-    ".orchestra/ownership.json",
-    ".orchestra/briefs/**",
-    ".orchestra/traceability.json",
-    ".orchestra/url-map.json",
-    ".orchestra/legacy-css-map.json",
-    "research/**",
-    "cedar-springs-teardown-blueprint.md",
-    "site/src/pages/routes.mjs",
-    "site/src/components/ui/index.mjs",
-    "site/site.config.mjs",
-    "content/site.json",
-    "content/**",
-    "brand/tokens.json",
-    "site/src/components/ui/**",
-    "site/src/pages/**"
-  ],
+  "forbidden": {
+    "w2": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "brand/tokens.json",
+      "site/src/components/ui/**",
+      "site/src/pages/**"
+    ]
+  },
   "reads": [
-    ".orchestra/ownership.json",
     "CONTRACT.md",
     "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
     "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
     "DESIGN-DIRECTION.md",
     ".orchestra/direction/effects-approved.json",
     ".orchestra/direction/motion-policy.md",
     ".orchestra/reports/effects-lab.json",
-    "CONTRACT.md §Attribute contract, §Living art"
+    "CONTRACT.md §7 Images, §8 Attribute contract, §9 Motion policy, §10 Components"
+  ],
+  "context": [
+    "Your base is tag wave-1-int: page families + frozen routes.mjs aggregator, ui/ split, layout scripts[] with env.assets.modules, new URLs + _redirects, legacy CSS slices in @layer legacy, module hashing, --out/SITE_DIST/PORT, dev-setup --devtools, check-content, rewrite-links, site.json.",
+    "qa merges LAST in W2, so a11y.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, trace.mjs and budgets v2 are not on your base: run those gates as deferred (report them) and the integrator runs them after the qa merge, when it also writes their baselines.",
+    "No stream owns the page files (site/src/pages/{home,services,areas,projects,company,editorial}.mjs) in W2: new primitives and scenes are proven on /styleguide/ (showcase build), not on real pages."
   ],
   "deliverables": [
-    "livingScene(id, o) / projectArt(project, o) / illustrationChip(): layered theme-reactive scenes (night bioluminescent, light dawn), 13 distinct area scenes, per-project art so /projects/ has no stock photos",
-    "Layers are separate OUTER <svg> boxes animated by transform/opacity only; living.js sets data-alive after load + idle when motion is on, pauses off-screen (IntersectionObserver) and on hidden tabs via --alive-play",
-    "Cursor spotlight (T3, fine pointer only) and rationed @property borders in living.js / 45-living.css",
-    "<picture> AVIF/WebP/JPEG at 480/768/1024/1600 via tools/process-images.mjs (sharp from scratch, EXIF stripped, licence manifest media/photos.json)",
-    "media/images.json pre-allocates every slot (per-project art, process-hero); unknown slots still render labelled art"
+    "livingScene(id, o) / projectArt(project, o) / illustrationChip(): layered theme-reactive scenes (night bioluminescent, light dawn), 13 distinct area scenes, per-project art.",
+    "Layers are separate OUTER <svg> boxes animated by transform/opacity only; living.js sets data-alive after load + idle while prefs.motionOn(), pauses off-screen (IntersectionObserver → data-offscreen) and on hidden tabs via --alive-play.",
+    "Cursor spotlight (T3, fine pointer only, off when motion is off) and rationed @property borders in living.js / 45-living.css (main.js no longer has a sheen).",
+    "<picture> AVIF/WebP/JPEG at 480/768/1024/1600 via tools/process-images.mjs (sharp from scratch, EXIF stripped, licence manifest media/photos.json).",
+    "media/images.json: stock:null on every project and portfolio slot; per-project art slots proj-<slug>-art (×16) and process-hero allocated; usedOn updated to the new URLs. picture() in lib/images.mjs renders projectArt()/livingScene() for a slot that has art and no stock: that is how /projects/ ends up with no stock photos without editing page files. Unknown slots still render labelled art.",
+    "Scenes are proven on /styleguide/ (living section) and, through images.json, on /projects/ in W2."
   ],
   "acceptance": [
-    "A13#27: AVIF+WebP srcset, max 1600 w — verified by budgets#image-widths",
-    "C3.4: Imagery rules: own photos only in /projects/, stock labelled, illustration for process/maps — verified by check-honesty#stock-in-projects",
-    "C4.5: <picture> AVIF/WebP/JPEG, srcset, dimensions, hero priority, lazy below fold, EXIF strip — verified by budgets#picture-pipeline",
-    "P4#17: AVIF/WebP pipeline, EXIF stripping, licence records, no stock in /projects/ — verified by unit/living-images.test#pipeline",
+    "A13#4: Descriptive hand-written alt; alt=\"\" for decorative — check check-seo#alt-filename (authored by seo, due w2); alt text lives in media/images.json",
+    "A13#27: AVIF+WebP srcset, max 1600 w — check budgets#image-widths (authored by qa, due w2)",
+    "C3.4: Imagery rules: own photos only in /projects/, stock labelled, illustration for process/maps — check check-honesty#stock-in-projects (authored by qa, due w2)",
+    "C4.5: <picture> AVIF/WebP/JPEG, srcset, dimensions, hero priority, lazy below the fold, EXIF strip — check budgets#picture-pipeline (authored by qa, due w2)",
+    "P4#17: AVIF/WebP pipeline, EXIF stripping, licence records, no stock in /projects/ — check unit/living-images.test#pipeline (you author it)",
     "Deterministic bytes (two builds identical), namespaced ids lv-*, hero scene ≤ 16 KB raw, aria-hidden \"Illustration\" chip",
     "No infinite animation runs with motion off or without JS",
-    "living legacy slices deleted"
+    "living slices 04, 06 and 25 deleted"
   ],
-  "gates": [
-    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
-    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
-    "tsc -p jsconfig.json",
-    "node --test \"tests/unit/**/*.test.mjs\"",
-    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
-    "node tools/csp.mjs --check",
-    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
-    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
-    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
-    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  "providesRules": [
+    {
+      "check": "unit/living-images.test#pipeline",
+      "kind": "unit",
+      "file": "site/tests/unit/living-images.test.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P4#17",
+      "implementers": "living"
+    }
+  ],
+  "legacySlices": [
+    {
+      "file": "site/src/styles/50-legacy-04-living.css",
+      "lines": [
+        67,
+        82
+      ],
+      "label": "aurora washes + .bento-band backdrop (replaced by living scenes)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    },
+    {
+      "file": "site/src/styles/50-legacy-06-living.css",
+      "lines": [
+        112,
+        121
+      ],
+      "label": "media frame, media chips, credits (picture())",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    },
+    {
+      "file": "site/src/styles/50-legacy-25-living.css",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    }
+  ],
+  "gates": {
+    "w2": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # deferred in W2 until qa merges",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs   # deferred in W2 until qa merges",
+      "node tools/trace.mjs --upto=w2 --stream=living   # deferred in W2 until qa merges",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=living --wave=w2 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
   ],
   "verifierLens": "Frame-budget profiler: 4× CPU throttle traces, Lighthouse delta, motion-audit with motion off/on, determinism diff",
-  "port": {
-    "w2": 4424
-  },
-  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
-  "out": "$SCRATCH/dist/<branch-with-dashes>",
-  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
   "requests": ".orchestra/requests/living.md (never edit a file outside owns; describe the change there)"
 }

@@ -1,0 +1,96 @@
+{
+  "id": "og-render",
+  "wave": "w5",
+  "lens": "Social-card renderer",
+  "branch": [
+    "w5/og-render"
+  ],
+  "base": {
+    "w5": "tag wave-4-int"
+  },
+  "port": {
+    "w5": 4451
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w5": [
+      "site/static/og/**",
+      ".orchestra/requests/og-render.md"
+    ]
+  },
+  "forbidden": {
+    "w5": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "site/src/**",
+      "content/**"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "site/tools/og-cards.mjs",
+    "CONTRACT.md §5"
+  ],
+  "context": [
+    "Your base is tag wave-4-int. Baselines are empty; the release gate runs with --no-baseline."
+  ],
+  "deliverables": [
+    "Render and commit one OG card per page template with tools/og-cards.mjs (≤ 45 KB each), wired through the existing per-page og:image fallback."
+  ],
+  "acceptance": [
+    "C6.3: Social cards: en_CA, one OG image per template, og:type website — check og-cards#coverage (authored by seo, due w5); seo ships the tool and rule in W2; cards are rendered in W5"
+  ],
+  "providesRules": [],
+  "gates": {
+    "w5": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+      "node tools/trace.mjs --upto=w5 --stream=og-render",
+      "node tools/lighthouse.mjs --runs=3   # quiet slot only",
+      "node tools/check-all.mjs --no-build --no-baseline",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=og-render --wave=w5 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "Social preview checker: every og:image resolves, ≤ 45 KB, correct per template",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/og-render.md (never edit a file outside owns; describe the change there)"
+}

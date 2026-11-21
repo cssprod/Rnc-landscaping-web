@@ -1,13 +1,28 @@
 {
-  "$comment": "W1 build splits site/src/styles/site.css into these slices, each wrapped in @layer legacy { } (legacy is the FIRST, lowest-priority layer declared in 00-layers.css). Concatenation is in file-name order, so the two-digit sequence reproduces the original source order exactly and the cascade is unchanged (acceptance: 0 px screenshot diff at 390 and 1440, dark and light). Split segments copy each listed selector rule into the owner slice inside its original @media wrapper; combined selector lists are split into one rule per selector (same specificity, same relative order). If a split rule causes any pixel diff, move it into 50-legacy-90-ds-core.css and record it here (ds-core re-homes it in W2). Each owner deletes its own slices once its new CSS replaces them; css-consolidator (W3b) proves none remain.",
+  "$comment": "W1 build splits site/src/styles/site.css into these slices, each wrapped in @layer legacy { } (legacy is the FIRST, lowest-priority layer declared in 00-layers.css). Concatenation is in file-name order, so the two-digit sequence reproduces the original source order exactly and the cascade is unchanged (acceptance: 0 px screenshot diff at 390 and 1440, dark and light). Split segments copy each listed selector rule into the owner slice inside its original @media wrapper; combined selector lists are split into one rule per selector (same specificity, same relative order). importantRules lists every legacy !important: inside the lowest layer an !important declaration BEATS every normal declaration in every newer layer, so a stream that restyles one of those selectors must delete that declaration from the slice (if it owns the slice) or request it from the slice owner. mustDeleteIn is the wave by which the owner deletes the slice; css-consolidator (W3b) proves none remain.",
   "source": "site/src/styles/site.css",
   "sourceLines": 678,
   "generatedOn": "2026-11-21",
   "layerDecl": "@layer legacy, reset, base, layout, chrome, components, living, pages, utilities, motion, print;",
-  "fallbackSlice": "site/src/styles/50-legacy-90-ds-core.css",
+  "fallbackSlice": {
+    "pattern": "site/src/styles/50-legacy-<NN>x-ds-core.css",
+    "example": "site/src/styles/50-legacy-21x-ds-core.css",
+    "rule": "If moving a split rule causes a pixel diff, put that rule AND every rule it conflicts with, in original source order, into 50-legacy-<NN>x-ds-core.css, where NN is the seq of the last slice that precedes the rules' original source position. \"NNx\" sorts after slice NN and before slice NN+1, so the moved rules keep their place in the cascade. For the media-split block (lines 606–650) that is 50-legacy-21x-ds-core.css (after the base slices, before the split slices). Never use a number that sorts after the split slices or the motion slice (e.g. 90). Record every moved rule in the build return. ds-core keeps fallback slices; the selector owner deletes the rule when it restyles it, and css-consolidator (W3b) removes what is left."
+  },
   "coverage": {
     "uncoveredNonBlankLines": [],
     "unownedSelectors": []
+  },
+  "importantSummary": {
+    "50-legacy-01-ds-core.css": 2,
+    "50-legacy-07-ds-chrome.css": 1,
+    "50-legacy-08-ds-comp.css": 4,
+    "50-legacy-11-t-home.css": 1,
+    "50-legacy-16-t-projects.css": 1,
+    "50-legacy-17-t-editorial.css": 1,
+    "50-legacy-19-quote.css": 3,
+    "50-legacy-21-ds-chrome.css": 1,
+    "50-legacy-32-ds-core.css": 2
   },
   "owners": {
     "ds-chrome": [
@@ -74,7 +89,26 @@
         1,
         39
       ],
-      "label": "header comment, base (reset, body, headings, focus, selection, .i, .vh, .note, skip link); layout (.wrap, .section variants, main)"
+      "label": "header comment, base (reset, body, headings, focus, selection, .i, .vh, .note, skip link); layout (.wrap, .section variants, main)",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 11,
+          "media": null,
+          "selector": "[hidden]",
+          "declarations": [
+            "display: none !important"
+          ]
+        },
+        {
+          "line": 25,
+          "media": null,
+          "selector": ".vh",
+          "declarations": [
+            "position: absolute !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 2,
@@ -84,7 +118,9 @@
         40,
         47
       ],
-      "label": "section head + link-more (ui/heads, ui/actions)"
+      "label": "section head + link-more (ui/heads, ui/actions)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 3,
@@ -94,7 +130,9 @@
         48,
         66
       ],
-      "label": "glass materials (.glass-card, .glass-bar, .icon-tile, @supports fallback)"
+      "label": "glass materials (.glass-card, .glass-bar, .icon-tile, @supports fallback)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 4,
@@ -104,7 +142,9 @@
         67,
         82
       ],
-      "label": "aurora washes + .bento-band backdrop (replaced by living scenes)"
+      "label": "aurora washes + .bento-band backdrop (replaced by living scenes)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 5,
@@ -114,7 +154,9 @@
         83,
         111
       ],
-      "label": "buttons, chips, placeholder chips, sample label"
+      "label": "buttons, chips, placeholder chips, sample label",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 6,
@@ -124,7 +166,9 @@
         112,
         121
       ],
-      "label": "media frame, media chips, credits (picture())"
+      "label": "media frame, media chips, credits (picture())",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 7,
@@ -134,7 +178,18 @@
         122,
         203
       ],
-      "label": "navigation capsule, mega panel, mobile sheet (+ its media queries); breadcrumbs"
+      "label": "navigation capsule, mega panel, mobile sheet (+ its media queries); breadcrumbs",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 179,
+          "media": "(max-width: 1119.98px)",
+          "selector": ".mega",
+          "declarations": [
+            "animation: none !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 8,
@@ -144,7 +199,42 @@
         204,
         291
       ],
-      "label": "heroes, dock, page heads (ui/heads); service tiles (ui/cards); cards and grids (ui/cards, ui/projects); prose sections, item cards (ui/heads sections())"
+      "label": "heroes, dock, page heads (ui/heads); service tiles (ui/cards); cards and grids (ui/cards, ui/projects); prose sections, item cards (ui/heads sections())",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 209,
+          "media": null,
+          "selector": ".hero__media .media",
+          "declarations": [
+            "aspect-ratio: auto !important"
+          ]
+        },
+        {
+          "line": 253,
+          "media": null,
+          "selector": ".tile .media",
+          "declarations": [
+            "aspect-ratio: 4 / 5 !important"
+          ]
+        },
+        {
+          "line": 270,
+          "media": null,
+          "selector": ".card__media .media",
+          "declarations": [
+            "aspect-ratio: 4 / 3 !important"
+          ]
+        },
+        {
+          "line": 271,
+          "media": null,
+          "selector": ".area-card .card__media .media",
+          "declarations": [
+            "aspect-ratio: 16 / 9 !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 9,
@@ -154,7 +244,9 @@
         292,
         294
       ],
-      "label": ".legal"
+      "label": ".legal",
+      "mustDeleteIn": "w3",
+      "importantRules": []
     },
     {
       "seq": 10,
@@ -164,7 +256,9 @@
         295,
         309
       ],
-      "label": "bento (ui/cards)"
+      "label": "bento (ui/cards)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 11,
@@ -174,7 +268,18 @@
         310,
         320
       ],
-      "label": "feature split (home)"
+      "label": "feature split (home)",
+      "mustDeleteIn": "w3",
+      "importantRules": [
+        {
+          "line": 314,
+          "media": null,
+          "selector": ".feature-split__media .media",
+          "declarations": [
+            "aspect-ratio: auto !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 12,
@@ -184,7 +289,9 @@
         321,
         375
       ],
-      "label": "testimonials (ui/trust); deep bands, credentials (ui/trust); CTA band (ui/cta); inset lists, def-list, FAQ (ui/faq)"
+      "label": "testimonials (ui/trust); deep bands, credentials (ui/trust); CTA band (ui/cta); inset lists, def-list, FAQ (ui/faq)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 13,
@@ -194,7 +301,9 @@
         376,
         385
       ],
-      "label": "includes, steps (service template)"
+      "label": "includes, steps (service template)",
+      "mustDeleteIn": "w3",
+      "importantRules": []
     },
     {
       "seq": 14,
@@ -204,7 +313,9 @@
         386,
         413
       ],
-      "label": "seasons (ui/seasons); before/after (ui/projects beforeAfter)"
+      "label": "seasons (ui/seasons); before/after (ui/projects beforeAfter)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
     },
     {
       "seq": 15,
@@ -214,7 +325,9 @@
         414,
         457
       ],
-      "label": "area map; area pages: intro, facts, check-list, service-list, notes, source chips"
+      "label": "area map; area pages: intro, facts, check-list, service-list, notes, source chips",
+      "mustDeleteIn": "w3",
+      "importantRules": []
     },
     {
       "seq": 16,
@@ -224,7 +337,18 @@
         458,
         479
       ],
-      "label": "spec bar, case study, gallery"
+      "label": "spec bar, case study, gallery",
+      "mustDeleteIn": "w3",
+      "importantRules": [
+        {
+          "line": 468,
+          "media": null,
+          "selector": ".case__visual > .media",
+          "declarations": [
+            "aspect-ratio: 16 / 9 !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 17,
@@ -234,7 +358,18 @@
         480,
         489
       ],
-      "label": "article date/media/body, prose, sources"
+      "label": "article date/media/body, prose, sources",
+      "mustDeleteIn": "w3",
+      "importantRules": [
+        {
+          "line": 481,
+          "media": null,
+          "selector": ".article__media .media",
+          "declarations": [
+            "aspect-ratio: 21 / 9 !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 18,
@@ -244,7 +379,9 @@
         490,
         499
       ],
-      "label": "owner block, capability row; contact cards"
+      "label": "owner block, capability row; contact cards",
+      "mustDeleteIn": "w3",
+      "importantRules": []
     },
     {
       "seq": 19,
@@ -254,7 +391,34 @@
         500,
         569
       ],
-      "label": "quote form, stepper, fields, choices, ready panel"
+      "label": "quote form, stepper, fields, choices, ready panel",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 508,
+          "media": null,
+          "selector": ".quote-aside .media",
+          "declarations": [
+            "aspect-ratio: 3 / 2 !important"
+          ]
+        },
+        {
+          "line": 547,
+          "media": null,
+          "selector": "[aria-invalid=\"true\"]",
+          "declarations": [
+            "border-color: var(--color-error) !important"
+          ]
+        },
+        {
+          "line": 559,
+          "media": null,
+          "selector": ".choice--check",
+          "declarations": [
+            "box-shadow: none !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 20,
@@ -264,7 +428,9 @@
         570,
         584
       ],
-      "label": "portfolio filters"
+      "label": "portfolio filters",
+      "mustDeleteIn": "w3",
+      "importantRules": []
     },
     {
       "seq": 21,
@@ -274,7 +440,18 @@
         585,
         605
       ],
-      "label": "footer"
+      "label": "footer",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 597,
+          "media": null,
+          "selector": ".brand--footer:hover",
+          "declarations": [
+            "text-decoration: none !important"
+          ]
+        }
+      ]
     },
     {
       "seq": 22,
@@ -285,6 +462,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
       "split": true,
       "rules": [
         {
@@ -307,7 +485,8 @@
           "media": "(max-width: 599.98px)",
           "selector": ".site-footer__areas"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 23,
@@ -318,6 +497,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
       "split": true,
       "rules": [
         {
@@ -425,7 +605,8 @@
           "media": "(max-width: 599.98px)",
           "selector": ".ba.is-enhanced .ba__control"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 24,
@@ -436,6 +617,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
       "split": true,
       "rules": [
         {
@@ -443,7 +625,8 @@
           "media": "(prefers-color-scheme: dark)",
           "selector": ":root:not([data-theme=\"light\"]) .icon-tile"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 25,
@@ -454,6 +637,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
       "split": true,
       "rules": [
         {
@@ -466,7 +650,8 @@
           "media": null,
           "selector": ":root[data-theme=\"dark\"] .media--art img"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 26,
@@ -477,6 +662,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
       "split": true,
       "rules": [
         {
@@ -499,7 +685,8 @@
           "media": "(prefers-color-scheme: dark)",
           "selector": ":root:not([data-theme=\"light\"]) .choice input:checked"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 27,
@@ -510,6 +697,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
       "split": true,
       "rules": [
         {
@@ -522,7 +710,8 @@
           "media": "(max-width: 959.98px)",
           "selector": ".area-map__grid"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 28,
@@ -533,6 +722,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
       "split": true,
       "rules": [
         {
@@ -550,7 +740,8 @@
           "media": "(max-width: 599.98px)",
           "selector": ".contact-cards"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 29,
@@ -561,6 +752,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
       "split": true,
       "rules": [
         {
@@ -573,7 +765,8 @@
           "media": "(max-width: 959.98px)",
           "selector": ".feature-split__media"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 30,
@@ -584,6 +777,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
       "split": true,
       "rules": [
         {
@@ -631,7 +825,8 @@
           "media": "(max-width: 599.98px)",
           "selector": ".segmented"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 31,
@@ -642,6 +837,7 @@
         650
       ],
       "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
       "split": true,
       "rules": [
         {
@@ -664,7 +860,8 @@
           "media": "(max-width: 599.98px)",
           "selector": ".includes__media"
         }
-      ]
+      ],
+      "importantRules": []
     },
     {
       "seq": 32,
@@ -674,7 +871,28 @@
         651,
         677
       ],
-      "label": "motion: keyframes, hero entrance, view() reveals, reduced-motion kill switch (→ 95-motion.css); print (→ 99-print.css)"
+      "label": "motion: keyframes, hero entrance, view() reveals, reduced-motion kill switch (→ 95-motion.css, deleted in W2); print (→ 99-print.css, deleted in W2)",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        {
+          "line": 668,
+          "media": "(prefers-reduced-motion: reduce)",
+          "selector": "*, *::before, *::after",
+          "declarations": [
+            "animation-duration: 0ms !important",
+            "transition-duration: 0ms !important",
+            "scroll-behavior: auto !important"
+          ]
+        },
+        {
+          "line": 672,
+          "media": "print",
+          "selector": ".site-header, .cta-band, .hero__dock, .skip-link, .site-footer__glow",
+          "declarations": [
+            "display: none !important"
+          ]
+        }
+      ]
     }
   ]
 }

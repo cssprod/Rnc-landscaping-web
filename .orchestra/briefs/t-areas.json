@@ -5,6 +5,14 @@
   "branch": [
     "w3/t-areas"
   ],
+  "base": {
+    "w3": "tag wave-2-int"
+  },
+  "port": {
+    "w3": 4433
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
   "owns": {
     "w3": [
       "site/src/pages/areas.mjs",
@@ -17,77 +25,146 @@
       ".orchestra/requests/t-areas.md"
     ]
   },
-  "forbidden": [
-    "CONTRACT.md",
-    "site/src/lib/head-scripts.mjs",
-    ".orchestra/ownership.json",
-    ".orchestra/briefs/**",
-    ".orchestra/traceability.json",
-    ".orchestra/url-map.json",
-    ".orchestra/legacy-css-map.json",
-    "research/**",
-    "cedar-springs-teardown-blueprint.md",
-    "site/src/pages/routes.mjs",
-    "site/src/components/ui/index.mjs",
-    "site/site.config.mjs",
-    "content/site.json",
-    "content/**",
-    "brand/**",
-    "site/src/components/ui/actions.mjs",
-    "site/src/components/ui/heads.mjs",
-    "site/src/styles/40-ui-actions.css",
-    "site/src/styles/41-ui-heads.css",
-    "brand/tokens.json",
-    "brand/tokens.css",
-    "media/images.json",
-    "site/src/components/layout.mjs",
-    "site/src/components/living.mjs",
-    "site/src/pages/_shared.mjs",
-    "site/src/pages/{routes,_shared}.mjs"
-  ],
+  "forbidden": {
+    "w3": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "brand/**",
+      "site/src/components/ui/actions.mjs",
+      "site/src/components/ui/heads.mjs",
+      "site/src/styles/40-ui-actions.css",
+      "site/src/styles/41-ui-heads.css",
+      "brand/tokens.json",
+      "brand/tokens.css",
+      "media/images.json",
+      "site/src/components/layout.mjs",
+      "site/src/components/sprite.mjs",
+      "site/src/components/living.mjs",
+      "site/src/scripts/main.js",
+      "site/src/scripts/lib/**",
+      "site/src/pages/_shared.mjs",
+      "site/src/pages/{routes,_shared}.mjs"
+    ]
+  },
   "reads": [
-    ".orchestra/ownership.json",
     "CONTRACT.md",
     "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
     "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
     "DESIGN-DIRECTION.md",
     "site/COMPONENTS.md",
+    ".orchestra/legacy-css-map.json",
     "research/cedar-springs-teardown-blueprint.md C2",
     "content/areas/*.json",
     "content/regional.json",
     "content/pages/areas.json",
     "research/area-facts/*.json"
   ],
+  "context": [
+    "Your base is tag wave-2-int: dark-first tokens, chrome with toggles and sticky bar, every C3 primitive, living scenes, the seo graph and check-seo, the quote builder, qa tools and the .orchestra/baselines/ files written at the W2 barrier.",
+    "Frozen in W3: layout.mjs, sprite.mjs (icons), main.js and lib/**, ui/actions + ui/heads, tokens, images.json, living.mjs, _shared.mjs, routes.mjs. Need something there? Write a request."
+  ],
   "deliverables": [
     "/areas/ hub with an interactive glowing SVG map + list (ONE keyboard path: the list; tiles tabindex=-1, state mirrored via :has())",
-    "13 municipality pages: H1 \"Landscaping in X\" → place summary → Local rules that affect your yard (sources, last-reviewed date) → conditions → most-requested services and why → local proof → shared regional block [data-shared] → neighbouring municipalities → CTA /free-quote/?area=<slug>"
+    "13 municipality pages: H1 \"Landscaping in X\" → place summary → Local rules that affect your yard (sourceChip, reviewedOn: \"Last reviewed 19 November 2026\" or \"Review date to confirm\") → conditions → most-requested services and why → local proof → shared regional block [data-shared] → neighbouring municipalities → CTA /free-quote/?area=<slug>. Stop rendering the deprecated intro[]/localNotes[] (areas-content may then drop them)"
   ],
   "acceptance": [
-    "C2.3: Municipality page wireframe — verified by e2e/areas.spec#template-order",
-    "P2#10: 13 municipality pages pass the swap test; /areas/ hub with SVG map — verified by f-honesty#swap-test-78-pairs",
+    "C1.4b: Internal linking: every municipality links to the 4 services and to 1–3 local projects — check check-seo#internal-links-area (authored by seo, due w3)",
+    "C2.3: Municipality page wireframe — check e2e/areas.spec#template-order (you author it)",
+    "C6.4b: Municipality pages avoid doorway risk in the rendered HTML ([data-shared] exempt) — check check-seo#cross-area-duplicates (authored by seo, due w3)",
+    "P2#10b: /areas/ hub with the SVG map and 13 municipality pages rendering the local blocks — check e2e/areas.spec#hub-map (you author it)",
     "Each municipality links to the 4 services and to 1–3 projects in that municipality when they exist",
     "Map hover/focus glow only while active; ambient pulse on the current area is T2 (var(--alive-play))",
-    "t-areas legacy slices deleted"
+    "t-areas legacy slices deleted; no .orchestra/baselines entry left whose path is one of your pages (url-map owner t-areas) or your files"
   ],
-  "gates": [
-    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
-    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
-    "tsc -p jsconfig.json",
-    "node --test \"tests/unit/**/*.test.mjs\"",
-    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
-    "node tools/csp.mjs --check",
-    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
-    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
-    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
-    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
-    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  "providesRules": [
+    {
+      "check": "e2e/areas.spec#template-order",
+      "kind": "e2e",
+      "file": "site/tests/e2e/areas.spec.mjs",
+      "shipIn": "w3",
+      "neededBy": "w3",
+      "forItems": "C2.3",
+      "implementers": "t-areas"
+    },
+    {
+      "check": "e2e/areas.spec#hub-map",
+      "kind": "e2e",
+      "file": "site/tests/e2e/areas.spec.mjs",
+      "shipIn": "w3",
+      "neededBy": "w3",
+      "forItems": "P2#10b",
+      "implementers": "t-areas"
+    }
+  ],
+  "legacySlices": [
+    {
+      "file": "site/src/styles/50-legacy-15-t-areas.css",
+      "lines": [
+        414,
+        457
+      ],
+      "label": "area map; area pages: intro, facts, check-list, service-list, notes, source chips",
+      "mustDeleteIn": "w3",
+      "importantRules": []
+    },
+    {
+      "file": "site/src/styles/50-legacy-27-t-areas.css",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w3",
+      "importantRules": []
+    }
+  ],
+  "gates": {
+    "w3": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+      "node tools/trace.mjs --upto=w3 --stream=t-areas",
+      "node tools/lighthouse.mjs --runs=3   # quiet slot only",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=t-areas --wave=w3 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
   ],
   "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
-  "port": {
-    "w3": 4433
-  },
-  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
-  "out": "$SCRATCH/dist/<branch-with-dashes>",
-  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
   "requests": ".orchestra/requests/t-areas.md (never edit a file outside owns; describe the change there)"
 }

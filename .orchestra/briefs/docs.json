@@ -1,0 +1,94 @@
+{
+  "id": "docs",
+  "wave": "w5",
+  "lens": "Technical writer (truthful status, launch hand-off)",
+  "branch": [
+    "w5/docs"
+  ],
+  "base": {
+    "w5": "tag wave-4-int"
+  },
+  "port": {
+    "w5": 4452
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w5": [
+      "README.md",
+      "site/README.md",
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "TRACEABILITY.md",
+      "site/CHANGELOG.md",
+      "site/LAUNCH-CHECKLIST.md",
+      "site/CONTENT-GUIDE.md",
+      "site/COMPONENTS.md",
+      "brand/brand.md",
+      "DESIGN-DIRECTION.md",
+      ".orchestra/requests/docs.md"
+    ]
+  },
+  "forbidden": {
+    "w5": [
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "site/src/**"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/traceability.json",
+    ".orchestra/reports/trace-status.json",
+    ".orchestra/carry.json",
+    ".orchestra/reports/w4/**"
+  ],
+  "context": [
+    "Your base is tag wave-4-int. Baselines are empty; the release gate runs with --no-baseline."
+  ],
+  "deliverables": [
+    "README, site/README.md, CONTRACT v3 final (record any speculation-rules fallback), CHANGELOG, brand.md",
+    "LAUNCH-CHECKLIST: every token to fill, every verify:true fact to re-check, GBP set-up (categories = the 4 service lines, service areas = the 13 municipalities, NAP identical to site.json, review link = [GOOGLE PROFILE]), SITE_MODE=launch steps",
+    "TRACEABILITY.md from traceability.json + trace-status.json: every item → code and evidence; A12 #6 and P4 #18 marked \"superseded on aesthetics, hard constraints kept\"; known issues from carry.json"
+  ],
+  "acceptance": [],
+  "providesRules": [],
+  "gates": {
+    "w5": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../.orchestra/tools/ownership.mjs --stream=docs --wave=w5 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "Fact checker: every claim in the docs matches the code and the evidence",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/docs.md (never edit a file outside owns; describe the change there)"
+}

@@ -5,6 +5,14 @@
   "branch": [
     "w2/ds-core"
   ],
+  "base": {
+    "w2": "tag wave-1-int"
+  },
+  "port": {
+    "w2": 4421
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
   "owns": {
     "w2": [
       "brand/tokens.json",
@@ -17,79 +25,194 @@
       "site/src/styles/9?-*.css",
       "site/src/styles/50-legacy-*-ds-core.css",
       "site/build.mjs",
+      "site/src/lib/build/**",
       "site/fixtures/brand/**",
       "site/tests/unit/ds-core-*.test.mjs",
       ".orchestra/requests/ds-core.md"
     ]
   },
-  "forbidden": [
-    "CONTRACT.md",
-    "site/src/lib/head-scripts.mjs",
-    ".orchestra/ownership.json",
-    ".orchestra/briefs/**",
-    ".orchestra/traceability.json",
-    ".orchestra/url-map.json",
-    ".orchestra/legacy-css-map.json",
-    "research/**",
-    "cedar-springs-teardown-blueprint.md",
-    "site/src/pages/routes.mjs",
-    "site/src/components/ui/index.mjs",
-    "site/site.config.mjs",
-    "content/site.json",
-    "content/**",
-    "site/src/components/**",
-    "site/src/scripts/**",
-    "site/src/styles/{3,4,6,7,8}?-*.css"
-  ],
+  "forbidden": {
+    "w2": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "site/src/components/**",
+      "site/src/scripts/**",
+      "site/src/styles/{3,4,6,7,8}?-*.css"
+    ]
+  },
   "reads": [
-    ".orchestra/ownership.json",
     "CONTRACT.md",
     "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
     "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
     "DESIGN-DIRECTION.md",
     ".orchestra/direction/tokens-proposal.json",
     ".orchestra/direction/motion-policy.md",
     ".orchestra/direction/effects-approved.json",
     "brand/**",
-    "CONTRACT.md §Attribute contract, §CSS"
+    ".orchestra/legacy-css-map.json",
+    "CONTRACT.md §8 Attribute contract, §9 Motion policy, §12 CSS, §15 Design tokens"
+  ],
+  "context": [
+    "Your base is tag wave-1-int: page families + frozen routes.mjs aggregator, ui/ split, layout scripts[] with env.assets.modules, new URLs + _redirects, legacy CSS slices in @layer legacy, module hashing, --out/SITE_DIST/PORT, dev-setup --devtools, check-content, rewrite-links, site.json.",
+    "qa merges LAST in W2, so a11y.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, trace.mjs and budgets v2 are not on your base: run those gates as deferred (report them) and the integrator runs them after the qa merge, when it also writes their baselines.",
+    "No stream owns the page files (site/src/pages/{home,services,areas,projects,company,editorial}.mjs) in W2: new primitives and scenes are proven on /styleguide/ (showcase build), not on real pages."
   ],
   "deliverables": [
-    "tokens.json: dark-first defaults ($extensions[\"ca.rnc.default\"]:\"dark\"), light values under [data-theme=light]; C3 fluid type scale; glass minimum alphas; two-tone focus ring tokens; manifest colours as tokens",
-    "check-contrast.mjs: every text/surface and focus/surface pair in both themes, solid fallbacks, glass worst cases over the art-palette extremes from tokens-proposal.json",
-    "00-layers.css (layer order), 01-reset, 02-base, 03-type, 05-layout, 08-utilities, 95-motion.css (T0–T4 tiers, the only place besides tokens.css allowed to mention prefers-reduced-motion), 99-print.css",
-    "prefers-reduced-transparency, prefers-contrast: more and forced-colors rules; build.mjs reads manifest/theme colours from tokens"
+    "tokens.json: dark-first defaults ($extensions[\"ca.rnc.default\"]:\"dark\"), light values under [data-theme=light]; C3 fluid type scale; glass minimum alphas; two-tone focus ring tokens; manifest colours as tokens.",
+    "build-tokens.mjs: emit the reduced-motion zeroing as @media (prefers-reduced-motion: reduce) { :root:not([data-motion=on]) { …0ms } } plus :root[data-motion=off] { …0ms }, so data-motion=on really overrides the OS setting (CONTRACT §8, §9). The integrator regenerates tokens.css after merges.",
+    "check-contrast.mjs: every text/surface and focus/surface pair in both themes, solid fallbacks, glass worst cases over the art-palette extremes from tokens-proposal.json.",
+    "00-layers.css (layer order), 01-reset, 02-base, 03-type, 05-layout (≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom), 08-utilities, 95-motion.css (T0–T4 tiers; with tokens.css the only place allowed to mention prefers-reduced-motion), 99-print.css.",
+    "Delete 50-legacy-32-ds-core.css in W2: its motion rules move into 95-motion.css under the policy (the hero entrance never animates the H1/LCP; the view() reveals become T4 inside @supports and stop when motion is off), its print rules move into 99-print.css. Its `*{animation-duration:0ms!important…}` kill switch is NOT carried over: the tiers replace it. Until it is gone, data-motion=on cannot work.",
+    "Re-home the other ds-core slices (01, 03, 24): [hidden] and .vh keep their !important in 01-reset / 08-utilities; then delete the slices. Fallback slices (50-legacy-NNx-ds-core.css, if build created any) stay until their selector owner or W3b removes the rules.",
+    "prefers-reduced-transparency, prefers-contrast: more and forced-colors rules; build.mjs reads manifest/theme colours from tokens (site/src/lib/build/** is yours in W2 if the pipeline needs it)."
   ],
   "acceptance": [
-    "A13#15: No loader; native View Transitions honouring reduced motion — verified by motion-audit#vt-and-loader",
-    "A12#6: Restraint: two-tone palette, big imagery, white space (superseded on aesthetics by the alive direction; hard constraints kept) — verified by f-visual#restraint-review (W4 screenshot matrix)",
-    "C3.1: Keep / adapt / drop (no loaders, sliders, lowercase source, third-party embeds) — verified by check-motion-policy#banned-effects",
-    "C3.2: Fluid type scale (display…small, Inter 400/600/700, Newsreader italic quotes only) — verified by unit/ds-core-tokens.test#type-scale",
-    "C3.3: Colour usage and contrast incl. dark focus token — verified by check-contrast#all-pairs",
-    "C3.5: Motion rules (transform/opacity, VT where supported, reduced motion, nothing autoplays) — verified by motion-audit#policy-tiers",
-    "P0#3: Dark-mode focus ring ≥ 3:1 on Fir night; re-test all focus states — verified by check-contrast#focus-pairs",
-    "P4#18: Glass limited to chrome, solid content, fluid type, reduced motion, no loaders/sliders/autoplay — superseded on aesthetics, hard constraints kept — verified by check-contrast#glass-worst-case",
+    "A13#15: No loader; native View Transitions honouring reduced motion — check motion-audit#vt-and-loader (authored by qa, due w2)",
+    "A12#6: Restraint: two-tone palette, big imagery, white space — check check-contrast#all-pairs (you author it); superseded on aesthetics by the alive direction; the hard constraint kept is contrast, so the proxy is C3.3's check; f-visual records the review in W4",
+    "C3.1: Keep / adapt / drop (no loaders, sliders, lowercase source, third-party embeds) — check check-motion-policy#banned-effects (authored by qa, due w2)",
+    "C3.2: Fluid type scale (display…small, Inter 400/600/700, Newsreader italic quotes only) — check unit/ds-core-tokens.test#type-scale (you author it)",
+    "C3.3: Colour usage and contrast incl. the dark focus token — check check-contrast#all-pairs (you author it)",
+    "C3.5: Motion rules (transform/opacity, VT where supported, reduced motion, nothing autoplays) — check motion-audit#policy-tiers (authored by qa, due w2)",
+    "C4.6: ≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom — check e2e/global.spec#reflow-320-zoom-200 (authored by qa, due w2)",
+    "P0#3: Dark-mode focus ring ≥ 3:1 on Fir night; re-test all focus states — check check-contrast#focus-pairs (you author it)",
+    "P4#18: Glass limited to chrome, solid content, fluid type, reduced motion, no loaders/sliders/autoplay — check check-contrast#glass-worst-case (you author it); superseded on aesthetics, hard constraints kept (contrast-safe glass, solid fallbacks, motion policy)",
     "Every surface has ≥ 1 ring colour ≥ 3:1 and the two ring colours are ≥ 3:1 against each other",
-    "Without data-theme the page renders dark; [data-theme=light] renders light; no flash (HEAD_SCRIPT applies stored choice before paint)",
-    "ds-core legacy slices deleted"
+    "Without data-theme the page renders dark; [data-theme=light] renders light; no flash (HEAD_SCRIPT applies the stored choice before paint)",
+    "With the OS set to reduce and data-motion=on, T1/T2 durations are non-zero; with data-motion=off they are 0 (unit test on the generated CSS now; motion-audit once qa merges)",
+    "ds-core slices 01, 03, 24 and 32 deleted; entries for your files gone from the baselines written at the W2 barrier"
   ],
-  "gates": [
-    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
-    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
-    "tsc -p jsconfig.json",
-    "node --test \"tests/unit/**/*.test.mjs\"",
-    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
-    "node tools/csp.mjs --check",
-    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
-    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
-    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
-    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  "providesRules": [
+    {
+      "check": "check-contrast#all-pairs",
+      "kind": "tool",
+      "file": "site/tools/check-contrast.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A12#6, C3.3",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "unit/ds-core-tokens.test#type-scale",
+      "kind": "unit",
+      "file": "site/tests/unit/ds-core-tokens.test.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C3.2",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "check-contrast#focus-pairs",
+      "kind": "tool",
+      "file": "site/tools/check-contrast.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P0#3",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "check-contrast#glass-worst-case",
+      "kind": "tool",
+      "file": "site/tools/check-contrast.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P4#18",
+      "implementers": "ds-core"
+    }
+  ],
+  "legacySlices": [
+    {
+      "file": "site/src/styles/50-legacy-01-ds-core.css",
+      "lines": [
+        1,
+        39
+      ],
+      "label": "header comment, base (reset, body, headings, focus, selection, .i, .vh, .note, skip link); layout (.wrap, .section variants, main)",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        "L11 [hidden]: display: none !important",
+        "L25 .vh: position: absolute !important"
+      ]
+    },
+    {
+      "file": "site/src/styles/50-legacy-03-ds-core.css",
+      "lines": [
+        48,
+        66
+      ],
+      "label": "glass materials (.glass-card, .glass-bar, .icon-tile, @supports fallback)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    },
+    {
+      "file": "site/src/styles/50-legacy-24-ds-core.css",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    },
+    {
+      "file": "site/src/styles/50-legacy-32-ds-core.css",
+      "lines": [
+        651,
+        677
+      ],
+      "label": "motion: keyframes, hero entrance, view() reveals, reduced-motion kill switch (→ 95-motion.css, deleted in W2); print (→ 99-print.css, deleted in W2)",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        "L668 *, *::before, *::after (@media (prefers-reduced-motion: reduce)): animation-duration: 0ms !important; transition-duration: 0ms !important; scroll-behavior: auto !important",
+        "L672 .site-header, .cta-band, .hero__dock, .skip-link, .site-footer__glow (@media print): display: none !important"
+      ]
+    }
+  ],
+  "gates": {
+    "w2": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # deferred in W2 until qa merges",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs   # deferred in W2 until qa merges",
+      "node tools/trace.mjs --upto=w2 --stream=ds-core   # deferred in W2 until qa merges",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=ds-core --wave=w2 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
   ],
   "verifierLens": "Contrast mathematician: recompute every pair, test forced-colors and 200 % zoom, grep for stray prefers-reduced-motion",
-  "port": {
-    "w2": 4421
-  },
-  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
-  "out": "$SCRATCH/dist/<branch-with-dashes>",
-  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
   "requests": ".orchestra/requests/ds-core.md (never edit a file outside owns; describe the change there)"
 }

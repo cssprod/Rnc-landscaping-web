@@ -5,6 +5,14 @@
   "branch": [
     "w2/ds-chrome"
   ],
+  "base": {
+    "w2": "tag wave-1-int"
+  },
+  "port": {
+    "w2": 4422
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
   "owns": {
     "w2": [
       "site/src/components/{layout,sprite}.mjs",
@@ -18,72 +26,205 @@
       ".orchestra/requests/ds-chrome.md"
     ]
   },
-  "forbidden": [
-    "CONTRACT.md",
-    "site/src/lib/head-scripts.mjs",
-    ".orchestra/ownership.json",
-    ".orchestra/briefs/**",
-    ".orchestra/traceability.json",
-    ".orchestra/url-map.json",
-    ".orchestra/legacy-css-map.json",
-    "research/**",
-    "cedar-springs-teardown-blueprint.md",
-    "site/src/pages/routes.mjs",
-    "site/src/components/ui/index.mjs",
-    "site/site.config.mjs",
-    "content/site.json",
-    "content/**",
-    "brand/**",
-    "site/src/components/ui/**",
-    "site/src/pages/**"
-  ],
+  "forbidden": {
+    "w2": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "brand/**",
+      "site/src/components/ui/**",
+      "site/src/pages/**"
+    ]
+  },
   "reads": [
-    ".orchestra/ownership.json",
     "CONTRACT.md",
     "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
     "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
     "DESIGN-DIRECTION.md",
     ".orchestra/direction/motion-policy.md",
-    "CONTRACT.md §Attribute contract, §Analytics events",
-    "site/COMPONENTS.md §Chrome"
+    "CONTRACT.md §3 Tokens, §5 Nav/Footer, §8 Attribute contract, §13 Analytics events",
+    "site/COMPONENTS.md §Chrome",
+    "site/tests/e2e/chrome.spec.mjs (keep every #rule test ia wrote)"
+  ],
+  "context": [
+    "Your base is tag wave-1-int: page families + frozen routes.mjs aggregator, ui/ split, layout scripts[] with env.assets.modules, new URLs + _redirects, legacy CSS slices in @layer legacy, module hashing, --out/SITE_DIST/PORT, dev-setup --devtools, check-content, rewrite-links, site.json.",
+    "qa merges LAST in W2, so a11y.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, trace.mjs and budgets v2 are not on your base: run those gates as deferred (report them) and the integrator runs them after the qa merge, when it also writes their baselines.",
+    "No stream owns the page files (site/src/pages/{home,services,areas,projects,company,editorial}.mjs) in W2: new primitives and scenes are proven on /styleguide/ (showcase build), not on real pages."
   ],
   "deliverables": [
-    "Glass header; Services ▾ / Service areas ▾ disclosure menus; mobile sheet (inert background, Esc closes, focus returns, accordions); one nav DOM",
-    "Sticky Call / Free-quote bar below 64em: each ≥ 48 px, env(safe-area-inset-bottom), hidden while [data-quote-form] is in view or the on-screen keyboard is open",
-    "Theme and Animations toggles: <button aria-pressed> named \"Dark theme\" and \"Animations\", ≥ 44×44, visible at every width, persisted (rnc-theme / rnc-motion), circular view-transition reveal, updates meta theme-color",
-    "tel:/sms:/mailto: in header and footer (telLink/mailLink/smsLink in lib/tokens.mjs); desktop header call button",
-    "scroll-padding-top/bottom = header and bar heights (2.4.11); lib/prefs.js + lib/track.js final",
-    "Delete the seed-time JS_FLAG alias from layout.mjs (build.mjs no longer imports it after W1); rename data-track values to the CONTRACT §13 names in layout/tokens.mjs"
+    "Glass header; Services ▾ / Service areas ▾ disclosures: rename the W1 hooks data-mega / data-mega-toggle / data-mega-panel to data-disclosure / data-disclosure-panel on BOTH sides (layout.mjs and main.js) in your branch; mobile sheet (inert background, Esc closes, focus returns, accordions); one nav DOM.",
+    "Header Call and Free quote buttons only at ≥ 64em; below 64em the sticky bar carries them (five 44 px header buttons plus the logo overflow 320 px). Logo, Menu and the two toggles stay visible at every width.",
+    "Sticky Call / Free-quote bar below 64em: each ≥ 48 px, env(safe-area-inset-bottom), hidden while [data-quote-form] is in view (ia added the hook in W1) or the on-screen keyboard is open. Its Call button reads \"Contact\" → /contact/ until [PHONE] is known (CONTRACT §8).",
+    "Theme and Animations toggles: <button aria-pressed> named \"Dark theme\" and \"Animations\", ≥ 44×44, visible at every width, persisted (rnc-theme / rnc-motion), circular view-transition reveal, updates meta theme-color.",
+    "tel:/sms:/mailto: in header and footer (telLink/mailLink/smsLink in lib/tokens.mjs). A link whose URL depends on an unresolved token renders as text + chip, never an href (CONTRACT §3).",
+    "scroll-padding-top/bottom = header and bar heights (2.4.11); lib/prefs.js + lib/track.js final.",
+    "main.js clean-up: delete the pointer sheen (\"glass highlight that follows the pointer\"; the T3 spotlight belongs to living.js); replace every reduceMotion matchMedia check with prefs.motionOn() / onMotionChange(); remove the W1 static imports of ./quote.js and ./projects.js (routes load them through scripts[]).",
+    "Delete the seed-time JS_FLAG alias from layout.mjs. Rename data-track values to the CONTRACT §13 names in layout.mjs (call_clicked → call_click), lib/tokens.mjs (telLink → call_click, mailLink → email_click, new smsLink → sms_click) and main.js's delegated handler.",
+    "Plausible loader in layout.mjs: only in launch builds with [PLAUSIBLE DOMAIN] set; no other third party (A13 #28).",
+    "sprite.mjs: add every icon named in DESIGN-DIRECTION.md and site/COMPONENTS.md now. The sprite is frozen in W3; later needs go through requests."
   ],
   "acceptance": [
-    "A13#9: Header call button, sticky mobile bar, tel:/mailto: everywhere — verified by e2e/chrome.spec#tel-sms-mailto",
-    "C1.5: Breadcrumbs on all depth-2+ pages — verified by check-seo#breadcrumbs",
-    "C4.2: Mobile nav sheet: inert, Esc, focus return, accordions — verified by e2e/chrome.spec#mobile-sheet",
-    "C4.3: Sticky action bar below 1024 px — verified by e2e/chrome.spec#sticky-bar",
-    "P0#4: scroll-padding for sticky header and bar; 2.4.11 keyboard test — verified by e2e/chrome.spec#focus-not-obscured",
-    "P1#6: Sticky mobile Call / Free-quote bar (≥ 48 px, safe-area, hidden over the form) — verified by e2e/chrome.spec#sticky-bar-hides",
-    "P1#7: tel:/mailto: in header and footer; desktop header call button — verified by e2e/chrome.spec#header-call",
+    "A13#3a: One responsive component per pattern: one nav DOM, no duplicated chrome — check check-seo#single-nav-dom (authored by seo, due w2); one nav[aria-label=Main]; header/footer link sets not duplicated",
+    "A13#9: Header call button, sticky mobile bar, tel:/mailto: everywhere — check e2e/chrome.spec#tel-sms-mailto (you author it)",
+    "A13#28: Plausible only; no consent banner — check budgets#third-party-origins (authored by qa, due w2); the Plausible loader lives in layout.mjs",
+    "C1.5: Breadcrumbs on all depth-2+ pages — check check-seo#breadcrumbs (authored by seo, due w2)",
+    "C4.2: Mobile nav sheet: inert, Esc, focus return, accordions — check e2e/chrome.spec#mobile-sheet (you author it)",
+    "C4.3: Sticky action bar below 1024 px — check e2e/chrome.spec#sticky-bar (you author it)",
+    "C4.4b: Touch targets ≥ 44×44 primary, ≥ 24×24 all: header, toggles, sheet, sticky bar, footer — check a11y#target-size (authored by qa, due w2)",
+    "P0#4: scroll-padding for sticky header and bar; 2.4.11 keyboard test — check e2e/chrome.spec#focus-not-obscured (you author it)",
+    "P1#6: Sticky mobile Call / Free-quote bar (≥ 48 px, safe-area, hidden over the form) — check e2e/chrome.spec#sticky-bar-hides (you author it)",
+    "P1#7: tel:/mailto: in header and footer; desktop header call button — check e2e/chrome.spec#header-call (you author it)",
+    "P2#13a: Disclosure-button menus (no href=\"#\") and breadcrumbs — check e2e/chrome.spec#disclosure-breadcrumbs (you author it)",
     "Keyboard-only pass: no focused element fully obscured by header or bar at 320–1440",
-    "ds-chrome legacy slices deleted"
+    "check-html#data-track-names green on the integration tip after the W2 merge",
+    "ds-chrome slices 07, 21 and 22 deleted (the !important on .mega and .brand--footer:hover with them)"
   ],
-  "gates": [
-    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
-    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
-    "tsc -p jsconfig.json",
-    "node --test \"tests/unit/**/*.test.mjs\"",
-    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
-    "node tools/csp.mjs --check",
-    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
-    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
-    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
-    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  "providesRules": [
+    {
+      "check": "e2e/chrome.spec#tel-sms-mailto",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#9",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#mobile-sheet",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C4.2",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#sticky-bar",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C4.3",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#focus-not-obscured",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P0#4",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#sticky-bar-hides",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P1#6",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#header-call",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P1#7",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "e2e/chrome.spec#disclosure-breadcrumbs",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P2#13a",
+      "implementers": "ds-chrome"
+    }
+  ],
+  "legacySlices": [
+    {
+      "file": "site/src/styles/50-legacy-07-ds-chrome.css",
+      "lines": [
+        122,
+        203
+      ],
+      "label": "navigation capsule, mega panel, mobile sheet (+ its media queries); breadcrumbs",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        "L179 .mega (@media (max-width: 1119.98px)): animation: none !important"
+      ]
+    },
+    {
+      "file": "site/src/styles/50-legacy-21-ds-chrome.css",
+      "lines": [
+        585,
+        605
+      ],
+      "label": "footer",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        "L597 .brand--footer:hover: text-decoration: none !important"
+      ]
+    },
+    {
+      "file": "site/src/styles/50-legacy-22-ds-chrome.css",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    }
+  ],
+  "gates": {
+    "w2": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # deferred in W2 until qa merges",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs   # deferred in W2 until qa merges",
+      "node tools/trace.mjs --upto=w2 --stream=ds-chrome   # deferred in W2 until qa merges",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=ds-chrome --wave=w2 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
   ],
   "verifierLens": "Keyboard and screen-reader tester: Tab through every page width, Esc paths, focus return, aria-pressed state persistence across reloads",
-  "port": {
-    "w2": 4422
-  },
-  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
-  "out": "$SCRATCH/dist/<branch-with-dashes>",
-  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
   "requests": ".orchestra/requests/ds-chrome.md (never edit a file outside owns; describe the change there)"
 }

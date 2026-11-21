@@ -14,6 +14,7 @@ Read the contract, this file and your brief before changing anything.
 - A visually stunning, **alive** site (living vector landscapes, glow, glass and bento depth) on top of RNC's fast, accessible static build.
 - Every fault the blueprint lists is fixed (A13 #1–36), and the full RNC blueprint is delivered (A12 #1–7, C1–C8, P0 #1–P4 #19).
 - Lighthouse ≥ 95 in all four categories and WCAG 2.2 AA, shipped as a PR with a Netlify Deploy Preview.
+- Every item maps to one implementing stream, one check and the stream that authors that check (`.orchestra/traceability.json`, CONTRACT §16).
 
 ## Status (true as of 21 November 2026, commit `8798346`)
 v2 of this file claimed an "Already done (foundation commit)" section. **None of it exists.** This is the real state.
@@ -41,6 +42,11 @@ v2 of this file claimed an "Already done (foundation commit)" section. **None of
 - No numbered CSS files.
 - No JS modules beyond `main.js`.
 - No `COMPONENTS.md` before this W0 skeleton.
+
+**W0 research done so far:**
+- `research/area-facts/<slug>.json` (R1) holds sourced rule and condition facts for all 13 municipalities.
+- The V1–V3 verification lanes (`research/area-verification-V*.md`) fetched most sources and set `reviewedOn` where the excerpt was found.
+- Facts on blocked hosts keep `reviewedOn: null`.
 
 **Content defects still to fix:**
 - **52** content links to `/quote/` and **17** to `/portfolio/` (the integrator's codemod handles these in W1).
@@ -97,6 +103,8 @@ v2 of this file claimed an "Already done (foundation commit)" section. **None of
   - One DOM per component; breakpoints at 40em, 64em and 80em; container queries for cards and tiles.
   - **Mobile sheet:** `inert`, Esc, focus return, accordions.
   - **Sticky Call / Free-quote bar below 64em:** each button ≥ 48 px, `env(safe-area-inset-bottom)`, hidden over the quote form or while the keyboard is open.
+    - Its Call reads "Contact" → `/contact/` until `[PHONE]` is known.
+    - The header Call and Free quote buttons show only at ≥ 64em; at 320 px the header holds the logo, Menu and the two toggles.
   - **Focus and targets:** `scroll-padding` equals the header and bar heights (2.4.11). Primary targets are ≥ 44×44 and all others ≥ 24×24.
   - No horizontal scroll at 320 px, and 200 % zoom works.
 - **Images (C4, P4 #17).** `<picture>` AVIF → WebP → JPEG at 480/768/1024/1600 via `site/tools/process-images.mjs`, with `sharp` installed in scratch, never as a repo dependency. All metadata is stripped and licences go in a manifest. Alt text is written by hand.
@@ -112,7 +120,7 @@ v2 of this file claimed an "Already done (foundation commit)" section. **None of
 - **Trust (C5):**
   - a `[REPLY TIME]` promise and "What happens next";
   - a credentials row that uses tokens only;
-  - a reviews band: 3 quotes in Newsreader italic, labelled Sample, with "Read all reviews on Google" → `[GOOGLE PROFILE]`;
+  - a reviews band: 3 quotes in Newsreader italic, labelled Sample, with "Read all reviews on Google" → `[GOOGLE PROFILE]`. While the token is unresolved, the link renders as text plus a chip, never as an `href` (CONTRACT §3);
   - a named owner, local-rules expertise, and a plain-language guarantee built around `[WARRANTY]`.
 
 **v2 decisions that are superseded (aesthetics only; every hard constraint is kept):**
@@ -175,19 +183,40 @@ Each stream runs builder → reviewer → fixer in its own worktree and branch `
 
 | Wave | Streams | Merge order |
 |---|---|---|
-| W0 | A1 architect, A2 critic → A3 reviser; P1–P3 art proposers; L1 effects lab; R1 area research; R2 content audit; J1–J3 judges; S1 synthesizer; then the seed commit | — |
-| W1 | build, ia, areas-content, content | build → ia → areas-content → content → codemod; then draft PR |
-| W2 | ds-core, ds-chrome, ds-comp, living, seo, quote, qa (+ areas-content and content continuing) | ds-core → ds-chrome → ds-comp → living → seo → quote → qa → areas-content → content → codemod |
-| W3 | t-home, t-services, t-areas, t-projects, t-company, t-editorial, css-consolidator (tooling) | t-editorial → t-company → t-services → t-areas → t-projects → t-home |
-| W3b | css-consolidator (exclusive lock on `site/src/styles/**`) | consolidator |
-| W4 | evidence pack, 7 read-only finders, triage, owner fixers (fix-system, fix-features, fix-pages, fix-qa, fix-content); at most 3 rounds with a divergence guard | per round |
-| W5 | og-render, docs (README, CONTRACT final, CHANGELOG, LAUNCH-CHECKLIST, brand.md, TRACEABILITY.md), ci, release-gate | then the PR is marked ready |
+| W0 | A1 architect, A2 critic → A3 reviser (one `architect` write set, used in turn); P1–P3 art proposers; L1 effects lab; R1 area research + V1–V3 source verification; R2 content audit; J1–J3 judges; S1 synthesizer; then the seed commit | — |
+| W1 | build, ia, areas-content, content | build → ia → areas-content → content, then the barrier; then the draft PR |
+| W2 | ds-core, ds-chrome, ds-comp, living, seo, quote, qa (+ areas-content and content continuing) | ds-core → ds-chrome → ds-comp → living → seo → quote → qa → areas-content → content, then the barrier |
+| W3 | t-home, t-services, t-areas, t-projects, t-company, t-editorial, css-consolidator (writes `check-css` only; its branch is not merged at the W3 barrier) | t-editorial → t-company → t-services → t-areas → t-projects → t-home, then the barrier |
+| W3b | css-consolidator (exclusive lock on `site/src/styles/**`) | the w3 check-css branch, then the lock branch, then the barrier |
+| W4 | w4-evidence, 7 read-only finders (f-a11y, f-perf, f-seo, f-visual, f-blueprint, f-honesty, f-interaction), w4-triage, owner fixers (fix-system, fix-features, fix-pages, fix-qa, fix-content); at most 3 rounds with a divergence guard | fixers per round, then the barrier |
+| W5 | og-render, ci, docs (README, CONTRACT final, CHANGELOG, LAUNCH-CHECKLIST, brand.md, TRACEABILITY.md), release-gate (read-only gate) | og-render → ci → docs, then the release gate; then the PR is marked ready |
+
+Every stream, W4 and W5 included, has a brief in `.orchestra/briefs/<id>.json`. Each brief is self-contained: its base, context, owns and forbidden paths, deliverables, acceptance, `providesRules` (the checks it must author for other streams), gates, ports and common rules.
+
+**The barrier** (CONTRACT §4) runs in this order at every wave end:
+1. Run `.orchestra/tools/ownership.mjs` before each merge, then merge in order, running the quick gate after each merge.
+2. After the last merge, run the link codemod (W1, W2) and regenerate generated files.
+3. Write baselines for the tools that merged and prune the rest (CONTRACT §17).
+4. Run the **full gate**.
+5. Tag `wave-<n>-int` and push.
+
+The full gate therefore never runs against the 52 `/quote/` and 17 `/portfolio/` links that the codemod rewrites.
+
+**W1 integration gates.** The four W1 streams branch from the seed and pass their own-branch gates there. A gate that needs another W1 stream's work runs on a throwaway merge, or after the integrator merges. Examples: `check-content` and strict links to the new URLs (from ia), and `_redirects` one-hop (from build). See `ownership.json` `integration.w1`.
 
 **Seed commit (orchestrator, after the W0 contract lane):**
 1. `git mv cedar-springs-teardown-blueprint.md research/` and fix the references.
 2. Commit CONTRACT v3, this file, the COMPONENTS.md skeleton and `.orchestra/**`.
 3. Add the frozen `site/src/lib/head-scripts.mjs` (CONTRACT §11). Make `layout.mjs` emit `HEAD_SCRIPT` and the speculation rules, with `JS_FLAG` kept as an alias of `HEAD_SCRIPT` so the old build check passes. Put both hashes in the netlify.toml CSP, then build once to prove the CSP check is green.
-4. `git config gc.auto 0`.
+4. **Gate enablers**, so each W1 branch can pass its gates alone. The exact list is in `ownership.json` `seed` step 4:
+   - `playwright.config.mjs` reads `PORT`/`SITE_DIST` with `reuseExistingServer: false`;
+   - `tools/lib.mjs` honours `SITE_DIST`;
+   - `build.mjs` writes non-`.html` route files raw and skips `sitemap:false` routes;
+   - minimal `tools/csp.mjs` and `tools/dev-setup.mjs`;
+   - the three new tokens in `site.config.mjs`;
+   - the CONTRACT §13 event names added to `event-schema.yaml`;
+   - `check-links --url-map`.
+5. `git config gc.auto 0`. Run `node .orchestra/tools/check-overlap.mjs .`, which must pass, and record the seed sha as every W1 brief's `--base`.
 
 **Failure handling:**
 - A crash, or a run with no commits, is relaunched once.
@@ -208,9 +237,20 @@ node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on
 node tools/motion-audit.mjs && node tools/text-over-media.mjs
 node tools/lighthouse.mjs --runs=3          # quiet slot only; ≥ 95 ×4 on every template
 node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity (online images, default dist)
-node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>
+node tools/trace.mjs --upto=<wave> --stream=<id>   # from W2 (qa)
+node ../.orchestra/tools/ownership.mjs --stream=<id> --wave=<wave> --base=<sha> --head=<branch>
 ```
-`check-all` covers links, html, tokens, placeholders, budgets, content, seo, honesty and ownership.
+- **`check-all`** discovers every `site/tools/check-*.mjs` (CONTRACT §14):
+  - links, html, tokens, placeholders and budgets;
+  - from W1: content;
+  - from W2: seo, honesty, motion-policy and ci;
+  - from W3b: css.
+- **Baselines** in `.orchestra/baselines/` apply automatically (CONTRACT §17). The W5 release gate adds `--no-baseline`.
+- **W1 differences:**
+  - streams build into their worktree's own `site/dist` (no `--out` on the seed base);
+  - `check-all` takes `--url-map`;
+  - the browser tools, Lighthouse and `trace.mjs` do not exist yet.
+- **The ownership checker** is the frozen `.orchestra/tools/ownership.mjs`. It is not a `check-*` tool, so Netlify never runs it.
 
 **End to end:**
 - the art director reviews the screenshot matrix (320/390/768/1024/1440 × dark/light × motion);

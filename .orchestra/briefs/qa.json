@@ -5,13 +5,22 @@
   "branch": [
     "w2/qa"
   ],
+  "base": {
+    "w2": "tag wave-1-int"
+  },
+  "port": {
+    "w2": 4427
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
   "owns": {
     "w2": [
       "site/playwright.config.mjs",
       "site/tests/helpers/**",
       "site/tests/e2e/global.spec.mjs",
-      "site/tools/{a11y,lighthouse,measure,motion-audit,text-over-media,check-honesty,check-motion-policy,budgets,screenshots,check-all,check-html,check-links,check-placeholders,check-tokens,check-content,check-ownership,serve,lib,csp,dev-setup}.mjs",
+      "site/tools/{a11y,lighthouse,measure,motion-audit,text-over-media,check-honesty,check-motion-policy,check-ci,trace,budgets,screenshots,check-all,check-html,check-links,check-placeholders,check-tokens,check-content,serve,lib,csp,dev-setup}.mjs",
       "site/tools/schemas/**",
+      "site/fixtures/content/**",
       "site/lighthouserc.json",
       ".github/workflows/ci.yml",
       "netlify.toml",
@@ -19,69 +28,287 @@
       ".orchestra/requests/qa.md"
     ]
   },
-  "forbidden": [
-    "CONTRACT.md",
-    "site/src/lib/head-scripts.mjs",
-    ".orchestra/ownership.json",
-    ".orchestra/briefs/**",
-    ".orchestra/traceability.json",
-    ".orchestra/url-map.json",
-    ".orchestra/legacy-css-map.json",
-    "research/**",
-    "cedar-springs-teardown-blueprint.md",
-    "site/src/pages/routes.mjs",
-    "site/src/components/ui/index.mjs",
-    "site/site.config.mjs",
-    "content/site.json",
-    "content/**",
-    "site/src/**",
-    "brand/**"
-  ],
+  "forbidden": {
+    "w2": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "content/**",
+      "site/src/**",
+      "brand/**"
+    ]
+  },
   "reads": [
-    ".orchestra/ownership.json",
     "CONTRACT.md",
     "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
     "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
     ".orchestra/traceability.json",
-    "CONTRACT.md §Gates, §Budgets",
-    ".orchestra/direction/motion-policy.md"
+    "CONTRACT.md §14 Build interface, §16 Gates and budgets, §17 Baselines",
+    ".orchestra/direction/motion-policy.md",
+    "site/event-schema.yaml"
+  ],
+  "context": [
+    "Your base is tag wave-1-int: page families + frozen routes.mjs aggregator, ui/ split, layout scripts[] with env.assets.modules, new URLs + _redirects, legacy CSS slices in @layer legacy, module hashing, --out/SITE_DIST/PORT, dev-setup --devtools, check-content, rewrite-links, site.json.",
+    "qa merges LAST in W2, so a11y.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, trace.mjs and budgets v2 are not on your base: run those gates as deferred (report them) and the integrator runs them after the qa merge, when it also writes their baselines.",
+    "No stream owns the page files (site/src/pages/{home,services,areas,projects,company,editorial}.mjs) in W2: new primitives and scenes are proven on /styleguide/ (showcase build), not on real pages."
   ],
   "deliverables": [
-    "global.spec: every page 200, one H1, no console/CSP errors in both themes, no horizontal overflow at 320 px, 200 % zoom",
-    "a11y.mjs (axe injected via bypassCSP context only; wcag2a/2aa/21aa/22aa; themes × widths × motion), lighthouse.mjs (median of 3, benchmarkIndex guard), measure.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, check-motion-policy.mjs (lint), budgets v2, screenshot matrix",
-    "CI on the new URLs; serve.mjs-based Playwright so the real CSP is enforced"
+    "global.spec: every page 200, one H1, no console/CSP errors in both themes, no horizontal overflow at 320 px, 200 % zoom (#reflow-320-zoom-200).",
+    "a11y.mjs (axe injected via a bypassCSP context only; wcag2a/2aa/21aa/22aa; themes × widths × motion; rules axe-matrix and target-size), lighthouse.mjs (median of 3, benchmarkIndex guard; rules median-of-3 and cwv: lab LCP ≤ 1.8 s, CLS ≤ 0.05, TBT ≤ 150 ms as the INP proxy), measure.mjs (audit-report JSON), motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, check-motion-policy.mjs (banned effects + raw durations + prefers-reduced-motion placement), budgets v2 (CONTRACT §16 incl. hero raster ≤ 120 KB), screenshot matrix. Every rule under providesRules, exported in RULES.",
+    "check-html#data-track-names: every data-track value and track() name exists in site/event-schema.yaml and none is a deprecated v2 name.",
+    "tools/trace.mjs (not a check-*: it needs .orchestra): fails when a traceability tool#rule is missing from that tool's literal RULES, or an e2e/unit check has no test whose title contains #rule; --upto=<wave> limits it to items due by then; --stream=<id>. Read RULES statically: never import a tool, because tools run on import.",
+    "tools/check-ci.mjs#required-gates: parses .github/workflows/ci.yml; typecheck, unit, build, check-all, csp, Playwright, a11y and Lighthouse steps present, on the new URLs, and not continue-on-error (except the launch gate); exits 0 when ci.yml is absent.",
+    "Every tool reports through tools/lib.mjs report() with baselines (CONTRACT §17); take over check-links, check-html, check-content and site/fixtures/content/** from ia without dropping a rule.",
+    "CI on the new URLs; serve.mjs-based Playwright so the real CSP is enforced."
   ],
   "acceptance": [
-    "A13#24: Spell-check in CI — verified by check-honesty#spelling",
-    "A13#28: Plausible only; no consent banner — verified by budgets#third-party-origins",
-    "A13#36: Audit performance, contrast, focus, tap targets before quoting numbers — verified by evidence-pack (a11y.mjs + lighthouse.mjs + measure.mjs, W4)",
-    "C4.4: Touch targets ≥ 44×44 primary, ≥ 24×24 all — verified by a11y#target-size",
-    "C4.6: ≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom — verified by e2e/global.spec#reflow-320-zoom-200",
-    "C7.1: Lighthouse mobile ≥ 95 ×4 every template — verified by lighthouse#median-of-3",
-    "C7.2: Weights: home ≤ 500 KB, inner ≤ 350 KB, CSS/JS/fonts caps, 1 third party — verified by budgets#v2",
-    "C7.3: WCAG 2.2 AA, 0 axe violations — verified by a11y#axe-matrix",
-    "P0#2: Lighthouse CI budgets, axe/Playwright at 5 widths, link checker in the build — verified by ci#required-gates",
-    "P4#19: Final regression: LH ≥ 95 ×4, 0 axe, manual SR pass, 200 % zoom, 320 px, CLS ≤ 0.05 — verified by release-gate#final-regression (W5)",
-    "Fault injection in a scratch copy: an a11y bug, a CSP violation, a 320 px overflow and a stock photo on /projects/ are all caught"
+    "P0#2: Lighthouse CI budgets, axe/Playwright at 5 widths, link checker in the build — check check-ci#required-gates (you author it)",
+    "Fault injection in a scratch copy: an a11y bug, a CSP violation, a 320 px overflow and a stock photo on /projects/ are all caught, each naming the page"
   ],
-  "gates": [
-    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
-    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
-    "tsc -p jsconfig.json",
-    "node --test \"tests/unit/**/*.test.mjs\"",
-    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
-    "node tools/csp.mjs --check",
-    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
-    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
-    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
-    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  "providesRules": [
+    {
+      "check": "check-honesty#unverifiable-claims",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#12",
+      "implementers": "content"
+    },
+    {
+      "check": "motion-audit#vt-and-loader",
+      "kind": "tool",
+      "file": "site/tools/motion-audit.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#15",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "motion-audit#no-auto-advance",
+      "kind": "tool",
+      "file": "site/tools/motion-audit.mjs",
+      "shipIn": "w2",
+      "neededBy": "w3",
+      "forItems": "A13#16",
+      "implementers": "t-home"
+    },
+    {
+      "check": "check-honesty#spelling",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#24",
+      "implementers": "content"
+    },
+    {
+      "check": "budgets#image-widths",
+      "kind": "tool",
+      "file": "site/tools/budgets.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#27",
+      "implementers": "living"
+    },
+    {
+      "check": "budgets#third-party-origins",
+      "kind": "tool",
+      "file": "site/tools/budgets.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#28",
+      "implementers": "ds-chrome"
+    },
+    {
+      "check": "measure#audit-report",
+      "kind": "tool",
+      "file": "site/tools/measure.mjs",
+      "shipIn": "w2",
+      "neededBy": "w4",
+      "forItems": "A13#36",
+      "implementers": "w4-evidence"
+    },
+    {
+      "check": "check-honesty#no-stock-people",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w3",
+      "forItems": "A12#4",
+      "implementers": "t-company"
+    },
+    {
+      "check": "check-honesty#commercial-proof",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A12#5a",
+      "implementers": "content"
+    },
+    {
+      "check": "check-motion-policy#banned-effects",
+      "kind": "tool",
+      "file": "site/tools/check-motion-policy.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C3.1",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "check-honesty#stock-in-projects",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C3.4",
+      "implementers": "living"
+    },
+    {
+      "check": "motion-audit#policy-tiers",
+      "kind": "tool",
+      "file": "site/tools/motion-audit.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C3.5",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "a11y#target-size",
+      "kind": "tool",
+      "file": "site/tools/a11y.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C4.4a, C4.4b",
+      "implementers": "ds-comp, ds-chrome"
+    },
+    {
+      "check": "budgets#picture-pipeline",
+      "kind": "tool",
+      "file": "site/tools/budgets.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C4.5",
+      "implementers": "living"
+    },
+    {
+      "check": "e2e/global.spec#reflow-320-zoom-200",
+      "kind": "e2e",
+      "file": "site/tests/e2e/global.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C4.6",
+      "implementers": "ds-core"
+    },
+    {
+      "check": "check-honesty#trust-without-prices",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.7",
+      "implementers": "content"
+    },
+    {
+      "check": "lighthouse#median-of-3",
+      "kind": "tool",
+      "file": "site/tools/lighthouse.mjs",
+      "shipIn": "w2",
+      "neededBy": "w4",
+      "forItems": "C7.1",
+      "implementers": "fix-system"
+    },
+    {
+      "check": "budgets#v2",
+      "kind": "tool",
+      "file": "site/tools/budgets.mjs",
+      "shipIn": "w2",
+      "neededBy": "w4",
+      "forItems": "C7.2",
+      "implementers": "fix-system"
+    },
+    {
+      "check": "a11y#axe-matrix",
+      "kind": "tool",
+      "file": "site/tools/a11y.mjs",
+      "shipIn": "w2",
+      "neededBy": "w4",
+      "forItems": "C7.3",
+      "implementers": "fix-system"
+    },
+    {
+      "check": "lighthouse#cwv",
+      "kind": "tool",
+      "file": "site/tools/lighthouse.mjs",
+      "shipIn": "w2",
+      "neededBy": "w4",
+      "forItems": "C7.4",
+      "implementers": "fix-system"
+    },
+    {
+      "check": "check-ci#required-gates",
+      "kind": "tool",
+      "file": "site/tools/check-ci.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P0#2",
+      "implementers": "qa"
+    },
+    {
+      "check": "check-honesty#reviews-credentials-guarantee",
+      "kind": "tool",
+      "file": "site/tools/check-honesty.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P1#8",
+      "implementers": "ds-comp"
+    }
+  ],
+  "gates": {
+    "w2": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+      "node tools/trace.mjs --upto=w2 --stream=qa",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=qa --wave=w2 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
   ],
   "verifierLens": "Mutation tester: seed faults, confirm each tool fails loudly and names the page",
-  "port": {
-    "w2": 4427
-  },
-  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
-  "out": "$SCRATCH/dist/<branch-with-dashes>",
-  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
   "requests": ".orchestra/requests/qa.md (never edit a file outside owns; describe the change there)"
 }
