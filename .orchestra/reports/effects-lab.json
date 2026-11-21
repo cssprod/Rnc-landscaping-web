@@ -1,0 +1,4201 @@
+{
+ "$schema": "L1 effects lab v1",
+ "generated": "2026-11-21T14:32:04.283Z",
+ "method": {
+  "browser": "Chromium 157.0.8103.78 (Playwright 1.63 headless), no hardware GPU: compositing and raster run in software on the CPU",
+  "cpuThrottle": "CDP Emulation.setCPUThrottlingRate rate 4 (renderer main thread only)",
+  "window": "5 s per scenario after the effect is started (html.alive added at t0, as living.js would after load + idle)",
+  "passA": "median of 3 runs: CDP Performance.getMetrics deltas (TaskDuration -> mainThreadMsPerSec, RecalcStyleDuration -> recalcStyleMs per second, RecalcStyleCount) plus PerformanceObserver long-animation-frame (>50 ms) and longtask; no tracing, no rAF probes",
+  "passB": "1 run with a light trace (devtools.timeline, blink.animations, toplevel, timeline.frame): Animation compositeFailed bitmask, per-thread busy time, Paint/UpdateLayoutTree counts, compositor DrawFrame rate",
+  "composited": "true = every animation reported compositeFailed 0 AND style recalcs/paints per second stay at baseline; false = Blink reported a composite failure or per-frame style/paint",
+  "actions": {
+   "idle": "wait 5 s",
+   "scroll": "Input.synthesizeScrollGesture mouse wheel, 800 px/s, down/up",
+   "pointer": "Input.dispatchMouseEvent mouseMoved every ~16 ms across the bento cards (desktop, fine pointer)",
+   "maphover": "mouseMoved across the 13 map tiles",
+   "nav": "click a same-origin link repeatedly (cross-document navigation)"
+  },
+  "lighthouse": "Lighthouse 12.8.2 CLI, mobile form factor, default simulated throttling, median of 3, same Chromium; delta vs the baseline page (same content, static art)",
+  "caveats": [
+   "Headless Chromium only. WebKit (all iOS browsers) and Gecko were not measured; WebKit does not composite animations on SVG child nodes and is more sensitive to backdrop-filter area.",
+   "softwareVizMsPerSec is CPU time of the GPU-process VizCompositorThread in software compositing. It is a RELATIVE indicator of compositor/GPU load (overdraw, blur), not a real-device number; with a hardware GPU it is far lower. It never counts toward TBT.",
+   "Main-thread numbers include input dispatch for pointer/scroll scenarios; compare against the matching baseline scenario (mainThreadMsPerSecVsBaseline).",
+   "For navigation scenarios getMetrics resets per document, so per-navigation trace numbers (trace.mainMsPerNav) are the comparable figures."
+  ],
+  "scratch": "/tmp/claude-0/-home-user-Rnc-landscaping-web/5110250c-2871-5a49-ba20-c506ac0ea22b/scratchpad/direction/L1/ (gen-pages.mjs, pages/, measure.cjs, lh.cjs, results.json, lh-results.json)"
+ },
+ "keyFindings": [
+  "Lighthouse is blind to living motion. Every lab page scored 100 performance (median of 3), including SMIL (218 ms/s main thread), JS rAF attribute animation (207 ms/s), @property loops (152 ms/s) and filter:blur blobs that drop frames to 21-43 fps. TBT stayed 0-36 ms because the work comes as many small tasks, and the non-composited-animations audit misses SMIL, JS and blur cost. The QA motion-audit needs its own budget (below), not Lighthouse.",
+  "Start ambient loops after load + idle. Hero with loops running from first paint: TBT median 36 ms and main-thread work 387 ms; started after load + idle: TBT 0 and 329 ms (baseline 246 ms). LCP stays the H1 and Speed Index does not move either way.",
+  "Ambient transform/opacity loops on OUTER boxes are effectively free on the main thread: all safe ambient effects together cost 1.3 ms/s in steady state.",
+  "Scroll-linked CSS (scroll()/view()) composites, but Chromium still runs a main-thread style update on every scroll frame: +31 ms/s for hero parallax and +36 ms/s for 16 view() reveals at 4x. IntersectionObserver one-shot reveals cost about a third of that.",
+  "Never animate a registered custom property (@property) in a loop: 2 conic borders = 152 ms/s, 180 paints/s. A transform-rotated conic layer looks the same for 3.6 ms/s.",
+  "Blur cost is on the compositor, not the main thread: filter:blur blobs and backdrop-filter over animated layers look clean in main-thread metrics but multiply compositor work (4-7x) and drop frames. Pre-blurred gradients and glass only over static art.",
+  "On an <svg> layer box animate `transform` only. The independent `translate` property on an SVG element is not composited (SVGTargetHasIndependentTransformProperty): combining parallax-by-translate with drift-by-transform cost +97 ms/s.",
+  "Chromium 153 composites CSS transform/opacity animations on SVG child nodes (the inner-node control was cheap); SMIL and JS attribute animation are not composited at all. WebKit was not measured; keep the outer-box rule for cross-engine safety.",
+  "Filters on SVG tiles (map drop-shadow) are main-thread: +72 ms/s during a hover sweep with a filter transition, 76 ms/s as an ambient pulse. Use instant on/off for hover and an opacity-animated HTML glow box for the pulse (3.4 ms/s)."
+ ],
+ "motionAuditBudgetProposal": {
+  "note": "Proposed for tools/motion-audit.mjs (qa), measured like this lab: Chromium, CDP CPU throttle 4x, 5 s windows, motion on.",
+  "steadyStateIdleMainThreadMsPerSec": "<= 10 after data-alive + 2.5 s (lab: all safe effects 1.3)",
+  "scrollMainThreadMsPerSecOverStaticPage": "<= +60 at 4x (lab: parallax +31, view() reveals +36, IO reveals +11; all-safe +131 fails this, so reveals must use IO)",
+  "longAnimationFramesDuringIdleOrScroll": 0,
+  "infiniteAnimationsCompositeFailed": "0 (trace Animation.compositeFailed); allow only transform and opacity in keyframes used by infinite animations",
+  "staticLintBans": [
+   "@keyframes that animate a custom property, filter, backdrop-filter, stroke-dashoffset, width/height, top/left in an infinite animation",
+   "SMIL elements (<animate>, <animateTransform>, <animateMotion>, <set>)",
+   "requestAnimationFrame loops that write styles or attributes",
+   "filter: blur() on animated elements",
+   "backdrop-filter on an element whose ancestor-stacking context or backdrop contains an infinite animation",
+   "independent translate/rotate/scale animations on <svg> elements"
+  ]
+ },
+ "thresholds": {
+  "safe": "composited, <= ~5 ms/s main-thread over baseline at 4x, 0 long frames, Lighthouse perf delta >= -1",
+  "ration": "bounded in time/area/count or interaction-only main-thread cost, or composited but heavy on the compositor",
+  "avoid": "continuous non-composited main-thread work (style+paint every frame) or a measurable Lighthouse loss"
+ },
+ "lighthouse": {
+  "baseline": {
+   "url": "baseline.html",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 767,
+   "lcp": 1201,
+   "si": 767,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 1653,
+   "mainThreadWork": 246,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "hero-layers-fireflies (alive after load+idle)": {
+   "url": "hero-layers-fireflies.html?alive=idle",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 767,
+   "lcp": 1201,
+   "si": 767,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 1635,
+   "mainThreadWork": 329,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "hero-layers-fireflies (alive immediately)": {
+   "url": "hero-layers-fireflies.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 766,
+   "lcp": 1201,
+   "si": 766,
+   "tbt": 36,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 1932,
+   "mainThreadWork": 387,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "all-safe (alive after load+idle)": {
+   "url": "all-safe.html?alive=idle",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 789,
+   "lcp": 1276,
+   "si": 789,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 12,
+   "benchmarkIndex": 1651,
+   "mainThreadWork": 953,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "all-safe (alive immediately)": {
+   "url": "all-safe.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 768,
+   "lcp": 1276,
+   "si": 768,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 12,
+   "benchmarkIndex": 1573,
+   "mainThreadWork": 910,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "conic-property (alive immediately)": {
+   "url": "conic-property.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 617,
+   "lcp": 1051,
+   "si": 617,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 2,
+   "benchmarkIndex": 1758,
+   "mainThreadWork": 678,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "glass-animated (alive immediately)": {
+   "url": "glass-animated.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 779,
+   "lcp": 1201,
+   "si": 779,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 2061,
+   "mainThreadWork": 250,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "neg-both: inner-node CSS + filter:blur blobs (alive immediately)": {
+   "url": "neg-both.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 612,
+   "lcp": 1051,
+   "si": 612,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 2250,
+   "mainThreadWork": 237,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "neg-inner-svg-smil (alive immediately)": {
+   "url": "neg-inner-svg-smil.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 769,
+   "lcp": 1201,
+   "si": 769,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 1895,
+   "mainThreadWork": 814,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  },
+  "neg-inner-svg-attr-raf (alive immediately)": {
+   "url": "neg-inner-svg-attr-raf.html?alive=now",
+   "perf": 100,
+   "a11y": 100,
+   "bp": 96,
+   "seo": 100,
+   "fcp": 764,
+   "lcp": 1200,
+   "si": 764,
+   "tbt": 0,
+   "cls": 0,
+   "nonComposited": 0,
+   "benchmarkIndex": 1607,
+   "mainThreadWork": 854,
+   "lcpElement": "Landscaping for Greater Victoria gardens",
+   "perfRuns": [
+    100,
+    100,
+    100
+   ]
+  }
+ },
+ "effects": [
+  {
+   "name": "Living layered SVG hero: 5 outer <svg> layer boxes drifting by transform (+2 firefly boxes by opacity)",
+   "mainThreadMsPerSec": 4.8,
+   "mainThreadMsPerSecVsBaseline": 4.3,
+   "softwareCompositorMsPerSec": 254.2,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 60.1,
+   "paintsPerSec": 1.4,
+   "compositeFailures": "0/5",
+   "msPerFrameAt60": 0.08,
+   "longFrames": 0,
+   "recalcStyleMs": 0.75,
+   "composited": true,
+   "lighthouseDelta": [
+    {
+     "page": "hero-layers-fireflies (alive after load+idle)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 329,
+     "mainThreadWorkDeltaMs": 83,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1201,
+     "lcpDeltaMs": 0,
+     "siMs": 767,
+     "siDeltaMs": 0,
+     "tbtMs": 0,
+     "tbtDeltaMs": 0,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 0,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    },
+    {
+     "page": "hero-layers-fireflies (alive immediately)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 387,
+     "mainThreadWorkDeltaMs": 141,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1201,
+     "lcpDeltaMs": 0,
+     "siMs": 766,
+     "siDeltaMs": -1,
+     "tbtMs": 36,
+     "tbtDeltaMs": 36,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 0,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    }
+   ],
+   "lighthouseNote": "Perf 100 both ways. Starting the loops at first paint (\"alive immediately\") added TBT (median 36 ms) and ~60 ms more main-thread work than starting after load + idle (TBT 0); LCP (the H1) and Speed Index did not move.",
+   "verdict": "safe",
+   "notes": "4.8 ms/s main thread vs 0.5 idle (+4.3), 0 long frames, 0 of 5 (0 of 7 with fireflies) animations failed to composite, ~1.4 paints/s (start only). Firefly boxes add nothing measurable on the main thread. Most of the 4.8 ms/s is the start-up (one style pass); in steady state the whole safe set of ambient loops together costs 1.3 ms/s (see the combined entry). The cost is on the compositor: 5 full-bleed layers at 112% width are ~250 ms/s of software-compositor CPU at 412 px and saturate it at 1440x900 (898 ms/s, 50 fps) in this GPU-less container; on real GPUs this is overdraw, not jank, but it is the reason to cap layer count and area. Test scene size: 7.6 KB raw / 1.9 KB gzip for 5 layers + 2 firefly boxes.",
+   "measuredOn": "hero-layers on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "Animate only OUTER <svg> boxes (or HTML wrappers) with transform/opacity keyframes; one animation per box.",
+    "Keep it to 5-6 boxes; paint the sky gradient as the hero background (static), not as a drifting full-size layer.",
+    "Scene container: position:absolute; inset:0; overflow:hidden; contain:strict (or paint) sized to the hero, not the viewport.",
+    "Start after load + idle (data-alive), pause with animation-play-state when off-screen (IntersectionObserver) and on visibilitychange.",
+    "Never put backdrop-filter glass directly over the drifting layers (see glass entry)."
+   ]
+  },
+  {
+   "name": "Scroll-timeline parallax (animation-timeline: scroll(root)) on the 5 hero layer boxes",
+   "mainThreadMsPerSec": 78.4,
+   "mainThreadMsPerSecVsBaseline": 31.2,
+   "softwareCompositorMsPerSec": 66.9,
+   "softwareCompositorMsPerSecBaseline": 27.6,
+   "compositorFps": 20.5,
+   "paintsPerSec": 1.6,
+   "compositeFailures": "0/5",
+   "msPerFrameAt60": 1.31,
+   "longFrames": 1,
+   "recalcStyleMs": 16.98,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "all-safe (alive after load+idle)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 953,
+    "mainThreadWorkDeltaMs": 707,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1276,
+    "lcpDeltaMs": 75,
+    "siMs": 789,
+    "siDeltaMs": 22,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 12,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Lighthouse does not scroll, so only the load cost is visible (all-safe page, which includes a parallax wrapper).",
+   "verdict": "ration",
+   "notes": "Composited (0 of 5 failures) but Chromium still runs a style/animation update on the main thread for every scroll frame: 78 ms/s vs 47 ms/s for the same scroll on the static page (+31 ms/s, ~16 extra style recalcs/s, 0-1 long frames). Combining parallax via `translate` with the drift via `transform` on the SAME box breaks compositing for those 5 animations (5 of 10 failed: SVGTargetHasIndependentTransformProperty, because the layer box is an <svg> element) and costs +97 ms/s with ~78 recalcs/s.",
+   "measuredOn": "parallax-scroll on mobile (412x823), action=scroll, baseline=baseline-scroll",
+   "guidance": [
+    "Hero only, <=5 boxes, animation-range limited to the hero (0 to 100vh), inside @supports and gated by the motion policy (T4).",
+    "On an <svg> box animate only `transform`; the independent translate/rotate/scale properties are not composited on SVG elements. To combine parallax and drift, put parallax on an HTML wrapper and the drift on the inner <svg>."
+   ]
+  },
+  {
+   "name": "Contour stroke-dashoffset draw-in (12 map contour paths)",
+   "mainThreadMsPerSec": 41.1,
+   "mainThreadMsPerSecVsBaseline": 40.6,
+   "softwareCompositorMsPerSec": 13.8,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 20.8,
+   "paintsPerSec": 41.5,
+   "compositeFailures": "12/12 TargetHasInvalidCompositingState+UnsupportedCSSProperty",
+   "msPerFrameAt60": 0.69,
+   "longFrames": 0,
+   "recalcStyleMs": 5.64,
+   "composited": false,
+   "lighthouseDelta": [
+    {
+     "page": "all-safe (alive after load+idle)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 953,
+     "mainThreadWorkDeltaMs": 707,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1276,
+     "lcpDeltaMs": 75,
+     "siMs": 789,
+     "siDeltaMs": 22,
+     "tbtMs": 0,
+     "tbtDeltaMs": 0,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 12,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    },
+    {
+     "page": "all-safe (alive immediately)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 910,
+     "mainThreadWorkDeltaMs": 664,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1276,
+     "lcpDeltaMs": 75,
+     "siMs": 768,
+     "siDeltaMs": 1,
+     "tbtMs": 0,
+     "tbtDeltaMs": 0,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 12,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    }
+   ],
+   "lighthouseNote": "In the all-safe page the 12 contour paths are what Lighthouse lists under non-composited animations (12 items) and most of its extra main-thread work; the score does not move.",
+   "verdict": "ration",
+   "notes": "Never composited (UnsupportedCSSProperty + TargetHasInvalidCompositingState): every frame is a style recalc plus a repaint of the SVG. Steady-state cost while drawing is ~118 ms/s with 120 paints/s for 12 paths (contour-loop); the 1.6 s one-shot averages 41 ms/s over a 5 s window and then drops to zero, with 0 long frames. Scroll-scrubbed with view() it costs +41 ms/s over plain scrolling (88 vs 47) and ~20 paints/s for as long as the map is in range.",
+   "measuredOn": "contour-oneshot on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "One-shot, time-based, <=1.6 s, triggered once when the map enters view (IntersectionObserver adds a class) rather than scroll-scrubbed.",
+    "<=12 short paths with pathLength=\"1\"; static drawn state under reduced motion and with no JS.",
+    "Never on the hero, never looping."
+   ]
+  },
+  {
+   "name": "Scroll reveals with view() timeline (opacity + transform, 16 targets)",
+   "mainThreadMsPerSec": 83.1,
+   "mainThreadMsPerSecVsBaseline": 35.9,
+   "softwareCompositorMsPerSec": 39.9,
+   "softwareCompositorMsPerSecBaseline": 27.6,
+   "compositorFps": 20.9,
+   "paintsPerSec": 3.8,
+   "compositeFailures": "0/16",
+   "msPerFrameAt60": 1.39,
+   "longFrames": 0,
+   "recalcStyleMs": 10.9,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "all-safe (alive after load+idle)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 953,
+    "mainThreadWorkDeltaMs": 707,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1276,
+    "lcpDeltaMs": 75,
+    "siMs": 789,
+    "siDeltaMs": 22,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 12,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Lighthouse does not scroll; load cost only (all-safe page). Must never apply to the LCP element or above-the-fold content.",
+   "verdict": "ration",
+   "notes": "All 16 animations composited, but like scroll() parallax each scroll frame triggers a main-thread style update: 83 ms/s vs 47 ms/s on the static page (+36 ms/s mobile, +48 ms/s desktop), 0 long frames, ~3.7 paints/s. The same reveal done as a one-shot CSS transition triggered by an IntersectionObserver class (reveals-io) costs +11 ms/s mobile / +26 ms/s desktop over plain scrolling, about a third, because nothing is linked to scroll position after the element has appeared.",
+   "measuredOn": "reveals-scroll on mobile (412x823), action=scroll, baseline=baseline-scroll",
+   "guidance": [
+    "Prefer the one-shot version: an IntersectionObserver adds a class once (then unobserves) and a <=600 ms opacity/transform transition runs (T1). Hidden state only applies under html.alive, so no-JS and reduced motion always show content.",
+    "If view() is used, one reveal per section (the section wrapper), not every child: cost scales with the number of active scroll-linked animations.",
+    "opacity/transform only, short animation-range (entry 0% to cover 30%), inside @supports, off under the motion policy.",
+    "Never on the H1/LCP element or anything in the first viewport."
+   ]
+  },
+  {
+   "name": "Cursor spotlight (delegated rAF-throttled pointermove)",
+   "mainThreadMsPerSec": 138.6,
+   "mainThreadMsPerSecVsBaseline": 59.8,
+   "softwareCompositorMsPerSec": 23.3,
+   "softwareCompositorMsPerSecBaseline": 6.5,
+   "compositorFps": 29.3,
+   "paintsPerSec": 58.5,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 2.31,
+   "longFrames": 1,
+   "recalcStyleMs": 28.81,
+   "composited": false,
+   "lighthouseDelta": null,
+   "lighthouseNote": "Fine pointer only, so it never runs in a Lighthouse mobile run; JS ~0.3 KB.",
+   "verdict": "ration",
+   "notes": "Measured on desktop with the pointer sweeping the 6 bento cards at ~30-60 Hz. Custom-property version (--mx/--my set on the hovered card, radial-gradient ::before): 139 ms/s vs 79 ms/s for the same pointer sweep with no effect (+60 ms/s), ~29 style recalcs/s and ~59 paints/s. Transform version (a pre-rendered radial glow element per card moved with translate3d): +43 ms/s and ~1.6 paints/s. Only active while the pointer moves over a card; 0-1 long frames (same as the baseline sweep).",
+   "measuredOn": "spotlight-vars on desktop (1440x900), action=pointer, baseline=baseline-pointer",
+   "guidance": [
+    "Prefer the transform version: one absolutely positioned glow child per card, moved with transform; no repaint.",
+    "If custom properties are used, set them on the hovered card only, never on :root or body (that restyles the whole document).",
+    "One passive listener on the grid, rAF-throttled, (pointer:fine) and motion-on only (T3)."
+   ]
+  },
+  {
+   "name": "@property --angle conic-gradient border animation (ambient, 2 elements)",
+   "mainThreadMsPerSec": 151.5,
+   "mainThreadMsPerSecVsBaseline": 151,
+   "softwareCompositorMsPerSec": 42.7,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 59.9,
+   "paintsPerSec": 179.7,
+   "compositeFailures": "2/2 UnsupportedCSSProperty",
+   "msPerFrameAt60": 2.52,
+   "longFrames": 0,
+   "recalcStyleMs": 52.63,
+   "composited": false,
+   "lighthouseDelta": {
+    "page": "conic-property (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 678,
+    "mainThreadWorkDeltaMs": 432,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1051,
+    "lcpDeltaMs": -150,
+    "siMs": 617,
+    "siDeltaMs": -150,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 2,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Delta vs baseline; ambient loop started before load.",
+   "verdict": "avoid",
+   "notes": "Animating a registered custom property is never composited (UnsupportedCSSProperty: --angle). Two cards cost 152 ms/s of main thread (vs 0.5 idle), 60 style recalcs/s and ~180 paints/s, continuously, for as long as the loop runs. That is the single most expensive \"safe-looking\" effect in the inventory.",
+   "measuredOn": "conic-property on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "Do not run @property angle animations as ambient loops. Use the rotated conic pseudo-element below for ambient borders.",
+    "Acceptable on :hover/:focus-visible only (bounded, T0/T1), or as a static conic border."
+   ]
+  },
+  {
+   "name": "Conic gradient border via transform-rotated conic layer (alternative to @property, 2 elements)",
+   "mainThreadMsPerSec": 3.6,
+   "mainThreadMsPerSecVsBaseline": 3.1,
+   "softwareCompositorMsPerSec": 132.4,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 59.9,
+   "paintsPerSec": 0.6,
+   "compositeFailures": "0/2",
+   "msPerFrameAt60": 0.06,
+   "longFrames": 0,
+   "recalcStyleMs": 0.53,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "all-safe (alive after load+idle)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 953,
+    "mainThreadWorkDeltaMs": 707,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1276,
+    "lcpDeltaMs": 75,
+    "siMs": 789,
+    "siDeltaMs": 22,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 12,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Included in the all-safe page.",
+   "verdict": "safe",
+   "notes": "Same look: an oversized conic-gradient child (inset:-50%) rotated with transform inside the card (overflow:hidden) with an inner surface pseudo-element 2 px in. 3.6 ms/s, 0 of 2 failed to composite, 0.6 paints/s, 0 long frames. Compositor cost ~130 ms/s software at 412 px.",
+   "measuredOn": "conic-rotate on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "Keep it to <=2 ambient elements per page (budget: infinite animations per viewport <= 8); pause off-screen."
+   ]
+  },
+  {
+   "name": "Glass bento: backdrop-filter blur(16px) over a STATIC background (6 cards)",
+   "mainThreadMsPerSec": 48.6,
+   "mainThreadMsPerSecVsBaseline": 1.4,
+   "softwareCompositorMsPerSec": 180.6,
+   "softwareCompositorMsPerSecBaseline": 27.6,
+   "compositorFps": 21.2,
+   "paintsPerSec": 0,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 0.81,
+   "longFrames": 0,
+   "recalcStyleMs": 0,
+   "composited": true,
+   "lighthouseDelta": null,
+   "lighthouseNote": "Not run separately (static glass adds no main-thread work during load).",
+   "verdict": "ration",
+   "notes": "Idle cost is zero (0.6 ms/s; nothing redraws). While scrolling the main thread matches the plain page (49 vs 47 ms/s) but the compositor re-blurs every glass card on every scroll frame: 181 ms/s vs 28 ms/s software-compositor CPU on the same scroll (6.5x).",
+   "measuredOn": "glass-static-scroll on mobile (412x823), action=scroll, baseline=baseline-scroll",
+   "guidance": [
+    "<=3 backdrop-filter elements per mobile viewport (budget), blur <=16px, contrast-safe alpha, solid fallback under prefers-reduced-transparency / prefers-contrast: more / no support."
+   ]
+  },
+  {
+   "name": "Glass bento: backdrop-filter blur(16px) over an ANIMATED background (6 cards over drifting layers)",
+   "mainThreadMsPerSec": 4.6,
+   "mainThreadMsPerSecVsBaseline": 0.2,
+   "softwareCompositorMsPerSec": 643,
+   "softwareCompositorMsPerSecBaseline": 151.9,
+   "compositorFps": 59.7,
+   "paintsPerSec": 2.6,
+   "compositeFailures": "0/10",
+   "msPerFrameAt60": 0.08,
+   "longFrames": 0,
+   "recalcStyleMs": 0.96,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "glass-animated (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 250,
+    "mainThreadWorkDeltaMs": 4,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1201,
+    "lcpDeltaMs": 0,
+    "siMs": 779,
+    "siDeltaMs": 12,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 0,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Delta vs baseline; Lighthouse cannot see compositor cost, so expect ~0.",
+   "verdict": "avoid",
+   "notes": "Main thread is unaffected (4.6 vs 4.4 ms/s for identical solid cards over the same drifting layers) but every frame re-blurs every card: software-compositor CPU 643 vs 152 ms/s at 412 px (4.2x), and at 1440x900 the frame rate falls from 55 to 42 fps. Low-end phones pay this on the GPU every frame.",
+   "measuredOn": "glass-animated on mobile (412x823), action=idle, baseline=solid-animated",
+   "guidance": [
+    "No backdrop-filter over animated layers at any width: use solid or pre-tinted cards over living art, or pause the layers behind glass. Glass is fine over static art."
+   ]
+  },
+  {
+   "name": "Cross-document view transitions (@view-transition navigation:auto, header + h1 named, 0.25 s)",
+   "mainThreadMsPerSec": 586.5,
+   "mainThreadMsPerSecVsBaseline": 215.9,
+   "perNavigation": {
+    "mainThreadMs": 337,
+    "baselineMainThreadMs": 203,
+    "softwareCompositorMs": 197,
+    "baselineSoftwareCompositorMs": 9,
+    "newPageFcpMs": 140,
+    "baselineNewPageFcpMs": 96,
+    "transitionFinishedMs": 387,
+    "longFramesPerNavs": "7/9",
+    "baselineLongFramesPerNavs": "1/9"
+   },
+   "softwareCompositorMsPerSec": 342.4,
+   "softwareCompositorMsPerSecBaseline": 15.8,
+   "compositorFps": 33.5,
+   "paintsPerSec": 74.9,
+   "compositeFailures": "15/15 AnimationHasNoVisibleChange+UnsupportedCSSProperty",
+   "msPerFrameAt60": 9.78,
+   "longFrames": 7,
+   "recalcStyleMs": 8.61,
+   "composited": false,
+   "lighthouseDelta": null,
+   "lighthouseNote": "n/a: Lighthouse measures a cold load, where no view transition runs. CSS ~0.2 KB.",
+   "verdict": "ration",
+   "notes": "Per same-origin navigation (trace, mobile, 4x): 337 ms main-thread vs 203 ms without (+134 ms), +188 ms software-compositor; new-page FCP 140 ms vs 96 ms (rendering is held for the snapshot); transition finished ~390 ms after navigation start; 7 long animation frames in 9 navigations vs 1, but total blocking duration only ~4 ms. All 15 transition animations ran on the main thread (UnsupportedCSSProperty for the UA width/height group animations, AnimationHasNoVisibleChange for the unchanged header), so the 250 ms transition is main-thread work. It is bounded (T1) and invisible to Lighthouse.",
+   "measuredOn": "vt-navigation on mobile (412x823), action=nav, baseline=novt-navigation (navigation: main-thread figures from the trace, getMetrics resets per document)",
+   "guidance": [
+    "Name <=3 elements (header, page title); never name the living-art layers or large images (each name is a snapshot).",
+    "Duration <=250 ms; inside @media (prefers-reduced-motion: no-preference); animation:none under [data-motion=off]."
+   ]
+  },
+  {
+   "name": "Living CTA band: 3 pre-blurred radial-gradient blobs moved by transform",
+   "mainThreadMsPerSec": 2.9,
+   "mainThreadMsPerSecVsBaseline": 2.4,
+   "softwareCompositorMsPerSec": 143,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 60.1,
+   "paintsPerSec": 0.8,
+   "compositeFailures": "0/3",
+   "msPerFrameAt60": 0.05,
+   "longFrames": 0,
+   "recalcStyleMs": 0.45,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "all-safe (alive after load+idle)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 953,
+    "mainThreadWorkDeltaMs": 707,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1276,
+    "lcpDeltaMs": 75,
+    "siMs": 789,
+    "siDeltaMs": 22,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 12,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Included in the all-safe page.",
+   "verdict": "safe",
+   "notes": "2.9 ms/s main thread, 0 of 3 failed, 60 fps, 0.8 paints/s, 143 ms/s software-compositor at 412 px. This is the reference for the filter:blur negative control: same look, ~7x less compositor work and no dropped frames.",
+   "measuredOn": "cta-blobs on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "Gradients baked into the blob (radial-gradient to transparent), transform only, fixed scrim under the text, pause off-screen."
+   ]
+  },
+  {
+   "name": "Static grain overlay (692 B PNG data-URI tile at 5% on deep bands)",
+   "mainThreadMsPerSec": 46.7,
+   "mainThreadMsPerSecVsBaseline": -0.5,
+   "softwareCompositorMsPerSec": 31.2,
+   "softwareCompositorMsPerSecBaseline": 27.6,
+   "compositorFps": 20.3,
+   "paintsPerSec": 0.2,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 0.78,
+   "longFrames": 0,
+   "recalcStyleMs": 0,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "all-safe (alive after load+idle)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 953,
+    "mainThreadWorkDeltaMs": 707,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1276,
+    "lcpDeltaMs": 75,
+    "siMs": 789,
+    "siDeltaMs": 22,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 12,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Included in the all-safe page; ~1 KB of CSS.",
+   "verdict": "safe",
+   "notes": "No measurable cost: scrolling with grain is within noise of the plain page, and grain over the animated CTA blobs does not change the blob numbers (3.4 vs 2.9 ms/s, same compositor load). The feTurbulence SVG tile variant (462 chars) also measured flat, because the tile is rasterised once.",
+   "measuredOn": "grain-png-scroll on mobile (412x823), action=scroll, baseline=baseline-scroll",
+   "guidance": [
+    "Static only (never animate the grain or use background-attachment: fixed); no blend modes; removed under prefers-contrast and forced-colors."
+   ]
+  },
+  {
+   "name": "Map glow: drop-shadow filter on hover/focus of SVG tiles (transitioned) and ambient pulse on the current area",
+   "mainThreadMsPerSec": 167.4,
+   "mainThreadMsPerSecVsBaseline": 71.8,
+   "softwareCompositorMsPerSec": 74.2,
+   "softwareCompositorMsPerSecBaseline": 9.8,
+   "compositorFps": 45,
+   "paintsPerSec": 89.7,
+   "compositeFailures": "6/6 UnsupportedCSSProperty+FilterRelatedPropertyMayMovePixels",
+   "msPerFrameAt60": 2.79,
+   "longFrames": 1,
+   "recalcStyleMs": 15.05,
+   "composited": false,
+   "lighthouseDelta": null,
+   "lighthouseNote": "Hover never runs in Lighthouse; the pulse variants were not run separately.",
+   "verdict": "ration",
+   "notes": "Hover sweep across all 13 tiles with a 0.2 s filter transition: 167 ms/s vs 96 ms/s for the same sweep without the glow (+72 ms/s), ~59 style recalcs/s and ~90 paints/s (FilterRelatedPropertyMayMovePixels, filter on an SVG child is not composited). Ambient pulse by animating drop-shadow on the current tile: 76 ms/s continuously with 60 recalcs/s (avoid). Ambient pulse as an HTML glow box over the map animated by opacity: 3.4 ms/s, composited (safe).",
+   "measuredOn": "map-hover-dropshadow on desktop (1440x900), action=maphover, baseline=map-hover-baseline",
+   "guidance": [
+    "Hover/focus: switch the drop-shadow on instantly (no filter transition); transition fill/stroke only (T0 <=200 ms).",
+    "Ambient pulse on the current area: an aria-hidden HTML (or outer <svg>) glow box positioned over the tile and animated by opacity, never an animated filter on the polygon."
+   ]
+  },
+  {
+   "name": "NEGATIVE control: filter: blur(64px) blobs moved by transform",
+   "mainThreadMsPerSec": 3.5,
+   "mainThreadMsPerSecVsBaseline": 0.6,
+   "softwareCompositorMsPerSec": 980.6,
+   "softwareCompositorMsPerSecBaseline": 143,
+   "compositorFps": 43.1,
+   "paintsPerSec": 0.8,
+   "compositeFailures": "0/3",
+   "msPerFrameAt60": 0.06,
+   "longFrames": 0,
+   "recalcStyleMs": 0.6,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "neg-both: inner-node CSS + filter:blur blobs (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 237,
+    "mainThreadWorkDeltaMs": -9,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1051,
+    "lcpDeltaMs": -150,
+    "siMs": 612,
+    "siDeltaMs": -155,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 0,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Combined with the inner-node CSS control; Lighthouse cannot see compositor cost.",
+   "verdict": "avoid",
+   "notes": "Confirms the rule. The animation itself composites (0 of 3 failed, 3.5 ms/s main thread), so a main-thread-only audit would pass it, but the compositor must re-blur three large layers every frame: 981 ms/s software-compositor CPU (vs 143 for pre-blurred gradients), and the frame rate falls to 43 fps at 412 px and 21 fps at 1440x900.",
+   "measuredOn": "neg-filter-blur-blobs on mobile (412x823), action=idle, baseline=cta-blobs",
+   "guidance": [
+    "Use pre-blurred radial-gradient blobs. filter: blur() on moving or large elements is banned."
+   ]
+  },
+  {
+   "name": "NEGATIVE control: inner-node SVG animation, CSS transform/opacity on <g>/<circle> inside one SVG",
+   "mainThreadMsPerSec": 6.5,
+   "mainThreadMsPerSecVsBaseline": 1.7,
+   "softwareCompositorMsPerSec": 250.4,
+   "softwareCompositorMsPerSecBaseline": 240.7,
+   "compositorFps": 59.9,
+   "paintsPerSec": 1.6,
+   "compositeFailures": "8/17 AnimationHasNoVisibleChange",
+   "msPerFrameAt60": 0.11,
+   "longFrames": 0,
+   "recalcStyleMs": 1.13,
+   "composited": true,
+   "lighthouseDelta": {
+    "page": "neg-both: inner-node CSS + filter:blur blobs (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 237,
+    "mainThreadWorkDeltaMs": -9,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1051,
+    "lcpDeltaMs": -150,
+    "siMs": 612,
+    "siDeltaMs": -155,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 0,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Combined with the filter:blur control.",
+   "verdict": "ration",
+   "notes": "Unexpected result: Chromium 153 composited the CSS transform/opacity animations on the 5 inner <g> layers and 12 firefly circles (0 of 17 failed on desktop; on mobile 8 of 17 were skipped as AnimationHasNoVisibleChange because those nodes were cropped out of the narrow viewport; no per-frame paints), costing 6.5 ms/s, about the same as the outer-box version. This lab could not test WebKit (all iOS browsers), which does not composite animations on SVG child elements; there the whole SVG repaints every frame. So the outer-box rule is still right for cross-engine reasons, even though Chromium does not penalise this.",
+   "measuredOn": "neg-inner-svg-nodes on mobile (412x823), action=idle, baseline=hero-layers-fireflies",
+   "guidance": [
+    "Keep the outer-box rule for the hero and anything large. Small accents (a few firefly circles) inside a small SVG are tolerable in Chromium but untested in WebKit."
+   ]
+  },
+  {
+   "name": "NEGATIVE control: inner-node SVG animation via SMIL (<animateTransform>/<animate>)",
+   "mainThreadMsPerSec": 217.9,
+   "mainThreadMsPerSecVsBaseline": 213.1,
+   "softwareCompositorMsPerSec": 56.5,
+   "softwareCompositorMsPerSecBaseline": 240.7,
+   "compositorFps": 59.9,
+   "paintsPerSec": 120.2,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 3.63,
+   "longFrames": 0,
+   "recalcStyleMs": 32.9,
+   "composited": false,
+   "lighthouseDelta": {
+    "page": "neg-inner-svg-smil (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 814,
+    "mainThreadWorkDeltaMs": 568,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1201,
+    "lcpDeltaMs": 0,
+    "siMs": 769,
+    "siDeltaMs": 2,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 0,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Delta vs baseline.",
+   "verdict": "avoid",
+   "notes": "218 ms/s main thread (vs 4.8 for the same scene as outer boxes), ~720 style recalcs/s and 120 paints/s, continuously. SMIL never composites.",
+   "measuredOn": "neg-inner-svg-smil on mobile (412x823), action=idle, baseline=hero-layers-fireflies",
+   "guidance": [
+    "Banned for anything ambient."
+   ]
+  },
+  {
+   "name": "NEGATIVE control: inner-node SVG animation via JS requestAnimationFrame writing attributes",
+   "mainThreadMsPerSec": 206.6,
+   "mainThreadMsPerSecVsBaseline": 201.8,
+   "softwareCompositorMsPerSec": 45.7,
+   "softwareCompositorMsPerSecBaseline": 240.7,
+   "compositorFps": 59.9,
+   "paintsPerSec": 119.8,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 3.44,
+   "longFrames": 0,
+   "recalcStyleMs": 23.89,
+   "composited": false,
+   "lighthouseDelta": {
+    "page": "neg-inner-svg-attr-raf (alive immediately)",
+    "perf": 100,
+    "perfDelta": 0,
+    "mainThreadWorkMs": 854,
+    "mainThreadWorkDeltaMs": 608,
+    "a11y": 100,
+    "bestPractices": 96,
+    "seo": 100,
+    "lcpMs": 1200,
+    "lcpDeltaMs": -1,
+    "siMs": 764,
+    "siDeltaMs": -3,
+    "tbtMs": 0,
+    "tbtDeltaMs": 0,
+    "cls": 0,
+    "nonCompositedAnimationsAudit": 0,
+    "perfRuns": [
+     100,
+     100,
+     100
+    ]
+   },
+   "lighthouseNote": "Delta vs baseline.",
+   "verdict": "avoid",
+   "notes": "207 ms/s main thread, 60 style recalcs/s, 120 paints/s, continuously (plus the rAF loop keeps the main thread producing frames). The pattern most animation libraries use for SVG.",
+   "measuredOn": "neg-inner-svg-attr-raf on mobile (412x823), action=idle, baseline=hero-layers-fireflies",
+   "guidance": [
+    "Banned: no JS-driven per-frame animation; living.js only toggles classes and play-state."
+   ]
+  },
+  {
+   "name": "COMBINED safe set (all-safe page: hero layers + fireflies, parallax wrapper, view() reveals, rotated conic x2, CTA blobs + grain, contour one-shot, map hover glow, spotlight, view transitions)",
+   "mainThreadMsPerSec": 1.3,
+   "mainThreadMsPerSecVsBaseline": 0.8,
+   "softwareCompositorMsPerSec": 258.2,
+   "softwareCompositorMsPerSecBaseline": 0.2,
+   "compositorFps": 59.7,
+   "paintsPerSec": 0,
+   "compositeFailures": "0/0",
+   "msPerFrameAt60": 0.02,
+   "longFrames": 0,
+   "recalcStyleMs": 0,
+   "composited": true,
+   "lighthouseDelta": [
+    {
+     "page": "all-safe (alive after load+idle)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 953,
+     "mainThreadWorkDeltaMs": 707,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1276,
+     "lcpDeltaMs": 75,
+     "siMs": 789,
+     "siDeltaMs": 22,
+     "tbtMs": 0,
+     "tbtDeltaMs": 0,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 12,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    },
+    {
+     "page": "all-safe (alive immediately)",
+     "perf": 100,
+     "perfDelta": 0,
+     "mainThreadWorkMs": 910,
+     "mainThreadWorkDeltaMs": 664,
+     "a11y": 100,
+     "bestPractices": 96,
+     "seo": 100,
+     "lcpMs": 1276,
+     "lcpDeltaMs": 75,
+     "siMs": 768,
+     "siDeltaMs": 1,
+     "tbtMs": 0,
+     "tbtDeltaMs": 0,
+     "cls": 0,
+     "nonCompositedAnimationsAudit": 12,
+     "perfRuns": [
+      100,
+      100,
+      100
+     ]
+    }
+   ],
+   "lighthouseNote": "Perf 100 either way; Lighthouse lists the 12 contour paths as non-composited and its main-thread work rises by ~700 ms, but TBT median stays 0 (worst single run 36 ms).",
+   "verdict": "ration",
+   "notes": "Steady state with every ambient loop running and nothing scrolling: 1.3 ms/s main thread, 0 style recalcs, 0 paints, 0 long frames: the ambient layer is free on the main thread. The first 5 s after start-up cost 97 ms/s, almost all from the 12-path contour draw-in (non-composited). While scrolling, the scroll-linked effects add up: 178 ms/s vs 47 ms/s on the plain page (+131 ms/s, ~78 style recalcs/s, still 0 long frames). Software-compositor load is ~260 ms/s at 412 px and saturates at 1440x900 (51 fps) in this GPU-less container.",
+   "measuredOn": "all-safe-idle-steady on mobile (412x823), action=idle, baseline=baseline-idle",
+   "guidance": [
+    "Ambient (T2) loops built from transform/opacity on outer boxes are effectively free on the main thread; spend the budget there.",
+    "Scroll-linked (T4) effects are where the main-thread cost is: keep parallax to the hero and do reveals with the one-shot IntersectionObserver pattern.",
+    "Trigger the contour draw-in only when the map enters view, never at start-up together with everything else."
+   ]
+  }
+ ],
+ "detail": {
+  "Living layered SVG hero: 5 outer <svg> layer boxes drifting by transform (+2 firefly boxes by opacity)": {
+   "scenarios": {
+    "hero-layers:mobile": {
+     "mainThreadMsPerSec": 4.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.75,
+     "layoutMsPerSec": 0.16,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4.8,
+      4.4,
+      5.7
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.2,
+      "paintsPerSec": 1.4,
+      "paintMsPerSec": 0.5,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 17.7,
+      "rasterMsPerSec": 1.1,
+      "softwareVizMsPerSec": 254.2,
+      "animations": 5,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers:desktop": {
+     "mainThreadMsPerSec": 4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.58,
+     "layoutMsPerSec": 0.02,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4,
+      4.7,
+      3.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.3,
+      "paintsPerSec": 1.4,
+      "paintMsPerSec": 0.19,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 50.5,
+      "rendererCompositorMsPerSec": 23.4,
+      "rasterMsPerSec": 4,
+      "softwareVizMsPerSec": 897.9,
+      "animations": 5,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers-fireflies:mobile": {
+     "mainThreadMsPerSec": 4.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.83,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      6.2,
+      4.6,
+      4.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.62,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 14.7,
+      "rasterMsPerSec": 1.4,
+      "softwareVizMsPerSec": 240.7,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers-fireflies:desktop": {
+     "mainThreadMsPerSec": 5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.77,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.8,
+      6.2,
+      5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7.8,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.74,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 52.7,
+      "rendererCompositorMsPerSec": 26.4,
+      "rasterMsPerSec": 3.5,
+      "softwareVizMsPerSec": 893.9,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Scroll-timeline parallax (animation-timeline: scroll(root)) on the 5 hero layer boxes": {
+   "scenarios": {
+    "parallax-scroll:mobile": {
+     "mainThreadMsPerSec": 78.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 16.98,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 16.4,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      78.4,
+      75.5,
+      83.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 109,
+      "paintsPerSec": 1.6,
+      "paintMsPerSec": 0.65,
+      "styleRecalcsPerSec": 16.7,
+      "commitsPerSec": 60.2,
+      "compositorFramesPerSec": 20.5,
+      "rendererCompositorMsPerSec": 20.2,
+      "rasterMsPerSec": 2,
+      "softwareVizMsPerSec": 66.9,
+      "animations": 5,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "parallax-scroll:desktop": {
+     "mainThreadMsPerSec": 72.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 17.23,
+     "layoutMsPerSec": 0.12,
+     "styleRecalcsPerSec": 17.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      72.8,
+      72.3,
+      64.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 92.4,
+      "paintsPerSec": 1.4,
+      "paintMsPerSec": 0.06,
+      "styleRecalcsPerSec": 18.1,
+      "commitsPerSec": 60.2,
+      "compositorFramesPerSec": 20.5,
+      "rendererCompositorMsPerSec": 21.7,
+      "rasterMsPerSec": 4.9,
+      "softwareVizMsPerSec": 229.8,
+      "animations": 5,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1134,
+      27,
+      567
+     ]
+    },
+    "parallax-plus-drift-translate:mobile": {
+     "mainThreadMsPerSec": 144.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 47.46,
+     "layoutMsPerSec": 0.02,
+     "styleRecalcsPerSec": 78.5,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      144.3,
+      134.3,
+      144.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 194.5,
+      "paintsPerSec": 1.6,
+      "paintMsPerSec": 0.81,
+      "styleRecalcsPerSec": 79,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 52.1,
+      "rendererCompositorMsPerSec": 25.2,
+      "rasterMsPerSec": 3.6,
+      "softwareVizMsPerSec": 166.6,
+      "animations": 10,
+      "compositeFailed": 5,
+      "failReasons": [
+       "SVGTargetHasIndependentTransformProperty"
+      ],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      540
+     ]
+    },
+    "parallax-plus-drift-translate:desktop": {
+     "mainThreadMsPerSec": 132.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 46.94,
+     "layoutMsPerSec": 0.16,
+     "styleRecalcsPerSec": 78.3,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      147.8,
+      125.9,
+      132.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 163,
+      "paintsPerSec": 1.4,
+      "paintMsPerSec": 0.38,
+      "styleRecalcsPerSec": 79.6,
+      "commitsPerSec": 59.6,
+      "compositorFramesPerSec": 52.4,
+      "rendererCompositorMsPerSec": 31.3,
+      "rasterMsPerSec": 5.8,
+      "softwareVizMsPerSec": 556,
+      "animations": 10,
+      "compositeFailed": 5,
+      "failReasons": [
+       "SVGTargetHasIndependentTransformProperty"
+      ],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      567
+     ]
+    }
+   },
+   "baseline": {
+    "baseline-scroll:mobile": {
+     "mainThreadMsPerSec": 47.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      43.5,
+      47.6,
+      47.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 71.9,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.2,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 27.6,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "baseline-scroll:desktop": {
+     "mainThreadMsPerSec": 38.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      38.3,
+      42.1,
+      38.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 70,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 16.6,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 71.4,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    }
+   }
+  },
+  "Contour stroke-dashoffset draw-in (12 map contour paths)": {
+   "scenarios": {
+    "contour-oneshot:mobile": {
+     "mainThreadMsPerSec": 41.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 5.64,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 20.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      47.6,
+      34.1,
+      41.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 56.2,
+      "paintsPerSec": 41.5,
+      "paintMsPerSec": 16.15,
+      "styleRecalcsPerSec": 20.8,
+      "commitsPerSec": 21,
+      "compositorFramesPerSec": 20.8,
+      "rendererCompositorMsPerSec": 12,
+      "rasterMsPerSec": 16.5,
+      "softwareVizMsPerSec": 13.8,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "contour-oneshot:desktop": {
+     "mainThreadMsPerSec": 36.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 6.38,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 20.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      52.3,
+      36.4,
+      33.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 56.5,
+      "paintsPerSec": 41.6,
+      "paintMsPerSec": 13.38,
+      "styleRecalcsPerSec": 20.8,
+      "commitsPerSec": 20.8,
+      "compositorFramesPerSec": 20.8,
+      "rendererCompositorMsPerSec": 12.8,
+      "rasterMsPerSec": 24.9,
+      "softwareVizMsPerSec": 19.8,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "contour-loop:mobile": {
+     "mainThreadMsPerSec": 117.9,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 17.92,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 60.1,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      123.4,
+      115.8,
+      117.9
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 162.7,
+      "paintsPerSec": 120.2,
+      "paintMsPerSec": 42.04,
+      "styleRecalcsPerSec": 60.1,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 30.3,
+      "rasterMsPerSec": 40.8,
+      "softwareVizMsPerSec": 37.6,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "contour-loop:desktop": {
+     "mainThreadMsPerSec": 114.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 18.74,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 60.1,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      123.7,
+      101.8,
+      114.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 148.1,
+      "paintsPerSec": 120.2,
+      "paintMsPerSec": 38.67,
+      "styleRecalcsPerSec": 60.3,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 34.6,
+      "rasterMsPerSec": 59.6,
+      "softwareVizMsPerSec": 52.7,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "contour-view-scroll:mobile": {
+     "mainThreadMsPerSec": 88.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 6.02,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 9.9,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      88.3,
+      86.4,
+      91.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 119.2,
+      "paintsPerSec": 19.4,
+      "paintMsPerSec": 8.14,
+      "styleRecalcsPerSec": 9.9,
+      "commitsPerSec": 59.8,
+      "compositorFramesPerSec": 29.7,
+      "rendererCompositorMsPerSec": 20.7,
+      "rasterMsPerSec": 8.5,
+      "softwareVizMsPerSec": 39.7,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     },
+     "scrollCheck": [
+      3203,
+      2096,
+      2609
+     ]
+    },
+    "contour-view-scroll:desktop": {
+     "mainThreadMsPerSec": 79.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 8.04,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 10.5,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      79.2,
+      78.2,
+      86.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 114,
+      "paintsPerSec": 20.6,
+      "paintMsPerSec": 9.22,
+      "styleRecalcsPerSec": 10.5,
+      "commitsPerSec": 60.2,
+      "compositorFramesPerSec": 30.3,
+      "rendererCompositorMsPerSec": 22.8,
+      "rasterMsPerSec": 15.9,
+      "softwareVizMsPerSec": 90.1,
+      "animations": 12,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     },
+     "scrollCheck": [
+      2787,
+      1680,
+      2193
+     ]
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Scroll reveals with view() timeline (opacity + transform, 16 targets)": {
+   "scenarios": {
+    "reveals-scroll:mobile": {
+     "mainThreadMsPerSec": 83.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 10.9,
+     "layoutMsPerSec": 0.48,
+     "styleRecalcsPerSec": 13.3,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      83.1,
+      78.1,
+      88.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 126.8,
+      "paintsPerSec": 3.8,
+      "paintMsPerSec": 1.23,
+      "styleRecalcsPerSec": 13.5,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.9,
+      "rendererCompositorMsPerSec": 22,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 39.9,
+      "animations": 16,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      513
+     ]
+    },
+    "reveals-scroll:desktop": {
+     "mainThreadMsPerSec": 86.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 10.55,
+     "layoutMsPerSec": 0.31,
+     "styleRecalcsPerSec": 17.5,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      89.6,
+      78.8,
+      86.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 136.8,
+      "paintsPerSec": 3.6,
+      "paintMsPerSec": 0.23,
+      "styleRecalcsPerSec": 17.8,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 21.6,
+      "rendererCompositorMsPerSec": 23.9,
+      "rasterMsPerSec": 2.5,
+      "softwareVizMsPerSec": 95.1,
+      "animations": 16,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      513
+     ]
+    },
+    "reveals-io-scroll:mobile": {
+     "mainThreadMsPerSec": 57.8,
+     "scriptMsPerSec": 0.5,
+     "recalcStyleMsPerSec": 3.64,
+     "layoutMsPerSec": 0.79,
+     "styleRecalcsPerSec": 9.9,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      57.8,
+      56.5,
+      60.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 91.3,
+      "paintsPerSec": 5.8,
+      "paintMsPerSec": 1.69,
+      "styleRecalcsPerSec": 10.3,
+      "commitsPerSec": 59.9,
+      "compositorFramesPerSec": 25.7,
+      "rendererCompositorMsPerSec": 17.8,
+      "rasterMsPerSec": 2.9,
+      "softwareVizMsPerSec": 34.9,
+      "animations": 4,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      540
+     ]
+    },
+    "reveals-io-scroll:desktop": {
+     "mainThreadMsPerSec": 64.5,
+     "scriptMsPerSec": 0.6,
+     "recalcStyleMsPerSec": 7.03,
+     "layoutMsPerSec": 1,
+     "styleRecalcsPerSec": 24.9,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      71.9,
+      63.4,
+      64.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 103.1,
+      "paintsPerSec": 7.5,
+      "paintMsPerSec": 3.62,
+      "styleRecalcsPerSec": 26.9,
+      "commitsPerSec": 59.1,
+      "compositorFramesPerSec": 34.6,
+      "rendererCompositorMsPerSec": 20.8,
+      "rasterMsPerSec": 6,
+      "softwareVizMsPerSec": 101.6,
+      "animations": 6,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1053,
+      0,
+      513
+     ]
+    }
+   },
+   "baseline": {
+    "baseline-scroll:mobile": {
+     "mainThreadMsPerSec": 47.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      43.5,
+      47.6,
+      47.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 71.9,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.2,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 27.6,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "baseline-scroll:desktop": {
+     "mainThreadMsPerSec": 38.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      38.3,
+      42.1,
+      38.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 70,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 16.6,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 71.4,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    }
+   }
+  },
+  "Cursor spotlight (delegated rAF-throttled pointermove)": {
+   "scenarios": {
+    "spotlight-vars:desktop": {
+     "mainThreadMsPerSec": 138.6,
+     "scriptMsPerSec": 11.7,
+     "recalcStyleMsPerSec": 28.81,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 29.1,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      136.9,
+      141.2,
+      138.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 204.3,
+      "paintsPerSec": 58.5,
+      "paintMsPerSec": 23.34,
+      "styleRecalcsPerSec": 29.1,
+      "commitsPerSec": 59.1,
+      "compositorFramesPerSec": 29.3,
+      "rendererCompositorMsPerSec": 28.3,
+      "rasterMsPerSec": 23.1,
+      "softwareVizMsPerSec": 23.3,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "spotlight-transform:desktop": {
+     "mainThreadMsPerSec": 122.3,
+     "scriptMsPerSec": 10.5,
+     "recalcStyleMsPerSec": 12.79,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 29.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      124.6,
+      117.9,
+      122.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 174.7,
+      "paintsPerSec": 1.6,
+      "paintMsPerSec": 0.54,
+      "styleRecalcsPerSec": 29.1,
+      "commitsPerSec": 59.1,
+      "compositorFramesPerSec": 29.3,
+      "rendererCompositorMsPerSec": 24.8,
+      "rasterMsPerSec": 0.2,
+      "softwareVizMsPerSec": 39.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-pointer:mobile": null,
+    "baseline-pointer:desktop": {
+     "mainThreadMsPerSec": 78.8,
+     "scriptMsPerSec": 1.3,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      78.8,
+      73.3,
+      80.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 121.7,
+      "paintsPerSec": 0.4,
+      "paintMsPerSec": 0.25,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 48.5,
+      "compositorFramesPerSec": 0.2,
+      "rendererCompositorMsPerSec": 11.4,
+      "rasterMsPerSec": 0.1,
+      "softwareVizMsPerSec": 6.5,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "@property --angle conic-gradient border animation (ambient, 2 elements)": {
+   "scenarios": {
+    "conic-property:mobile": {
+     "mainThreadMsPerSec": 151.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 52.63,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 60.1,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      127.9,
+      151.5,
+      154
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 198.3,
+      "paintsPerSec": 179.7,
+      "paintMsPerSec": 62.86,
+      "styleRecalcsPerSec": 60.1,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 30.2,
+      "rasterMsPerSec": 75.3,
+      "softwareVizMsPerSec": 42.7,
+      "animations": 2,
+      "compositeFailed": 2,
+      "failReasons": [
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "--angle"
+      ]
+     }
+    },
+    "conic-property:desktop": {
+     "mainThreadMsPerSec": 159.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 55.51,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 60.1,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      156.6,
+      159.4,
+      169.7
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 188.7,
+      "paintsPerSec": 179.8,
+      "paintMsPerSec": 65.74,
+      "styleRecalcsPerSec": 60.1,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 34.5,
+      "rasterMsPerSec": 93.7,
+      "softwareVizMsPerSec": 47,
+      "animations": 2,
+      "compositeFailed": 2,
+      "failReasons": [
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "--angle"
+      ]
+     }
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Conic gradient border via transform-rotated conic layer (alternative to @property, 2 elements)": {
+   "scenarios": {
+    "conic-rotate:mobile": {
+     "mainThreadMsPerSec": 3.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.53,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.9,
+      3.1,
+      3.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.3,
+      "paintsPerSec": 0.6,
+      "paintMsPerSec": 0.05,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 18.4,
+      "rasterMsPerSec": 1.1,
+      "softwareVizMsPerSec": 132.4,
+      "animations": 2,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "conic-rotate:desktop": {
+     "mainThreadMsPerSec": 3.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.45,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.8,
+      3.6,
+      3.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.1,
+      "paintsPerSec": 0.6,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 20.3,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 175.2,
+      "animations": 2,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Glass bento: backdrop-filter blur(16px) over a STATIC background (6 cards)": {
+   "scenarios": {
+    "glass-static-scroll:mobile": {
+     "mainThreadMsPerSec": 48.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      48.6,
+      48,
+      53.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 88.3,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.2,
+      "compositorFramesPerSec": 21.2,
+      "rendererCompositorMsPerSec": 18.4,
+      "rasterMsPerSec": 2.6,
+      "softwareVizMsPerSec": 180.6,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      540
+     ]
+    },
+    "glass-static-scroll:desktop": {
+     "mainThreadMsPerSec": 44.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      42.7,
+      44.6,
+      45
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 75.5,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.4,
+      "rendererCompositorMsPerSec": 18.4,
+      "rasterMsPerSec": 2.9,
+      "softwareVizMsPerSec": 287.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      0,
+      513
+     ]
+    },
+    "glass-static-idle:mobile": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.5,
+      0.6,
+      0.7
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.7,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.4,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "glass-static-idle:desktop": {
+     "mainThreadMsPerSec": 0.7,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.7,
+      0.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.3,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-scroll:mobile": {
+     "mainThreadMsPerSec": 47.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      43.5,
+      47.6,
+      47.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 71.9,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.2,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 27.6,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "baseline-scroll:desktop": {
+     "mainThreadMsPerSec": 38.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      38.3,
+      42.1,
+      38.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 70,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 16.6,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 71.4,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    }
+   }
+  },
+  "Glass bento: backdrop-filter blur(16px) over an ANIMATED background (6 cards over drifting layers)": {
+   "scenarios": {
+    "glass-animated:mobile": {
+     "mainThreadMsPerSec": 4.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.96,
+     "layoutMsPerSec": 0.12,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4.8,
+      4.6,
+      4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7,
+      "paintsPerSec": 2.6,
+      "paintMsPerSec": 0.74,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.7,
+      "rendererCompositorMsPerSec": 22.6,
+      "rasterMsPerSec": 1.9,
+      "softwareVizMsPerSec": 643,
+      "animations": 10,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "glass-animated:desktop": {
+     "mainThreadMsPerSec": 4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.64,
+     "layoutMsPerSec": 0.23,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4,
+      3.9,
+      4.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.2,
+      "paintsPerSec": 2.6,
+      "paintMsPerSec": 0.64,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 41.8,
+      "rendererCompositorMsPerSec": 25.2,
+      "rasterMsPerSec": 5.5,
+      "softwareVizMsPerSec": 978.5,
+      "animations": 10,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "solid-animated:mobile": {
+     "mainThreadMsPerSec": 4.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.87,
+     "layoutMsPerSec": 0.2,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4.4,
+      4.4,
+      4.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7,
+      "paintsPerSec": 2.6,
+      "paintMsPerSec": 0.67,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 1,
+      "compositorFramesPerSec": 59.7,
+      "rendererCompositorMsPerSec": 18.7,
+      "rasterMsPerSec": 2.6,
+      "softwareVizMsPerSec": 151.9,
+      "animations": 10,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "solid-animated:desktop": {
+     "mainThreadMsPerSec": 4.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.78,
+     "layoutMsPerSec": 0.06,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4.6,
+      3.7,
+      5.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7.7,
+      "paintsPerSec": 2.6,
+      "paintMsPerSec": 0.91,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 54.7,
+      "rendererCompositorMsPerSec": 27.1,
+      "rasterMsPerSec": 4.6,
+      "softwareVizMsPerSec": 852.4,
+      "animations": 10,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Cross-document view transitions (@view-transition navigation:auto, header + h1 named, 0.25 s)": {
+   "scenarios": {
+    "vt-navigation:mobile": {
+     "mainThreadMsPerSec": 33.3,
+     "scriptMsPerSec": 0.2,
+     "recalcStyleMsPerSec": 8.61,
+     "layoutMsPerSec": 4,
+     "styleRecalcsPerSec": 4.1,
+     "longFrames": 7,
+     "loafBlockingMs": 4,
+     "repsMainMsPerSec": [
+      28.1,
+      34.7,
+      33.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 586.5,
+      "paintsPerSec": 74.9,
+      "paintMsPerSec": 29.61,
+      "styleRecalcsPerSec": 48.8,
+      "commitsPerSec": 44.7,
+      "compositorFramesPerSec": 33.5,
+      "rendererCompositorMsPerSec": 31.4,
+      "rasterMsPerSec": 31,
+      "softwareVizMsPerSec": 342.4,
+      "animations": 15,
+      "compositeFailed": 15,
+      "failReasons": [
+       "AnimationHasNoVisibleChange",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "height"
+      ],
+      "mainMsPerNav": 337,
+      "vizMsPerNav": 197,
+      "navs": 9
+     },
+     "nav": {
+      "navs": 9,
+      "fcpMs": 140,
+      "vtFinishedMs": 387
+     }
+    },
+    "vt-navigation:desktop": {
+     "mainThreadMsPerSec": 22.8,
+     "scriptMsPerSec": 0.2,
+     "recalcStyleMsPerSec": 5.84,
+     "layoutMsPerSec": 2.63,
+     "styleRecalcsPerSec": 2.5,
+     "longFrames": 5,
+     "loafBlockingMs": 3,
+     "repsMainMsPerSec": [
+      21.3,
+      22.8,
+      27.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 489.4,
+      "paintsPerSec": 46.3,
+      "paintMsPerSec": 21.22,
+      "styleRecalcsPerSec": 33.9,
+      "commitsPerSec": 29,
+      "compositorFramesPerSec": 19.4,
+      "rendererCompositorMsPerSec": 30.7,
+      "rasterMsPerSec": 94.8,
+      "softwareVizMsPerSec": 677,
+      "animations": 15,
+      "compositeFailed": 15,
+      "failReasons": [
+       "UnsupportedCSSProperty",
+       "AnimationHasNoVisibleChange"
+      ],
+      "unsupported": [
+       "height"
+      ],
+      "mainMsPerNav": 285,
+      "vizMsPerNav": 395,
+      "navs": 9
+     },
+     "nav": {
+      "navs": 9,
+      "fcpMs": 184,
+      "vtFinishedMs": 428
+     }
+    }
+   },
+   "baseline": {
+    "novt-navigation:mobile": {
+     "mainThreadMsPerSec": 11.8,
+     "scriptMsPerSec": 0.2,
+     "recalcStyleMsPerSec": 1.52,
+     "layoutMsPerSec": 2.24,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      18.8,
+      10.1,
+      11.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 370.6,
+      "paintsPerSec": 7.3,
+      "paintMsPerSec": 11.21,
+      "styleRecalcsPerSec": 9.1,
+      "commitsPerSec": 14.6,
+      "compositorFramesPerSec": 1.8,
+      "rendererCompositorMsPerSec": 10.5,
+      "rasterMsPerSec": 20.6,
+      "softwareVizMsPerSec": 15.8,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": [],
+      "mainMsPerNav": 203,
+      "vizMsPerNav": 9,
+      "navs": 10
+     },
+     "nav": {
+      "navs": 9,
+      "fcpMs": 96,
+      "vtFinishedMs": null
+     }
+    },
+    "novt-navigation:desktop": {
+     "mainThreadMsPerSec": 16.2,
+     "scriptMsPerSec": 0.2,
+     "recalcStyleMsPerSec": 2.32,
+     "layoutMsPerSec": 3.04,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      16.2,
+      18.2,
+      11.9
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 370.3,
+      "paintsPerSec": 7.2,
+      "paintMsPerSec": 9.75,
+      "styleRecalcsPerSec": 9,
+      "commitsPerSec": 11.6,
+      "compositorFramesPerSec": 1.8,
+      "rendererCompositorMsPerSec": 10.8,
+      "rasterMsPerSec": 37.5,
+      "softwareVizMsPerSec": 36.3,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": [],
+      "mainMsPerNav": 207,
+      "vizMsPerNav": 20,
+      "navs": 9
+     },
+     "nav": {
+      "navs": 9,
+      "fcpMs": 116,
+      "vtFinishedMs": null
+     }
+    }
+   }
+  },
+  "Living CTA band: 3 pre-blurred radial-gradient blobs moved by transform": {
+   "scenarios": {
+    "cta-blobs:mobile": {
+     "mainThreadMsPerSec": 2.9,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.45,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.7,
+      2.9,
+      3.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.1,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.47,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1,
+      "softwareVizMsPerSec": 143,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "cta-blobs:desktop": {
+     "mainThreadMsPerSec": 3.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.29,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.2,
+      3.1,
+      3.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.3,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.07,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 20,
+      "rasterMsPerSec": 2.6,
+      "softwareVizMsPerSec": 349.7,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "Static grain overlay (692 B PNG data-URI tile at 5% on deep bands)": {
+   "scenarios": {
+    "grain-png-scroll:mobile": {
+     "mainThreadMsPerSec": 46.7,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      46.7,
+      52.7,
+      44.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 84.6,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.2,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.2,
+      "compositorFramesPerSec": 20.3,
+      "rendererCompositorMsPerSec": 16.6,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 31.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "grain-png-scroll:desktop": {
+     "mainThreadMsPerSec": 45.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      49.6,
+      41.2,
+      45.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 72.9,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 17.4,
+      "rasterMsPerSec": 2.9,
+      "softwareVizMsPerSec": 72,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "grain-turbulence-svg-scroll:mobile": {
+     "mainThreadMsPerSec": 53,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      53,
+      54.5,
+      49.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 87.6,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.2,
+      "rendererCompositorMsPerSec": 17.6,
+      "rasterMsPerSec": 2.3,
+      "softwareVizMsPerSec": 31.3,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      0,
+      513
+     ]
+    },
+    "grain-turbulence-svg-scroll:desktop": {
+     "mainThreadMsPerSec": 46,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      48.7,
+      46,
+      41.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 76.7,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 17.6,
+      "rasterMsPerSec": 2.2,
+      "softwareVizMsPerSec": 71.5,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      0,
+      513
+     ]
+    },
+    "grain-over-cta-blobs:mobile": {
+     "mainThreadMsPerSec": 3.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.54,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.2,
+      4.4,
+      3.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.2,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.04,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 16.7,
+      "rasterMsPerSec": 1.2,
+      "softwareVizMsPerSec": 136.8,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "grain-over-cta-blobs:desktop": {
+     "mainThreadMsPerSec": 3.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.48,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.1,
+      3.3,
+      3.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.3,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.19,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 20.8,
+      "rasterMsPerSec": 2.2,
+      "softwareVizMsPerSec": 362.8,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "baseline-scroll:mobile": {
+     "mainThreadMsPerSec": 47.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      43.5,
+      47.6,
+      47.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 71.9,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20.2,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1.3,
+      "softwareVizMsPerSec": 27.6,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    },
+    "baseline-scroll:desktop": {
+     "mainThreadMsPerSec": 38.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      38.3,
+      42.1,
+      38.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 70,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 20,
+      "rendererCompositorMsPerSec": 16.6,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 71.4,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1107,
+      27,
+      567
+     ]
+    }
+   }
+  },
+  "Map glow: drop-shadow filter on hover/focus of SVG tiles (transitioned) and ambient pulse on the current area": {
+   "scenarios": {
+    "map-hover-dropshadow:desktop": {
+     "mainThreadMsPerSec": 167.4,
+     "scriptMsPerSec": 1.1,
+     "recalcStyleMsPerSec": 15.05,
+     "layoutMsPerSec": 1.87,
+     "styleRecalcsPerSec": 59.3,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      170.9,
+      161.7,
+      167.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 211,
+      "paintsPerSec": 89.7,
+      "paintMsPerSec": 25.47,
+      "styleRecalcsPerSec": 61.2,
+      "commitsPerSec": 57.8,
+      "compositorFramesPerSec": 45,
+      "rendererCompositorMsPerSec": 31.9,
+      "rasterMsPerSec": 45.2,
+      "softwareVizMsPerSec": 74.2,
+      "animations": 6,
+      "compositeFailed": 6,
+      "failReasons": [
+       "UnsupportedCSSProperty",
+       "FilterRelatedPropertyMayMovePixels"
+      ],
+      "unsupported": [
+       "fill"
+      ]
+     }
+    },
+    "map-pulse-inner-dropshadow:mobile": {
+     "mainThreadMsPerSec": 75.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 7.91,
+     "layoutMsPerSec": 0.09,
+     "styleRecalcsPerSec": 60.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      69.6,
+      75.8,
+      80.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 107.5,
+      "paintsPerSec": 0.4,
+      "paintMsPerSec": 0.12,
+      "styleRecalcsPerSec": 60.1,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 22.8,
+      "rasterMsPerSec": 0.1,
+      "softwareVizMsPerSec": 41,
+      "animations": 1,
+      "compositeFailed": 1,
+      "failReasons": [
+       "FilterRelatedPropertyMayMovePixels"
+      ],
+      "unsupported": []
+     }
+    },
+    "map-pulse-inner-dropshadow:desktop": {
+     "mainThreadMsPerSec": 73.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 8.72,
+     "layoutMsPerSec": 0.01,
+     "styleRecalcsPerSec": 60.3,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      73.6,
+      62.1,
+      75.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 105.8,
+      "paintsPerSec": 0.4,
+      "paintMsPerSec": 0.23,
+      "styleRecalcsPerSec": 60,
+      "commitsPerSec": 60,
+      "compositorFramesPerSec": 59.8,
+      "rendererCompositorMsPerSec": 25.3,
+      "rasterMsPerSec": 0.1,
+      "softwareVizMsPerSec": 50.5,
+      "animations": 1,
+      "compositeFailed": 1,
+      "failReasons": [
+       "FilterRelatedPropertyMayMovePixels"
+      ],
+      "unsupported": []
+     }
+    },
+    "map-pulse-overlay:mobile": {
+     "mainThreadMsPerSec": 3.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.22,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      4.4,
+      3.2,
+      3.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.2,
+      "paintsPerSec": 0.4,
+      "paintMsPerSec": 0.03,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 14,
+      "rasterMsPerSec": 0.2,
+      "softwareVizMsPerSec": 20.1,
+      "animations": 1,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "map-pulse-overlay:desktop": {
+     "mainThreadMsPerSec": 2.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.24,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.9,
+      2.2,
+      2.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.5,
+      "paintsPerSec": 0.4,
+      "paintMsPerSec": 0.22,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.4,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 18.6,
+      "rasterMsPerSec": 0.1,
+      "softwareVizMsPerSec": 24,
+      "animations": 1,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "map-hover-baseline:mobile": null,
+    "map-hover-baseline:desktop": {
+     "mainThreadMsPerSec": 95.6,
+     "scriptMsPerSec": 1.3,
+     "recalcStyleMsPerSec": 2.26,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 7.6,
+     "longFrames": 1,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      95.6,
+      86.5,
+      96.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 135.6,
+      "paintsPerSec": 15.2,
+      "paintMsPerSec": 5.31,
+      "styleRecalcsPerSec": 7.4,
+      "commitsPerSec": 49.9,
+      "compositorFramesPerSec": 7.6,
+      "rendererCompositorMsPerSec": 14.6,
+      "rasterMsPerSec": 4.3,
+      "softwareVizMsPerSec": 9.8,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "NEGATIVE control: filter: blur(64px) blobs moved by transform": {
+   "scenarios": {
+    "neg-filter-blur-blobs:mobile": {
+     "mainThreadMsPerSec": 3.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.6,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.8,
+      3.5,
+      5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.8,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.04,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 43.1,
+      "rendererCompositorMsPerSec": 15.8,
+      "rasterMsPerSec": 1.1,
+      "softwareVizMsPerSec": 980.6,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "neg-filter-blur-blobs:desktop": {
+     "mainThreadMsPerSec": 3.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.41,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.1,
+      3.6,
+      2.7
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 3.7,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.02,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 21.4,
+      "rendererCompositorMsPerSec": 10.8,
+      "rasterMsPerSec": 2.8,
+      "softwareVizMsPerSec": 974,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "cta-blobs:mobile": {
+     "mainThreadMsPerSec": 2.9,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.45,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.7,
+      2.9,
+      3.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6.1,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.47,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 60.1,
+      "rendererCompositorMsPerSec": 16.4,
+      "rasterMsPerSec": 1,
+      "softwareVizMsPerSec": 143,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "cta-blobs:desktop": {
+     "mainThreadMsPerSec": 3.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.29,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      2.2,
+      3.1,
+      3.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 5.3,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.07,
+      "styleRecalcsPerSec": 0.4,
+      "commitsPerSec": 0.6,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 20,
+      "rasterMsPerSec": 2.6,
+      "softwareVizMsPerSec": 349.7,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "NEGATIVE control: inner-node SVG animation, CSS transform/opacity on <g>/<circle> inside one SVG": {
+   "scenarios": {
+    "neg-inner-svg-nodes:mobile": {
+     "mainThreadMsPerSec": 6.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 1.13,
+     "layoutMsPerSec": 0.34,
+     "styleRecalcsPerSec": 1.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      6,
+      7.8,
+      6.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 12,
+      "paintsPerSec": 1.6,
+      "paintMsPerSec": 1.12,
+      "styleRecalcsPerSec": 1.2,
+      "commitsPerSec": 1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 21.1,
+      "rasterMsPerSec": 1.7,
+      "softwareVizMsPerSec": 250.4,
+      "animations": 17,
+      "compositeFailed": 8,
+      "failReasons": [
+       "AnimationHasNoVisibleChange"
+      ],
+      "unsupported": []
+     }
+    },
+    "neg-inner-svg-nodes:desktop": {
+     "mainThreadMsPerSec": 5.1,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.83,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      5.1,
+      5.1,
+      6.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 8.2,
+      "paintsPerSec": 0.8,
+      "paintMsPerSec": 0.22,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.5,
+      "rendererCompositorMsPerSec": 32.6,
+      "rasterMsPerSec": 3.4,
+      "softwareVizMsPerSec": 707.2,
+      "animations": 17,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "hero-layers-fireflies:mobile": {
+     "mainThreadMsPerSec": 4.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.83,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      6.2,
+      4.6,
+      4.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.62,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 14.7,
+      "rasterMsPerSec": 1.4,
+      "softwareVizMsPerSec": 240.7,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers-fireflies:desktop": {
+     "mainThreadMsPerSec": 5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.77,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.8,
+      6.2,
+      5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7.8,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.74,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 52.7,
+      "rendererCompositorMsPerSec": 26.4,
+      "rasterMsPerSec": 3.5,
+      "softwareVizMsPerSec": 893.9,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "NEGATIVE control: inner-node SVG animation via SMIL (<animateTransform>/<animate>)": {
+   "scenarios": {
+    "neg-inner-svg-smil:mobile": {
+     "mainThreadMsPerSec": 217.9,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 32.9,
+     "layoutMsPerSec": 9.26,
+     "styleRecalcsPerSec": 722,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      217.9,
+      210,
+      221.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 279.3,
+      "paintsPerSec": 120.2,
+      "paintMsPerSec": 39.55,
+      "styleRecalcsPerSec": 722,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 32.6,
+      "rasterMsPerSec": 101.9,
+      "softwareVizMsPerSec": 56.5,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "neg-inner-svg-smil:desktop": {
+     "mainThreadMsPerSec": 223.7,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 32.03,
+     "layoutMsPerSec": 9.76,
+     "styleRecalcsPerSec": 721.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      218.3,
+      224.9,
+      223.7
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 309.9,
+      "paintsPerSec": 120.2,
+      "paintMsPerSec": 45.99,
+      "styleRecalcsPerSec": 721.9,
+      "commitsPerSec": 59.9,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 45.7,
+      "rasterMsPerSec": 337.8,
+      "softwareVizMsPerSec": 151.8,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "hero-layers-fireflies:mobile": {
+     "mainThreadMsPerSec": 4.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.83,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      6.2,
+      4.6,
+      4.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.62,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 14.7,
+      "rasterMsPerSec": 1.4,
+      "softwareVizMsPerSec": 240.7,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers-fireflies:desktop": {
+     "mainThreadMsPerSec": 5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.77,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.8,
+      6.2,
+      5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7.8,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.74,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 52.7,
+      "rendererCompositorMsPerSec": 26.4,
+      "rasterMsPerSec": 3.5,
+      "softwareVizMsPerSec": 893.9,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "NEGATIVE control: inner-node SVG animation via JS requestAnimationFrame writing attributes": {
+   "scenarios": {
+    "neg-inner-svg-attr-raf:mobile": {
+     "mainThreadMsPerSec": 206.6,
+     "scriptMsPerSec": 18,
+     "recalcStyleMsPerSec": 23.89,
+     "layoutMsPerSec": 14.73,
+     "styleRecalcsPerSec": 59.9,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      206.6,
+      203.8,
+      217.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 269.5,
+      "paintsPerSec": 119.8,
+      "paintMsPerSec": 44.29,
+      "styleRecalcsPerSec": 59.9,
+      "commitsPerSec": 60.1,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 31.9,
+      "rasterMsPerSec": 84,
+      "softwareVizMsPerSec": 45.7,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "neg-inner-svg-attr-raf:desktop": {
+     "mainThreadMsPerSec": 205.1,
+     "scriptMsPerSec": 17.1,
+     "recalcStyleMsPerSec": 21.79,
+     "layoutMsPerSec": 13.92,
+     "styleRecalcsPerSec": 59.9,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      205.1,
+      190.6,
+      217.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 266.4,
+      "paintsPerSec": 119.8,
+      "paintMsPerSec": 43.86,
+      "styleRecalcsPerSec": 60.1,
+      "commitsPerSec": 59.9,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 45.5,
+      "rasterMsPerSec": 289.8,
+      "softwareVizMsPerSec": 122.3,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   },
+   "baseline": {
+    "hero-layers-fireflies:mobile": {
+     "mainThreadMsPerSec": 4.8,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.83,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.8,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      6.2,
+      4.6,
+      4.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 6,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.62,
+      "styleRecalcsPerSec": 0.8,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 14.7,
+      "rasterMsPerSec": 1.4,
+      "softwareVizMsPerSec": 240.7,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "hero-layers-fireflies:desktop": {
+     "mainThreadMsPerSec": 5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0.77,
+     "layoutMsPerSec": 0.03,
+     "styleRecalcsPerSec": 0.6,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      3.8,
+      6.2,
+      5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 7.8,
+      "paintsPerSec": 1.8,
+      "paintMsPerSec": 0.74,
+      "styleRecalcsPerSec": 0.6,
+      "commitsPerSec": 0.8,
+      "compositorFramesPerSec": 52.7,
+      "rendererCompositorMsPerSec": 26.4,
+      "rasterMsPerSec": 3.5,
+      "softwareVizMsPerSec": 893.9,
+      "animations": 7,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  },
+  "COMBINED safe set (all-safe page: hero layers + fireflies, parallax wrapper, view() reveals, rotated conic x2, CTA blobs + grain, contour one-shot, map hover glow, spotlight, view transitions)": {
+   "scenarios": {
+    "all-safe-idle-steady:mobile": {
+     "mainThreadMsPerSec": 1.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      1.5,
+      1.2,
+      1.3
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 2.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 59.7,
+      "rendererCompositorMsPerSec": 18.2,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 258.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "all-safe-idle-steady:desktop": {
+     "mainThreadMsPerSec": 1.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      1.4,
+      1.5,
+      1.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 2.8,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 50.5,
+      "rendererCompositorMsPerSec": 29.9,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 958,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "all-safe-scroll-steady:mobile": {
+     "mainThreadMsPerSec": 178.2,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 64.3,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 78.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      188.4,
+      178.2,
+      173.1
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 225.3,
+      "paintsPerSec": 0.2,
+      "paintMsPerSec": 0.06,
+      "styleRecalcsPerSec": 78.3,
+      "commitsPerSec": 59.7,
+      "compositorFramesPerSec": 59.9,
+      "rendererCompositorMsPerSec": 28.5,
+      "rasterMsPerSec": 3.6,
+      "softwareVizMsPerSec": 359.7,
+      "animations": 3,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1080,
+      0,
+      540
+     ]
+    },
+    "all-safe-scroll-steady:desktop": {
+     "mainThreadMsPerSec": 170.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 65.64,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 73.3,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      170.6,
+      183.9,
+      170.2
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 201.2,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 69.2,
+      "commitsPerSec": 46.4,
+      "compositorFramesPerSec": 47.3,
+      "rendererCompositorMsPerSec": 34,
+      "rasterMsPerSec": 4.4,
+      "softwareVizMsPerSec": 831.7,
+      "animations": 5,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     },
+     "scrollCheck": [
+      1134,
+      81,
+      621
+     ]
+    },
+    "all-safe-idle:mobile": {
+     "mainThreadMsPerSec": 96.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 31.41,
+     "layoutMsPerSec": 0.47,
+     "styleRecalcsPerSec": 20.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      96.1,
+      106,
+      96.5
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 106.4,
+      "paintsPerSec": 45.7,
+      "paintMsPerSec": 13.62,
+      "styleRecalcsPerSec": 20.2,
+      "commitsPerSec": 20.2,
+      "compositorFramesPerSec": 59.7,
+      "rendererCompositorMsPerSec": 29.2,
+      "rasterMsPerSec": 1.2,
+      "softwareVizMsPerSec": 260.2,
+      "animations": 41,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "all-safe-idle:desktop": {
+     "mainThreadMsPerSec": 92.7,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 29,
+     "layoutMsPerSec": 0.43,
+     "styleRecalcsPerSec": 19.2,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      92.7,
+      95.6,
+      87.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 114.6,
+      "paintsPerSec": 44.6,
+      "paintMsPerSec": 15.27,
+      "styleRecalcsPerSec": 19.4,
+      "commitsPerSec": 19.4,
+      "compositorFramesPerSec": 51.5,
+      "rendererCompositorMsPerSec": 35.8,
+      "rasterMsPerSec": 5.1,
+      "softwareVizMsPerSec": 893.7,
+      "animations": 41,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     }
+    },
+    "all-safe-scroll:mobile": {
+     "mainThreadMsPerSec": 234.3,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 83.48,
+     "layoutMsPerSec": 0.5,
+     "styleRecalcsPerSec": 76.7,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      241.7,
+      234.3,
+      224
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 278.5,
+      "paintsPerSec": 45,
+      "paintMsPerSec": 13.23,
+      "styleRecalcsPerSec": 77.3,
+      "commitsPerSec": 58.2,
+      "compositorFramesPerSec": 59.2,
+      "rendererCompositorMsPerSec": 37.4,
+      "rasterMsPerSec": 4.9,
+      "softwareVizMsPerSec": 387.9,
+      "animations": 41,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     },
+     "scrollCheck": [
+      864,
+      0,
+      540
+     ]
+    },
+    "all-safe-scroll:desktop": {
+     "mainThreadMsPerSec": 200.4,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 72.02,
+     "layoutMsPerSec": 0.59,
+     "styleRecalcsPerSec": 61.4,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      190.1,
+      200.4,
+      218.8
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 247.5,
+      "paintsPerSec": 33.6,
+      "paintMsPerSec": 13.35,
+      "styleRecalcsPerSec": 64.2,
+      "commitsPerSec": 43.5,
+      "compositorFramesPerSec": 44.3,
+      "rendererCompositorMsPerSec": 46.5,
+      "rasterMsPerSec": 7.8,
+      "softwareVizMsPerSec": 910.1,
+      "animations": 41,
+      "compositeFailed": 12,
+      "failReasons": [
+       "TargetHasInvalidCompositingState",
+       "UnsupportedCSSProperty"
+      ],
+      "unsupported": [
+       "stroke-dashoffset"
+      ]
+     },
+     "scrollCheck": [
+      756,
+      0,
+      513
+     ]
+    }
+   },
+   "baseline": {
+    "baseline-idle:mobile": {
+     "mainThreadMsPerSec": 0.5,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.9,
+      0.5,
+      0.4
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.1,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    },
+    "baseline-idle:desktop": {
+     "mainThreadMsPerSec": 0.6,
+     "scriptMsPerSec": 0,
+     "recalcStyleMsPerSec": 0,
+     "layoutMsPerSec": 0,
+     "styleRecalcsPerSec": 0,
+     "longFrames": 0,
+     "loafBlockingMs": 0,
+     "repsMainMsPerSec": [
+      0.7,
+      0.6,
+      0.6
+     ],
+     "trace": {
+      "mainBusyMsPerSec": 0.6,
+      "paintsPerSec": 0,
+      "paintMsPerSec": 0,
+      "styleRecalcsPerSec": 0,
+      "commitsPerSec": 0,
+      "compositorFramesPerSec": 0,
+      "rendererCompositorMsPerSec": 0,
+      "rasterMsPerSec": 0,
+      "softwareVizMsPerSec": 0.2,
+      "animations": 0,
+      "compositeFailed": 0,
+      "failReasons": [],
+      "unsupported": []
+     }
+    }
+   }
+  }
+ }
+}
