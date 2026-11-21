@@ -24,6 +24,7 @@ Branch `w1/content`, base `064d569`. Each item names the owner who can make the 
 
 ## areas-content (W1)
 7. **`content/pages/areas.json` SEO description is 156 characters** (limit 155). It is yours; content did not touch it. Three area files are also over: `highlands.json` (156), `oak-bay.json` (156), `saanich.json` (157) on the seed copy; please confirm on your branch.
+18. **Optional: federal nest excerpt on `bc-bird-nests`.** Content removed the clause "federal law also protects migratory birds' nests" from the tree-vegetation FAQ and the spring checklist, because only Wildlife Act s.34 is excerpted. If you want the federal rule on the site, add a verified excerpt from the federal Migratory Birds Regulations (review round 2 notes they generally protect a nest only while it holds a live bird or viable egg, with longer protection for some listed species; please confirm) with `verify: true` and `reviewedOn`, and tell content; content will then add a qualified sentence ("federal rules also protect active nests of migratory birds"). No action needed otherwise.
 8. **Regional ids.** Service `localRulesRefs` and `home.localExpertise.regional` use the ids in your `content/regional.json`: `crd-watering`, `crd-water-systems`, `crd-invasives`, `bc-riparian`, `bc-bird-nests`, `bc-private-wells`. If you rename a block, tell content.
 
 ## Integrator (W1 barrier)

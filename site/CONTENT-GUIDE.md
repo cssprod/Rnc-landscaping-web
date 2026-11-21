@@ -42,7 +42,7 @@ Each guide shows the byline "[OWNER NAME], RNC Landscaping", linking to `/about/
 Every project and testimonial with `"sample": true` shows a visible Sample label and blocks a launch build. For a real project or a real, consented review, set it to `false` (testimonials also set `"source": "google"` when the review is on your Google profile). Remove sample entries you do not replace.
 
 ## Photos
-Photos are referenced by slot ID (for example `proj-irrigation-1`) in `media/images.json`. To use your own photo, add it as `media/photos/<slot>.jpg` and ask your developer to run the image tool. Until a slot has a photo, the site shows a labelled illustration. Stock photos are never shown as your work, and never stand in for you or your crew.
+Photos are referenced by slot ID (for example `proj-irrigation-1`) in `media/images.json`. To use your own photo, add it to `site/static/` (for example `site/static/photos/oak-bay-garden.jpg`) and ask your developer to point the slot at it. Until a slot has your photo, it shows a placeholder: a labelled illustration, or a stock photo in online builds. A simpler photo workflow is planned, and this guide will be updated when it ships. Stock photos are never shown as your work, and never stand in for you or your crew.
 
 ## Quote requests
 The quote form opens the visitor's email app with their request written out, addressed to `[EMAIL]`. Requests arrive in that inbox like any other email; nothing is stored on the website.

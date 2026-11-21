@@ -68,7 +68,7 @@
       },
       {
         "task": "Plan and written scope",
-        "detail": "Layout, plant list, written scope and any permits named."
+        "detail": "A layout, plant list and written scope, naming any permit the work may need."
       },
       {
         "task": "Ground preparation",
@@ -84,7 +84,7 @@
       },
       {
         "task": "Walkthrough",
-        "detail": "Final walkthrough and first-season care notes handed over."
+        "detail": "We walk the finished work with you and hand over first-season care notes."
       }
     ]
   },
@@ -151,7 +151,7 @@
   "faqs": [
     {
       "q": "Do I need a permit for my landscape project?",
-      "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Each of our [area pages](/areas/) links to the local bylaws."
+      "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Each of our [area pages](/areas/) links to the official sources for local rules."
     },
     {
       "q": "When should we plant?",
