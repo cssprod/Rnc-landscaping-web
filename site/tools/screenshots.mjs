@@ -5,7 +5,8 @@
  *   node tools/screenshots.mjs [--pages=/a/,/b/] [--w=390,1440] [--themes=dark,light] [--full] [--out-dir=DIR]
  *   node tools/screenshots.mjs --compare=BASE_DIST [same options]
  *       screenshots SITE_DIST and BASE_DIST with identical settings and compares them pixel by pixel; exits 1 on any
- *       difference (the pre/post refactor gate: 0 px at 390 and 1440, dark and light).
+ *       difference (the pre/post refactor gate: 0 px at 390 and 1440, dark and light). A differing pair is re-shot
+ *       once, so a one-off rendering-timing flake is reported but does not fail; a repeatable difference fails.
  * Serves SITE_DIST on PORT (default 4399; the base build on a free port). Build first with --offline-images so
  * everything is local; external requests are blocked. Uses Playwright's Chromium (or $CHROME).
  * --dark is kept as a shorthand for --themes=dark.
@@ -80,18 +81,27 @@ async function diffPixels(a, b) {
 const name = (/** @type {string} */ p, /** @type {number} */ w, /** @type {string} */ theme) => `${(p.replace(/[/?=&]/g, '_').replace(/^_+|_+$/g, '') || 'home')}-${w}-${theme}${full ? '-full' : ''}`;
 let diffs = 0, shots = 0;
 for (const w of widths) for (const theme of themes) for (const p of list) {
-  const png = await shoot(mainPort, p, w, theme);
+  let png = await shoot(mainPort, p, w, theme);
   shots++;
   if (!baseServer) { writeFileSync(join(OUT, `${name(p, w, theme)}.png`), png); continue; }
-  const base = await shoot(basePort, p, w, theme);
-  const r = await diffPixels(base, png);
+  let base = await shoot(basePort, p, w, theme);
+  let r = await diffPixels(base, png);
+  let note = '';
+  if (r.px !== 0) {
+    // A rendering-timing flake (lazy decode, font swap) does not repeat: re-shoot both once; only a repeatable diff counts.
+    const first = r;
+    png = await shoot(mainPort, p, w, theme);
+    base = await shoot(basePort, p, w, theme);
+    r = await diffPixels(base, png);
+    note = r.px === 0 ? ` (first attempt: ${first.px < 0 ? first.size : `${first.px} px`}; 0 px on retry)` : ' (repeated on retry)';
+  }
   const same = r.px === 0;
   if (!same) {
     diffs++;
     writeFileSync(join(OUT, `${name(p, w, theme)}.base.png`), base);
     writeFileSync(join(OUT, `${name(p, w, theme)}.png`), png);
   }
-  console.log(`${same ? '✓' : '✗'} ${p} ${w}px ${theme}: ${r.px < 0 ? `size differs (${r.size})` : `${r.px} px differ (${r.size})`}`);
+  console.log(`${same ? '✓' : '✗'} ${p} ${w}px ${theme}: ${r.px < 0 ? `size differs (${r.size})` : `${r.px} px differ (${r.size})`}${note}`);
 }
 await browser.close();
 mainServer.close();

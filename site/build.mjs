@@ -84,6 +84,7 @@ else {
   if (!/for = "\/\*"[\s\S]*?Content-Security-Policy/.test(toml)) fatal.push('netlify.toml has no Content-Security-Policy header for "/*"');
   for (const s of INLINE_SCRIPTS) if (!cspHashes.includes(sha256(s))) fatal.push(`netlify.toml CSP script-src is missing '${sha256(s)}' for an inline head script (src/lib/head-scripts.mjs)`);
 }
+
 /* ---- static files, fonts, brand assets ---- */
 if (existsSync(join(paths.site, 'static'))) cpSync(join(paths.site, 'static'), DIST, { recursive: true });
 for (const f of ['logo.svg', 'logo-mark.svg', 'logo-reversed.svg', 'favicon.svg', 'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png']) {
