@@ -24,7 +24,7 @@
         },
         {
           "title": "Property managers",
-          "body": "Several sites on one schedule, with issue reports in writing."
+          "body": "Several sites on one visit schedule, with the same scope format for each."
         },
         {
           "title": "Public and institutional buyers",
@@ -52,16 +52,8 @@
           "body": "One person for questions, scope changes and owner or tenant concerns."
         },
         {
-          "title": "Visit notes",
-          "body": "After recurring visits, a short note of what was done and anything that needs a decision."
-        },
-        {
-          "title": "Issues reported in writing",
-          "body": "Problems we find, such as a damaged sprinkler line, are reported in writing before we act on anything outside the scope."
-        },
-        {
-          "title": "Work planned around occupants",
-          "body": "Start times, access and site rules agreed at a start-up meeting before the first visit."
+          "title": "Visit notes and issue reports",
+          "body": "After recurring visits, a short note of what was done. Problems we find, such as a damaged sprinkler line, are reported in writing before we act on anything outside the scope."
         },
         {
           "title": "A reply within [REPLY TIME]",

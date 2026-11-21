@@ -50,7 +50,7 @@
       "category": "Local rules"
     },
     {
-      "id": "crd-watering",
+      "id": "watering-days",
       "q": "What are the CRD watering days?",
       "a": "From May 1 to September 30, CRD Stage 1 rules allow lawn watering on two days a week, set by your address, in the early morning or evening. Hand watering and drip irrigation of gardens are allowed any day. Our [watering guide](/resources/crd-watering-rules-guide/) has the full schedule and the link to the CRD.",
       "category": "Local rules"

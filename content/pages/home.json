@@ -1,5 +1,5 @@
 {
-  "_notes": "Featured items reference services, projects and testimonials by slug. featuredProject is the single spec-strip project; process.source points at content/pages/process.json overview (not repeated here); faq.ids reference content/pages/faq.json; reviewsBand.googleLink and cta.secondary carry token-built URLs that templates must never put in an href while the token is unresolved (CONTRACT section 3).",
+  "_notes": "Featured items reference services, projects and testimonials by slug. featuredProject is the single spec-strip project; process.source points at content/pages/process.json overview (not repeated here); faq.ids reference content/pages/faq.json; reviewsBand shows the featuredTestimonials list (one list, so the two cannot drift); reviewsBand.googleLink has only a label, and templates take its URL from site.json googleProfile. cta.secondary carries a token-built URL that templates must never put in an href while the token is unresolved (CONTRACT section 3).",
   "seo": {
     "title": "Landscaping in Greater Victoria, BC | RNC Landscaping",
     "description": "Grounds maintenance, landscape installation, irrigation and tree care for homes, stratas and businesses in Greater Victoria. Free, site-specific quotes."
@@ -50,15 +50,9 @@
   ],
   "reviewsBand": {
     "heading": "What clients say",
-    "lede": "Quotes marked Sample are illustrative until RNC publishes reviews from its own clients, shared with their permission.",
-    "testimonials": [
-      "strata-council-sidney",
-      "homeowner-oak-bay",
-      "general-contractor-langford"
-    ],
+    "lede": "From homeowners, strata councils and contractors. A quote marked Sample is an example, not a review from a client.",
     "googleLink": {
-      "label": "Read all reviews on Google",
-      "href": "[GOOGLE PROFILE]"
+      "label": "Read all reviews on Google"
     }
   },
   "localExpertise": {
@@ -117,11 +111,11 @@
     },
     {
       "id": "why",
-      "heading": "How we work",
+      "heading": "What to expect from us",
       "body": [],
       "items": [
         {
-          "title": "Local rules, handled",
+          "title": "Rules checked first",
           "body": "We check CRD watering rules and your municipality's tree bylaw before we start, and point you to the official source."
         },
         {
