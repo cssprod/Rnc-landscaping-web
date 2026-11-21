@@ -1,0 +1,106 @@
+{
+  "$id": "site.schema.json",
+  "title": "content/site.json: the single source of business facts (CONTRACT §6)",
+  "x-files": ["site.json"],
+  "type": "object",
+  "required": ["tokens", "name", "shortName", "locale", "region", "nap", "hours", "replyTime", "googleProfile", "founded", "owner", "crewSize", "warranty", "services", "municipalities", "credentials", "sameAs", "capabilityStatement"],
+  "additionalProperties": false,
+  "properties": {
+    "_notes": { "type": "string" },
+    "tokens": {
+      "type": "object",
+      "required": ["PHONE", "EMAIL", "HOURS", "ADDRESS", "LEGAL NAME", "YEAR", "CREW SIZE", "OWNER NAME", "OWNER BIO", "LIABILITY LIMIT", "WORKSAFEBC STATUS", "LICENCES", "CERTIFICATIONS", "MEMBERSHIPS", "WARRANTY", "DOMAIN", "REPLY TIME", "GOOGLE PROFILE", "FOUNDED", "PLAUSIBLE DOMAIN"],
+      "additionalProperties": false,
+      "properties": {
+        "PHONE": { "type": ["string", "null"] },
+        "EMAIL": { "type": ["string", "null"], "pattern": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$" },
+        "HOURS": { "type": ["string", "null"] },
+        "ADDRESS": { "type": ["string", "null"] },
+        "LEGAL NAME": { "type": ["string", "null"] },
+        "YEAR": { "type": ["string", "null"], "pattern": "^\\d{4}$" },
+        "CREW SIZE": { "type": ["string", "null"] },
+        "OWNER NAME": { "type": ["string", "null"] },
+        "OWNER BIO": { "type": ["string", "null"] },
+        "LIABILITY LIMIT": { "type": ["string", "null"] },
+        "WORKSAFEBC STATUS": { "type": ["string", "null"] },
+        "LICENCES": { "type": ["string", "null"] },
+        "CERTIFICATIONS": { "type": ["string", "null"] },
+        "MEMBERSHIPS": { "type": ["string", "null"] },
+        "WARRANTY": { "type": ["string", "null"] },
+        "DOMAIN": { "type": ["string", "null"], "pattern": "^[a-z0-9.-]+\\.[a-z]{2,}$" },
+        "REPLY TIME": { "type": ["string", "null"] },
+        "GOOGLE PROFILE": { "type": ["string", "null"], "pattern": "^https://" },
+        "FOUNDED": { "type": ["string", "null"], "pattern": "^\\d{4}$" },
+        "PLAUSIBLE DOMAIN": { "type": ["string", "null"] }
+      }
+    },
+    "name": { "const": "RNC Landscaping" },
+    "shortName": { "$ref": "_defs.schema.json#/definitions/text" },
+    "locale": { "const": "en-CA" },
+    "region": { "$ref": "_defs.schema.json#/definitions/text" },
+    "nap": {
+      "type": "object",
+      "required": ["name", "legalName", "address", "phone", "email"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "$ref": "_defs.schema.json#/definitions/text" },
+        "legalName": { "type": "string" },
+        "address": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" }
+      }
+    },
+    "hours": {
+      "type": "object",
+      "required": ["display", "openingHours"],
+      "additionalProperties": false,
+      "properties": {
+        "display": { "type": "string" },
+        "openingHours": { "type": "array", "items": { "type": "object", "required": ["@type"], "properties": { "@type": { "const": "OpeningHoursSpecification" } } } }
+      }
+    },
+    "replyTime": { "type": "string" },
+    "googleProfile": { "type": "string" },
+    "founded": { "type": "string" },
+    "owner": {
+      "type": "object",
+      "required": ["name", "bio", "photo"],
+      "properties": { "name": { "type": "string" }, "bio": { "type": "string" }, "photo": { "$ref": "_defs.schema.json#/definitions/slot" } }
+    },
+    "crewSize": { "type": "string" },
+    "warranty": { "type": "string" },
+    "services": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["slug", "name", "navLabel"],
+        "additionalProperties": false,
+        "properties": { "slug": { "$ref": "_defs.schema.json#/definitions/service" }, "name": { "$ref": "_defs.schema.json#/definitions/text" }, "navLabel": { "$ref": "_defs.schema.json#/definitions/text" } }
+      }
+    },
+    "municipalities": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["slug", "name"],
+        "additionalProperties": false,
+        "properties": { "slug": { "$ref": "_defs.schema.json#/definitions/area" }, "name": { "$ref": "_defs.schema.json#/definitions/text" } }
+      }
+    },
+    "credentials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "value", "issuerUrl"],
+        "additionalProperties": false,
+        "properties": { "id": { "$ref": "_defs.schema.json#/definitions/slug" }, "label": { "$ref": "_defs.schema.json#/definitions/text" }, "value": { "type": "string" }, "issuerUrl": { "type": ["string", "null"], "pattern": "^https://" } }
+      }
+    },
+    "sameAs": { "type": "array", "items": { "type": "string", "pattern": "^https://" } },
+    "capabilityStatement": { "$ref": "_defs.schema.json#/definitions/path" }
+  }
+}

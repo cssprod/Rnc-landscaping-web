@@ -4,7 +4,7 @@
   "navLabel": "Tree and vegetation",
   "seo": {
     "title": "Tree & Vegetation Management in Greater Victoria | RNC Lands",
-    "description": "Fixture copy: tree & vegetation management for homeowners, strata councils and commercial sites across Greater Victoria, BC. Request a free quote from RNC Lands"
+    "description": "Fixture copy: tree & vegetation management for homeowners, strata councils and commercial sites across Greater Victoria, BC. Request a free quote."
   },
   "hero": {
     "h1": "Tree & Vegetation Management for Greater Victoria properties",
@@ -98,11 +98,49 @@
     },
     {
       "q": "How do I get a quote?",
-      "a": "Use the [free quote form](/quote/) or call [PHONE]."
+      "a": "Use the [free quote form](/free-quote/) or call [PHONE]."
+    },
+    {
+      "q": "Fixture question 3 about tree & vegetation management?",
+      "a": "Fixture answer 3."
+    },
+    {
+      "q": "Fixture question 4 about tree & vegetation management?",
+      "a": "Fixture answer 4."
+    },
+    {
+      "q": "Fixture question 5 about tree & vegetation management?",
+      "a": "Fixture answer 5."
     }
   ],
   "detailImages": [
     "svc-tree-vegetation-detail-1",
     "svc-tree-vegetation-detail-2"
+  ],
+  "localContext": "Fixture sentence of Greater Victoria context for tree & vegetation management.",
+  "goodFitIf": [
+    "Fixture fit statement one.",
+    "Fixture fit statement two.",
+    "Fixture fit statement three."
+  ],
+  "perVisit": {
+    "caption": "What happens on each visit",
+    "rows": [
+      {
+        "task": "Fixture task 1",
+        "detail": "Fixture detail 1."
+      },
+      {
+        "task": "Fixture task 2",
+        "detail": "Fixture detail 2."
+      },
+      {
+        "task": "Fixture task 3",
+        "detail": "Fixture detail 3."
+      }
+    ]
+  },
+  "localRulesRefs": [
+    "crd-watering"
   ]
 }

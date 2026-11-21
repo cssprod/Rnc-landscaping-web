@@ -22,8 +22,34 @@ export const val = (name) => tokens[name] ?? undefined;
 /** @param {TokenName} name */
 export const has = (name) => tokens[name] != null && tokens[name] !== '';
 
-/** Digits-only tel: target. */
-export const telHref = () => (tokens.PHONE ? `tel:${tokens.PHONE.replace(/[^\d+]/g, '')}` : 'tel:[PHONE]');
+/** A trailing extension ("ext 2", "ext. 2", "x2", "#2", "extension 2") and the number before it. @param {string} s */
+const splitExt = (s) => {
+  const m = /^(.*?)[\s,;]*(?:ext(?:ension)?\.?|x|#)\s*(\d+)\s*$/i.exec(s);
+  return m ? { number: m[1], ext: m[2] } : { number: s, ext: '' };
+};
+
+/**
+ * E.164 digits for a North American number ("250-555-0100" → "+12505550100"); other forms keep their digits.
+ * An extension is dropped ("250-555-0100 ext 2" → "+12505550100"); telHref() adds it back as ";ext=".
+ * @param {string} s
+ */
+export const e164 = (s) => {
+  const d = splitExt(s).number.replace(/[^\d+]/g, '');
+  if (d.startsWith('+')) return d;
+  if (/^\d{10}$/.test(d)) return `+1${d}`;
+  if (/^1\d{10}$/.test(d)) return `+${d}`;
+  return d;
+};
+
+/** tel: target with the country code (tel:+1…) and any extension as ";ext=" (RFC 3966). Call it only once PHONE is known. */
+export const telHref = () => {
+  if (!tokens.PHONE) return 'tel:[PHONE]';
+  const { ext } = splitExt(tokens.PHONE);
+  return `tel:${e164(tokens.PHONE)}${ext ? `;ext=${ext}` : ''}`;
+};
+
+/** sms: target with the country code. A text cannot reach an extension, so it is left off. Call it only once PHONE is known. */
+export const smsHref = () => (tokens.PHONE ? `sms:${e164(tokens.PHONE)}` : 'sms:[PHONE]');
 
 /**
  * Phone number as a link once it is known; until then the [PHONE] chip as plain text.

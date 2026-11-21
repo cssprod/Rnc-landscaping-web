@@ -23,6 +23,21 @@
     "after": "proj-tree-vegetation-4",
     "gallery": [
       "svc-tree-vegetation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-view-royal-tree-fixture-4-art"
+  },
+  "seo": {
+    "title": "View Royal tree and vegetation project 4 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample tree and vegetation project in View Royal."
+  },
+  "season": "Spring",
+  "tags": [
+    "tree-vegetation",
+    "view-royal"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

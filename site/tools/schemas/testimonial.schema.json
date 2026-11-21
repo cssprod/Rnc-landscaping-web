@@ -1,0 +1,17 @@
+{
+  "$id": "testimonial.schema.json",
+  "title": "content/testimonials/<slug>.json (schema v3): samples carry sample:true and a generic attribution",
+  "x-files": ["testimonials/*.json"],
+  "type": "object",
+  "required": ["slug", "sample", "quote", "attribution", "source"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "slug": { "$ref": "_defs.schema.json#/definitions/slug" },
+    "sample": { "type": "boolean" },
+    "quote": { "$ref": "_defs.schema.json#/definitions/text" },
+    "attribution": { "$ref": "_defs.schema.json#/definitions/text" },
+    "service": { "anyOf": [{ "$ref": "_defs.schema.json#/definitions/service" }, { "type": "null" }] },
+    "area": { "anyOf": [{ "$ref": "_defs.schema.json#/definitions/area" }, { "type": "null" }] },
+    "source": { "enum": ["sample", "google"] }
+  }
+}

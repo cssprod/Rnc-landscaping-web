@@ -23,6 +23,21 @@
     "after": "proj-tree-vegetation-2",
     "gallery": [
       "svc-tree-vegetation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-victoria-tree-fixture-2-art"
+  },
+  "seo": {
+    "title": "Victoria tree and vegetation project 2 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample tree and vegetation project in Victoria."
+  },
+  "season": "Winter",
+  "tags": [
+    "tree-vegetation",
+    "victoria"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

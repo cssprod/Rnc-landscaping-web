@@ -1,0 +1,54 @@
+{
+  "$id": "_defs.schema.json",
+  "title": "Shared definitions (content schema v3, CONTRACT §6)",
+  "definitions": {
+    "text": { "type": "string", "minLength": 1 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "date": { "type": "string", "format": "date" },
+    "dateOrNull": { "type": ["string", "null"], "format": "date" },
+    "url": { "type": "string", "pattern": "^https?://[^\\s]+$" },
+    "path": { "type": "string", "pattern": "^/[^\\s]*$" },
+    "slot": { "type": "string", "x-slot": true },
+    "slotOrNull": { "type": ["string", "null"], "x-slot": true },
+    "service": { "enum": ["grounds-maintenance", "landscape-installation", "irrigation", "tree-vegetation"] },
+    "area": { "enum": ["victoria", "saanich", "oak-bay", "esquimalt", "langford", "colwood", "view-royal", "sooke", "central-saanich", "north-saanich", "sidney", "highlands", "metchosin"] },
+    "season": { "enum": ["Spring", "Summer", "Fall", "Winter"] },
+    "paras": { "type": "array", "items": { "$ref": "#/definitions/text" } },
+    "seo": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 155 }
+      }
+    },
+    "titleBody": {
+      "type": "object",
+      "required": ["title"],
+      "properties": { "title": { "$ref": "#/definitions/text" }, "body": { "type": "string" } }
+    },
+    "section": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "heading": { "type": "string" },
+        "body": { "$ref": "#/definitions/paras" },
+        "items": { "type": "array", "items": { "$ref": "#/definitions/titleBody" } }
+      }
+    },
+    "sourced": {
+      "type": "object",
+      "required": ["id", "text", "sourceUrl", "excerpt", "verify", "reviewedOn"],
+      "properties": {
+        "id": { "$ref": "#/definitions/slug" },
+        "text": { "$ref": "#/definitions/text" },
+        "sourceUrl": { "$ref": "#/definitions/url" },
+        "sourceTitle": { "type": "string" },
+        "sourceType": { "enum": ["official", "secondary"] },
+        "excerpt": { "$ref": "#/definitions/text" },
+        "verify": { "const": true },
+        "reviewedOn": { "$ref": "#/definitions/dateOrNull" }
+      }
+    }
+  }
+}

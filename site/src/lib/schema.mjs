@@ -3,8 +3,11 @@
  * JSON-LD builders. No Review/AggregateRating is emitted: testimonials are
  * samples until RNC supplies real, consented reviews. Business facts that are
  * still placeholders are left out rather than published as "[TOKEN]".
+ * Every business fact comes from content/site.json (siteJson): name, NAP, hours,
+ * founding year (foundingDate only), the 13 municipalities (areaServed) and the
+ * 4 service lines (knowsAbout), so the markup matches the Google Business Profile.
  */
-import { site } from '../../site.config.mjs';
+import { siteJson } from '../../site.config.mjs';
 import { val } from './tokens.mjs';
 
 /** @typedef {{ origin: string, data: any }} Env */
@@ -17,13 +20,15 @@ const clean = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !=
 
 /** @param {Env} env */
 export function business(env) {
-  const areas = site.areas.map((a) => env.data.areas[a]?.name || a);
+  const areas = siteJson.municipalities.map((m) => m.name);
+  const hours = siteJson.hours?.openingHours || [];
   return clean({
     '@context': 'https://schema.org',
     '@type': 'LandscapingBusiness',
     '@id': abs(env, '/#business'),
-    name: site.name,
+    name: siteJson.nap?.name || siteJson.name,
     legalName: val('LEGAL NAME'),
+    foundingDate: val('FOUNDED'),
     url: abs(env, '/'),
     logo: abs(env, '/assets/brand/logo-mark.svg'),
     image: abs(env, '/assets/brand/icon-512.png'),
@@ -31,9 +36,10 @@ export function business(env) {
     email: val('EMAIL'),
     address: val('ADDRESS') ? { '@type': 'PostalAddress', streetAddress: val('ADDRESS'), addressRegion: 'BC', addressCountry: 'CA' } : { '@type': 'PostalAddress', addressRegion: 'BC', addressCountry: 'CA' },
     openingHours: val('HOURS'),
+    ...(hours.length ? { openingHoursSpecification: hours } : {}),
     areaServed: areas.map((name) => ({ '@type': 'City', name: `${name}, BC` })),
-    knowsAbout: site.services.map((s) => env.data.services[s]?.name || s),
-    ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
+    knowsAbout: siteJson.services.map((s) => s.name),
+    ...(siteJson.sameAs?.length ? { sameAs: siteJson.sameAs } : {}),
   });
 }
 
@@ -60,7 +66,7 @@ export const service = (env, svc, path) => ({
   description: svc.seo?.description,
   url: abs(env, path),
   provider: { '@id': abs(env, '/#business') },
-  areaServed: site.areas.map((a) => ({ '@type': 'City', name: `${env.data.areas[a]?.name || a}, BC` })),
+  areaServed: siteJson.municipalities.map((m) => ({ '@type': 'City', name: `${m.name}, BC` })),
 });
 
 /** @param {Env} env @param {any} r @param {string} path @param {string|null} image */
@@ -73,6 +79,6 @@ export const article = (env, r, path, image) => ({
   dateModified: r.date,
   ...(image ? { image } : {}),
   mainEntityOfPage: abs(env, path),
-  author: { '@type': 'Organization', name: site.name },
+  author: { '@type': 'Organization', name: siteJson.name },
   publisher: { '@id': abs(env, '/#business') },
 });

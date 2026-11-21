@@ -23,6 +23,27 @@
     "after": "proj-landscape-installation-4",
     "gallery": [
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-central-saanich-landscape-fixture-4-art"
+  },
+  "seo": {
+    "title": "Central Saanich landscape installation project 4 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample landscape installation project in Central Saanich."
+  },
+  "season": "Spring",
+  "tags": [
+    "landscape-installation",
+    "central-saanich"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": [
+    {
+      "common": "Fixture plant",
+      "botanical": "Fixturea exemplaris",
+      "note": "Fixture note"
+    }
+  ]
 }

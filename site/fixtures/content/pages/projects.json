@@ -1,0 +1,18 @@
+{
+  "seo": {
+    "title": "Projects | RNC Landscaping",
+    "description": "Fixture description for the projects page of RNC Landscaping, a landscaping and grounds maintenance company serving Greater Victoria, BC."
+  },
+  "h1": "Projects",
+  "lede": "Fixture lede for the projects hub.",
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "Fixture section heading",
+      "body": [
+        "Fixture paragraph for this page."
+      ],
+      "items": []
+    }
+  ]
+}

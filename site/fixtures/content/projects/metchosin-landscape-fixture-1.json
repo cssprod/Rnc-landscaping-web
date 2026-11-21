@@ -23,6 +23,27 @@
     "after": "proj-landscape-installation-1",
     "gallery": [
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-metchosin-landscape-fixture-1-art"
+  },
+  "seo": {
+    "title": "Metchosin landscape installation project 1 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample landscape installation project in Metchosin."
+  },
+  "season": "Summer",
+  "tags": [
+    "landscape-installation",
+    "metchosin"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": [
+    {
+      "common": "Fixture plant",
+      "botanical": "Fixturea exemplaris",
+      "note": "Fixture note"
+    }
+  ]
 }

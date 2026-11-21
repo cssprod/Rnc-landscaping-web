@@ -1,0 +1,40 @@
+{
+  "$id": "project.schema.json",
+  "title": "content/projects/<slug>.json (schema v3): structured project data, never a budget",
+  "x-files": ["projects/*.json"],
+  "type": "object",
+  "required": ["slug", "sample", "title", "service", "area", "clientType", "seo", "summary", "season", "duration", "scope", "tags", "challenge", "approach", "result", "testimonial", "images"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "slug": { "$ref": "_defs.schema.json#/definitions/slug" },
+    "sample": { "type": "boolean" },
+    "title": { "$ref": "_defs.schema.json#/definitions/text" },
+    "service": { "$ref": "_defs.schema.json#/definitions/service" },
+    "area": { "$ref": "_defs.schema.json#/definitions/area" },
+    "clientType": { "enum": ["Homeowner", "Strata", "Commercial", "Institutional", "Public sector", "General contractor"] },
+    "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+    "summary": { "$ref": "_defs.schema.json#/definitions/text" },
+    "season": { "enum": ["Spring", "Summer", "Fall", "Winter", "Year-round"] },
+    "duration": { "$ref": "_defs.schema.json#/definitions/text" },
+    "scope": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "tags": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slug" }, "uniqueItems": true },
+    "challenge": { "$ref": "_defs.schema.json#/definitions/text" },
+    "approach": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "result": { "$ref": "_defs.schema.json#/definitions/text" },
+    "story": { "type": "array", "items": { "type": "string" }, "x-deprecated": "use challenge / approach / result" },
+    "plantPalette": {
+      "type": "array",
+      "items": { "type": "object", "required": ["common"], "properties": { "common": { "$ref": "_defs.schema.json#/definitions/text" }, "botanical": { "type": "string" }, "note": { "type": "string" } } }
+    },
+    "testimonial": { "type": ["string", "null"] },
+    "images": {
+      "type": "object",
+      "properties": {
+        "before": { "$ref": "_defs.schema.json#/definitions/slotOrNull" },
+        "after": { "$ref": "_defs.schema.json#/definitions/slotOrNull" },
+        "gallery": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slot" } },
+        "art": { "$ref": "_defs.schema.json#/definitions/slot", "pattern": "^proj-[a-z0-9-]+-art$" }
+      }
+    }
+  }
+}

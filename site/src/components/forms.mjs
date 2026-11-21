@@ -8,7 +8,7 @@
  * ([{ title, intro, fields: [{ name, type, label, help, required, options, errors }] }]).
  */
 import { html, raw, md } from '../lib/html.mjs';
-import { tok } from '../lib/tokens.mjs';
+import { tok, has, mailLink } from '../lib/tokens.mjs';
 import { icon } from './sprite.mjs';
 
 /**
@@ -89,7 +89,10 @@ export function quoteForm(data, page) {
   const b = page?.buttons || {};
   const ready = page?.messages?.ready || {};
   const email = tok('EMAIL');
-  return html`<form class="quote-form glass-card" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" data-stepper data-email="${email}" data-label-next="${b.next || 'Next'}" data-label-back="${b.back || 'Back'}" data-label-copied="${b.copied || 'Copied'}">
+  // CONTRACT §3: a URL is never built on an unresolved token. Until [EMAIL] is known the mailto: has no recipient (the
+  // same target main.js composes) and the help text shows the address as text, so the chip marks it in showcase builds.
+  const to = has('EMAIL') ? email : '';
+  return html`<form class="quote-form glass-card" name="quote" method="post" action="mailto:${to}?subject=Free%20quote%20request" enctype="text/plain" data-stepper data-quote-form data-email="${email}" data-label-next="${b.next || 'Next'}" data-label-back="${b.back || 'Back'}" data-label-copied="${b.copied || 'Copied'}">
   <ol class="stepper" data-stepper-progress>${steps.map((s, i) => html`<li data-step-label="${i}"${i === 0 ? raw(' class="is-current"') : ''}><span class="stepper__n">${i + 1}</span><span class="stepper__t">${s.title}</span></li>`)}</ol>
   <p class="vh" role="status" aria-live="polite" data-stepper-status></p>
   ${steps.map((s, i) => html`<fieldset class="step" data-step="${i}" id="step-${i + 1}">
@@ -98,7 +101,7 @@ export function quoteForm(data, page) {
     ${s.fields.map((f) => field(f, 'q'))}
     <div class="step__nav" data-step-nav></div>
   </fieldset>`)}
-  <div class="quote-form__submit" data-submit-row><button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Create my email'}</button><p class="field__help">Opens your email app. Nothing is sent until you press send.</p></div>
+  <div class="quote-form__submit" data-submit-row><button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Create my email'}</button><p class="field__help">Opens your email app${has('EMAIL') ? '' : html` with the request written out. Add ${mailLink('quote_form')} as the recipient`}. Nothing is sent until you press send.</p></div>
   <div class="quote-ready" data-quote-ready hidden tabindex="-1">
     <span class="icon-tile icon-tile--success">${icon('check', { size: 24 })}</span>
     <h2>${ready.heading || 'Your email is ready to send'}</h2>
@@ -107,7 +110,7 @@ export function quoteForm(data, page) {
     <textarea id="q-summary" readonly rows="11" data-quote-summary></textarea>
     <div class="quote-ready__actions">
       <button type="button" class="btn btn--primary" data-copy>${icon('copy', { size: 18 })}<span data-copy-label>${b.copy || 'Copy request'}</span></button>
-      <a class="btn btn--secondary" href="mailto:${email}" data-mailto>${icon('mail', { size: 18 })}${b.reopen || 'Open email again'}</a>
+      <a class="btn btn--secondary" href="mailto:${to}" data-mailto>${icon('mail', { size: 18 })}${b.reopen || 'Open email again'}</a>
       <button type="button" class="btn btn--plain" data-restart>${b.restart || 'Start over'}</button>
     </div>
   </div>

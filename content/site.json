@@ -1,0 +1,73 @@
+{
+  "_notes": "Single source of truth for business facts (CONTRACT §6). Every value in tokens that is null renders as its bracket token: a placeholder chip in showcase builds; SITE_MODE=launch fails while a required one is null. Fill tokens here, never in templates. FOUNDED is used only as JSON-LD foundingDate. GOOGLE PROFILE, FOUNDED and PLAUSIBLE DOMAIN are optional.",
+  "tokens": {
+    "PHONE": null,
+    "EMAIL": null,
+    "HOURS": null,
+    "ADDRESS": null,
+    "LEGAL NAME": null,
+    "YEAR": null,
+    "CREW SIZE": null,
+    "OWNER NAME": null,
+    "OWNER BIO": null,
+    "LIABILITY LIMIT": null,
+    "WORKSAFEBC STATUS": null,
+    "LICENCES": null,
+    "CERTIFICATIONS": null,
+    "MEMBERSHIPS": null,
+    "WARRANTY": null,
+    "DOMAIN": null,
+    "REPLY TIME": null,
+    "GOOGLE PROFILE": null,
+    "FOUNDED": null,
+    "PLAUSIBLE DOMAIN": null
+  },
+  "name": "RNC Landscaping",
+  "shortName": "RNC",
+  "locale": "en-CA",
+  "region": "Greater Victoria, BC",
+  "nap": {
+    "name": "RNC Landscaping",
+    "legalName": "[LEGAL NAME]",
+    "address": "[ADDRESS]",
+    "phone": "[PHONE]",
+    "email": "[EMAIL]"
+  },
+  "hours": { "display": "[HOURS]", "openingHours": [] },
+  "replyTime": "[REPLY TIME]",
+  "googleProfile": "[GOOGLE PROFILE]",
+  "founded": "[FOUNDED]",
+  "owner": { "name": "[OWNER NAME]", "bio": "[OWNER BIO]", "photo": "about-owner" },
+  "crewSize": "[CREW SIZE]",
+  "warranty": "[WARRANTY]",
+  "services": [
+    { "slug": "grounds-maintenance", "name": "Grounds Maintenance", "navLabel": "Grounds maintenance" },
+    { "slug": "landscape-installation", "name": "Landscape Installation & Construction", "navLabel": "Landscape installation" },
+    { "slug": "irrigation", "name": "Irrigation", "navLabel": "Irrigation" },
+    { "slug": "tree-vegetation", "name": "Tree & Vegetation Management", "navLabel": "Tree and vegetation" }
+  ],
+  "municipalities": [
+    { "slug": "victoria", "name": "Victoria" },
+    { "slug": "saanich", "name": "Saanich" },
+    { "slug": "oak-bay", "name": "Oak Bay" },
+    { "slug": "esquimalt", "name": "Esquimalt" },
+    { "slug": "langford", "name": "Langford" },
+    { "slug": "colwood", "name": "Colwood" },
+    { "slug": "view-royal", "name": "View Royal" },
+    { "slug": "sooke", "name": "Sooke" },
+    { "slug": "central-saanich", "name": "Central Saanich" },
+    { "slug": "north-saanich", "name": "North Saanich" },
+    { "slug": "sidney", "name": "Sidney" },
+    { "slug": "highlands", "name": "Highlands" },
+    { "slug": "metchosin", "name": "Metchosin" }
+  ],
+  "credentials": [
+    { "id": "insurance", "label": "Liability insurance", "value": "[LIABILITY LIMIT]", "issuerUrl": null },
+    { "id": "worksafebc", "label": "WorkSafeBC", "value": "[WORKSAFEBC STATUS]", "issuerUrl": null },
+    { "id": "licences", "label": "Business licences", "value": "[LICENCES]", "issuerUrl": null },
+    { "id": "certifications", "label": "Certifications", "value": "[CERTIFICATIONS]", "issuerUrl": null },
+    { "id": "memberships", "label": "Memberships", "value": "[MEMBERSHIPS]", "issuerUrl": null }
+  ],
+  "sameAs": [],
+  "capabilityStatement": "/downloads/rnc-capability-statement.pdf"
+}

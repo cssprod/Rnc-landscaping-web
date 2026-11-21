@@ -23,6 +23,21 @@
     "after": "proj-grounds-maintenance-2",
     "gallery": [
       "svc-grounds-maintenance-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-esquimalt-grounds-fixture-2-art"
+  },
+  "seo": {
+    "title": "Esquimalt grounds maintenance project 2 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample grounds maintenance project in Esquimalt."
+  },
+  "season": "Fall",
+  "tags": [
+    "grounds-maintenance",
+    "esquimalt"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

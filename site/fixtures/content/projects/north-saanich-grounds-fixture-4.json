@@ -23,6 +23,21 @@
     "after": "proj-grounds-maintenance-4",
     "gallery": [
       "svc-grounds-maintenance-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-north-saanich-grounds-fixture-4-art"
+  },
+  "seo": {
+    "title": "North Saanich grounds maintenance project 4 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample grounds maintenance project in North Saanich."
+  },
+  "season": "Fall",
+  "tags": [
+    "grounds-maintenance",
+    "north-saanich"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

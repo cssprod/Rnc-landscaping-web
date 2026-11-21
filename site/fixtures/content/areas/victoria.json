@@ -3,12 +3,12 @@
   "name": "Victoria",
   "seo": {
     "title": "Landscaping in Victoria, BC | RNC Landscaping",
-    "description": "Fixture copy: grounds maintenance, landscape installation, irrigation and tree work in Victoria, BC. Local notes, recent projects and free quotes from RNC Lands"
+    "description": "Fixture copy: grounds maintenance, landscape installation, irrigation and tree work in Victoria, BC. Local notes, recent projects and free quotes."
   },
   "h1": "Landscaping and grounds care in Victoria",
   "intro": [
-    "Fixture introduction for Victoria: how properties here differ and what owners ask for most.",
-    "Fixture second paragraph about soils, exposure or typical lot sizes."
+    "Fixture introduction written only for Victoria.",
+    "Fixture second paragraph about Victoria soils and lots."
   ],
   "neighbourhoods": [
     "Fixture neighbourhood A",
@@ -20,7 +20,7 @@
   ],
   "localNotes": [
     {
-      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "text": "Fixture local note for Victoria.",
       "sourceUrl": "https://www.crd.bc.ca/",
       "verify": true
     }
@@ -32,5 +32,56 @@
     "tree-vegetation": "Fixture local sentence about tree and vegetation in Victoria."
   },
   "featuredProject": "victoria-grounds-fixture-1",
-  "image": "area-victoria"
+  "image": "area-victoria",
+  "summary": [
+    "Fixture summary written only for Victoria."
+  ],
+  "localRules": [
+    {
+      "id": "victoria-tree-rule",
+      "topic": "trees",
+      "text": "Fixture local rule for Victoria.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture source for Victoria",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt for Victoria.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "conditions": [
+    {
+      "id": "victoria-soils",
+      "kind": "soils",
+      "text": "Fixture condition for Victoria.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture condition source for Victoria",
+      "sourceType": "secondary",
+      "excerpt": "Fixture condition excerpt for Victoria.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "victoria-grounds-fixture-1"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Fixture job note for Victoria.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "irrigation"
+  ],
+  "neighbours": [
+    "view-royal"
+  ]
 }

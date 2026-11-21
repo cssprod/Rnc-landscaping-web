@@ -61,6 +61,24 @@ export function sharedFile(kind, rel) {
   return null;
 }
 
+/**
+ * Load one top-level content file (content/<name>.json). The real file wins; in a
+ * fixture build (content/pages holds no files) the matching site/fixtures/content
+ * file is used and recorded; otherwise `empty` is returned, so pages build before
+ * the stream that owns the file has merged (CONTRACT §6: site.json, regional.json).
+ * @template T @param {string} name e.g. "site" @param {T} empty @returns {T}
+ */
+function single(name, empty) {
+  const real = join(paths.content, `${name}.json`);
+  if (existsSync(real)) return readJson(real);
+  const fix = join(paths.fixtures, 'content', `${name}.json`);
+  if (jsonFiles(join(paths.content, 'pages')).length === 0 && existsSync(fix)) {
+    fallbacks.push(`content/${name}.json (fixture)`);
+    return readJson(fix);
+  }
+  return empty;
+}
+
 export function loadAll() {
   fallbacks.length = 0;
   const services = collection('services');
@@ -69,10 +87,14 @@ export function loadAll() {
   const areas = collection('areas');
   const resources = collection('resources');
   const pages = collection('pages');
+  /** content/site.json (single source of business facts; site.config.mjs reads the same file). */
+  const site = single('site', /** @type {Record<string, any>} */ ({}));
+  /** content/regional.json (shared CRD-wide blocks, owned by areas-content). */
+  const regional = single('regional', /** @type {{ blocks: any[] }} */ ({ blocks: [] }));
   const imagesFile = sharedFile('media', 'images.json');
   /** @type {any[]} */
   const images = imagesFile ? readJson(imagesFile) : [];
   const tokensJsonFile = sharedFile('brand', 'tokens.json');
   const tokensJson = tokensJsonFile ? readJson(tokensJsonFile) : {};
-  return { services, projects, testimonials, areas, resources, pages, images, tokensJson, fallbacks: [...fallbacks] };
+  return { services, projects, testimonials, areas, resources, pages, site, regional, images, tokensJson, fallbacks: [...fallbacks] };
 }
