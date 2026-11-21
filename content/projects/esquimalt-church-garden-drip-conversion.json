@@ -1,28 +1,41 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "esquimalt-church-garden-drip-conversion",
+  "sample": true,
   "title": "Drip conversion for an Esquimalt church garden",
   "service": "irrigation",
   "area": "esquimalt",
   "clientType": "Institutional",
   "seo": {
-    "title": "Sample project: Esquimalt drip conversion | RNC",
-    "description": "Sample project: spray heads in an Esquimalt church garden converted to drip irrigation for beds and shrubs, with a simple controller. Request a free quote."
+    "title": "Sample project: Esquimalt church drip conversion",
+    "description": "Sample case study: spray heads in an Esquimalt church garden converted to drip lines, with a simple controller volunteers can run."
   },
   "summary": "Spray heads in shrub beds converted to drip lines for a volunteer-run garden.",
+  "season": "Spring",
+  "duration": "3 days",
+  "scopeTags": [
+    "Spray to drip conversion",
+    "New controller",
+    "Volunteer handover"
+  ],
   "scope": [
     "Spray to drip conversion in four beds",
     "New controller",
     "Volunteer walkthrough"
   ],
-  "duration": "3 days",
+  "challenge": "Volunteers at a church garden were hand-adjusting spray heads that soaked the walkways more than the beds.",
+  "approach": [
+    "We converted four shrub beds from spray heads to drip lines and installed a simple controller.",
+    "Before leaving we walked the volunteers through the controller and showed them how to pause it for rain."
+  ],
+  "result": "Water goes to the plants, not the paths, and volunteers can run the system.",
+  "links": "Read more about [irrigation](/services/irrigation/), see our work in [Esquimalt](/areas/esquimalt/), or [get a free quote](/free-quote/).",
   "story": [
     "Volunteers were hand-adjusting spray heads that soaked the walkways.",
     "We converted the beds to drip, installed a simple controller and showed volunteers how to pause it for rain.",
     "Read more about [irrigation](/services/irrigation/), see our work in [Esquimalt](/areas/esquimalt/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Water goes to the plants, not the paths, and volunteers can run the system.",
   "testimonial": "facilities-volunteer-esquimalt",
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-2",

@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "victoria",
   "name": "Victoria",
   "seo": {
-    "title": "Landscaping Services in Victoria, BC | RNC Landscaping",
-    "description": "Landscaping, grounds care, irrigation and tree work for Victoria homes and stratas, from James Bay to Fernwood, with tree bylaw checks. Get a free quote."
+    "title": "Landscaping in Victoria, BC: Gardens & Stratas | RNC",
+    "description": "Garden care, courtyard planting, irrigation and tree work for Victoria homes and stratas, with the City tree bylaw checked before we prune. Get a free quote."
   },
   "h1": "Landscaping in Victoria, BC",
+  "cardSummary": "Compact heritage gardens, shaded strata courtyards and downtown frontages, with many trees protected by City bylaw.",
   "intro": [
-    "Victoria lots range from heritage gardens in Rockland to small condo courtyards downtown. We look after character homes, townhouse and apartment stratas, and commercial frontages across the city.",
-    "Many Victoria trees are protected, including Garry oak and arbutus at small sizes, and trees on steep slopes or near watercourses. We check the City's bylaw before we prune or remove, and before digging near a root zone. Browse [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/free-quote/).",
-    "See [sample projects](/projects/) and our [seasonal guides](/resources/) for more."
+    "Many Victoria gardens are compact and long established: heritage lots in Rockland and Fairfield, shaded courtyards in Fernwood, apartment stratas in James Bay and downtown frontages where every bed is on show.",
+    "Mature trees are the common thread. The City protects many of them, including Garry oak and arbutus from 50 cm tall and trees on steep slopes or near watercourses, so pruning, removals and digging in a root zone start with a bylaw check. Browse [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/free-quote/?area=victoria)."
   ],
   "neighbourhoods": [
     "James Bay",
@@ -33,21 +34,60 @@
     "downtown commercial and mixed-use frontages",
     "townhouse stratas"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "The City of Victoria has its own tree bylaw with low thresholds for native species and hedges, on top of the regional watering and invasive-plant rules. Hedges count too: one stem over 30 cm can bring a hedge under the bylaw.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Victoria Tree Protection Bylaw",
       "text": "Victoria's Tree Protection Bylaw protects private trees over 30 cm diameter at breast height, hedges with any stem over 30 cm, Garry oak, arbutus, Pacific yew and Pacific dogwood over 50 cm tall, replacement trees, and trees on steep slopes or near watercourses. A permit may be needed to prune, remove or work in the root zone of a protected tree.",
       "sourceUrl": "https://www.victoria.ca/node/162",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Wind and salt along the Dallas Road shore",
+      "body": "Gardens in James Bay and south Fairfield face the Strait of Juan de Fuca and take winter wind and salt spray. Tough, wind-tolerant shrubs and grasses usually outlast soft-leaved plants there."
+    },
+    {
+      "title": "Shade and roots on mature lots",
+      "body": "Big street and backyard trees in Fairfield, Rockland and Oaklands shade lawns and compete for water. Lawns often thin out under them, and shade-tolerant beds or mulch can be a better use of the space."
+    },
+    {
+      "title": "Rock close to the surface",
+      "body": "Some lots, especially around Rockland and the city’s rocky knolls, have bedrock close to the surface. Shallow rock changes what can be dug, so it is worth probing before planning a patio or new beds."
+    },
+    {
+      "title": "Regional water on every lot",
+      "body": "Victoria properties are on the regional supply, so the CRD lawn days apply. Stratas water on the complex’s street address, not each unit’s."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "grounds-maintenance",
+      "why": "Small lots and strata courtyards need regular, tidy visits more than big projects, and compact beds show neglect quickly."
+    },
+    {
+      "service": "tree-vegetation",
+      "why": "With hedges and native trees protected at small sizes, most tree jobs here begin with a check of the City’s bylaw."
     }
   ],
   "servicesBlurb": {
@@ -57,5 +97,36 @@
     "tree-vegetation": "Pruning and removals with a check of Victoria's Tree Protection Bylaw first."
   },
   "featuredProject": "fernwood-strata-courtyard-planting",
+  "nearbyProjects": [
+    "fernwood-strata-courtyard-planting",
+    "rockland-spring-start-up-and-repair",
+    "esquimalt-church-garden-drip-conversion"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Hillside-Quadra",
+      "title": "Corner-lot hedge cut back from the sidewalk",
+      "body": "A corner hedge was trimmed back to clear the sidewalk sightline, after confirming no stem was large enough to bring it under the bylaw, and the bed behind it was replanted with low, drought-tolerant shrubs."
+    },
+    {
+      "sample": true,
+      "service": "irrigation",
+      "neighbourhood": "James Bay",
+      "title": "Courtyard drip split by sun and shade",
+      "body": "An apartment strata’s single drip zone was split in two so the shaded north beds stopped staying wet while the sunny south beds dried out."
+    }
+  ],
+  "neighbours": [
+    "oak-bay",
+    "saanich",
+    "esquimalt"
+  ],
+  "cta": {
+    "heading": "Get a free quote for your Victoria property",
+    "body": "Tell us the neighbourhood and what is growing there. If a large tree or hedge is involved, mention it so the bylaw check is part of the plan.",
+    "href": "/free-quote/?area=victoria"
+  },
   "image": "area-victoria"
 }

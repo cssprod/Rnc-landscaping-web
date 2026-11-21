@@ -1,29 +1,46 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "sooke-acreage-brush-and-broom-clearing",
+  "sample": true,
   "title": "Brush and broom clearing on a Sooke acreage",
   "service": "tree-vegetation",
   "area": "sooke",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Sooke brush and broom clearing | RNC",
-    "description": "Sample project: Scotch broom, blackberry and brush cleared on a Sooke acreage, keeping native trees, with invasive material disposed of properly. Free quote."
+    "title": "Sample project: Sooke broom and brush clearing",
+    "description": "Sample case study: Scotch broom and blackberry cleared from a Sooke acreage, keeping young firs and arbutus, with proper invasive disposal."
   },
   "summary": "Scotch broom and blackberry cleared from a rural lot while keeping native trees.",
+  "season": "Early summer",
+  "duration": "1 week",
+  "scopeTags": [
+    "Scotch broom removal",
+    "Blackberry clearing",
+    "Native tree retention",
+    "Invasive disposal"
+  ],
+  "plantPalette": [
+    "Young Douglas-fir and arbutus retained"
+  ],
   "scope": [
     "Broom and blackberry removal",
     "Brush clearing around outbuildings",
     "Retention of native trees",
     "Disposal of invasive material"
   ],
-  "duration": "1 week",
+  "challenge": "Scotch broom and blackberry had closed in the driveway and a field on a rural Sooke lot, around young native trees the owners wanted to keep.",
+  "approach": [
+    "We cut and pulled broom before it set seed and cleared the blackberry, working around the young firs and arbutus.",
+    "Invasive material was kept separate from other brush and disposed of following CRD guidance."
+  ],
+  "result": "An open driveway and field, with native trees kept.",
+  "links": "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Sooke](/areas/sooke/), or [get a free quote](/free-quote/).",
   "story": [
     "Broom and blackberry had closed in the driveway and a field.",
     "We cut and pulled broom before it set seed, cleared blackberry, kept the young firs and arbutus and disposed of the invasive material following CRD guidance.",
     "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Sooke](/areas/sooke/), or [get a free quote](/free-quote/)."
   ],
-  "result": "An open driveway and field, with native trees kept.",
   "testimonial": "homeowner-sooke",
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-1",

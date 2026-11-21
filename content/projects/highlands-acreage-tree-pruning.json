@@ -1,29 +1,43 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "highlands-acreage-tree-pruning",
+  "sample": true,
   "title": "Clearance pruning on a Highlands acreage",
   "service": "tree-vegetation",
   "area": "highlands",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Highlands tree pruning | RNC",
-    "description": "Sample project: clearance pruning near a Highlands home and driveway, with a check of the District's tree bylaw near the lake first. Request a free quote."
+    "title": "Sample project: Highlands clearance pruning",
+    "description": "Sample case study: clearance pruning over a Highlands roof and driveway near a lake, after a check of the District's tree bylaw."
   },
   "summary": "Clearance pruning over a driveway and roof on a forested lot near a lake.",
+  "season": "Winter",
+  "duration": "2 days",
+  "scopeTags": [
+    "Bylaw check",
+    "Clearance pruning",
+    "Deadwood removal",
+    "Chipping"
+  ],
   "scope": [
     "Bylaw check for work near the lake",
     "Clearance pruning over the roof and driveway",
     "Deadwood removal",
     "Brush chipping"
   ],
-  "duration": "2 days",
+  "challenge": "Branches on a forested Highlands lot hung over the roof and scraped vehicles on the driveway, and the lot sits near a lake.",
+  "approach": [
+    "Because the work was near a lake, we checked the District's Tree Management Bylaw first and confirmed which cuts would need a permit.",
+    "We pruned for roof and driveway clearance, removed deadwood and chipped the brush, leaving the canopy intact."
+  ],
+  "result": "Clear roof and driveway, with the bylaw question answered before work.",
+  "links": "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Highlands](/areas/highlands/), or [get a free quote](/free-quote/).",
   "story": [
     "Branches hung over the roof and scraped vehicles on the driveway.",
     "Because the lot is near a lake, we checked the District's tree rules first and confirmed which cuts needed a permit. We pruned for clearance and left the canopy intact.",
     "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Highlands](/areas/highlands/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Clear roof and driveway, with the bylaw question answered before work.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-2",

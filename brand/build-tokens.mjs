@@ -7,7 +7,7 @@
  *
  * tokens.json follows the W3C Design Tokens (DTCG) format. Extensions used:
  *   $extensions['ca.rnc.css']   CSS expression used instead of $value (fluid clamp(), composites). {a.b} refs become var(--a-b).
- *   $extensions['ca.rnc.dark']  value for the dark appearance (prefers-color-scheme: dark, or data-theme="dark").
+ *   $extensions['ca.rnc.dark']  value for the dark appearance (prefers-color-scheme: dark, unless data-theme="light").
  *   $extensions['ca.rnc.solid'] opaque value for prefers-reduced-transparency / prefers-contrast: more (materials).
  * The site build (site/build.mjs) imports generate() so the CSS it ships always matches tokens.json.
  */
@@ -67,6 +67,7 @@ const ALIASES = {
   '--step-5': 'var(--font-size-display)',
   '--leading-tight': 'var(--font-leading-title)',
   '--leading-body': 'var(--font-leading-body)',
+  '--measure': 'var(--layout-measure)',
   '--content-max': 'var(--layout-content-max)',
   '--gutter': 'var(--layout-gutter)',
   '--dur-fast': 'var(--motion-duration-fast)',
@@ -74,7 +75,7 @@ const ALIASES = {
   '--dur-slow': 'var(--motion-duration-slow)',
   '--ease': 'var(--motion-easing-standard)',
   '--ease-out': 'var(--motion-easing-out)',
-  '--ease-spring': 'var(--motion-easing-spring)',
+  '--ease-spring': 'var(--motion-easing-out)',
 };
 
 /** @param {any} json @returns {string} */
@@ -86,7 +87,7 @@ export function generate(json) {
   const fallbacks = json.$extensions?.['ca.rnc.fallbacks'] || [];
   const line = (/** @type {string} */ n, /** @type {string} */ v) => `  ${n}: ${v};`;
   const out = [];
-  out.push('/* RNC Landscaping design tokens: "Liquid Glass".');
+  out.push('/* RNC Landscaping design tokens (editorial system; Liquid Glass on chrome only).');
   out.push('   GENERATED from brand/tokens.json by brand/build-tokens.mjs. Edit the JSON, then run: node brand/build-tokens.mjs */');
   for (const f of faces) {
     out.push(`@font-face { font-family: "${f.family}"; src: url("${f.src}") format("woff2-variations"), url("${f.src}") format("woff2"); font-weight: ${f.weight}; font-style: ${f.style}; font-display: swap; }`);
@@ -101,7 +102,7 @@ export function generate(json) {
   out.push('}');
   const dark = list.filter((t) => t.dark != null).map((t) => line(t.name, /** @type {string} */ (t.dark)));
   out.push(`@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n  ${dark.join('\n  ')}\n  }\n}`);
-  out.push(`:root[data-theme="dark"] {\n  color-scheme: dark;\n${dark.join('\n')}\n}`);
+  // Forced appearance: data-theme="light" opts out of the dark media query. (A forced dark theme was dropped to keep CSS small.)
   out.push(':root[data-theme="light"] { color-scheme: light; }');
   const solids = list.filter((t) => t.name.startsWith('--material-')).map((t) => line(t.name, t.solid && /media/.test(t.name) ? t.solid : 'var(--color-bg-elevated)'));
   out.push(`/* Accessibility: glass turns solid when people ask for less transparency or more contrast. */\n@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {\n  :root {\n${solids.join('\n')}\n    --glass-blur: 0px;\n    --glass-blur-strong: 0px;\n  }\n}`);

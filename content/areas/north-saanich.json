@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "north-saanich",
   "name": "North Saanich",
   "seo": {
-    "title": "Landscaping in North Saanich, BC | RNC Landscaping",
-    "description": "Acreage and garden maintenance, landscape projects, irrigation and tree work in North Saanich, with tree permit checks before removal. Get a free quote."
+    "title": "North Saanich Landscaping & Acreage Care | RNC",
+    "description": "Acreage upkeep, waterfront gardens, irrigation and tree removals timed around North Saanich permit review and posting. Request a free quote today."
   },
   "h1": "Landscaping in North Saanich",
+  "cardSummary": "Acreages, hobby farms and a long exposed shoreline, where tree permits take weeks and must be posted before work.",
   "intro": [
-    "North Saanich has acreages, hobby farms and waterfront homes from Deep Cove to Lands End, along with townhouse stratas near Dean Park.",
-    "The Tree Protection Bylaw requires a permit to remove regulated trees, which can be smaller in environmental and steep-slope areas. Topping is prohibited. Permits are reviewed by staff and must be posted before work, so plan ahead. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/).",
-    "See [sample projects](/projects/) and our [seasonal guides](/resources/) for more."
+    "North Saanich is acreage country with a long shoreline: hobby farms and rural lots around Ardmore and McDonald Park, waterfront homes from Deep Cove to Lands End and Curteis Point, and townhouse stratas near Dean Park.",
+    "The Tree Protection Bylaw (No. 1548) needs a permit to remove a regulated tree, generally from 20 cm across and smaller for native species. Topping is prohibited. Staff review takes about two to three weeks and the permit must be posted 48 hours before work, so removals need planning. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/?area=north-saanich)."
   ],
   "neighbourhoods": [
     "Deep Cove",
@@ -26,21 +27,60 @@
     "hobby farms",
     "townhouse stratas"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "In North Saanich, timing is the main thing to plan for: allow for staff review and the 48-hour posting before any regulated removal. In environmental and steep-slope permit areas, trees are regulated from 10 cm.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "North Saanich Tree Protection Bylaw",
       "text": "North Saanich's Tree Protection Bylaw No. 1548 requires a permit to remove any regulated tree (generally 20 cm diameter or more, smaller for arbutus, Garry oak, Pacific dogwood, yew and shore pine, plus trees in environmental or steep-slope areas). Topping is prohibited; best-practice pruning needs no permit. Staff review takes about 2-3 weeks and the permit must be posted 48 hours before work.",
       "sourceUrl": "https://www.northsaanich.ca/node/51",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Wind and salt on the shoreline",
+      "body": "Waterfront lots at Lands End, Curteis Point and Deep Cove face open water and winter storms. Salt-tolerant hedging and wind-firm planting last longer there."
+    },
+    {
+      "title": "Deer and open acreage",
+      "body": "Deer are common across rural North Saanich. Vegetable gardens and new planting usually need fencing or deer-resistant choices."
+    },
+    {
+      "title": "Wells and the regional supply",
+      "body": "Some rural properties may be on private wells rather than the regional supply. The CRD lawn days apply only where you are connected, but well owners still benefit from low-flow drip."
+    },
+    {
+      "title": "Lower thresholds near slopes and streams",
+      "body": "In environmental and steep-slope development permit areas, trees from 10 cm are regulated, so clearing on those parts of a lot needs a check first."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "grounds-maintenance",
+      "why": "Large lawns, rough grass, hedges and fence lines on acreage need a steady seasonal routine."
+    },
+    {
+      "service": "tree-vegetation",
+      "why": "Removals have to be scheduled around permit review and posting, and careful reduction pruning stays clear of the topping ban."
     }
   ],
   "servicesBlurb": {
@@ -50,5 +90,35 @@
     "tree-vegetation": "Removals timed around permit review, and best-practice pruning."
   },
   "featuredProject": "deep-cove-acreage-upkeep",
+  "nearbyProjects": [
+    "deep-cove-acreage-upkeep",
+    "sidney-condo-hedge-reduction",
+    "keating-business-park-grounds-maintenance"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Ardmore",
+      "title": "Removal booked around the permit clock",
+      "body": "A regulated tree removal was scheduled three weeks out to allow for staff review, and the crew start was set after the 48-hour posting period."
+    },
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Dean Park",
+      "title": "Reduction cuts instead of topping",
+      "body": "Overgrown trees along a strata boundary were reduced with selective cuts over two seasons rather than topped, which the bylaw does not allow."
+    }
+  ],
+  "neighbours": [
+    "sidney",
+    "central-saanich"
+  ],
+  "cta": {
+    "heading": "Get a free quote in North Saanich",
+    "body": "If you need a tree removed, tell us early: permit review and posting add a few weeks. For acreage care, let us know the rough size of the lot.",
+    "href": "/free-quote/?area=north-saanich"
+  },
   "image": "area-north-saanich"
 }

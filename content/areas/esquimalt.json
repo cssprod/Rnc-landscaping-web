@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "esquimalt",
   "name": "Esquimalt",
   "seo": {
-    "title": "Landscaping & Yard Care in Esquimalt, BC | RNC",
-    "description": "Yard maintenance, landscape installs, irrigation and tree work for Esquimalt homes and stratas, with tree permit checks built in. Request a free quote."
+    "title": "Landscaping in Esquimalt, BC: Yards & Drip Irrigation | RNC",
+    "description": "Yard and strata care, spray-to-drip conversions, planting and tree permit checks for Esquimalt homes, churches and stratas. Get a free quote today."
   },
   "h1": "Landscaping and yard care in Esquimalt",
+  "cardSummary": "Small older lots, big boundary hedges, stratas and community grounds near the harbour, with a root-zone tree permit rule.",
   "intro": [
-    "Esquimalt has older family homes near Saxe Point and Gorge Vale, apartment and townhouse stratas, commercial frontages in the village, and institutional grounds.",
-    "The Township's Tree Protection Bylaw requires a permit to remove or prune a protected tree, or to work in its root zone, unless exempt. We check before we start. Read about [irrigation](/services/irrigation/) or [request a free quote](/free-quote/).",
-    "See [sample projects](/projects/) and our [seasonal guides](/resources/) for more."
+    "Esquimalt fits a lot into a small township: older family homes around Saxe Point, West Bay and Gorge Vale, apartment and townhouse stratas, village frontages, and churches and institutional grounds.",
+    "The Township’s Tree Protection Bylaw (No. 3076, 2022) needs a permit to remove or prune a protected tree, and also to work in its protected root zone, unless the work is exempt. That last part catches bed renewals and new paths as well as tree work. Read about [irrigation](/services/irrigation/) or [request a free quote](/free-quote/?area=esquimalt)."
   ],
   "neighbourhoods": [
     "Saxe Point",
@@ -26,21 +27,60 @@
     "commercial frontages",
     "institutional and defence-related grounds"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "Esquimalt’s permit covers digging in a protected tree’s root zone, not only cutting the tree, so garden and hardscape work near large trees is checked as carefully as pruning.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Esquimalt Tree Protection Bylaw",
       "text": "Esquimalt requires a tree permit to remove or prune a protected tree, or to work in its protected root zone, unless exempted. The Tree Protection Bylaw (2022, No. 3076) defines which trees are protected.",
       "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Harbour and Strait exposure",
+      "body": "Lots near Saxe Point, West Bay and the harbour face wind and some salt spray. Low, wind-firm planting tends to last longer on those edges."
+    },
+    {
+      "title": "Small lots and big hedges",
+      "body": "Many older Esquimalt lots are narrow, with tall boundary hedges and tight side access. Work is often done by hand or with small equipment, and debris has to come out through the house side yard."
+    },
+    {
+      "title": "Shallow soil in places",
+      "body": "Parts of Rockheights and the Saxe Point area have rock near the surface, which limits deep planting and lawn depth."
+    },
+    {
+      "title": "Regional water and stratas",
+      "body": "Properties are on the regional supply, so the CRD lawn days apply, and stratas use the complex’s street address."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "irrigation",
+      "why": "Older spray systems in small beds and community gardens often waste water, and drip conversions suit the drip-any-day rule."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Compact lots with mature hedges and small lawns need regular, hands-on visits more than large machinery."
     }
   ],
   "servicesBlurb": {
@@ -50,5 +90,36 @@
     "tree-vegetation": "Tree and hedge work with a check of Esquimalt's tree permit rules."
   },
   "featuredProject": "esquimalt-church-garden-drip-conversion",
+  "nearbyProjects": [
+    "esquimalt-church-garden-drip-conversion",
+    "view-royal-townhouse-irrigation-audit",
+    "fernwood-strata-courtyard-planting"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Gorge Vale",
+      "title": "Side-yard hedge reduced by hand",
+      "body": "A tall boundary hedge along a narrow side yard was reduced with hand tools and the clippings carried out through the yard, with nearby trees checked against the bylaw first."
+    },
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Rockheights",
+      "title": "Mulched slopes at a townhouse strata",
+      "body": "Thin-soiled banks at a townhouse strata were weeded and mulched on a monthly round instead of reseeded, since grass struggled over the rock."
+    }
+  ],
+  "neighbours": [
+    "victoria",
+    "view-royal",
+    "saanich"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Esquimalt",
+    "body": "Tell us about access to the yard and any big trees nearby. Narrow side yards and root-zone rules both affect how the work is planned.",
+    "href": "/free-quote/?area=esquimalt"
+  },
   "image": "area-esquimalt"
 }

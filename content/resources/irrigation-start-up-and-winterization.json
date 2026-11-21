@@ -1,11 +1,18 @@
 {
+  "_notes": "Seasonal guide (A13 #20). 'date' is the real publish date; 'updated' is added only when the article is actually revised (never invented). 'author' {name, org, href} renders as the byline \"[OWNER NAME], RNC Landscaping\" linking to /about/ (also Article schema author); 'byline' is the ready-made string. Display dates in one format, e.g. \"19 November 2026\".",
   "slug": "irrigation-start-up-and-winterization",
   "title": "Irrigation start-up and winterization guide",
   "seo": {
-    "title": "Irrigation Start-Up & Winterizing in Victoria, BC",
-    "description": "When and how to start up and winterize an irrigation system on southern Vancouver Island, with a zone checklist and CRD watering days to set. Get a free quote."
+    "title": "Irrigation start-up and winterizing in Victoria, BC",
+    "description": "When and how to start up and winterize an irrigation system on southern Vancouver Island, with a zone checklist and the CRD lawn days to set."
   },
   "date": "2026-11-19",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "href": "/about/"
+  },
+  "byline": "[OWNER NAME], RNC Landscaping",
   "summary": "A spring start-up checklist and a fall shutdown guide for home and strata irrigation systems.",
   "image": "res-6",
   "body": [

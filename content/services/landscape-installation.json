@@ -1,15 +1,16 @@
 {
+  "_notes": "Service page (blueprint C2). Existing keys unchanged in shape. New keys: 'summary' (one line for tiles and the services hub); 'includesHeading' (section heading, \"What's included\"); 'goodFitIf' {heading, items[string]} for the \"Good fit if\" list; 'seasonal' items are the seasonal timeline, in order Spring, Summer, Fall, Winter; 'process' steps now carry an optional 'deliverable' string (what you get at that step); 'localRules' {heading, intro, lastReviewed (ISO date the sources were checked), items[{text, sourceUrl, verify:true}], areasLink (Markdown)} - only sourced facts from research/areas.json, render the source link and the review date; 'relatedProjects' [project slugs, in display order]; 'relatedGuides' [resource slugs]. 'faqs' has 5-6 entries. No prices.",
   "slug": "landscape-installation",
   "name": "Landscape Installation & Construction",
   "navLabel": "Landscape installation",
+  "summary": "Planting, sod, patios, paths and low walls, built to a written plan and plant list.",
   "seo": {
-    "title": "Landscape Installation & Design-Build in Victoria | RNC",
-    "description": "Design-build landscaping in Greater Victoria: planting, sod, patios, paths and retaining walls, planned around your site and bylaws. Request a free quote."
+    "title": "Landscape installation in Greater Victoria | RNC Landscaping",
+    "description": "Planting, sod, patios, paths and retaining walls in Greater Victoria, planned around your soil, slope and the tree bylaw for your lot. Ask for a free quote."
   },
   "hero": {
     "h1": "Landscape installation and construction in Greater Victoria",
-    "lede": "Planting, sod, patios, paths and retaining walls, planned around your soil, slope, sun and the bylaws that apply to your lot.",
-    "image": "svc-landscape-installation-hero"
+    "lede": "Planting, sod, patios, paths and low retaining walls, planned around clay or rocky soil, slope, deer and the tree bylaw that applies to your lot."
   },
   "audiences": [
     {
@@ -25,6 +26,7 @@
       "body": "Soft and hard landscape packages built to your drawings and schedule, with coordination through your site supervisor. See [commercial work](/commercial/)."
     }
   ],
+  "includesHeading": "What's included",
   "includes": [
     {
       "title": "Design and layout",
@@ -51,33 +53,21 @@
       "body": "Drip or spray zones added during the build through our [irrigation service](/services/irrigation/)."
     }
   ],
-  "process": [
-    {
-      "title": "Request a quote",
-      "body": "Tell us what you have in mind on the [quote form](/free-quote/). Photos help."
-    },
-    {
-      "title": "Site visit",
-      "body": "We measure, check soil, slope and access, and look for protected trees or root zones near the work."
-    },
-    {
-      "title": "Plan and written scope",
-      "body": "You get a layout, plant list and written scope, with any permits that may apply named up front."
-    },
-    {
-      "title": "Build",
-      "body": "We prepare the ground, install hardscape, then plant and mulch. You get updates as each phase finishes."
-    },
-    {
-      "title": "Walkthrough and care notes",
-      "body": "We walk the finished work with you and leave watering and care notes for the first season."
-    }
-  ],
+  "goodFitIf": {
+    "heading": "Good fit if…",
+    "items": [
+      "You want to replace lawn with planting that copes with dry summers and deer",
+      "Your yard holds water in winter or slopes toward the house",
+      "You have a designer's plan or contractor's drawings that need building",
+      "Your strata wants written options council can choose between",
+      "There is a protected tree near the work and you want the rules checked first"
+    ]
+  },
   "seasonal": [
     {
       "season": "Spring",
       "items": [
-        "Planting before summer dry",
+        "Planting before the summer dry spell",
         "Sod installation",
         "Patio and path builds"
       ]
@@ -93,7 +83,7 @@
     {
       "season": "Fall",
       "items": [
-        "Planting trees and shrubs while soil is warm and rain returns",
+        "Planting trees and shrubs while the soil is warm and rain returns",
         "Bed renewals",
         "Drainage work before winter"
       ]
@@ -107,22 +97,95 @@
       ]
     }
   ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Tell us what you have in mind on the [quote form](/free-quote/). Photos help.",
+      "deliverable": "Your request, sent from your own email app"
+    },
+    {
+      "title": "Site visit",
+      "body": "We measure, check soil, slope and access, and look for protected trees or root zones near the work.",
+      "deliverable": "Notes on the site and any rules that may apply"
+    },
+    {
+      "title": "Plan and written scope",
+      "body": "You get a layout, plant list and written scope, with any permits that may apply named up front.",
+      "deliverable": "A layout, plant list and written scope"
+    },
+    {
+      "title": "Build",
+      "body": "We prepare the ground, install hardscape, then plant and mulch. You get an update as each phase finishes.",
+      "deliverable": "Phase updates"
+    },
+    {
+      "title": "Walkthrough and care notes",
+      "body": "We walk the finished work with you and leave watering and care notes for the first season.",
+      "deliverable": "Written care notes for the first season"
+    }
+  ],
+  "localRules": {
+    "heading": "Local rules that affect a build",
+    "intro": "Most installation work needs no permit, but these rules come up often. We check them for your address before work starts.",
+    "lastReviewed": "2026-11-19",
+    "items": [
+      {
+        "text": "Victoria's Tree Protection Bylaw: a permit may be needed to prune, remove or work in the root zone of a protected tree.",
+        "sourceUrl": "https://www.victoria.ca/node/162",
+        "verify": true
+      },
+      {
+        "text": "Esquimalt requires a tree permit to remove or prune a protected tree, or to work in its protected root zone, unless exempted.",
+        "sourceUrl": "https://www.esquimalt.ca/esquimalt-tree-cutting-permit",
+        "verify": true
+      },
+      {
+        "text": "CRD watering rules: new sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "In Metchosin, where a stream or wetland is on or next to the property, the BC Riparian Areas Regulation may also apply.",
+        "sourceUrl": "https://www.metchosin.ca/node/485",
+        "verify": true
+      }
+    ],
+    "areasLink": "Every municipality has its own tree bylaw. Find yours on our [service area pages](/areas/)."
+  },
+  "relatedProjects": [
+    "oak-bay-front-garden-renewal",
+    "royal-bay-backyard-patio",
+    "fernwood-strata-courtyard-planting",
+    "langford-townhouse-landscape-package"
+  ],
+  "relatedGuides": [
+    "native-and-drought-tolerant-planting",
+    "crd-watering-rules-guide"
+  ],
   "faqs": [
     {
       "q": "Do I need a permit for my landscape project?",
       "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Read our [tree permit notes](/resources/winter-pruning-and-storm-prep/)."
     },
     {
-      "q": "When is the best time to plant?",
-      "a": "Fall is often a good time on southern Vancouver Island because rain returns and roots grow through the mild winter. Spring works too, with careful watering through summer."
+      "q": "When is a good time to plant?",
+      "a": "Fall often suits southern Vancouver Island because the rain returns and roots grow through the mild winter. Spring works too, with careful watering through the first summer."
     },
     {
       "q": "Can you work from my designer's plan?",
       "a": "Yes. We can build from your plan or a general contractor's drawings."
     },
     {
-      "q": "How do you price a project?",
-      "a": "We price each project from a site visit and a written scope. There is no charge for the quote."
+      "q": "How do quotes work for a project?",
+      "a": "We quote each project from a site visit and a written scope. There is no charge for the quote, and the scope lists what is and is not included."
+    },
+    {
+      "q": "Can new sod be watered outside the lawn days?",
+      "a": "The CRD says new sod or seed does not need a permit and has a temporary watering schedule. Check the current details on the [CRD watering page](https://www.crd.ca/environment/water-conservation/watering-schedule) or our [watering guide](/resources/crd-watering-rules-guide/)."
+    },
+    {
+      "q": "What plants cope with deer and dry summers?",
+      "a": "Many natives and Mediterranean shrubs do, such as Oregon grape, sword fern, salal, lavender and rosemary. Your plant list is chosen for the site. See our [native planting guide](/resources/native-and-drought-tolerant-planting/)."
     }
   ],
   "detailImages": [

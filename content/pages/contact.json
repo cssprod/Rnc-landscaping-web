@@ -1,11 +1,11 @@
 {
-  "_notes": "Contact details are tokens until confirmed.",
+  "_notes": "Contact details are tokens until confirmed. Section 'details' is rendered by the contact cards component. 'replyTime' holds the reply promise.",
   "seo": {
     "title": "Contact RNC Landscaping | Greater Victoria, BC",
-    "description": "Call, email or send a quote request to RNC Landscaping for grounds care, landscape installation, irrigation or tree work anywhere in Greater Victoria, BC."
+    "description": "Call, text or email RNC Landscaping, or send a free quote request, for grounds care, installation, irrigation or tree work anywhere in Greater Victoria."
   },
   "h1": "Contact RNC Landscaping",
-  "lede": "The quickest way to start is the free quote form. You can also call or email.",
+  "lede": "The quickest way to start is the free quote form. You can also call, text or email. We reply within [REPLY TIME].",
   "sections": [
     {
       "id": "details",
@@ -34,7 +34,7 @@
       "id": "quote",
       "heading": "Request a quote",
       "body": [
-        "[Get a free quote](/free-quote/) in four short steps. We'll get back to you."
+        "[Get a free quote](/free-quote/) with one short form that opens in your own email app. See [what happens next](/process/)."
       ]
     },
     {
@@ -51,5 +51,6 @@
         "Many questions are answered in our [FAQ](/faq/). Commercial buyers can see [documents and capability](/commercial/)."
       ]
     }
-  ]
+  ],
+  "replyTime": "We reply within [REPLY TIME]."
 }

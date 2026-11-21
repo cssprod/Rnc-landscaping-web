@@ -1,0 +1,150 @@
+{
+  "_notes": "Process page (blueprint C1/C5, A12 #2). 'processName' names the RNC process; 'steps' is the short shared four-step summary (also used by the home teaser). Sections render in order with the generic sections() renderer. Section extras: 'track' ('maintenance' | 'installation') marks the two track sections, whose items carry 'deliverable' (what you get at that step); the 'next' section is \"What happens next\" (items are ordered steps); 'replyTime' holds the reply promise built on [REPLY TIME]. The guarantee wording around [WARRANTY] must be confirmed by RNC before launch.",
+  "seo": {
+    "title": "How we work: the site-first process | RNC Landscaping",
+    "description": "How RNC plans and delivers grounds maintenance and landscape installation in Greater Victoria: site walk, written scope, scheduled work and review."
+  },
+  "h1": "How we work",
+  "lede": "We call it the site-first process: we look at your property and the local rules before we write a quote, and the written scope is what the crew works to.",
+  "processName": "The site-first process",
+  "replyTime": "We reply to every quote request within [REPLY TIME].",
+  "steps": [
+    {
+      "title": "Request",
+      "body": "Send a short request from the [free quote page](/free-quote/). Photos help."
+    },
+    {
+      "title": "Site visit",
+      "body": "We walk the property, check access and the rules that apply, and answer questions."
+    },
+    {
+      "title": "Written quote",
+      "body": "You get a written scope: what we will do, how often, and when. No prices are published; every quote is site-specific."
+    },
+    {
+      "title": "Scheduled work",
+      "body": "The crew works to the scope, and one contact handles questions and changes."
+    }
+  ],
+  "sections": [
+    {
+      "id": "overview",
+      "heading": "One process, two tracks",
+      "body": [
+        "Recurring care and one-time builds need different paperwork, so the process splits after the site visit. Both tracks start the same way and end with a written record of what was done."
+      ]
+    },
+    {
+      "id": "maintenance",
+      "track": "maintenance",
+      "heading": "Maintenance track",
+      "body": [
+        "For [grounds maintenance](/services/grounds-maintenance/), irrigation service and recurring tree and hedge work."
+      ],
+      "items": [
+        {
+          "title": "1. Site walk",
+          "body": "We walk lawns, beds, hedges and access with you or your site contact.",
+          "deliverable": "Notes on the property and any rules that apply"
+        },
+        {
+          "title": "2. Written scope and calendar",
+          "body": "Tasks for each visit, the visit frequency and the season it covers, written so a strata council can approve it.",
+          "deliverable": "A written scope and visit calendar"
+        },
+        {
+          "title": "3. Scheduled visits",
+          "body": "The crew works to the scope on the agreed days, around residents, tenants or occupants.",
+          "deliverable": "A short note after each visit"
+        },
+        {
+          "title": "4. Issues in writing",
+          "body": "Anything outside the scope, such as a broken sprinkler head or a leaning tree, is reported before we act.",
+          "deliverable": "Issue reports with photos"
+        },
+        {
+          "title": "5. Seasonal review",
+          "body": "Before each season we review what is working and adjust the plan with you.",
+          "deliverable": "An updated plan for the next season"
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "track": "installation",
+      "heading": "Installation track",
+      "body": [
+        "For [landscape installation](/services/landscape-installation/), new [irrigation](/services/irrigation/) systems and one-time [tree and vegetation](/services/tree-vegetation/) work."
+      ],
+      "items": [
+        {
+          "title": "1. Site visit and rules check",
+          "body": "We measure, check soil, slope, drainage and access, and look for protected trees, root zones and watercourses near the work.",
+          "deliverable": "A note of any permits that may apply"
+        },
+        {
+          "title": "2. Plan and written scope",
+          "body": "A layout, plant list and written scope, with what is and is not included.",
+          "deliverable": "A layout, plant list and written scope"
+        },
+        {
+          "title": "3. Build in phases",
+          "body": "Ground preparation, hardscape, then planting and irrigation. You hear from us as each phase finishes.",
+          "deliverable": "Phase updates"
+        },
+        {
+          "title": "4. Walkthrough",
+          "body": "We walk the finished work with you and list anything that needs finishing.",
+          "deliverable": "A closed-out deficiency list"
+        },
+        {
+          "title": "5. Care notes",
+          "body": "Watering and care notes for the first season, set to the CRD watering rules for your address.",
+          "deliverable": "Written care notes"
+        }
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "What happens next",
+      "body": [
+        "We reply to every quote request within [REPLY TIME]."
+      ],
+      "items": [
+        {
+          "title": "We read your request",
+          "body": "Your request arrives as an email from your own email app. If something is unclear, we ask."
+        },
+        {
+          "title": "We arrange a site visit",
+          "body": "We agree a time to see the property, or work from your photos for small jobs."
+        },
+        {
+          "title": "You get a written quote",
+          "body": "The quote is free and lists the work, frequency and timing. You decide with no obligation."
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "heading": "Local rules, checked first",
+      "body": [
+        "Tree bylaws differ across the 13 municipalities, and the CRD sets the lawn watering days. We check what applies to your address before we quote, and link you to the official source. See your [service area page](/areas/) or the [CRD watering schedule](https://www.crd.ca/environment/water-conservation/watering-schedule)."
+      ]
+    },
+    {
+      "id": "guarantee",
+      "heading": "Workmanship guarantee",
+      "body": [
+        "Our workmanship guarantee covers [WARRANTY]. If something we installed or built does not hold up within that time because of how we did the work, tell us. We will come and look, explain in writing what we found, and put right anything that is our responsibility."
+      ]
+    },
+    {
+      "id": "start",
+      "heading": "Start with a request",
+      "body": [
+        "[Get a free quote](/free-quote/), read the [FAQ](/faq/) or see [sample projects](/projects/)."
+      ]
+    }
+  ]
+}

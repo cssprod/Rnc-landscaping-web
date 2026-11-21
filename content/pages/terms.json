@@ -1,13 +1,13 @@
 {
   "_notes": "Lawyer to confirm limitation-of-liability wording. Draft for legal review.",
   "seo": {
-    "title": "Terms of Use (Draft) | RNC Landscaping",
-    "description": "Terms for using the RNC Landscaping website, including quote requests, sample content, links to official sources and limits on liability. Draft for review."
+    "title": "Terms of use (draft) | RNC Landscaping",
+    "description": "Terms for using the RNC Landscaping website: quote requests, no published prices, sample content, links to official sources and liability. Draft for review."
   },
   "h1": "Terms of use",
   "lede": "Draft for legal review. This page has not yet been reviewed by a lawyer and must not be relied on as final.",
   "status": "draft-for-legal-review",
-  "updated": "2026-11-19",
+  "updated": "2026-11-21",
   "sections": [
     {
       "id": "use",
@@ -20,7 +20,7 @@
       "id": "quotes",
       "heading": "Quote requests",
       "body": [
-        "Sending a quote request does not create a contract. Any work is governed by a separate written quote or agreement that you accept."
+        "Sending a quote request does not create a contract. We do not publish prices; every quote is written for the site. Any work, and any workmanship guarantee, is governed by a separate written quote or agreement that you accept."
       ]
     },
     {

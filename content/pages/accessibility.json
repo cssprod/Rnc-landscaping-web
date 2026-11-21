@@ -1,17 +1,18 @@
 {
-  "_notes": "Accessibility statement.",
+  "_notes": "Accessibility statement (P2 #12). Target WCAG 2.2 AA, followed voluntarily; 'updated' is the date this statement was last revised.",
   "seo": {
-    "title": "Accessibility Statement | RNC Landscaping",
-    "description": "RNC Landscaping aims to meet WCAG 2.2 Level AA on this website. Learn what we have done, known limits, and how to report an accessibility problem to us."
+    "title": "Accessibility statement | RNC Landscaping",
+    "description": "RNC Landscaping follows WCAG 2.2 Level AA on this website voluntarily. What we have done, known limits, and how to report a problem or ask for another format."
   },
   "h1": "Accessibility statement",
-  "lede": "We want everyone to be able to use this website, including people who use assistive technology.",
+  "lede": "We want everyone to be able to use this website, including people who use a screen reader, keyboard, magnification or voice control.",
   "sections": [
     {
       "id": "target",
-      "heading": "Our target",
+      "heading": "Our standard",
       "body": [
-        "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA."
+        "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA across this website.",
+        "The [Accessible British Columbia Act](https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/21019) sets accessibility duties for prescribed organizations. A small private business like ours is not prescribed under it, so we follow WCAG 2.2 AA voluntarily."
       ]
     },
     {
@@ -21,23 +22,27 @@
       "items": [
         {
           "title": "Contrast",
-          "body": "Text and controls meet AA contrast ratios."
+          "body": "Text, controls and focus outlines meet AA contrast in light and dark appearance."
         },
         {
           "title": "Keyboard",
-          "body": "All links, menus and form steps work with a keyboard, with a visible focus outline."
+          "body": "Menus, the quote form and the before-and-after comparison work with a keyboard, with a visible focus outline that is not hidden by the sticky header or action bar."
         },
         {
           "title": "Forms",
-          "body": "Every field has a label, help text and clear error messages linked to the field."
+          "body": "Every field has a label, help text and error messages linked to the field. Entered values are never cleared."
         },
         {
           "title": "Images",
-          "body": "Meaningful images have text alternatives."
+          "body": "Meaningful images have hand-written text alternatives; decorative images are hidden from screen readers."
         },
         {
           "title": "Motion",
-          "body": "Animation is minimal and turned off when you choose reduced motion."
+          "body": "Animation is short and turned off when you choose reduced motion. There are no carousels, autoplay or loading screens."
+        },
+        {
+          "title": "Zoom and reflow",
+          "body": "Pages reflow at 320 px wide and work at 200% zoom without sideways scrolling."
         }
       ]
     },
@@ -45,14 +50,14 @@
       "id": "limits",
       "heading": "Known limits",
       "body": [
-        "Some linked government pages and PDF documents are outside our control and may not meet the same standard."
+        "Some linked government pages and PDF documents are outside our control and may not meet the same standard. Photos labelled Sample image are placeholders until RNC supplies its own."
       ]
     },
     {
       "id": "report",
-      "heading": "Report a problem",
+      "heading": "Report a problem or ask for another format",
       "body": [
-        "If something doesn't work for you, contact us at [EMAIL] or [PHONE]. Tell us the page and what happened, and we'll work on a fix or give you the information another way."
+        "If something doesn't work for you, contact us at [EMAIL] or [PHONE]. Tell us the page and what happened. We reply within [REPLY TIME] and will fix the problem or give you the information another way."
       ]
     },
     {
@@ -62,5 +67,6 @@
         "[Contact](/contact/), [privacy policy](/privacy/), [get a free quote](/free-quote/)."
       ]
     }
-  ]
+  ],
+  "updated": "2026-11-21"
 }

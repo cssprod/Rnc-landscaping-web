@@ -1,15 +1,16 @@
 {
+  "_notes": "Service page (blueprint C2). Existing keys unchanged in shape. New keys: 'summary' (one line for tiles and the services hub); 'includesHeading' (section heading, \"What's included\"); 'goodFitIf' {heading, items[string]} for the \"Good fit if\" list; 'seasonal' items are the seasonal timeline, in order Spring, Summer, Fall, Winter; 'process' steps now carry an optional 'deliverable' string (what you get at that step); 'localRules' {heading, intro, lastReviewed (ISO date the sources were checked), items[{text, sourceUrl, verify:true}], areasLink (Markdown)} - only sourced facts from research/areas.json, render the source link and the review date; 'relatedProjects' [project slugs, in display order]; 'relatedGuides' [resource slugs]. 'faqs' has 5-6 entries. No prices.",
   "slug": "grounds-maintenance",
   "name": "Grounds Maintenance",
   "navLabel": "Grounds maintenance",
+  "summary": "Mowing, bed care, pruning and seasonal cleanups on a schedule you agree in writing.",
   "seo": {
-    "title": "Grounds & Landscape Maintenance in Victoria, BC | RNC",
-    "description": "Scheduled mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites in Greater Victoria. Ask RNC Landscaping for a free quote."
+    "title": "Grounds maintenance in Greater Victoria | RNC Landscaping",
+    "description": "Scheduled mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites in Greater Victoria, with a written visit scope. Free quote."
   },
   "hero": {
-    "h1": "Grounds and landscape maintenance in Greater Victoria",
-    "lede": "Mowing, bed care, pruning and seasonal cleanups on a set schedule, with a written scope so you know what each visit covers.",
-    "image": "svc-grounds-maintenance-hero"
+    "h1": "Grounds maintenance in Greater Victoria",
+    "lede": "Mowing, bed care, pruning and seasonal cleanups on a set schedule, planned for wet winters, dry summers and the CRD watering rules. A written scope says what each visit covers."
   },
   "audiences": [
     {
@@ -25,6 +26,7 @@
       "body": "Work to your specification, scheduled around tenants, students or patients, with insurance and safety documents on request."
     }
   ],
+  "includesHeading": "What's included",
   "includes": [
     {
       "title": "Lawn care",
@@ -51,28 +53,16 @@
       "body": "On recurring work we note anything we see that needs attention, such as a broken sprinkler head or a leaning tree, and tell you before we act."
     }
   ],
-  "process": [
-    {
-      "title": "Tell us about the property",
-      "body": "Use the [free quote form](/free-quote/) to share the address, property type and what you need."
-    },
-    {
-      "title": "Site walk",
-      "body": "We walk the property with you or your site contact and note lawn areas, beds, hedges and access."
-    },
-    {
-      "title": "Written scope and schedule",
-      "body": "You get a written quote that lists tasks per visit, visit frequency and the season it covers."
-    },
-    {
-      "title": "Regular visits",
-      "body": "The crew works to the scope. Questions or changes go through one contact."
-    },
-    {
-      "title": "Seasonal check-in",
-      "body": "Before each season we review what is working and adjust the plan with you."
-    }
-  ],
+  "goodFitIf": {
+    "heading": "Good fit if…",
+    "items": [
+      "You want the yard kept to one standard without managing it yourself",
+      "Your strata council needs a written scope and visit calendar it can approve",
+      "You manage several sites and want visit notes and issue reports in writing",
+      "You are away for part of the year and want someone checking the property",
+      "Your current contractor's visits are hard to plan around tenants or residents"
+    ]
+  },
   "seasonal": [
     {
       "season": "Spring",
@@ -86,10 +76,10 @@
     {
       "season": "Summer",
       "items": [
-        "Regular mowing at a taller height in dry spells",
+        "Mowing at a taller height in dry spells",
         "Weeding and deadheading",
         "Hedge trimming",
-        "Checking that irrigation suits CRD watering days"
+        "Checking irrigation suits CRD lawn days"
       ]
     },
     {
@@ -98,7 +88,7 @@
         "Leaf removal",
         "Perennial cut-back",
         "Aeration and overseeding",
-        "Gutters and drains cleared of leaves where included"
+        "Drains cleared of leaves where included"
       ]
     },
     {
@@ -111,10 +101,65 @@
       ]
     }
   ],
+  "process": [
+    {
+      "title": "Tell us about the property",
+      "body": "Use the [free quote form](/free-quote/) to share the municipality, property type and what you need.",
+      "deliverable": "Your request, sent from your own email app"
+    },
+    {
+      "title": "Site walk",
+      "body": "We walk the property with you or your site contact and note lawn areas, beds, hedges and access.",
+      "deliverable": "A list of questions answered on the spot"
+    },
+    {
+      "title": "Written scope and schedule",
+      "body": "You get a written quote that lists the tasks per visit, the visit frequency and the season it covers.",
+      "deliverable": "A written scope and visit calendar"
+    },
+    {
+      "title": "Regular visits",
+      "body": "The crew works to the scope. Questions and changes go through one contact.",
+      "deliverable": "Visit notes on recurring work"
+    },
+    {
+      "title": "Seasonal check-in",
+      "body": "Before each season we review what is working and adjust the plan with you.",
+      "deliverable": "An updated plan for the next season"
+    }
+  ],
+  "localRules": {
+    "heading": "Local rules that affect maintenance",
+    "intro": "Two regional rules shape routine grounds care across Greater Victoria. Municipal tree bylaws also apply to hedges and larger pruning; see your [area page](/areas/).",
+    "lastReviewed": "2026-11-19",
+    "items": [
+      {
+        "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply. Lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm. Hand watering and drip irrigation of trees, shrubs and gardens is allowed any day.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "The CRD Regional Invasive Species Program asks for invasive plants to be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "areasLink": "See the rules for your municipality on our [service area pages](/areas/)."
+  },
+  "relatedProjects": [
+    "sidney-strata-seasonal-grounds-care",
+    "gordon-head-weekly-garden-care",
+    "keating-business-park-grounds-maintenance",
+    "deep-cove-acreage-upkeep"
+  ],
+  "relatedGuides": [
+    "spring-lawn-and-garden-checklist",
+    "fall-cleanup-and-leaf-guide"
+  ],
   "faqs": [
     {
       "q": "How often will you visit?",
-      "a": "It depends on the property and season. Many lawns need weekly or every-other-week visits in spring and early summer and less in winter. Your quote states the visit frequency."
+      "a": "It depends on the property and the season. Many lawns need weekly or every-other-week visits in spring and early summer and fewer in winter. Your quote states the visit frequency."
     },
     {
       "q": "Do you work year-round?",
@@ -122,11 +167,19 @@
     },
     {
       "q": "Can you quote to our existing strata specification?",
-      "a": "Yes. Send the specification with your quote request and we will price to it and note any questions."
+      "a": "Yes. Send the specification with your quote request and we will quote to it and list any questions."
     },
     {
       "q": "What happens to the green waste?",
       "a": "We remove it. Invasive plants are kept separate and disposed of following CRD guidance."
+    },
+    {
+      "q": "Will you tell us about problems you notice?",
+      "a": "Yes. On recurring work we note things like a broken sprinkler head or a leaning tree and tell you before we act, so nothing outside the scope happens without your say."
+    },
+    {
+      "q": "Do I need to be home for visits?",
+      "a": "No, as long as the crew can reach the work area safely. Tell us about gates, pets and parking when you request a quote."
     }
   ],
   "detailImages": [

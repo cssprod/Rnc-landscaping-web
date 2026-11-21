@@ -1,29 +1,46 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "sidney-condo-hedge-reduction",
+  "sample": true,
   "title": "Hedge reduction for a Sidney condo",
   "service": "tree-vegetation",
   "area": "sidney",
   "clientType": "Strata",
   "seo": {
-    "title": "Sample project: Sidney condo hedge reduction | RNC",
-    "description": "Sample project: an overgrown laurel and cedar hedge at a Sidney condo reduced in stages, within Town tree rules and with neighbours told first. Free quote."
+    "title": "Sample project: Sidney condo hedge reduction",
+    "description": "Sample case study: an overgrown Sidney condo hedge reduced in two stages a year apart, after a check of the Town's tree rules."
   },
   "summary": "An overgrown boundary hedge reduced in stages over two seasons.",
+  "season": "Fall, over two years",
+  "duration": "2 visits, a year apart",
+  "scopeTags": [
+    "Town tree rules check",
+    "Staged hedge reduction",
+    "Neighbour notice",
+    "Chipping and removal"
+  ],
+  "plantPalette": [
+    "Laurel and western redcedar hedge, kept as a screen"
+  ],
   "scope": [
     "Check of Town tree rules",
     "First-stage height and width reduction",
     "Second-stage reduction the following year",
     "Chipping and removal"
   ],
-  "duration": "2 visits, a year apart",
+  "challenge": "A boundary hedge at a Sidney condo had grown over the sidewalk and shaded the ground-floor units.",
+  "approach": [
+    "We checked the Town's Tree Preservation Bylaw first, because western redcedar is among the species it lists.",
+    "The hedge was reduced in two stages a year apart so it would green up again instead of leaving bare stems. Neighbours got notice before each visit."
+  ],
+  "result": "Sidewalk cleared and the hedge kept as a screen.",
+  "links": "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Sidney](/areas/sidney/), or [get a free quote](/free-quote/).",
   "story": [
     "The hedge had grown over the sidewalk and shaded ground-floor units.",
     "We checked the Town's rules, then reduced the hedge in two stages so it would green up again rather than leave bare stems. Neighbours got notice before work.",
     "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Sidney](/areas/sidney/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Sidewalk cleared and the hedge kept as a screen.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-4",

@@ -1,14 +1,33 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "oak-bay-front-garden-renewal",
+  "sample": true,
   "title": "Front garden renewal in Oak Bay",
   "service": "landscape-installation",
   "area": "oak-bay",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Oak Bay front garden renewal | RNC",
-    "description": "Sample project: an Oak Bay character home's front garden rebuilt with deer-resistant planting, a stone path and drip irrigation. Request your free quote today."
+    "title": "Sample project: Oak Bay front garden renewal",
+    "description": "Sample case study: an Oak Bay front lawn replaced with deer-resistant planting, a flagstone path and drip lines, kept clear of a protected tree."
   },
   "summary": "A tired lawn and overgrown beds replaced with deer-resistant planting and a stone path.",
+  "season": "Spring",
+  "duration": "3 weeks",
+  "scopeTags": [
+    "Lawn removal",
+    "Planting",
+    "Flagstone path",
+    "Drip irrigation",
+    "Root-zone protection"
+  ],
+  "plantPalette": [
+    "Lavender",
+    "Rosemary",
+    "Sword fern",
+    "Oregon grape",
+    "Kinnikinnick",
+    "Mock orange"
+  ],
   "scope": [
     "Lawn removal and soil amendment",
     "Flagstone path to the front door",
@@ -16,15 +35,19 @@
     "Drip irrigation for new beds",
     "Mulch and care notes"
   ],
-  "duration": "3 weeks",
+  "challenge": "Deer had eaten most of the old planting, the lawn browned every summer, and a protected tree stood near the boulevard where the new path would run.",
+  "approach": [
+    "Before digging we confirmed the tree's status under Oak Bay's Tree Protection Bylaw and kept all excavation outside its root zone.",
+    "We lifted the lawn, amended the soil and set a flagstone path to the front door, then planted shrubs and perennials that deer tend to leave alone. Drip lines went in under the mulch, and the owners got written care notes for the first summer."
+  ],
+  "result": "A front garden suited to deer pressure and dry summers, with less lawn to water.",
+  "links": "Read more about [landscape installation](/services/landscape-installation/), see our work in [Oak Bay](/areas/oak-bay/), or [get a free quote](/free-quote/).",
   "story": [
     "Deer had eaten most of the old planting, and the lawn struggled in summer.",
     "We checked the protected tree near the boulevard before digging, kept work outside its root zone, and planted lavender, rosemary, sword fern, Oregon grape and other plants deer tend to leave alone. Drip lines went in under the mulch.",
     "Read more about [landscape installation](/services/landscape-installation/), see our work in [Oak Bay](/areas/oak-bay/), or [get a free quote](/free-quote/)."
   ],
-  "result": "A front garden suited to deer pressure and dry summers, with less lawn to water.",
   "testimonial": "homeowner-oak-bay",
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-1",

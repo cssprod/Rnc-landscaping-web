@@ -1,29 +1,44 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "deep-cove-acreage-upkeep",
+  "sample": true,
   "title": "Acreage upkeep for a Deep Cove property",
   "service": "grounds-maintenance",
   "area": "north-saanich",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Deep Cove acreage upkeep | RNC",
-    "description": "Sample project: monthly acreage upkeep in Deep Cove, North Saanich: field mowing, hedge trimming and blackberry control on one schedule. Get a free quote."
+    "title": "Sample project: Deep Cove acreage upkeep",
+    "description": "Sample case study: monthly upkeep of a two-acre Deep Cove lot in North Saanich, with field mowing, hedges and photo reports to the owners."
   },
   "summary": "Monthly upkeep of lawns, long grass, hedges and beds on a two-acre lot.",
+  "season": "Year-round",
+  "duration": "Ongoing, monthly visits",
+  "scopeTags": [
+    "Lawn mowing",
+    "Field-edge mowing",
+    "Hedge trimming",
+    "Blackberry control",
+    "Photo reports"
+  ],
   "scope": [
     "Lawn mowing near the house",
     "Rough mowing of field edges",
     "Laurel and cedar hedge trimming",
     "Blackberry control along the fence line"
   ],
-  "duration": "Ongoing, monthly visits",
+  "challenge": "The owners of a two-acre Deep Cove lot travel for part of the year and wanted the property kept to the same standard while they were away.",
+  "approach": [
+    "We set monthly visits, with extra mowing in spring growth, and a fixed list of tasks for each visit.",
+    "Blackberry was cut back from the fence line on every visit, hedges were trimmed twice a year, and the owners got photos after each visit."
+  ],
+  "result": "A property kept to a set standard while the owners were away.",
+  "links": "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [North Saanich](/areas/north-saanich/), or [get a free quote](/free-quote/).",
   "story": [
     "The owners travel for part of the year and wanted the property kept up while they were away.",
     "We set monthly visits with extra spring mowing, kept blackberry off the fence line and sent photos after each visit.",
     "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [North Saanich](/areas/north-saanich/), or [get a free quote](/free-quote/)."
   ],
-  "result": "A property kept to a set standard while the owners were away.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-grounds-maintenance-before",
     "after": "proj-grounds-maintenance-4",

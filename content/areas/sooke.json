@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "sooke",
   "name": "Sooke",
   "seo": {
-    "title": "Landscaping & Property Clearing in Sooke, BC | RNC",
-    "description": "Landscaping, yard care, irrigation, brush clearing and tree work for Sooke homes and rural acreages. Ask RNC Landscaping for a free quote and site visit."
+    "title": "Landscaping in Sooke, BC: Brush Clearing & Acreage | RNC",
+    "description": "Broom, blackberry and brush clearing, acreage mowing, planting and irrigation for Sooke rural, waterfront and subdivision lots. Request a free quote."
   },
   "h1": "Landscaping and property clearing in Sooke",
+  "cardSummary": "Rural acreage, Sooke Basin waterfront and new subdivisions, where broom, blackberry and wetter weather set the work.",
   "intro": [
-    "Sooke properties are often larger and more rural: acreages in Saseenos and Broomhill, waterfront homes near Whiffin Spit, and newer subdivisions near the town centre.",
-    "Broom, blackberry and brush can close in a rural lot quickly. We clear it while keeping native trees, and dispose of invasive material following CRD guidance. Confirm whether your property is on the regional water supply before relying on CRD watering rules. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/).",
-    "See [sample projects](/projects/) and our [seasonal guides](/resources/) for more."
+    "Sooke properties tend to be larger and more rural than in the urban core: acreages in Saseenos and Broomhill, waterfront homes near Whiffin Spit and the Sooke Basin, and newer subdivisions close to the town centre.",
+    "Broom, gorse and blackberry can close in a rural lot within a few seasons. Clearing goes further when native trees are kept and invasive material is disposed of following CRD guidance. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/?area=sooke)."
   ],
   "neighbourhoods": [
     "Sooke town centre",
@@ -25,16 +26,52 @@
     "waterfront homes",
     "commercial frontages"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "This page does not yet summarise a District of Sooke tree rule, because none has been checked against an official source. Ask the District before removing trees; the regional rules below apply where noted.",
   "localNotes": [
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
       "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (confirm your property's water supply): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
       "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Broom, gorse and blackberry",
+      "body": "Sunny rural edges, fence lines and cleared lots fill quickly with Scotch broom and blackberry, and gorse is on the CRD priority list. Cutting before broom sets seed slows the spread."
+    },
+    {
+      "title": "Wetter, windier weather",
+      "body": "Sooke usually sees more rain and wind than the Victoria core. Drainage, mulch and wind-firm planting matter more here, and lawns can stay soft well into spring."
+    },
+    {
+      "title": "Check your water supply",
+      "body": "The CRD lawn days apply only to properties on the regional supply. Rural lots may be on a private system, so confirm which you are on before planning irrigation."
+    },
+    {
+      "title": "Waterfront lots on the basin",
+      "body": "Homes near Whiffin Spit and the Sooke Basin face salt air and winter storms, which can burn tender planting."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "tree-vegetation",
+      "why": "Brush, broom and blackberry clearing is the usual first job on a rural Sooke lot."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Once a lot is cleared, rough mowing and regular visits keep regrowth from taking it back."
     }
   ],
   "servicesBlurb": {
@@ -44,5 +81,35 @@
     "tree-vegetation": "Brush, broom and blackberry clearing, plus tree pruning and removals."
   },
   "featuredProject": "sooke-acreage-brush-and-broom-clearing",
+  "nearbyProjects": [
+    "sooke-acreage-brush-and-broom-clearing",
+    "metchosin-trail-edge-invasive-removal",
+    "highlands-acreage-tree-pruning"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Saseenos",
+      "title": "Fence line held clear over a summer",
+      "body": "Blackberry was cut out along a fence line, then rough-mown twice through the summer to stop regrowth from the roots."
+    },
+    {
+      "sample": true,
+      "service": "landscape-installation",
+      "neighbourhood": "Whiffin Spit area",
+      "title": "Salt-tolerant replant after storms",
+      "body": "A waterfront bed scorched by winter storms was replanted with salt- and wind-tolerant shrubs and heavily mulched."
+    }
+  ],
+  "neighbours": [
+    "metchosin",
+    "langford"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Sooke",
+    "body": "Tell us roughly how big the lot is, what is growing on it, and whether you are on the regional water supply. Photos of the overgrown areas help.",
+    "href": "/free-quote/?area=sooke"
+  },
   "image": "area-sooke"
 }

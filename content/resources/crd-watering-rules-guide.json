@@ -1,11 +1,18 @@
 {
+  "_notes": "Seasonal guide (A13 #20). 'date' is the real publish date; 'updated' is added only when the article is actually revised (never invented). 'author' {name, org, href} renders as the byline \"[OWNER NAME], RNC Landscaping\" linking to /about/ (also Article schema author); 'byline' is the ready-made string. Display dates in one format, e.g. \"19 November 2026\".",
   "slug": "crd-watering-rules-guide",
   "title": "CRD watering rules: lawn days, times and new sod",
   "seo": {
-    "title": "CRD Watering Rules Explained: Lawn Days & Times",
-    "description": "A plain guide to CRD Stage 1 lawn watering days and times, new sod rules and how to set irrigation timers to match, with a link to the CRD source. Free quote."
+    "title": "CRD watering rules: lawn days, times and new sod",
+    "description": "CRD Stage 1 lawn watering days and times for Greater Victoria, the new sod schedule, and how to set an irrigation timer to match, with the CRD source."
   },
   "date": "2026-11-19",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "href": "/about/"
+  },
+  "byline": "[OWNER NAME], RNC Landscaping",
   "summary": "A plain-language summary of the Capital Regional District's summer watering schedule for lawns, gardens and new sod.",
   "image": "res-2",
   "body": [

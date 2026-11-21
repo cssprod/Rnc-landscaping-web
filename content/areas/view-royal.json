@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "view-royal",
   "name": "View Royal",
   "seo": {
-    "title": "Landscaping in View Royal, BC | RNC Landscaping",
-    "description": "Grounds maintenance, landscape projects, irrigation and tree care for View Royal homes and stratas, with tree bylaw checks before work. Get a free quote."
+    "title": "Landscaping in View Royal, BC: Stratas & Irrigation | RNC",
+    "description": "Strata grounds care, irrigation checks and repairs, planting and tree work for View Royal homes on Portage Inlet and near Thetis Lake. Get a free quote."
   },
   "h1": "Landscaping in View Royal, BC",
+  "cardSummary": "Portage Inlet waterfront, sloped family lots and townhouse stratas, with shore pine and nest trees protected by bylaw.",
   "intro": [
-    "View Royal includes waterfront homes on Portage Inlet, family homes in Helmcken and Atkins, townhouse stratas and healthcare and institutional grounds.",
-    "View Royal's bylaw protects species including shore pine and trees with raptor, osprey or heron nests. Most removals or alterations need a permit. See [irrigation](/services/irrigation/) or [get a free quote](/free-quote/).",
-    "See [sample projects](/projects/) and our [seasonal guides](/resources/) for more."
+    "View Royal sits between the Gorge waterway and Thetis Lake: waterfront homes on Portage Inlet, family streets in Helmcken and Atkins, townhouse stratas, and hospital and institutional grounds.",
+    "View Royal’s Tree Protection Bylaw (No. 1069, 2022) protects species including shore pine, trees with raptor, osprey or heron nests, and Town trees. Most removals or alterations need a permit; small-branch pruning is exempt only when an ISA certified arborist does it. See [irrigation](/services/irrigation/) or [get a free quote](/free-quote/?area=view-royal)."
   ],
   "neighbourhoods": [
     "Portage Inlet",
@@ -25,21 +26,56 @@
     "townhouse stratas",
     "healthcare and institutional grounds"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "View Royal’s bylaw names shore pine and nest trees, exempts small-branch pruning only when an ISA certified arborist does it, and sets a short deadline for emergency removals: notice with photos by the next business day.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "View Royal Tree Protection Bylaw",
       "text": "View Royal's Tree Protection Bylaw No. 1069 (2022) protects species including shore pine, replacement trees, trees with raptor, osprey or heron nests, trees kept as a permit condition and Town trees. Removing or altering protected trees generally needs a Tree Removal or Alteration Permit; pruning branches up to 10 cm by an ISA certified arborist is exempt, and emergency removals need notice with photos by the next business day.",
       "sourceUrl": "https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Portage Inlet shoreline",
+      "body": "Waterfront lots drain straight to the inlet. Keeping fertiliser, clippings and soil out of the water, and leaving a planted buffer at the edge, protects the shoreline."
+    },
+    {
+      "title": "Slopes and drainage",
+      "body": "Many lots slope toward the inlet or the Craigflower valley. Runoff, soggy low spots and erosion often need solving before new planting or turf."
+    },
+    {
+      "title": "Dry rocky ground near Thetis Lake",
+      "body": "Lots near the Thetis Lake area can be rocky and dry in summer, with arbutus and shore pine that suit low-water planting around them."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "irrigation",
+      "why": "Older strata and home systems on sloped lots tend to need zone-by-zone checks, repairs and better coverage."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Townhouse stratas and family homes want reliable recurring care, with the shoreline kept clean."
     }
   ],
   "servicesBlurb": {
@@ -49,5 +85,38 @@
     "tree-vegetation": "Tree work planned around View Royal's protected species and nest trees."
   },
   "featuredProject": "view-royal-townhouse-irrigation-audit",
+  "nearbyProjects": [
+    "view-royal-townhouse-irrigation-audit",
+    "esquimalt-church-garden-drip-conversion",
+    "langford-retail-centre-irrigation-repair"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Craigflower",
+      "title": "Unmown strip along the inlet",
+      "body": "A lawn edge along Portage Inlet was left as an unmown native strip, and clippings were bagged rather than blown toward the water."
+    },
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Six Mile",
+      "title": "Shore pine checked before pruning",
+      "body": "Limbs over a deck were left in place until the shore pine was assessed against the Town’s bylaw and the permit question was answered."
+    }
+  ],
+  "neighbours": [
+    "saanich",
+    "esquimalt",
+    "colwood",
+    "langford",
+    "highlands"
+  ],
+  "cta": {
+    "heading": "Get a free quote in View Royal",
+    "body": "Tell us if the property is waterfront or sloped, and for stratas, roughly how old the irrigation is. Both change how we plan the visit.",
+    "href": "/free-quote/?area=view-royal"
+  },
   "image": "area-view-royal"
 }
