@@ -1,0 +1,84 @@
+{
+  "id": "ds-comp",
+  "wave": "w2",
+  "lens": "Component-library engineer (frozen APIs, container queries, accessible markup patterns)",
+  "branch": [
+    "w2/ds-comp"
+  ],
+  "owns": {
+    "w2": [
+      "site/src/components/ui/{actions,heads,cards,projects,trust,faq,cta,seasons,callouts}.mjs",
+      "site/src/styles/{40,41,42,43,44,46,47,48,49}-ui-*.css",
+      "site/src/styles/80-styleguide.css",
+      "site/src/styles/50-legacy-*-ds-comp.css",
+      "site/src/pages/styleguide.mjs",
+      "site/COMPONENTS.md",
+      "site/tests/unit/ui-api.test.mjs",
+      "site/tests/unit/ds-comp-*.test.mjs",
+      "site/tests/e2e/components.spec.mjs",
+      ".orchestra/requests/ds-comp.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/{layout,living,map,forms}.mjs",
+    "site/src/pages/{home,services,areas,projects,company,editorial,quote,routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "site/COMPONENTS.md",
+    "DESIGN-DIRECTION.md",
+    ".orchestra/direction/effects-approved.json",
+    "CONTRACT.md §Components, §Attribute contract"
+  ],
+  "deliverables": [
+    "Every C3 primitive in COMPONENTS.md implemented with the frozen API: hero with living-scene slot, numbered section heads, spec strip, tiles, spotlight bento card, timeline, review card + reviews band, credentials row, local-rules callout with last-reviewed date, shared-regional block, guarantee, reassurance strip, FAQ <details>, living CTA band, fallback contact panel, in-page TOC",
+    "Container-query reflow at 320 px for every card/tile; paired 4x-ui-*.css files",
+    "tests/unit/ui-api.test.mjs snapshot of every export and parameter name (fails on removal; additive optional params allowed)",
+    "/styleguide/ (noindex, not in sitemap, showcase builds only) rendering every primitive in both themes"
+  ],
+  "acceptance": [
+    "C3.6: Component inventory — verified by unit/ui-api.test#inventory",
+    "C4.1: Content breakpoints 40/64/80em, container queries, one DOM per component — verified by check-css#breakpoints-and-cq",
+    "P1#8: Reviews band, credentials row (verifiable only), written guarantee — verified by check-honesty#reviews-credentials-guarantee",
+    "No primitive emits a heading level the caller did not choose; one H1 rule untouched",
+    "ds-comp legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "API contract auditor: diff exports against COMPONENTS.md, axe every styleguide specimen at 320 and 1440 in both themes",
+  "port": {
+    "w2": 4423
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/ds-comp.md (never edit a file outside owns; describe the change there)"
+}

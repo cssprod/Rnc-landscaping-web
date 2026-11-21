@@ -1,0 +1,615 @@
+{
+  "$comment": "Every blueprint item → exactly ONE accountable stream and ONE verifying check (tool#rule). \"stream\" is the implementer who must make the check pass; the tool may be built by another stream (qa/seo/ia) earlier. status moves planned → in-progress → evidenced (with evidence path) → known-issue. W5 docs turns this into TRACEABILITY.md.",
+  "generatedOn": "2026-11-21",
+  "counts": {
+    "items": 101
+  },
+  "items": {
+    "A13#1": {
+      "title": "Card links generated from the post URL; link checker in CI",
+      "stream": "ia",
+      "check": "check-links#internal-200",
+      "status": "planned"
+    },
+    "A13#2": {
+      "title": "Netlify _redirects 301 map for every retired URL",
+      "stream": "ia",
+      "check": "check-links#strict-redirects (every url-map 301 → one hop → 200)",
+      "status": "planned"
+    },
+    "A13#3": {
+      "title": "One responsive component per pattern; no duplicated DOM",
+      "stream": "seo",
+      "check": "check-seo#repeated-text (no text node repeated in a page outside [data-shared]; one nav[aria-label=Main])",
+      "status": "planned"
+    },
+    "A13#4": {
+      "title": "Descriptive hand-written alt; alt=\"\" for decorative",
+      "stream": "seo",
+      "check": "check-seo#alt-filename",
+      "status": "planned"
+    },
+    "A13#5": {
+      "title": "One H1 per template; embedded blocks start at H2",
+      "stream": "seo",
+      "check": "check-seo#h1-count",
+      "status": "planned"
+    },
+    "A13#6": {
+      "title": "H1 on every index page",
+      "stream": "seo",
+      "check": "check-seo#h1-present-on-hubs",
+      "status": "planned"
+    },
+    "A13#7": {
+      "title": "Services menu lists every service page (no orphans)",
+      "stream": "ia",
+      "check": "check-links#orphans (every sitemap URL reachable from nav/footer/hubs)",
+      "status": "planned"
+    },
+    "A13#8": {
+      "title": "<button aria-expanded> disclosures, never href=\"#\"",
+      "stream": "ia",
+      "check": "check-html#no-href-hash",
+      "status": "planned"
+    },
+    "A13#9": {
+      "title": "Header call button, sticky mobile bar, tel:/mailto: everywhere",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#tel-sms-mailto",
+      "status": "planned"
+    },
+    "A13#10": {
+      "title": "≈6 inputs, single name field, no CAPTCHA",
+      "stream": "quote",
+      "check": "e2e/quote.spec#six-inputs",
+      "status": "planned"
+    },
+    "A13#11": {
+      "title": "Reviews band on home and service pages linking to Google",
+      "stream": "t-home",
+      "check": "e2e/home.spec#reviews-band-google-link (+ services.spec)",
+      "status": "planned"
+    },
+    "A13#12": {
+      "title": "Only claim what can be verified; credentials band links to issuers",
+      "stream": "content",
+      "check": "check-honesty#unverifiable-claims",
+      "status": "planned"
+    },
+    "A13#13": {
+      "title": "Single source of truth for founding year / business facts",
+      "stream": "ia",
+      "check": "check-content#single-source",
+      "status": "planned"
+    },
+    "A13#14": {
+      "title": "One municipality list in data; one page per municipality",
+      "stream": "ia",
+      "check": "check-content#municipality-list",
+      "status": "planned"
+    },
+    "A13#15": {
+      "title": "No loader; native View Transitions honouring reduced motion",
+      "stream": "ds-core",
+      "check": "motion-audit#vt-and-loader",
+      "status": "planned"
+    },
+    "A13#16": {
+      "title": "Static, user-controlled project rail (no auto-advance)",
+      "stream": "t-home",
+      "check": "motion-audit#no-auto-advance",
+      "status": "planned"
+    },
+    "A13#17": {
+      "title": "aria-hidden on decorative duplicates or render once",
+      "stream": "seo",
+      "check": "check-seo#decorative-duplicate",
+      "status": "planned"
+    },
+    "A13#18": {
+      "title": "One OG card per page; website type; en_CA locale",
+      "stream": "seo",
+      "check": "check-seo#og-tags",
+      "status": "planned"
+    },
+    "A13#19": {
+      "title": "Escape once at build; no double-encoding",
+      "stream": "seo",
+      "check": "check-seo#double-encoding",
+      "status": "planned"
+    },
+    "A13#20": {
+      "title": "Named author with bio; real publish dates",
+      "stream": "content",
+      "check": "check-content#resource-byline-dates",
+      "status": "planned"
+    },
+    "A13#21": {
+      "title": "Slug linting",
+      "stream": "seo",
+      "check": "check-seo#slug-lint",
+      "status": "planned"
+    },
+    "A13#22": {
+      "title": "One <time datetime> format, displayed \"19 November 2026\"",
+      "stream": "t-editorial",
+      "check": "check-seo#time-format",
+      "status": "planned"
+    },
+    "A13#23": {
+      "title": "Structured project data with validation",
+      "stream": "ia",
+      "check": "check-content#schema-v3",
+      "status": "planned"
+    },
+    "A13#24": {
+      "title": "Spell-check in CI",
+      "stream": "qa",
+      "check": "check-honesty#spelling",
+      "status": "planned"
+    },
+    "A13#25": {
+      "title": "Footer links deduplicated",
+      "stream": "ia",
+      "check": "check-links#footer-duplicates",
+      "status": "planned"
+    },
+    "A13#26": {
+      "title": "Footer phone and email linked",
+      "stream": "ia",
+      "check": "check-html#footer-tel-mailto",
+      "status": "planned"
+    },
+    "A13#27": {
+      "title": "AVIF+WebP srcset, max 1600 w",
+      "stream": "living",
+      "check": "budgets#image-widths",
+      "status": "planned"
+    },
+    "A13#28": {
+      "title": "Plausible only; no consent banner",
+      "stream": "qa",
+      "check": "budgets#third-party-origins",
+      "status": "planned"
+    },
+    "A13#29": {
+      "title": "HTTPS, consistent canonicals",
+      "stream": "seo",
+      "check": "check-seo#canonical",
+      "status": "planned"
+    },
+    "A13#30": {
+      "title": "Plain-language workmanship guarantee",
+      "stream": "content",
+      "check": "check-content#guarantee",
+      "status": "planned"
+    },
+    "A13#31": {
+      "title": "\"What's included each visit / season\" tables (no prices)",
+      "stream": "content",
+      "check": "check-content#service-tables",
+      "status": "planned"
+    },
+    "A13#32": {
+      "title": "Short FAQs on each service page",
+      "stream": "content",
+      "check": "check-content#service-faqs",
+      "status": "planned"
+    },
+    "A13#33": {
+      "title": "Proper case in HTML source",
+      "stream": "seo",
+      "check": "check-seo#sentence-case",
+      "status": "planned"
+    },
+    "A13#34": {
+      "title": "Lead with 3–6 key people with real bios",
+      "stream": "t-company",
+      "check": "e2e/company.spec#about-people",
+      "status": "planned"
+    },
+    "A13#35": {
+      "title": "301 old duplicate URLs to new; one canonical per page",
+      "stream": "seo",
+      "check": "check-seo#canonical-unique",
+      "status": "planned"
+    },
+    "A13#36": {
+      "title": "Audit performance, contrast, focus, tap targets before quoting numbers",
+      "stream": "qa",
+      "check": "evidence-pack (a11y.mjs + lighthouse.mjs + measure.mjs, W4)",
+      "status": "planned"
+    },
+    "A12#1": {
+      "title": "Project spec strip (municipality, service, duration, plant palette, challenge→approach→result; no budgets)",
+      "stream": "t-projects",
+      "check": "e2e/projects.spec#spec-strip",
+      "status": "planned"
+    },
+    "A12#2": {
+      "title": "Named, phased process with deliverables",
+      "stream": "t-company",
+      "check": "e2e/company.spec#process-tracks",
+      "status": "planned"
+    },
+    "A12#3": {
+      "title": "Filterable portfolio",
+      "stream": "t-projects",
+      "check": "e2e/projects.spec#filter",
+      "status": "planned"
+    },
+    "A12#4": {
+      "title": "Real-crew credibility (faces and roles, only when real)",
+      "stream": "t-company",
+      "check": "check-honesty#no-stock-people",
+      "status": "planned"
+    },
+    "A12#5": {
+      "title": "Commercial proof points instead of adjectives",
+      "stream": "t-services",
+      "check": "check-honesty#commercial-proof",
+      "status": "planned"
+    },
+    "A12#6": {
+      "title": "Restraint: two-tone palette, big imagery, white space (superseded on aesthetics by the alive direction; hard constraints kept)",
+      "stream": "ds-core",
+      "check": "f-visual#restraint-review (W4 screenshot matrix)",
+      "status": "planned"
+    },
+    "A12#7": {
+      "title": "Dedicated landing page per service line with local context",
+      "stream": "t-services",
+      "check": "e2e/services.spec#local-context",
+      "status": "planned"
+    },
+    "C1.1": {
+      "title": "Sitemap and URL map (/projects/, /free-quote/, /process/ …)",
+      "stream": "ia",
+      "check": "check-links#sitemap-matches-url-map",
+      "status": "planned"
+    },
+    "C1.2": {
+      "title": "Primary nav: Services ▾ · Projects · Service areas ▾ · Process · About · Call · Free quote",
+      "stream": "ia",
+      "check": "e2e/chrome.spec#primary-nav",
+      "status": "planned"
+    },
+    "C1.3": {
+      "title": "Footer: services, municipalities, NAP, hours, tel/sms/mailto, legal + Google profile, no careers",
+      "stream": "ia",
+      "check": "e2e/chrome.spec#footer",
+      "status": "planned"
+    },
+    "C1.4": {
+      "title": "Internal linking (service↔municipality↔project)",
+      "stream": "seo",
+      "check": "check-seo#internal-links",
+      "status": "planned"
+    },
+    "C1.5": {
+      "title": "Breadcrumbs on all depth-2+ pages",
+      "stream": "ds-chrome",
+      "check": "check-seo#breadcrumbs",
+      "status": "planned"
+    },
+    "C2.1": {
+      "title": "Home wireframe sections 1–10",
+      "stream": "t-home",
+      "check": "e2e/home.spec#sections",
+      "status": "planned"
+    },
+    "C2.2": {
+      "title": "Service page wireframe",
+      "stream": "t-services",
+      "check": "e2e/services.spec#template-order",
+      "status": "planned"
+    },
+    "C2.3": {
+      "title": "Municipality page wireframe",
+      "stream": "t-areas",
+      "check": "e2e/areas.spec#template-order",
+      "status": "planned"
+    },
+    "C2.4": {
+      "title": "Project case study wireframe",
+      "stream": "t-projects",
+      "check": "e2e/projects.spec#case-study-order",
+      "status": "planned"
+    },
+    "C2.5": {
+      "title": "Free quote page wireframe",
+      "stream": "quote",
+      "check": "e2e/quote.spec#page-order",
+      "status": "planned"
+    },
+    "C3.1": {
+      "title": "Keep / adapt / drop (no loaders, sliders, lowercase source, third-party embeds)",
+      "stream": "ds-core",
+      "check": "check-motion-policy#banned-effects",
+      "status": "planned"
+    },
+    "C3.2": {
+      "title": "Fluid type scale (display…small, Inter 400/600/700, Newsreader italic quotes only)",
+      "stream": "ds-core",
+      "check": "unit/ds-core-tokens.test#type-scale",
+      "status": "planned"
+    },
+    "C3.3": {
+      "title": "Colour usage and contrast incl. dark focus token",
+      "stream": "ds-core",
+      "check": "check-contrast#all-pairs",
+      "status": "planned"
+    },
+    "C3.4": {
+      "title": "Imagery rules: own photos only in /projects/, stock labelled, illustration for process/maps",
+      "stream": "living",
+      "check": "check-honesty#stock-in-projects",
+      "status": "planned"
+    },
+    "C3.5": {
+      "title": "Motion rules (transform/opacity, VT where supported, reduced motion, nothing autoplays)",
+      "stream": "ds-core",
+      "check": "motion-audit#policy-tiers",
+      "status": "planned"
+    },
+    "C3.6": {
+      "title": "Component inventory",
+      "stream": "ds-comp",
+      "check": "unit/ui-api.test#inventory",
+      "status": "planned"
+    },
+    "C4.1": {
+      "title": "Content breakpoints 40/64/80em, container queries, one DOM per component",
+      "stream": "ds-comp",
+      "check": "check-css#breakpoints-and-cq",
+      "status": "planned"
+    },
+    "C4.2": {
+      "title": "Mobile nav sheet: inert, Esc, focus return, accordions",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#mobile-sheet",
+      "status": "planned"
+    },
+    "C4.3": {
+      "title": "Sticky action bar below 1024 px",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#sticky-bar",
+      "status": "planned"
+    },
+    "C4.4": {
+      "title": "Touch targets ≥ 44×44 primary, ≥ 24×24 all",
+      "stream": "qa",
+      "check": "a11y#target-size",
+      "status": "planned"
+    },
+    "C4.5": {
+      "title": "<picture> AVIF/WebP/JPEG, srcset, dimensions, hero priority, lazy below fold, EXIF strip",
+      "stream": "living",
+      "check": "budgets#picture-pipeline",
+      "status": "planned"
+    },
+    "C4.6": {
+      "title": "≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom",
+      "stream": "qa",
+      "check": "e2e/global.spec#reflow-320-zoom-200",
+      "status": "planned"
+    },
+    "C5.1": {
+      "title": "Quote builder six inputs, ?area= prefill",
+      "stream": "quote",
+      "check": "e2e/quote.spec#prefill",
+      "status": "planned"
+    },
+    "C5.2": {
+      "title": "mailto submit with encoded subject/body ≤ 1,800 chars; works without JS",
+      "stream": "quote",
+      "check": "unit/quote-builder.test#mailto",
+      "status": "planned"
+    },
+    "C5.3": {
+      "title": "Ready panel: copy, address, call/text, webmail links",
+      "stream": "quote",
+      "check": "e2e/quote.spec#ready-panel",
+      "status": "planned"
+    },
+    "C5.4": {
+      "title": "Native validation, inline errors, error summary, values kept",
+      "stream": "quote",
+      "check": "e2e/quote.spec#validation",
+      "status": "planned"
+    },
+    "C5.5": {
+      "title": "sessionStorage draft",
+      "stream": "quote",
+      "check": "e2e/quote.spec#draft-restore",
+      "status": "planned"
+    },
+    "C5.6": {
+      "title": "Plausible custom events, no personal data",
+      "stream": "quote",
+      "check": "unit/quote-events.test#no-pii",
+      "status": "planned"
+    },
+    "C5.7": {
+      "title": "Trust without prices (reply time, next steps, verifiable credentials, reviews, owner, local rules, guarantee)",
+      "stream": "content",
+      "check": "check-honesty#trust-without-prices",
+      "status": "planned"
+    },
+    "C6.1": {
+      "title": "One @id JSON-LD graph (business subtype, Service, BreadcrumbList, FAQPage optional, no Review/AggregateRating)",
+      "stream": "seo",
+      "check": "unit/seo-graph.test#graph",
+      "status": "planned"
+    },
+    "C6.2": {
+      "title": "Title and meta description patterns and lengths",
+      "stream": "seo",
+      "check": "check-seo#title-meta",
+      "status": "planned"
+    },
+    "C6.3": {
+      "title": "Social cards: en_CA, one OG image per template, og:type website",
+      "stream": "seo",
+      "check": "og-cards#coverage",
+      "status": "planned"
+    },
+    "C6.4": {
+      "title": "Municipality pages avoid doorway risk (3 local blocks, swap test)",
+      "stream": "areas-content",
+      "check": "check-seo#cross-area-duplicates",
+      "status": "planned"
+    },
+    "C6.5": {
+      "title": "Google Business Profile alignment (off-site; documented)",
+      "stream": "docs",
+      "check": "LAUNCH-CHECKLIST#gbp",
+      "status": "planned"
+    },
+    "C6.6": {
+      "title": "Technical: sitemap, robots, self canonicals, _redirects, lang en-CA, build SEO checks",
+      "stream": "seo",
+      "check": "check-seo#technical",
+      "status": "planned"
+    },
+    "C7.1": {
+      "title": "Lighthouse mobile ≥ 95 ×4 every template",
+      "stream": "qa",
+      "check": "lighthouse#median-of-3",
+      "status": "planned"
+    },
+    "C7.2": {
+      "title": "Weights: home ≤ 500 KB, inner ≤ 350 KB, CSS/JS/fonts caps, 1 third party",
+      "stream": "qa",
+      "check": "budgets#v2",
+      "status": "planned"
+    },
+    "C7.3": {
+      "title": "WCAG 2.2 AA, 0 axe violations",
+      "stream": "qa",
+      "check": "a11y#axe-matrix",
+      "status": "planned"
+    },
+    "C8": {
+      "title": "Parallel streams on separate branches gated by the same CI; merge only when budgets pass",
+      "stream": "build",
+      "check": "check-ownership#every-merge",
+      "status": "planned"
+    },
+    "P0#1": {
+      "title": "site.json single source for NAP, founding year, hours, licences, municipalities",
+      "stream": "ia",
+      "check": "unit/ia-site-json.test#consumers",
+      "status": "planned"
+    },
+    "P0#2": {
+      "title": "Lighthouse CI budgets, axe/Playwright at 5 widths, link checker in the build",
+      "stream": "qa",
+      "check": "ci#required-gates",
+      "status": "planned"
+    },
+    "P0#3": {
+      "title": "Dark-mode focus ring ≥ 3:1 on Fir night; re-test all focus states",
+      "stream": "ds-core",
+      "check": "check-contrast#focus-pairs",
+      "status": "planned"
+    },
+    "P0#4": {
+      "title": "scroll-padding for sticky header and bar; 2.4.11 keyboard test",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#focus-not-obscured",
+      "status": "planned"
+    },
+    "P1#5": {
+      "title": "Quote builder → mailto, no-JS path, copy, visible email, tel/sms fallbacks + status",
+      "stream": "quote",
+      "check": "e2e/quote.spec#no-js-and-fallbacks",
+      "status": "planned"
+    },
+    "P1#6": {
+      "title": "Sticky mobile Call / Free-quote bar (≥ 48 px, safe-area, hidden over the form)",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#sticky-bar-hides",
+      "status": "planned"
+    },
+    "P1#7": {
+      "title": "tel:/mailto: in header and footer; desktop header call button",
+      "stream": "ds-chrome",
+      "check": "e2e/chrome.spec#header-call",
+      "status": "planned"
+    },
+    "P1#8": {
+      "title": "Reviews band, credentials row (verifiable only), written guarantee",
+      "stream": "ds-comp",
+      "check": "check-honesty#reviews-credentials-guarantee",
+      "status": "planned"
+    },
+    "P2#9": {
+      "title": "Services overview + 4 service pages on the C2 template",
+      "stream": "t-services",
+      "check": "e2e/services.spec#hub-and-four",
+      "status": "planned"
+    },
+    "P2#10": {
+      "title": "13 municipality pages pass the swap test; /areas/ hub with SVG map",
+      "stream": "t-areas",
+      "check": "f-honesty#swap-test-78-pairs",
+      "status": "planned"
+    },
+    "P2#11": {
+      "title": "Case-study template, filterable portfolio, accessible before/after with side-by-side",
+      "stream": "t-projects",
+      "check": "e2e/projects.spec#before-after-keyboard",
+      "status": "planned"
+    },
+    "P2#12": {
+      "title": "Process page (two tracks), FAQ page, accessibility statement",
+      "stream": "t-company",
+      "check": "e2e/company.spec#process-faq-statement",
+      "status": "planned"
+    },
+    "P2#13": {
+      "title": "Disclosure menus (no href=\"#\"), breadcrumbs, helpful 404",
+      "stream": "ia",
+      "check": "e2e/chrome.spec#disclosure-breadcrumb-404",
+      "status": "planned"
+    },
+    "P3#14": {
+      "title": "JSON-LD graph, OG per page, og:locale en_CA, lang en-CA",
+      "stream": "seo",
+      "check": "check-seo#jsonld-graph",
+      "status": "planned"
+    },
+    "P3#15": {
+      "title": "Sitemap with git lastmod, robots, _redirects, build checks",
+      "stream": "build",
+      "check": "unit/build-lastmod.test#git-lastmod",
+      "status": "planned"
+    },
+    "P3#16": {
+      "title": "GBP alignment: matching NAP, 13 service areas, review link",
+      "stream": "ia",
+      "check": "check-content#nap-consistency",
+      "status": "planned"
+    },
+    "P4#17": {
+      "title": "AVIF/WebP pipeline, EXIF stripping, licence records, no stock in /projects/",
+      "stream": "living",
+      "check": "unit/living-images.test#pipeline",
+      "status": "planned"
+    },
+    "P4#18": {
+      "title": "Glass limited to chrome, solid content, fluid type, reduced motion, no loaders/sliders/autoplay — superseded on aesthetics, hard constraints kept",
+      "stream": "ds-core",
+      "check": "check-contrast#glass-worst-case",
+      "status": "planned"
+    },
+    "P4#19": {
+      "title": "Final regression: LH ≥ 95 ×4, 0 axe, manual SR pass, 200 % zoom, 320 px, CLS ≤ 0.05",
+      "stream": "qa",
+      "check": "release-gate#final-regression (W5)",
+      "status": "planned"
+    }
+  }
+}

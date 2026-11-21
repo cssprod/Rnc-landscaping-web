@@ -1,0 +1,536 @@
+{
+  "$comment": "Every URL the current build emits (node build.mjs --offline-images, 58 pages) mapped to its C1 URL. status 301 rows become site/dist/_redirects lines via site/src/pages/redirects.mjs (W1 ia). Rules: exactly one hop, destination returns 200, trailing-slash tolerant, query destinations allowed (Netlify keeps them).",
+  "generatedOn": "2026-11-21",
+  "source": "site/dist from commit 8798346 (pre-redesign)",
+  "counts": {
+    "current": 58,
+    "kept": 36,
+    "moved": 18,
+    "retired": 4,
+    "added": 2,
+    "aliases": 1,
+    "newPages": 56
+  },
+  "entries": [
+    {
+      "old": "/",
+      "new": "/",
+      "status": 200,
+      "kind": "kept",
+      "template": "home",
+      "owner": "t-home"
+    },
+    {
+      "old": "/404.html",
+      "new": "/404.html",
+      "status": 200,
+      "kind": "kept",
+      "template": "404",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/about/",
+      "new": "/about/",
+      "status": 200,
+      "kind": "kept",
+      "template": "about",
+      "owner": "t-company"
+    },
+    {
+      "old": "/accessibility/",
+      "new": "/accessibility/",
+      "status": 200,
+      "kind": "kept",
+      "template": "accessibility-statement",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/areas/",
+      "new": "/areas/",
+      "status": 200,
+      "kind": "kept",
+      "template": "areas-hub",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/central-saanich/",
+      "new": "/areas/central-saanich/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/colwood/",
+      "new": "/areas/colwood/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/esquimalt/",
+      "new": "/areas/esquimalt/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/highlands/",
+      "new": "/areas/highlands/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/langford/",
+      "new": "/areas/langford/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/metchosin/",
+      "new": "/areas/metchosin/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/north-saanich/",
+      "new": "/areas/north-saanich/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/oak-bay/",
+      "new": "/areas/oak-bay/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/saanich/",
+      "new": "/areas/saanich/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/sidney/",
+      "new": "/areas/sidney/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/sooke/",
+      "new": "/areas/sooke/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/victoria/",
+      "new": "/areas/victoria/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/areas/view-royal/",
+      "new": "/areas/view-royal/",
+      "status": 200,
+      "kind": "kept",
+      "template": "municipality",
+      "owner": "t-areas"
+    },
+    {
+      "old": "/commercial/",
+      "new": "/commercial/",
+      "status": 200,
+      "kind": "kept",
+      "template": "commercial",
+      "owner": "t-services"
+    },
+    {
+      "old": "/contact/",
+      "new": "/contact/",
+      "status": 200,
+      "kind": "kept",
+      "template": "contact",
+      "owner": "t-company"
+    },
+    {
+      "old": "/faq/",
+      "new": "/faq/",
+      "status": 200,
+      "kind": "kept",
+      "template": "faq",
+      "owner": "t-company"
+    },
+    {
+      "old": "/portfolio/",
+      "new": "/projects/",
+      "status": 301,
+      "kind": "moved",
+      "template": "projects-hub",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/grounds-maintenance/",
+      "new": "/projects/?service=grounds-maintenance",
+      "status": 301,
+      "kind": "retired",
+      "template": "projects-hub",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/grounds-maintenance/deep-cove-acreage-upkeep/",
+      "new": "/projects/deep-cove-acreage-upkeep/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/grounds-maintenance/gordon-head-weekly-garden-care/",
+      "new": "/projects/gordon-head-weekly-garden-care/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/grounds-maintenance/keating-business-park-grounds-maintenance/",
+      "new": "/projects/keating-business-park-grounds-maintenance/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/grounds-maintenance/sidney-strata-seasonal-grounds-care/",
+      "new": "/projects/sidney-strata-seasonal-grounds-care/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/irrigation/",
+      "new": "/projects/?service=irrigation",
+      "status": 301,
+      "kind": "retired",
+      "template": "projects-hub",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/irrigation/esquimalt-church-garden-drip-conversion/",
+      "new": "/projects/esquimalt-church-garden-drip-conversion/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/irrigation/langford-retail-centre-irrigation-repair/",
+      "new": "/projects/langford-retail-centre-irrigation-repair/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/irrigation/rockland-spring-start-up-and-repair/",
+      "new": "/projects/rockland-spring-start-up-and-repair/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/irrigation/view-royal-townhouse-irrigation-audit/",
+      "new": "/projects/view-royal-townhouse-irrigation-audit/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/landscape-installation/",
+      "new": "/projects/?service=landscape-installation",
+      "status": 301,
+      "kind": "retired",
+      "template": "projects-hub",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/landscape-installation/fernwood-strata-courtyard-planting/",
+      "new": "/projects/fernwood-strata-courtyard-planting/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/landscape-installation/langford-townhouse-landscape-package/",
+      "new": "/projects/langford-townhouse-landscape-package/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/landscape-installation/oak-bay-front-garden-renewal/",
+      "new": "/projects/oak-bay-front-garden-renewal/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/landscape-installation/royal-bay-backyard-patio/",
+      "new": "/projects/royal-bay-backyard-patio/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/tree-vegetation/",
+      "new": "/projects/?service=tree-vegetation",
+      "status": 301,
+      "kind": "retired",
+      "template": "projects-hub",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/tree-vegetation/highlands-acreage-tree-pruning/",
+      "new": "/projects/highlands-acreage-tree-pruning/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/tree-vegetation/metchosin-trail-edge-invasive-removal/",
+      "new": "/projects/metchosin-trail-edge-invasive-removal/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/tree-vegetation/sidney-condo-hedge-reduction/",
+      "new": "/projects/sidney-condo-hedge-reduction/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/portfolio/tree-vegetation/sooke-acreage-brush-and-broom-clearing/",
+      "new": "/projects/sooke-acreage-brush-and-broom-clearing/",
+      "status": 301,
+      "kind": "moved",
+      "template": "case-study",
+      "owner": "t-projects"
+    },
+    {
+      "old": "/privacy/",
+      "new": "/privacy/",
+      "status": 200,
+      "kind": "kept",
+      "template": "legal",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/quote/",
+      "new": "/free-quote/",
+      "status": 301,
+      "kind": "moved",
+      "template": "free-quote",
+      "owner": "quote"
+    },
+    {
+      "old": "/resources/",
+      "new": "/resources/",
+      "status": 200,
+      "kind": "kept",
+      "template": "resources-hub",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/crd-watering-rules-guide/",
+      "new": "/resources/crd-watering-rules-guide/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/fall-cleanup-and-leaf-guide/",
+      "new": "/resources/fall-cleanup-and-leaf-guide/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/irrigation-start-up-and-winterization/",
+      "new": "/resources/irrigation-start-up-and-winterization/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/native-and-drought-tolerant-planting/",
+      "new": "/resources/native-and-drought-tolerant-planting/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/spring-lawn-and-garden-checklist/",
+      "new": "/resources/spring-lawn-and-garden-checklist/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/resources/winter-pruning-and-storm-prep/",
+      "new": "/resources/winter-pruning-and-storm-prep/",
+      "status": 200,
+      "kind": "kept",
+      "template": "guide",
+      "owner": "t-editorial"
+    },
+    {
+      "old": "/reviews/",
+      "new": "/reviews/",
+      "status": 200,
+      "kind": "kept",
+      "template": "reviews",
+      "owner": "t-company"
+    },
+    {
+      "old": "/services/",
+      "new": "/services/",
+      "status": 200,
+      "kind": "kept",
+      "template": "services-hub",
+      "owner": "t-services"
+    },
+    {
+      "old": "/services/grounds-maintenance/",
+      "new": "/services/grounds-maintenance/",
+      "status": 200,
+      "kind": "kept",
+      "template": "service",
+      "owner": "t-services"
+    },
+    {
+      "old": "/services/irrigation/",
+      "new": "/services/irrigation/",
+      "status": 200,
+      "kind": "kept",
+      "template": "service",
+      "owner": "t-services"
+    },
+    {
+      "old": "/services/landscape-installation/",
+      "new": "/services/landscape-installation/",
+      "status": 200,
+      "kind": "kept",
+      "template": "service",
+      "owner": "t-services"
+    },
+    {
+      "old": "/services/tree-vegetation/",
+      "new": "/services/tree-vegetation/",
+      "status": 200,
+      "kind": "kept",
+      "template": "service",
+      "owner": "t-services"
+    },
+    {
+      "old": "/terms/",
+      "new": "/terms/",
+      "status": 200,
+      "kind": "kept",
+      "template": "legal",
+      "owner": "t-editorial"
+    }
+  ],
+  "added": [
+    {
+      "new": "/process/",
+      "status": 200,
+      "kind": "added",
+      "template": "process",
+      "owner": "t-company",
+      "note": "C1; stub in W1 (ia), full page W3 (t-company)"
+    },
+    {
+      "new": "/styleguide/",
+      "status": 200,
+      "kind": "added",
+      "template": "styleguide",
+      "owner": "ds-comp",
+      "note": "showcase builds only (D4): noindex, not in sitemap, never built when SITE_MODE=launch"
+    }
+  ],
+  "aliases": [
+    {
+      "old": "/services/tree-vegetation-management/",
+      "new": "/services/tree-vegetation/",
+      "status": 301,
+      "kind": "alias",
+      "note": "blueprint C1 spelling of the slug; never published, redirect is a courtesy"
+    }
+  ],
+  "redirectsFile": [
+    "/portfolio/  /projects/  301",
+    "/portfolio/grounds-maintenance/  /projects/?service=grounds-maintenance  301",
+    "/portfolio/grounds-maintenance/deep-cove-acreage-upkeep/  /projects/deep-cove-acreage-upkeep/  301",
+    "/portfolio/grounds-maintenance/gordon-head-weekly-garden-care/  /projects/gordon-head-weekly-garden-care/  301",
+    "/portfolio/grounds-maintenance/keating-business-park-grounds-maintenance/  /projects/keating-business-park-grounds-maintenance/  301",
+    "/portfolio/grounds-maintenance/sidney-strata-seasonal-grounds-care/  /projects/sidney-strata-seasonal-grounds-care/  301",
+    "/portfolio/irrigation/  /projects/?service=irrigation  301",
+    "/portfolio/irrigation/esquimalt-church-garden-drip-conversion/  /projects/esquimalt-church-garden-drip-conversion/  301",
+    "/portfolio/irrigation/langford-retail-centre-irrigation-repair/  /projects/langford-retail-centre-irrigation-repair/  301",
+    "/portfolio/irrigation/rockland-spring-start-up-and-repair/  /projects/rockland-spring-start-up-and-repair/  301",
+    "/portfolio/irrigation/view-royal-townhouse-irrigation-audit/  /projects/view-royal-townhouse-irrigation-audit/  301",
+    "/portfolio/landscape-installation/  /projects/?service=landscape-installation  301",
+    "/portfolio/landscape-installation/fernwood-strata-courtyard-planting/  /projects/fernwood-strata-courtyard-planting/  301",
+    "/portfolio/landscape-installation/langford-townhouse-landscape-package/  /projects/langford-townhouse-landscape-package/  301",
+    "/portfolio/landscape-installation/oak-bay-front-garden-renewal/  /projects/oak-bay-front-garden-renewal/  301",
+    "/portfolio/landscape-installation/royal-bay-backyard-patio/  /projects/royal-bay-backyard-patio/  301",
+    "/portfolio/tree-vegetation/  /projects/?service=tree-vegetation  301",
+    "/portfolio/tree-vegetation/highlands-acreage-tree-pruning/  /projects/highlands-acreage-tree-pruning/  301",
+    "/portfolio/tree-vegetation/metchosin-trail-edge-invasive-removal/  /projects/metchosin-trail-edge-invasive-removal/  301",
+    "/portfolio/tree-vegetation/sidney-condo-hedge-reduction/  /projects/sidney-condo-hedge-reduction/  301",
+    "/portfolio/tree-vegetation/sooke-acreage-brush-and-broom-clearing/  /projects/sooke-acreage-brush-and-broom-clearing/  301",
+    "/quote/  /free-quote/  301",
+    "/services/tree-vegetation-management/  /services/tree-vegetation/  301"
+  ],
+  "newSitemapExcludes": [
+    "/404.html",
+    "/styleguide/"
+  ]
+}

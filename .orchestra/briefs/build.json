@@ -1,0 +1,98 @@
+{
+  "id": "build",
+  "wave": "w1",
+  "lens": "Build-systems engineer (zero-dependency Node 22 SSG, cascade-preserving refactors, CSP)",
+  "branch": [
+    "w1/build"
+  ],
+  "owns": {
+    "w1": [
+      "site/build.mjs",
+      "site/src/lib/build/**",
+      "site/src/scripts/**",
+      "site/src/styles/**",
+      "site/src/components/sprite.mjs",
+      "site/tools/{csp,dev-setup,check-ownership,serve,lib,check-all,budgets,screenshots}.mjs",
+      "site/tests/unit/build-*.test.mjs",
+      "site/tests/fixtures/build/**",
+      "site/playwright.config.mjs",
+      "site/jsconfig.json",
+      "netlify.toml",
+      ".github/workflows/ci.yml",
+      ".gitignore",
+      "site/.gitignore",
+      ".orchestra/requests/build.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "content/**",
+    "site/src/pages/**",
+    "site/src/components/{layout,ui,map,forms,living}.mjs",
+    "site/src/components/ui/**",
+    "brand/**",
+    "media/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "site/build.mjs",
+    "site/src/styles/site.css",
+    "site/src/scripts/main.js",
+    "site/src/components/sprite.mjs",
+    "site/tools/**",
+    "netlify.toml",
+    ".github/workflows/ci.yml",
+    ".orchestra/legacy-css-map.json",
+    "CONTRACT.md §Build, §Modules, §CSS, §Head scripts"
+  ],
+  "deliverables": [
+    "--out=DIR / SITE_DIST / PORT everywhere (build, check-all, serve, playwright.config, screenshots); dist guard: rmSync only a directory that is empty or contains .rnc-dist",
+    "site/src/lib/build/minify-css.mjs: tokenizer-aware minifier (strings, url(), comments, custom-property values, @supports/@media conditions preserved) + golden tests in tests/fixtures/build + --no-minify",
+    "CSS pipeline: auto-discover site/src/styles/*.css in name order, prepend tokens.css unlayered, 00-layers.css declares the layer order; site.css split into the 50-legacy-NN-<owner>.css slices of legacy-css-map.json; pre-registered empty stubs for every later CSS file (CONTRACT §CSS)",
+    "JS: main.js split into main.js (chrome), lib/track.js (same track() API), lib/prefs.js (motionOn/onMotionChange/theme/onThemeChange + rnc:motion / rnc:theme events), quote.js, projects.js; stubs living.js, areas.js; module-graph hashing in dependency order (leaves first, import specifiers rewritten to hashed URLs), <link rel=modulepreload> for deps, env.assets.modules[name] = {src, deps[]}; no import map",
+    "Inline scripts only from site/src/lib/head-scripts.mjs INLINE_SCRIPTS; build fails if any inline <script> in output is not in that list or its sha256 is missing from the netlify.toml CSP (replaces JS_FLAG check)",
+    "Sprite tree-shaking: emit only the <symbol>s a page references (≈ -14 KB/page); namespaced ids i-* / logo-*",
+    "sitemap <lastmod> from git log of each route's declared sources (fallback: build date + one warning on shallow clones)",
+    "serve.mjs: applies dist/_redirects (301, trailing-slash tolerant, query destinations), dist/_headers and the netlify.toml [[headers]] (CSP included); MIME for avif/webp/jpg/jpeg/mjs",
+    "tools/csp.mjs (--check: every INLINE_SCRIPTS hash present in netlify.toml, nothing extra), tools/dev-setup.mjs (symlinks site/node_modules/{playwright,playwright-core,@types/node} from /opt/node-tools, untracked; --devtools installs lighthouse@12 + axe-core@4 into $SCRATCH/devtools), tools/check-ownership.mjs (--stream --base --head against .orchestra/ownership.json), check-all discovers every tools/check-*.mjs",
+    "tsc -p jsconfig.json green (fix TS2688 typeRoots); CI steps 1–3 green"
+  ],
+  "acceptance": [
+    "C8: Parallel streams on separate branches gated by the same CI; merge only when budgets pass — verified by check-ownership#every-merge",
+    "P3#15: Sitemap with git lastmod, robots, _redirects, build checks — verified by unit/build-lastmod.test#git-lastmod",
+    "0 px screenshot diff at 390 and 1440 (dark and light) between the pre-split build and the post-split build (tools/screenshots.mjs --compare)",
+    "Two builds into different --out dirs in parallel do not interfere; build refuses to delete a non-dist directory",
+    "Injected unhashed inline <script> → build error AND a CSP console error in Playwright via serve.mjs",
+    "Minifier output parses identically (golden tests) and gz CSS within ±2 % of the old minifier",
+    "Budgets within ±2 % of baseline except the sprite saving"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>"
+  ],
+  "verifierLens": "Reproducibility sceptic: re-run in a clean worktree, parallel builds, fault-inject a stray inline script, diff screenshots pixel-for-pixel",
+  "port": {
+    "w1": 4411
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/build.md (never edit a file outside owns; describe the change there)"
+}

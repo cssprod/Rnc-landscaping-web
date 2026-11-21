@@ -1,0 +1,93 @@
+{
+  "id": "living",
+  "wave": "w2",
+  "lens": "Generative-SVG artist + rendering-performance engineer (composited-only animation, deterministic output)",
+  "branch": [
+    "w2/living"
+  ],
+  "owns": {
+    "w2": [
+      "site/src/lib/{art,images}.mjs",
+      "site/src/components/living.mjs",
+      "site/src/styles/45-living.css",
+      "site/src/styles/50-legacy-*-living.css",
+      "site/src/scripts/living.js",
+      "media/images.json",
+      "media/shot-list.md",
+      "media/photos/**",
+      "media/photos.json",
+      "site/static/img/**",
+      "site/tools/process-images.mjs",
+      "site/fixtures/media/**",
+      "site/tests/unit/living-*.test.mjs",
+      "site/tests/e2e/living.spec.mjs",
+      ".orchestra/requests/living.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/tokens.json",
+    "site/src/components/ui/**",
+    "site/src/pages/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    ".orchestra/direction/effects-approved.json",
+    ".orchestra/direction/motion-policy.md",
+    ".orchestra/reports/effects-lab.json",
+    "CONTRACT.md §Attribute contract, §Living art"
+  ],
+  "deliverables": [
+    "livingScene(id, o) / projectArt(project, o) / illustrationChip(): layered theme-reactive scenes (night bioluminescent, light dawn), 13 distinct area scenes, per-project art so /projects/ has no stock photos",
+    "Layers are separate OUTER <svg> boxes animated by transform/opacity only; living.js sets data-alive after load + idle when motion is on, pauses off-screen (IntersectionObserver) and on hidden tabs via --alive-play",
+    "Cursor spotlight (T3, fine pointer only) and rationed @property borders in living.js / 45-living.css",
+    "<picture> AVIF/WebP/JPEG at 480/768/1024/1600 via tools/process-images.mjs (sharp from scratch, EXIF stripped, licence manifest media/photos.json)",
+    "media/images.json pre-allocates every slot (per-project art, process-hero); unknown slots still render labelled art"
+  ],
+  "acceptance": [
+    "A13#27: AVIF+WebP srcset, max 1600 w — verified by budgets#image-widths",
+    "C3.4: Imagery rules: own photos only in /projects/, stock labelled, illustration for process/maps — verified by check-honesty#stock-in-projects",
+    "C4.5: <picture> AVIF/WebP/JPEG, srcset, dimensions, hero priority, lazy below fold, EXIF strip — verified by budgets#picture-pipeline",
+    "P4#17: AVIF/WebP pipeline, EXIF stripping, licence records, no stock in /projects/ — verified by unit/living-images.test#pipeline",
+    "Deterministic bytes (two builds identical), namespaced ids lv-*, hero scene ≤ 16 KB raw, aria-hidden \"Illustration\" chip",
+    "No infinite animation runs with motion off or without JS",
+    "living legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Frame-budget profiler: 4× CPU throttle traces, Lighthouse delta, motion-audit with motion off/on, determinism diff",
+  "port": {
+    "w2": 4424
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/living.md (never edit a file outside owns; describe the change there)"
+}

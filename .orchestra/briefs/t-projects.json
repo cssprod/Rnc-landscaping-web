@@ -1,0 +1,96 @@
+{
+  "id": "t-projects",
+  "wave": "w3",
+  "lens": "Art-directed template builder: Projects + case studies",
+  "branch": [
+    "w3/t-projects"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/projects.mjs",
+      "site/src/styles/63-projects.css",
+      "site/src/styles/50-legacy-*-t-projects.css",
+      "site/tests/e2e/projects.spec.mjs",
+      "site/tests/unit/t-projects-*.test.mjs",
+      "site/src/components/ui/projects.mjs",
+      "site/src/styles/43-ui-projects.css",
+      "site/src/scripts/projects.js",
+      ".orchestra/requests/t-projects.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/projects/*.json",
+    "content/pages/projects.json",
+    "content/testimonials/*.json"
+  ],
+  "deliverables": [
+    "/projects/ filters by service × municipality (GET form; works without JS, shows all) with a same-document View Transition",
+    "Case study: hero (project art) → spec strip (municipality, service, season, duration, scope tags, plant palette) → Challenge / Approach / Result → gallery with keyboard before/after + side-by-side toggle → client quote if real → related → CTA"
+  ],
+  "acceptance": [
+    "A12#1: Project spec strip (municipality, service, duration, plant palette, challenge→approach→result; no budgets) — verified by e2e/projects.spec#spec-strip",
+    "A12#3: Filterable portfolio — verified by e2e/projects.spec#filter",
+    "C2.4: Project case study wireframe — verified by e2e/projects.spec#case-study-order",
+    "P2#11: Case-study template, filterable portfolio, accessible before/after with side-by-side — verified by e2e/projects.spec#before-after-keyboard",
+    "No stock photo anywhere under /projects/ (check-honesty)",
+    "Every project links back to its service and municipality",
+    "Stop reading story[] (content stream may then drop it)",
+    "t-projects legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4434
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-projects.md (never edit a file outside owns; describe the change there)"
+}

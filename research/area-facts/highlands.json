@@ -2,6 +2,11 @@
   "slug": "highlands",
   "name": "Highlands",
   "researchedOn": "2026-11-21",
+  "verification": {
+    "by": "V2",
+    "on": "2026-11-21",
+    "log": "research/area-verification-V2.md"
+  },
   "facts": [
     {
       "id": "highlands-tree-bylaw-10",
@@ -13,7 +18,9 @@
       "excerpt": "cutting down a significant tree is strictly prohibited",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing."
     },
     {
       "id": "highlands-protected-species",
@@ -25,7 +32,9 @@
       "excerpt": "Under the Tree Management Bylaw protected trees are:",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. One snippet listed only Garry oak; size thresholds (e.g. Douglas-fir over 60 cm, any tree over 80 cm, in research/areas.json) not re-confirmed."
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing. One snippet listed only Garry oak. The size thresholds in content/areas/highlands.json (Douglas-fir over 60 cm, any tree over 80 cm) are still NOT confirmed."
     },
     {
       "id": "highlands-dpas",
@@ -37,19 +46,23 @@
       "excerpt": "DP Area #1 - Steep Slopes, DP Area #2 - Water and Riparian Areas, DP Area #3 - Sensitive Vegetation",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing."
     },
     {
       "id": "highlands-wells-aquifer",
       "kind": "condition",
       "unique": true,
-      "text": "Most Highlands homes draw drinking water from private wells in a bedrock aquifer (BC Aquifer #680), so irrigation is planned around well yield. CRD watering rules apply only to the few connected properties.",
+      "text": "Most Highlands homes draw drinking water from private wells in a bedrock aquifer (BC Aquifer #680), so irrigation is planned around well yield. CRD watering rules apply only to the parts of Highlands on the Juan de Fuca system.",
       "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/District%20of%20Highlands%20Groundwater%20Protection%20-%20Final%20Work%20Plan%20and%20Implementation%20Report.pdf",
       "sourceTitle": "Groundwater Protection - Final Work Plan and Implementation Report (District of Highlands)",
       "excerpt": "the majority of residents in the District obtain their drinking water from private wells that tap into the local bedrock aquifer",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing"
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing. Only the CRD part is verified: the CRD Drinking Water Systems page says the Juan de Fuca system serves 'parts of Highlands' (see regional-crd-water-systems). 'the few connected properties' was changed to 'the parts of Highlands on the Juan de Fuca system' to match the CRD wording."
     },
     {
       "id": "highlands-iron-wells",
@@ -61,7 +74,9 @@
       "excerpt": "many wells in the Highlands are high in iron",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Staining is our inference, not a District statement; which Highlands page holds the iron sentence was unclear in the snippet."
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing. Staining is our inference, not a District statement."
     },
     {
       "id": "highlands-burning-permits",
@@ -73,7 +88,9 @@
       "excerpt": "permits are mandatory year-round and are free of charge",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. One page cites Bylaw No. 264, another the Fire Control and Protection Bylaw No. 474, 2025; confirm the current bylaw."
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing. Bylaw No. 264 vs Fire Control and Protection Bylaw No. 474, 2025: not resolved."
     },
     {
       "id": "highlands-firesmart-wui",
@@ -85,7 +102,9 @@
       "excerpt": "a free home assessment with no obligation",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. CWPP: https://www.highlands.ca/sites/31/files/2025-02/Highlands_CWPP%20-%20r.pdf (Blackwell, Dec 2009)."
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing."
     },
     {
       "id": "highlands-wells-proof",
@@ -97,35 +116,84 @@
       "excerpt": "Hanington Estates subdivision is served by groundwater wells",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. From the 2018 report; may have changed."
+      "sourceType": "official",
+      "status": "unverified",
+      "note": "V2 UNVERIFIED: highlands.ca 301-redirects to www.highlands.ca, which this session's network refused (curl CONNECT 403; WebFetch ENOTFOUND), so no Highlands page could be opened. Still from a search snippet; confirm on the live page before publishing. From the 2018 report; may have changed."
     },
     {
       "id": "regional-crd-stage1-watering",
       "kind": "regional",
       "unique": false,
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm. Most Highlands homes are on private wells and only some areas are connected, so check before applying it.",
-      "sourceUrl": "https://www.crd.ca/node/4919",
-      "sourceTitle": "CRD - Watering schedule",
-      "excerpt": "Any method: 4-10am or 7-10pm",
+      "text": "CRD Stage 1 watering rules (Water Conservation Bylaw No. 4099) run May 1 to September 30 every year for properties on the Regional Water Supply System: lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4-10 am or 7-10 pm by any method, or 12:01-10 am or 7-10 pm with timed/automatic irrigation. Trees, shrubs, flowers and vegetable gardens may be sprinkled any day 4-10 am or 7-10 pm, and hand watering or micro/drip irrigation is allowed any day, any time. Strata and other multi-unit complexes use the complex's street address. New sod and newly seeded lawns need no permit and have a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "sourceTitle": "Regional Watering Schedule - Capital Regional District",
+      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
       "verify": true,
-      "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Dates and day split also shown in the Saanich watering-schedules page snippet. Shared regional block, not municipality-specific."
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "corrected",
+      "note": "V2: verified on the live CRD page (www.crd.ca/node/4919 redirects here). Corrections: added the separate timed/automatic irrigation window (12:01-10 am or 7-10 pm), the any-day rules for trees, shrubs and gardens, the multi-unit address rule and the bylaw number. Shared regional block, not municipality-specific; R1a files use the id 'crd-watering-stage1' for the same rule, so the integrator should merge the two ids."
+    },
+    {
+      "id": "regional-crd-water-systems",
+      "kind": "regional",
+      "unique": false,
+      "text": "The CRD's Juan de Fuca Water Distribution System supplies drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and East Sooke; the Saanich Peninsula Water Distribution System supplies Central Saanich, Sidney and North Saanich. Properties not connected (for example on private wells) are outside the CRD watering schedule.",
+      "sourceUrl": "https://www.crd.ca/programs-services/water/drinking-water-systems",
+      "sourceTitle": "Drinking Water Systems - Capital Regional District",
+      "excerpt": "The Juan de Fuca Water Distribution System provides drinking water to Colwood, Langford, Metchosin, View Royal, Sooke, parts of Highlands and electoral area East Sooke.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "added",
+      "note": "V2: new shared regional fact. Same page, verbatim: 'The Saanich Peninsula Water Distribution System provides drinking water to Central Saanich, Sidney and North Saanich.' The last sentence (unconnected properties are outside the schedule) follows from the watering page, which says Bylaw 4099 applies to customers of the Regional Water Supply System."
+    },
+    {
+      "id": "regional-crd-invasive-disposal",
+      "kind": "regional",
+      "unique": false,
+      "text": "Invasive plants can be taken to Hartland Landfill in bags marked 'Invasive Species' or in covered loads; knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs. The CRD's Regional Invasive Species Program lists priority species including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "sourceTitle": "Invasive Species - Capital Regional District",
+      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "added",
+      "note": "V2: new shared regional fact; it confirms the CRD invasive-species note already used in content/areas/*.json. Same page, verbatim: 'Knotweed species disposal requires a controlled waste permit (reduced fee)' and 'Note: Knotweed species must not be disposed of at these locations.'"
+    },
+    {
+      "id": "regional-bc-rapr",
+      "kind": "regional",
+      "unique": false,
+      "text": "B.C.'s riparian rules (the Riparian Areas Protection Regulation, formerly the Riparian Areas Regulation) apply across the Capital Regional District except the City of Victoria and Esquimalt. Residential, commercial or industrial work within 30 m of a fish-bearing stream, lake, wetland or ditch, including removing or altering plants and disturbing soil, can need a Qualified Environmental Professional's assessment; each local government sets how it applies through permit areas or bylaws. Amendments to the regulation take effect January 1, 2027.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/plants-animals-and-ecosystems/fish-fish-habitat/riparian-areas-regulations/rar-brochure-2016_final_web.pdf",
+      "sourceTitle": "Riparian Areas Regulation brochure (Province of B.C., 2016)",
+      "excerpt": "within 30 metres of a watercourse, even if that watercourse is not on your property,",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "corrected",
+      "note": "V2: the 30 m figure is not on the RAPR web page itself, so the source is now the provincial brochure. Brochure, verbatim: the activities listed include 'Removing or altering plants' and 'Disturbing soils'. Regulation page (https://www2.gov.bc.ca/gov/content/environment/plants-animals-ecosystems/fish/aquatic-habitat-management/riparian-areas-regulation), verbatim: 'Amendments to RAPR come into effect on January 1, 2027.' Citizen resources page (.../riparian-areas-regulation/citizen-resources), verbatim: 'Capital (except City of Victoria and Esquimalt)'. The 2016 guidebook adds that the rules do not apply to marine or estuarine shorelines. The brochure predates the 2019 rename and the 2027 amendments, so re-check after January 1, 2027."
     },
     {
       "id": "regional-bc-wildlife-act-nests",
       "kind": "regional",
       "unique": false,
-      "text": "B.C.'s Wildlife Act (section 34) protects occupied bird nests, and eagle, osprey, heron and some other nests year-round, so trees are checked for active nests before felling or heavy pruning, especially in spring and summer.",
-      "sourceUrl": "https://www2.gov.bc.ca/gov/content/transportation/transportation-infrastructure/engineering-standards-guidelines/environmental-management/reference-documents/environmental-regulatory-compliance/wildlife",
-      "sourceTitle": "Wildlife - Environmental regulatory compliance (Province of B.C.)",
-      "excerpt": "The protection for eagle and heron nests applies even outside of the breeding season.",
+      "text": "Section 34 of B.C.'s Wildlife Act makes it an offence to take, injure, molest or destroy a bird or its egg, the nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl (protected even when not in use), or any other bird's nest while it holds a bird or egg. Trees are therefore checked for nests before felling or heavy pruning, especially in spring and summer.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf",
+      "sourceTitle": "Migratory Birds and Breeding Birds: Federal and Provincial Legislation (BC Timber Sales, March 2024)",
+      "excerpt": "possesses, takes, injures, molests or destroys: a) A bird or its egg, b) The nest of an eagle, peregrine falcon, gyrfalcon, osprey, heron or burrowing owl",
       "verify": true,
-      "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host not in allowed network); confirm wording on the page before publishing. Provincial rule: shared regional block."
+      "reviewedOn": "2026-11-21",
+      "sourceType": "official",
+      "status": "corrected",
+      "note": "V2: the earlier source (www2.gov.bc.ca .../environmental-regulatory-compliance/wildlife) now returns 404, so the source is now this provincial guidance sheet, which quotes section 34. Same sheet, verbatim: 'c) The nest of a bird not referred to in paragraph (b) when the nest is occupied by a bird or its egg.' It also says inactive nests of listed species 'have regulatory protection'. Correction: the species list is now exact (peregrine falcon, gyrfalcon and burrowing owl added; 'some other nests' removed)."
     }
   ],
   "gaps": [
-    "Could not fetch highlands.ca: size thresholds for protected trees and the definition of 'significant tree' not confirmed.",
+    "ALL Highlands-specific facts are unverified: www.highlands.ca must be added to the session's allowed network (highlands.ca alone is not enough; it redirects to www).",
+    "Protected-tree size thresholds and the definition of 'significant tree' not confirmed.",
     "Deer pressure and soils (thin soil over rock): no official source found.",
     "Whether the 2009 CWPP has been replaced by a newer Community Wildfire Resiliency Plan not confirmed."
   ]

@@ -2,6 +2,7 @@
   "slug": "north-saanich",
   "name": "North Saanich",
   "researchedOn": "2026-11-21",
+  "verifiedOn": "2026-11-21",
   "facts": [
     {
       "id": "ns-tree-bylaw-1548",
@@ -13,7 +14,7 @@
       "excerpt": "A tree permit is required to remove any trees regulated by the District's Tree Protection Bylaw No. 1548.",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet. V1 attempt on 2026-11-21: northsaanich.ca returns 301 to www.northsaanich.ca, which is not on this session's allowed hosts, so the page could not be opened. Allow www.northsaanich.ca to verify."
     },
     {
       "id": "ns-tree-20cm",
@@ -25,7 +26,7 @@
       "excerpt": "a tree with a D.B.H. of 20 cm or greater",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet. The URL redirects (301) to www.northsaanich.ca, which is not on this session's allowed hosts."
     },
     {
       "id": "ns-tree-topping",
@@ -37,7 +38,7 @@
       "excerpt": "Topping is prohibited",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool"
+      "note": "UNVERIFIED: from search snippet, and the excerpt was paraphrased by the search tool. The URL redirects (301) to www.northsaanich.ca, which is not on this session's allowed hosts."
     },
     {
       "id": "ns-dpas",
@@ -49,7 +50,7 @@
       "excerpt": "1: Marine Uplands and Foreshore; DPA No. 3: Sensitive Ecosystems; DPA No. 4: Steep Slopes",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet. The URL redirects (301) to www.northsaanich.ca, which is not on this session's allowed hosts. The '10 cm in DPAs' claim from research/areas.json is STILL UNVERIFIED and must not be published."
     },
     {
       "id": "ns-alr-rural",
@@ -61,7 +62,7 @@
       "excerpt": "nearly 35% of the District is within the Agricultural Land Reserve (ALR)",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet. The URL redirects (301) to www.northsaanich.ca, which is not on this session's allowed hosts. 'Acreages and hobby farms are typical' is our framing."
     },
     {
       "id": "ns-groundwater-levels",
@@ -73,7 +74,7 @@
       "excerpt": "a crystalline bedrock well reads at the low end of its historical range",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool, and the report changes over time"
+      "note": "UNVERIFIED: from search snippet, and the excerpt was paraphrased by the search tool. bcrfc.env.gov.bc.ca is not on this session's allowed hosts. The report changes over time, so do not quote a reading. prov-private-well-drought (verified) covers the advice."
     },
     {
       "id": "ns-water-supply",
@@ -85,50 +86,61 @@
       "excerpt": "watering schedules are in effect within the District of North Saanich",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked); excerpt paraphrased by search tool"
-    },
-    {
-      "id": "prov-private-well-drought",
-      "kind": "regional",
-      "text": "Provincial (BC): owners with private wells are advised to conserve water year-round, follow local watering restrictions, use drought-friendly landscaping and check nearby observation wells in the same aquifer.",
-      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-wells/bc_gov_drywellbrochure.pdf",
-      "sourceTitle": "What to do if your well goes dry (Province of BC brochure)",
-      "sourceType": "official",
-      "excerpt": "This should be done year-round and can include using less water, using low-water appliances, and drought-friendly landscaping.",
-      "verify": true,
-      "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet, and the excerpt was paraphrased by the search tool. www.northsaanich.ca is not on this session's allowed hosts. The CRD 'Greater Victoria Drinking Water Supply System' map (crd.ca) labels North Saanich, but its text does not say which parcels are served, so it does not confirm this fact."
     },
     {
       "id": "ns-pesticide-policy",
       "kind": "rule",
-      "text": "North Saanich encourages owners to reduce or stop cosmetic pesticide use. Search found no residential pesticide bylaw, so confirm with the District.",
+      "text": "North Saanich encourages owners to reduce or stop cosmetic pesticide use. Whether it has a residential pesticide bylaw was not confirmed, so check with the District before advising.",
       "sourceUrl": "https://www.northsaanich.ca/node/57",
       "sourceTitle": "Pesticide Use | District of North Saanich",
       "sourceType": "official",
       "excerpt": "encourages property owners to reduce or eliminate the cosmetic use of pesticides on their properties",
       "verify": true,
       "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "note": "UNVERIFIED: from search snippet. www.northsaanich.ca is not on this session's allowed hosts. CORRECTED wording: removed 'Search found no residential pesticide bylaw', because a negative search is not evidence."
+    },
+    {
+      "id": "prov-private-well-drought",
+      "kind": "regional",
+      "text": "Provincial (BC): owners with private wells are advised to conserve water year-round, including through drought-friendly landscaping. They should also follow local watering restrictions, check nearby observation wells in the same aquifer, and consider collecting rainwater for gardens.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/water-wells/bc_gov_drywellbrochure.pdf",
+      "sourceTitle": "What to do if your well goes dry (Province of BC brochure)",
+      "sourceType": "official",
+      "excerpt": "This should be done year-round and can include using less water, using low-water appliances, and drought-friendly landscaping.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed on the live PDF (section 'Drought preparation and planning'). Rainwater collection was added from the same section; the brochure notes that rainwater is not safe to drink unless treated."
     },
     {
       "id": "crd-watering-stage1",
       "kind": "regional",
-      "text": "Regional (CRD, not municipal): from May 1 to September 30, lawns on the regional water supply may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday). The day limits apply only to lawns.",
-      "sourceUrl": "https://crd.bc.ca/education/water-conservation/at-home/watering-schedules",
-      "sourceTitle": "Watering Schedules | Capital Regional District",
+      "text": "Regional (CRD, not municipal): every year from May 1 to September 30, Stage 1 of the CRD Water Conservation Bylaw applies on the regional water supply. Lawns may be watered two days a week by address (even: Wednesday and Saturday; odd: Thursday and Sunday), 4 to 10 a.m. or 7 to 10 p.m.; automatic systems may start at 12:01 a.m. Trees, shrubs, flowers and vegetables may be sprinkled any day in those hours, and hand watering and drip are allowed any time. A strata complex uses the complex's street address.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "sourceTitle": "Regional Watering Schedule | Capital Regional District",
       "sourceType": "official",
-      "excerpt": "The watering schedule days only apply to lawns!",
+      "excerpt": "Stage 1 Watering Schedule of the Water Conservation Bylaw No. 4099 for the Regional Water Supply System is in effect May 1 through September 30 every year.",
       "verify": true,
-      "reviewedOn": null,
-      "note": "from search snippet (official site could not be fetched from this session: host blocked)"
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. CORRECTED: the old URL (crd.bc.ca/education/...) is not reachable and www.crd.ca/node/4919 redirects here, so the URL was updated. The old excerpt 'The watering schedule days only apply to lawns!' is not on the current page and was replaced. The bylaw applies to customers of the Regional Water Supply System; properties on private wells are not covered."
+    },
+    {
+      "id": "crd-invasive-disposal",
+      "kind": "regional",
+      "text": "Regional (CRD): invasive plants can go to Hartland Landfill in bags marked 'Invasive Species' or in covered loads. Knotweed needs a controlled waste permit and must not go to municipal yard-waste drop-offs.",
+      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+      "sourceTitle": "Invasive Species | Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Invasive species can be disposed of at Hartland Landfill. They must be in bags marked “Invasive Species” or in covered loads.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW shared regional fact (same id in every V1 file)."
     }
   ],
   "gaps": [
-    "The claim in research/areas.json that trees are regulated from 10 cm in environmental and steep-slope DPAs could not be confirmed (a summary said protected species start at 10 cm, but no clear source). Check Bylaw 1548 and OCP s.5.10.",
-    "Which North Saanich parcels are on private wells and which are on municipal water: the service area map was not retrieved.",
-    "Deer pressure on North Saanich farms: only regional and older CRD material found.",
-    "Pesticide bylaw: none found in search. That does not mean none exists; see https://www.northsaanich.ca/local-government/bylaws-policies.",
-    "northsaanich.ca could not be fetched in this session, so reviewedOn is null on every fact."
+    "BLOCKED: every North Saanich municipal page redirects to www.northsaanich.ca, which this session's network does not allow (only northsaanich.ca was allowed). All eight District facts (ns-*) stay unverified with reviewedOn null. Allow www.northsaanich.ca and re-run.",
+    "The research/areas.json claim that trees are regulated from 10 cm in environmental and steep-slope DPAs is still unconfirmed. Do not publish it.",
+    "Which parcels are on private wells and which are on municipal water: no map retrieved.",
+    "Deer pressure, burning rules and wildfire interface: not verified."
   ]
 }

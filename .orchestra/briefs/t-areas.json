@@ -1,0 +1,93 @@
+{
+  "id": "t-areas",
+  "wave": "w3",
+  "lens": "Art-directed template builder: Service areas + interactive map",
+  "branch": [
+    "w3/t-areas"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/areas.mjs",
+      "site/src/styles/62-areas.css",
+      "site/src/styles/50-legacy-*-t-areas.css",
+      "site/tests/e2e/areas.spec.mjs",
+      "site/tests/unit/t-areas-*.test.mjs",
+      "site/src/components/map.mjs",
+      "site/src/scripts/areas.js",
+      ".orchestra/requests/t-areas.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/areas/*.json",
+    "content/regional.json",
+    "content/pages/areas.json",
+    "research/area-facts/*.json"
+  ],
+  "deliverables": [
+    "/areas/ hub with an interactive glowing SVG map + list (ONE keyboard path: the list; tiles tabindex=-1, state mirrored via :has())",
+    "13 municipality pages: H1 \"Landscaping in X\" → place summary → Local rules that affect your yard (sources, last-reviewed date) → conditions → most-requested services and why → local proof → shared regional block [data-shared] → neighbouring municipalities → CTA /free-quote/?area=<slug>"
+  ],
+  "acceptance": [
+    "C2.3: Municipality page wireframe — verified by e2e/areas.spec#template-order",
+    "P2#10: 13 municipality pages pass the swap test; /areas/ hub with SVG map — verified by f-honesty#swap-test-78-pairs",
+    "Each municipality links to the 4 services and to 1–3 projects in that municipality when they exist",
+    "Map hover/focus glow only while active; ambient pulse on the current area is T2 (var(--alive-play))",
+    "t-areas legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4433
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-areas.md (never edit a file outside owns; describe the change there)"
+}

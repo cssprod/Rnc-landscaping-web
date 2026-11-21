@@ -1,0 +1,112 @@
+{
+  "id": "ia",
+  "wave": "w1",
+  "lens": "Information architect + SSG router engineer (C1, redirects, single source of truth)",
+  "branch": [
+    "w1/ia"
+  ],
+  "owns": {
+    "w1": [
+      "site/src/pages/**",
+      "site/src/components/{layout,ui,map,forms,living}.mjs",
+      "site/src/components/ui/**",
+      "site/src/lib/{seo,schema,data,tokens,dates}.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/tools/{check-links,check-html,rewrite-links,check-content}.mjs",
+      "site/tools/schemas/**",
+      "site/tests/e2e/**",
+      "site/tests/helpers/**",
+      "site/tests/site.spec.mjs",
+      "site/tests/unit/ia-*.test.mjs",
+      "site/fixtures/**",
+      ".orchestra/requests/ia.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "content/{areas,projects,services,resources,testimonials,pages}/**",
+    "content/regional.json",
+    "site/src/styles/**",
+    "site/src/scripts/**",
+    "site/build.mjs",
+    "brand/**",
+    "media/**",
+    "netlify.toml"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "site/src/pages/routes.mjs",
+    "site/src/components/**",
+    "site/src/lib/**",
+    "site/site.config.mjs",
+    "content/**",
+    "site/tests/site.spec.mjs",
+    ".orchestra/url-map.json",
+    "CONTRACT.md §URL map, §Content schemas v3, §Modules",
+    "site/COMPONENTS.md"
+  ],
+  "deliverables": [
+    "Route families: site/src/pages/{_shared,home,services,areas,projects,company,editorial,quote,styleguide}.mjs + routes.mjs aggregator (frozen after W1; concatenates family exports in a fixed order); each route declares {path,file,render,sources[],scripts[]}",
+    "C1 URLs: /projects/, /projects/{slug}/ (flat), /free-quote/, /process/ stub; routes read pg(\"projects\") ?? pg(\"portfolio\") and pg(\"process\") ?? stub during the transition",
+    "site/src/pages/redirects.mjs → dist/_redirects from .orchestra/url-map.json rules (one 301 per retired URL, no chains)",
+    "site/src/lib/seo.mjs: headMeta(env, p) and jsonLd(env, p) — layout.mjs only calls them (logic moved, output identical except URLs)",
+    "content/site.json (schema v3) as the single source of NAP, hours, services, municipalities, credentials and token values; site.config.mjs reads it; new tokens [REPLY TIME] (required), [GOOGLE PROFILE], [FOUNDED] (optional)",
+    "C1 header: Services ▾ · Projects · Service areas ▾ · Process · About · [Call] [Free quote] with <button aria-expanded aria-controls> disclosures; C1 footer (4 services + commercial, 13 municipalities, NAP from site.json, hours, tel:/sms:/mailto:, Privacy/Terms/Accessibility/Google profile; no careers, no duplicates). Keep the literal strings <header class=\"site-header\" and <footer class=\"site-footer\"",
+    "ui.mjs split mechanically into components/ui/{actions,heads,cards,projects,trust,faq,cta,seasons,callouts}.mjs + index.mjs (export * from each; frozen) — byte-identical HTML; callouts.mjs starts empty; components/living.mjs stub with the frozen livingScene/projectArt signatures returning \"\"",
+    "layout.mjs: scripts:[] option reading env.assets.modules[name] = {src, deps[]} → <script type=module> + <link rel=modulepreload> per dep; main and living on every page; keep JS_FLAG alias (seed) untouched",
+    "site/src/lib/dates.mjs: formatDate(iso) → \"19 November 2026\", timeEl(iso) → <time datetime>",
+    "tools/rewrite-links.mjs (dry-run by default; --write is integrator-only; never run on content/ by a stream) + tools/check-content.mjs + tools/schemas/*.schema.json (content schema v3 validator: required fields, enum values, no budget/price keys, slug lint, link targets exist)",
+    "tests split per owner into tests/e2e/{global,chrome,components,living,quote,projects,areas,home,services,company,editorial,redirects}.spec.mjs on the new URLs; tests/helpers/ for shared fixtures"
+  ],
+  "acceptance": [
+    "A13#1: Card links generated from the post URL; link checker in CI — verified by check-links#internal-200",
+    "A13#2: Netlify _redirects 301 map for every retired URL — verified by check-links#strict-redirects (every url-map 301 → one hop → 200)",
+    "A13#7: Services menu lists every service page (no orphans) — verified by check-links#orphans (every sitemap URL reachable from nav/footer/hubs)",
+    "A13#8: <button aria-expanded> disclosures, never href=\"#\" — verified by check-html#no-href-hash",
+    "A13#13: Single source of truth for founding year / business facts — verified by check-content#single-source",
+    "A13#14: One municipality list in data; one page per municipality — verified by check-content#municipality-list",
+    "A13#23: Structured project data with validation — verified by check-content#schema-v3",
+    "A13#25: Footer links deduplicated — verified by check-links#footer-duplicates",
+    "A13#26: Footer phone and email linked — verified by check-html#footer-tel-mailto",
+    "C1.1: Sitemap and URL map (/projects/, /free-quote/, /process/ …) — verified by check-links#sitemap-matches-url-map",
+    "C1.2: Primary nav: Services ▾ · Projects · Service areas ▾ · Process · About · Call · Free quote — verified by e2e/chrome.spec#primary-nav",
+    "C1.3: Footer: services, municipalities, NAP, hours, tel/sms/mailto, legal + Google profile, no careers — verified by e2e/chrome.spec#footer",
+    "P0#1: site.json single source for NAP, founding year, hours, licences, municipalities — verified by unit/ia-site-json.test#consumers",
+    "P2#13: Disclosure menus (no href=\"#\"), breadcrumbs, helpful 404 — verified by e2e/chrome.spec#disclosure-breadcrumb-404",
+    "P3#16: GBP alignment: matching NAP, 13 service areas, review link — verified by check-content#nap-consistency",
+    "Old sitemap vs new: every url-map 301 row resolves in one hop to a 200 (serve.mjs + check-links --strict-redirects)",
+    "No orphan pages: every sitemap URL is reachable from header/footer/hub links",
+    "HTML byte-identical to the pre-split build except URL changes, nav/footer and the moved seo calls (diff report attached)",
+    "Strict check-links passes on a scratch copy with tools/rewrite-links.mjs --write applied"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>"
+  ],
+  "verifierLens": "Crawler + screen-reader landmark auditor: old→new URL matrix, nav landmark names, disclosure semantics, orphan detection",
+  "port": {
+    "w1": 4412
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/ia.md (never edit a file outside owns; describe the change there)"
+}

@@ -1,0 +1,680 @@
+{
+  "$comment": "W1 build splits site/src/styles/site.css into these slices, each wrapped in @layer legacy { } (legacy is the FIRST, lowest-priority layer declared in 00-layers.css). Concatenation is in file-name order, so the two-digit sequence reproduces the original source order exactly and the cascade is unchanged (acceptance: 0 px screenshot diff at 390 and 1440, dark and light). Split segments copy each listed selector rule into the owner slice inside its original @media wrapper; combined selector lists are split into one rule per selector (same specificity, same relative order). If a split rule causes any pixel diff, move it into 50-legacy-90-ds-core.css and record it here (ds-core re-homes it in W2). Each owner deletes its own slices once its new CSS replaces them; css-consolidator (W3b) proves none remain.",
+  "source": "site/src/styles/site.css",
+  "sourceLines": 678,
+  "generatedOn": "2026-11-21",
+  "layerDecl": "@layer legacy, reset, base, layout, chrome, components, living, pages, utilities, motion, print;",
+  "fallbackSlice": "site/src/styles/50-legacy-90-ds-core.css",
+  "coverage": {
+    "uncoveredNonBlankLines": [],
+    "unownedSelectors": []
+  },
+  "owners": {
+    "ds-chrome": [
+      "site/src/styles/50-legacy-07-ds-chrome.css",
+      "site/src/styles/50-legacy-21-ds-chrome.css",
+      "site/src/styles/50-legacy-22-ds-chrome.css"
+    ],
+    "ds-comp": [
+      "site/src/styles/50-legacy-02-ds-comp.css",
+      "site/src/styles/50-legacy-05-ds-comp.css",
+      "site/src/styles/50-legacy-08-ds-comp.css",
+      "site/src/styles/50-legacy-10-ds-comp.css",
+      "site/src/styles/50-legacy-12-ds-comp.css",
+      "site/src/styles/50-legacy-14-ds-comp.css",
+      "site/src/styles/50-legacy-23-ds-comp.css"
+    ],
+    "ds-core": [
+      "site/src/styles/50-legacy-01-ds-core.css",
+      "site/src/styles/50-legacy-03-ds-core.css",
+      "site/src/styles/50-legacy-24-ds-core.css",
+      "site/src/styles/50-legacy-32-ds-core.css"
+    ],
+    "living": [
+      "site/src/styles/50-legacy-04-living.css",
+      "site/src/styles/50-legacy-06-living.css",
+      "site/src/styles/50-legacy-25-living.css"
+    ],
+    "quote": [
+      "site/src/styles/50-legacy-19-quote.css",
+      "site/src/styles/50-legacy-26-quote.css"
+    ],
+    "t-areas": [
+      "site/src/styles/50-legacy-15-t-areas.css",
+      "site/src/styles/50-legacy-27-t-areas.css"
+    ],
+    "t-company": [
+      "site/src/styles/50-legacy-18-t-company.css",
+      "site/src/styles/50-legacy-28-t-company.css"
+    ],
+    "t-editorial": [
+      "site/src/styles/50-legacy-09-t-editorial.css",
+      "site/src/styles/50-legacy-17-t-editorial.css"
+    ],
+    "t-home": [
+      "site/src/styles/50-legacy-11-t-home.css",
+      "site/src/styles/50-legacy-29-t-home.css"
+    ],
+    "t-projects": [
+      "site/src/styles/50-legacy-16-t-projects.css",
+      "site/src/styles/50-legacy-20-t-projects.css",
+      "site/src/styles/50-legacy-30-t-projects.css"
+    ],
+    "t-services": [
+      "site/src/styles/50-legacy-13-t-services.css",
+      "site/src/styles/50-legacy-31-t-services.css"
+    ]
+  },
+  "segments": [
+    {
+      "seq": 1,
+      "file": "site/src/styles/50-legacy-01-ds-core.css",
+      "owner": "ds-core",
+      "lines": [
+        1,
+        39
+      ],
+      "label": "header comment, base (reset, body, headings, focus, selection, .i, .vh, .note, skip link); layout (.wrap, .section variants, main)"
+    },
+    {
+      "seq": 2,
+      "file": "site/src/styles/50-legacy-02-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        40,
+        47
+      ],
+      "label": "section head + link-more (ui/heads, ui/actions)"
+    },
+    {
+      "seq": 3,
+      "file": "site/src/styles/50-legacy-03-ds-core.css",
+      "owner": "ds-core",
+      "lines": [
+        48,
+        66
+      ],
+      "label": "glass materials (.glass-card, .glass-bar, .icon-tile, @supports fallback)"
+    },
+    {
+      "seq": 4,
+      "file": "site/src/styles/50-legacy-04-living.css",
+      "owner": "living",
+      "lines": [
+        67,
+        82
+      ],
+      "label": "aurora washes + .bento-band backdrop (replaced by living scenes)"
+    },
+    {
+      "seq": 5,
+      "file": "site/src/styles/50-legacy-05-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        83,
+        111
+      ],
+      "label": "buttons, chips, placeholder chips, sample label"
+    },
+    {
+      "seq": 6,
+      "file": "site/src/styles/50-legacy-06-living.css",
+      "owner": "living",
+      "lines": [
+        112,
+        121
+      ],
+      "label": "media frame, media chips, credits (picture())"
+    },
+    {
+      "seq": 7,
+      "file": "site/src/styles/50-legacy-07-ds-chrome.css",
+      "owner": "ds-chrome",
+      "lines": [
+        122,
+        203
+      ],
+      "label": "navigation capsule, mega panel, mobile sheet (+ its media queries); breadcrumbs"
+    },
+    {
+      "seq": 8,
+      "file": "site/src/styles/50-legacy-08-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        204,
+        291
+      ],
+      "label": "heroes, dock, page heads (ui/heads); service tiles (ui/cards); cards and grids (ui/cards, ui/projects); prose sections, item cards (ui/heads sections())"
+    },
+    {
+      "seq": 9,
+      "file": "site/src/styles/50-legacy-09-t-editorial.css",
+      "owner": "t-editorial",
+      "lines": [
+        292,
+        294
+      ],
+      "label": ".legal"
+    },
+    {
+      "seq": 10,
+      "file": "site/src/styles/50-legacy-10-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        295,
+        309
+      ],
+      "label": "bento (ui/cards)"
+    },
+    {
+      "seq": 11,
+      "file": "site/src/styles/50-legacy-11-t-home.css",
+      "owner": "t-home",
+      "lines": [
+        310,
+        320
+      ],
+      "label": "feature split (home)"
+    },
+    {
+      "seq": 12,
+      "file": "site/src/styles/50-legacy-12-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        321,
+        375
+      ],
+      "label": "testimonials (ui/trust); deep bands, credentials (ui/trust); CTA band (ui/cta); inset lists, def-list, FAQ (ui/faq)"
+    },
+    {
+      "seq": 13,
+      "file": "site/src/styles/50-legacy-13-t-services.css",
+      "owner": "t-services",
+      "lines": [
+        376,
+        385
+      ],
+      "label": "includes, steps (service template)"
+    },
+    {
+      "seq": 14,
+      "file": "site/src/styles/50-legacy-14-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        386,
+        413
+      ],
+      "label": "seasons (ui/seasons); before/after (ui/projects beforeAfter)"
+    },
+    {
+      "seq": 15,
+      "file": "site/src/styles/50-legacy-15-t-areas.css",
+      "owner": "t-areas",
+      "lines": [
+        414,
+        457
+      ],
+      "label": "area map; area pages: intro, facts, check-list, service-list, notes, source chips"
+    },
+    {
+      "seq": 16,
+      "file": "site/src/styles/50-legacy-16-t-projects.css",
+      "owner": "t-projects",
+      "lines": [
+        458,
+        479
+      ],
+      "label": "spec bar, case study, gallery"
+    },
+    {
+      "seq": 17,
+      "file": "site/src/styles/50-legacy-17-t-editorial.css",
+      "owner": "t-editorial",
+      "lines": [
+        480,
+        489
+      ],
+      "label": "article date/media/body, prose, sources"
+    },
+    {
+      "seq": 18,
+      "file": "site/src/styles/50-legacy-18-t-company.css",
+      "owner": "t-company",
+      "lines": [
+        490,
+        499
+      ],
+      "label": "owner block, capability row; contact cards"
+    },
+    {
+      "seq": 19,
+      "file": "site/src/styles/50-legacy-19-quote.css",
+      "owner": "quote",
+      "lines": [
+        500,
+        569
+      ],
+      "label": "quote form, stepper, fields, choices, ready panel"
+    },
+    {
+      "seq": 20,
+      "file": "site/src/styles/50-legacy-20-t-projects.css",
+      "owner": "t-projects",
+      "lines": [
+        570,
+        584
+      ],
+      "label": "portfolio filters"
+    },
+    {
+      "seq": 21,
+      "file": "site/src/styles/50-legacy-21-ds-chrome.css",
+      "owner": "ds-chrome",
+      "lines": [
+        585,
+        605
+      ],
+      "label": "footer"
+    },
+    {
+      "seq": 22,
+      "file": "site/src/styles/50-legacy-22-ds-chrome.css",
+      "owner": "ds-chrome",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 610,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".site-footer__top"
+        },
+        {
+          "line": 611,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".site-footer__brand"
+        },
+        {
+          "line": 628,
+          "media": "(max-width: 599.98px)",
+          "selector": ".site-footer__top"
+        },
+        {
+          "line": 629,
+          "media": "(max-width: 599.98px)",
+          "selector": ".site-footer__areas"
+        }
+      ]
+    },
+    {
+      "seq": 23,
+      "file": "site/src/styles/50-legacy-23-ds-comp.css",
+      "owner": "ds-comp",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 609,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".tiles"
+        },
+        {
+          "line": 609,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".card-grid--4"
+        },
+        {
+          "line": 612,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".seasons"
+        },
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".prose-section__grid"
+        },
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".faq__grid"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".prose-section__head h2"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".prose-section__head h3"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".faq__head h2"
+        },
+        {
+          "line": 618,
+          "media": "(max-width: 959.98px)",
+          "selector": ".bento"
+        },
+        {
+          "line": 618,
+          "media": "(max-width: 959.98px)",
+          "selector": ".bento--3"
+        },
+        {
+          "line": 619,
+          "media": "(max-width: 959.98px)",
+          "selector": ".bento--3 .bento__card:first-child"
+        },
+        {
+          "line": 620,
+          "media": "(max-width: 959.98px)",
+          "selector": ".trust__grid"
+        },
+        {
+          "line": 624,
+          "media": "(max-width: 599.98px)",
+          "selector": ".tiles"
+        },
+        {
+          "line": 625,
+          "media": "(max-width: 599.98px)",
+          "selector": ".tiles::-webkit-scrollbar"
+        },
+        {
+          "line": 626,
+          "media": "(max-width: 599.98px)",
+          "selector": ".tile"
+        },
+        {
+          "line": 627,
+          "media": "(max-width: 599.98px)",
+          "selector": ".card-grid--4"
+        },
+        {
+          "line": 627,
+          "media": "(max-width: 599.98px)",
+          "selector": ".seasons"
+        },
+        {
+          "line": 627,
+          "media": "(max-width: 599.98px)",
+          "selector": ".trust__grid"
+        },
+        {
+          "line": 634,
+          "media": "(max-width: 599.98px)",
+          "selector": ".hero__ctas .btn"
+        },
+        {
+          "line": 635,
+          "media": "(max-width: 599.98px)",
+          "selector": ".dock__note"
+        },
+        {
+          "line": 639,
+          "media": "(max-width: 599.98px)",
+          "selector": ".ba.is-enhanced .ba__control"
+        }
+      ]
+    },
+    {
+      "seq": 24,
+      "file": "site/src/styles/50-legacy-24-ds-core.css",
+      "owner": "ds-core",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 647,
+          "media": "(prefers-color-scheme: dark)",
+          "selector": ":root:not([data-theme=\"light\"]) .icon-tile"
+        }
+      ]
+    },
+    {
+      "seq": 25,
+      "file": "site/src/styles/50-legacy-25-living.css",
+      "owner": "living",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 645,
+          "media": "(prefers-color-scheme: dark)",
+          "selector": ":root:not([data-theme=\"light\"]) .media--art img"
+        },
+        {
+          "line": 649,
+          "media": null,
+          "selector": ":root[data-theme=\"dark\"] .media--art img"
+        }
+      ]
+    },
+    {
+      "seq": 26,
+      "file": "site/src/styles/50-legacy-26-quote.css",
+      "owner": "quote",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".quote-page__grid"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".quote-aside"
+        },
+        {
+          "line": 640,
+          "media": "(max-width: 599.98px)",
+          "selector": ".step__nav .btn"
+        },
+        {
+          "line": 646,
+          "media": "(prefers-color-scheme: dark)",
+          "selector": ":root:not([data-theme=\"light\"]) .choice input:checked"
+        }
+      ]
+    },
+    {
+      "seq": 27,
+      "file": "site/src/styles/50-legacy-27-t-areas.css",
+      "owner": "t-areas",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".area-intro"
+        },
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".area-map__grid"
+        }
+      ]
+    },
+    {
+      "seq": 28,
+      "file": "site/src/styles/50-legacy-28-t-company.css",
+      "owner": "t-company",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 612,
+          "media": "(max-width: 1099.98px)",
+          "selector": ".contact-cards"
+        },
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".owner"
+        },
+        {
+          "line": 627,
+          "media": "(max-width: 599.98px)",
+          "selector": ".contact-cards"
+        }
+      ]
+    },
+    {
+      "seq": 29,
+      "file": "site/src/styles/50-legacy-29-t-home.css",
+      "owner": "t-home",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".feature-split"
+        },
+        {
+          "line": 621,
+          "media": "(max-width: 959.98px)",
+          "selector": ".feature-split__media"
+        }
+      ]
+    },
+    {
+      "seq": 30,
+      "file": "site/src/styles/50-legacy-30-t-projects.css",
+      "owner": "t-projects",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".case__body"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".case__scope"
+        },
+        {
+          "line": 630,
+          "media": "(max-width: 599.98px)",
+          "selector": ".spec-bar"
+        },
+        {
+          "line": 631,
+          "media": "(max-width: 599.98px)",
+          "selector": ".spec-bar > div + div"
+        },
+        {
+          "line": 632,
+          "media": "(max-width: 599.98px)",
+          "selector": ".spec-bar > div:nth-child(even)"
+        },
+        {
+          "line": 633,
+          "media": "(max-width: 599.98px)",
+          "selector": ".spec-bar > div:nth-child(n + 3)"
+        },
+        {
+          "line": 636,
+          "media": "(max-width: 599.98px)",
+          "selector": ".filters__count"
+        },
+        {
+          "line": 637,
+          "media": "(max-width: 599.98px)",
+          "selector": ".filters"
+        },
+        {
+          "line": 638,
+          "media": "(max-width: 599.98px)",
+          "selector": ".segmented"
+        }
+      ]
+    },
+    {
+      "seq": 31,
+      "file": "site/src/styles/50-legacy-31-t-services.css",
+      "owner": "t-services",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "split": true,
+      "rules": [
+        {
+          "line": 615,
+          "media": "(max-width: 959.98px)",
+          "selector": ".includes"
+        },
+        {
+          "line": 616,
+          "media": "(max-width: 959.98px)",
+          "selector": ".includes__media"
+        },
+        {
+          "line": 617,
+          "media": "(max-width: 959.98px)",
+          "selector": ".includes__media"
+        },
+        {
+          "line": 627,
+          "media": "(max-width: 599.98px)",
+          "selector": ".includes__media"
+        }
+      ]
+    },
+    {
+      "seq": 32,
+      "file": "site/src/styles/50-legacy-32-ds-core.css",
+      "owner": "ds-core",
+      "lines": [
+        651,
+        677
+      ],
+      "label": "motion: keyframes, hero entrance, view() reveals, reduced-motion kill switch (→ 95-motion.css); print (→ 99-print.css)"
+    }
+  ]
+}

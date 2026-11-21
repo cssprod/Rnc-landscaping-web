@@ -1,0 +1,94 @@
+{
+  "id": "t-services",
+  "wave": "w3",
+  "lens": "Art-directed template builder: Services + Commercial",
+  "branch": [
+    "w3/t-services"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/services.mjs",
+      "site/src/styles/61-services.css",
+      "site/src/styles/50-legacy-*-t-services.css",
+      "site/tests/e2e/services.spec.mjs",
+      "site/tests/unit/t-services-*.test.mjs",
+      "site/src/components/ui/{seasons,callouts}.mjs",
+      "site/src/styles/{48-ui-seasons,49-ui-callouts}.css",
+      ".orchestra/requests/t-services.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/services/*.json",
+    "content/pages/{services,commercial}.json",
+    "content/regional.json"
+  ],
+  "deliverables": [
+    "Services hub + 4 service pages: H1 with local context → What's included → Good fit if… → per-visit table → seasonal timeline → process → related projects → local-rules callout → FAQ 5–6 → CTA; sticky in-page TOC on desktop",
+    "Commercial page with operational proof points and no invented numbers"
+  ],
+  "acceptance": [
+    "A12#5: Commercial proof points instead of adjectives — verified by check-honesty#commercial-proof",
+    "A12#7: Dedicated landing page per service line with local context — verified by e2e/services.spec#local-context",
+    "C2.2: Service page wireframe — verified by e2e/services.spec#template-order",
+    "P2#9: Services overview + 4 service pages on the C2 template — verified by e2e/services.spec#hub-and-four",
+    "Reviews band on every service page with the Google profile link (A13#11, shared with t-home)",
+    "Every service page links to all 13 municipality pages (C1 internal linking)",
+    "t-services legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4432
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-services.md (never edit a file outside owns; describe the change there)"
+}

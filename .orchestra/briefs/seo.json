@@ -1,0 +1,92 @@
+{
+  "id": "seo",
+  "wave": "w2",
+  "lens": "Technical SEO engineer (schema.org graphs, Google policies on self-serving reviews and doorway pages)",
+  "branch": [
+    "w2/seo"
+  ],
+  "owns": {
+    "w2": [
+      "site/src/lib/{schema,seo}.mjs",
+      "site/src/pages/redirects.mjs",
+      "site/tools/{check-seo,og-cards}.mjs",
+      "site/static/og/**",
+      "site/tests/unit/seo-*.test.mjs",
+      "site/tests/e2e/redirects.spec.mjs",
+      ".orchestra/requests/seo.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "site/src/components/**",
+    "site/src/styles/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "CONTRACT.md §URL map, §Schema",
+    ".orchestra/url-map.json",
+    "research/cedar-springs-teardown-blueprint.md C6, A9, A13"
+  ],
+  "deliverables": [
+    "C6 @graph per page with @ids: HomeAndConstructionBusiness, WebSite, WebPage, Service, BreadcrumbList, FAQPage (semantic only), Article with author; areaServed 13 places, hasOfferCatalog 4 services; placeholders omitted; no Review/AggregateRating",
+    "og:locale en_CA, og:type website (article for guides), per-page OG image with fallback",
+    "check-seo.mjs rules: h1-count, title-meta (≤60 / ≤160, unique), double-encoding, alt-filename, slug-lint, sentence-case, canonical, repeated-text, decorative-duplicate, cross-area-duplicates ([data-shared] exempt), internal-links, breadcrumbs, time-format, technical",
+    "tools/og-cards.mjs ready (cards rendered in W5)"
+  ],
+  "acceptance": [
+    "A13#3: One responsive component per pattern; no duplicated DOM — verified by check-seo#repeated-text (no text node repeated in a page outside [data-shared]; one nav[aria-label=Main])",
+    "A13#4: Descriptive hand-written alt; alt=\"\" for decorative — verified by check-seo#alt-filename",
+    "A13#5: One H1 per template; embedded blocks start at H2 — verified by check-seo#h1-count",
+    "A13#6: H1 on every index page — verified by check-seo#h1-present-on-hubs",
+    "A13#17: aria-hidden on decorative duplicates or render once — verified by check-seo#decorative-duplicate",
+    "A13#18: One OG card per page; website type; en_CA locale — verified by check-seo#og-tags",
+    "A13#19: Escape once at build; no double-encoding — verified by check-seo#double-encoding",
+    "A13#21: Slug linting — verified by check-seo#slug-lint",
+    "A13#29: HTTPS, consistent canonicals — verified by check-seo#canonical",
+    "A13#33: Proper case in HTML source — verified by check-seo#sentence-case",
+    "A13#35: 301 old duplicate URLs to new; one canonical per page — verified by check-seo#canonical-unique",
+    "C1.4: Internal linking (service↔municipality↔project) — verified by check-seo#internal-links",
+    "C6.1: One @id JSON-LD graph (business subtype, Service, BreadcrumbList, FAQPage optional, no Review/AggregateRating) — verified by unit/seo-graph.test#graph",
+    "C6.2: Title and meta description patterns and lengths — verified by check-seo#title-meta",
+    "C6.3: Social cards: en_CA, one OG image per template, og:type website — verified by og-cards#coverage",
+    "C6.6: Technical: sitemap, robots, self canonicals, _redirects, lang en-CA, build SEO checks — verified by check-seo#technical",
+    "P3#14: JSON-LD graph, OG per page, og:locale en_CA, lang en-CA — verified by check-seo#jsonld-graph",
+    "Unit tests snapshot the graph for home, a service, an area, a project and a guide"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Rich-results validator mindset: parse every JSON-LD block, check @id references resolve, look for invented values",
+  "port": {
+    "w2": 4425
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/seo.md (never edit a file outside owns; describe the change there)"
+}

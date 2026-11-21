@@ -1,0 +1,87 @@
+{
+  "id": "t-editorial",
+  "wave": "w3",
+  "lens": "Editorial template builder: guides, legal, accessibility statement, 404",
+  "branch": [
+    "w3/t-editorial"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/editorial.mjs",
+      "site/src/styles/65-editorial.css",
+      "site/src/styles/50-legacy-*-t-editorial.css",
+      "site/tests/e2e/editorial.spec.mjs",
+      "site/tests/unit/t-editorial-*.test.mjs",
+      ".orchestra/requests/t-editorial.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/resources/*.json",
+    "content/pages/{resources,privacy,terms,accessibility,404}.json"
+  ],
+  "deliverables": [
+    "Resources hub + 6 guides with byline \"[OWNER NAME], RNC Landscaping\" → /about/, published/updated <time> shown as \"19 November 2026\", reading progress (T1, motion policy)",
+    "Privacy, terms, accessibility statement (WCAG 2.2 AA, voluntary under Accessible BC; documents the Dark theme and Animations toggles)",
+    "Helpful 404 with search-style links to hubs"
+  ],
+  "acceptance": [
+    "A13#22: One <time datetime> format, displayed \"19 November 2026\" — verified by check-seo#time-format",
+    "t-editorial legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4436
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-editorial.md (never edit a file outside owns; describe the change there)"
+}

@@ -1,0 +1,87 @@
+{
+  "id": "qa",
+  "wave": "w2",
+  "lens": "QA tooling engineer (Playwright, axe, Lighthouse, fault injection)",
+  "branch": [
+    "w2/qa"
+  ],
+  "owns": {
+    "w2": [
+      "site/playwright.config.mjs",
+      "site/tests/helpers/**",
+      "site/tests/e2e/global.spec.mjs",
+      "site/tools/{a11y,lighthouse,measure,motion-audit,text-over-media,check-honesty,check-motion-policy,budgets,screenshots,check-all,check-html,check-links,check-placeholders,check-tokens,check-content,check-ownership,serve,lib,csp,dev-setup}.mjs",
+      "site/tools/schemas/**",
+      "site/lighthouserc.json",
+      ".github/workflows/ci.yml",
+      "netlify.toml",
+      "site/tests/unit/qa-*.test.mjs",
+      ".orchestra/requests/qa.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "site/src/**",
+    "brand/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/traceability.json",
+    "CONTRACT.md §Gates, §Budgets",
+    ".orchestra/direction/motion-policy.md"
+  ],
+  "deliverables": [
+    "global.spec: every page 200, one H1, no console/CSP errors in both themes, no horizontal overflow at 320 px, 200 % zoom",
+    "a11y.mjs (axe injected via bypassCSP context only; wcag2a/2aa/21aa/22aa; themes × widths × motion), lighthouse.mjs (median of 3, benchmarkIndex guard), measure.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, check-motion-policy.mjs (lint), budgets v2, screenshot matrix",
+    "CI on the new URLs; serve.mjs-based Playwright so the real CSP is enforced"
+  ],
+  "acceptance": [
+    "A13#24: Spell-check in CI — verified by check-honesty#spelling",
+    "A13#28: Plausible only; no consent banner — verified by budgets#third-party-origins",
+    "A13#36: Audit performance, contrast, focus, tap targets before quoting numbers — verified by evidence-pack (a11y.mjs + lighthouse.mjs + measure.mjs, W4)",
+    "C4.4: Touch targets ≥ 44×44 primary, ≥ 24×24 all — verified by a11y#target-size",
+    "C4.6: ≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom — verified by e2e/global.spec#reflow-320-zoom-200",
+    "C7.1: Lighthouse mobile ≥ 95 ×4 every template — verified by lighthouse#median-of-3",
+    "C7.2: Weights: home ≤ 500 KB, inner ≤ 350 KB, CSS/JS/fonts caps, 1 third party — verified by budgets#v2",
+    "C7.3: WCAG 2.2 AA, 0 axe violations — verified by a11y#axe-matrix",
+    "P0#2: Lighthouse CI budgets, axe/Playwright at 5 widths, link checker in the build — verified by ci#required-gates",
+    "P4#19: Final regression: LH ≥ 95 ×4, 0 axe, manual SR pass, 200 % zoom, 320 px, CLS ≤ 0.05 — verified by release-gate#final-regression (W5)",
+    "Fault injection in a scratch copy: an a11y bug, a CSP violation, a 320 px overflow and a stock photo on /projects/ are all caught"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Mutation tester: seed faults, confirm each tool fails loudly and names the page",
+  "port": {
+    "w2": 4427
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/qa.md (never edit a file outside owns; describe the change there)"
+}

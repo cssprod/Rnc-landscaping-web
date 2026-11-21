@@ -1,0 +1,85 @@
+{
+  "id": "areas-content",
+  "wave": [
+    "w1",
+    "w2"
+  ],
+  "lens": "Local-government researcher-editor (doorway-page avoidance, swap test, sourcing discipline)",
+  "branch": [
+    "w1/areas-content",
+    "w2/areas-content"
+  ],
+  "owns": {
+    "w1": [
+      "content/areas/**",
+      "content/regional.json",
+      "content/pages/areas.json",
+      ".orchestra/requests/areas-content.md"
+    ],
+    "w2": [
+      "content/areas/**",
+      "content/regional.json",
+      "content/pages/areas.json",
+      ".orchestra/requests/areas-content.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/**",
+    "content/{projects,services,resources,testimonials}/**",
+    "content/site.json"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "research/area-facts/*.json",
+    "research/area-sources.md",
+    "research/areas.json",
+    ".orchestra/reports/content-audit.json",
+    "CONTRACT.md §Content schemas v3 (areas, regional)",
+    "content/projects/*.json (for proof references)"
+  ],
+  "deliverables": [
+    "13 content/areas/<slug>.json files on schema v3: summary (place-specific), localRules[], conditions[], proof[], sharedRegional[] refs, servicesBlurb, topServices, neighbours, CTA area slug",
+    "content/regional.json: ONE block per CRD-wide rule (watering stages, invasive species disposal, …) referenced by id; rendered once per page inside [data-shared]",
+    "content/pages/areas.json hub copy on the new URLs only"
+  ],
+  "acceptance": [
+    "C6.4: Municipality pages avoid doorway risk (3 local blocks, swap test) — verified by check-seo#cross-area-duplicates",
+    "≥ 3 genuinely local blocks per page: localRules (sourceUrl, excerpt, verify:true, reviewedOn only if fetched this session), sourced conditions, proof (project refs or job notes with sample:true)",
+    "No sentence appears on two or more area pages outside the shared regional block (check-seo#cross-area-duplicates)",
+    "Sooke covered (wells vs regional water, deer, salt spray, soils where sourced); never \"no bylaw exists\"",
+    "Swap test: exchanging any two municipality names makes both pages false (13/13)"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Adversarial swap-tester and source checker: open every sourceUrl excerpt, run the 78-pair swap test, hunt shared sentences",
+  "port": {
+    "w1": 4413,
+    "w2": 4428
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/areas-content.md (never edit a file outside owns; describe the change there)"
+}

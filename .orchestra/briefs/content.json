@@ -1,0 +1,95 @@
+{
+  "id": "content",
+  "wave": [
+    "w1",
+    "w2"
+  ],
+  "lens": "Senior copy editor with an honesty lens (no invented facts, Canadian English, plain language)",
+  "branch": [
+    "w1/content",
+    "w2/content"
+  ],
+  "owns": {
+    "w1": [
+      "content/{projects,services,resources,testimonials}/**",
+      "content/pages/{404,about,accessibility,commercial,contact,faq,home,portfolio,projects,privacy,process,quote,resources,reviews,services,terms}.json",
+      "site/CONTENT-GUIDE.md",
+      ".orchestra/requests/content.md"
+    ],
+    "w2": [
+      "content/{projects,services,resources,testimonials}/**",
+      "content/pages/{404,about,accessibility,commercial,contact,faq,home,portfolio,projects,privacy,process,resources,reviews,services,terms}.json",
+      "site/CONTENT-GUIDE.md",
+      ".orchestra/requests/content.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/**",
+    "site/tools/**",
+    "content/areas/**",
+    "content/regional.json",
+    "content/site.json",
+    "content/pages/areas.json"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/reports/content-audit.json",
+    "content/**",
+    "CONTRACT.md §Hard rules, §Bracket tokens, §Content schemas v3",
+    "research/cedar-springs-teardown-blueprint.md A12, A13, C2, C5"
+  ],
+  "deliverables": [
+    "Projects (16): challenge, approach[], result, season, scope tags, tags, sample plantPalette (labelled sample), no budgets; story[] kept only until W3 t-projects stops reading it",
+    "Services (4): goodFitIf[3–5], perVisit table, seasonal table, faqs 5–6 each, localRulesRefs to regional blocks",
+    "content/pages/process.json: overview (4 steps) + two tracks (maintenance, installation) with deliverables per step + guarantee built on [WARRANTY]",
+    "content/pages/projects.json (replaces portfolio.json; portfolio.json removed once routes stop falling back)",
+    "Resources (6): author {name:\"[OWNER NAME]\", org:\"RNC Landscaping\", url:\"/about/\"}, published = the existing real date, updated only when real",
+    "content/pages/quote.json on the v3 six-input schema (W1 only; quote owns it from W2)",
+    "Trust copy: [REPLY TIME] promise, \"What happens next\", credentials via tokens only, reviews band copy with [GOOGLE PROFILE]",
+    "All /quote/ and /portfolio/ links in content left for the integrator codemod (do not hand-edit links)"
+  ],
+  "acceptance": [
+    "A13#12: Only claim what can be verified; credentials band links to issuers — verified by check-honesty#unverifiable-claims",
+    "A13#20: Named author with bio; real publish dates — verified by check-content#resource-byline-dates",
+    "A13#30: Plain-language workmanship guarantee — verified by check-content#guarantee",
+    "A13#31: \"What's included each visit / season\" tables (no prices) — verified by check-content#service-tables",
+    "A13#32: Short FAQs on each service page — verified by check-content#service-faqs",
+    "C5.7: Trust without prices (reply time, next steps, verifiable credentials, reviews, owner, local rules, guarantee) — verified by check-honesty#trust-without-prices",
+    "No superlatives, prices, budgets or years-in-business claims (check-honesty); every sample carries sample:true",
+    "Additive changes only: old fields removed only where the current templates tolerate it (build + e2e green)",
+    "check-content passes schema v3 for every file"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Honesty auditor: flags any real-seeming fact about RNC, invented numbers, superlatives, duplicated boilerplate",
+  "port": {
+    "w1": 4414,
+    "w2": 4429
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/content.md (never edit a file outside owns; describe the change there)"
+}

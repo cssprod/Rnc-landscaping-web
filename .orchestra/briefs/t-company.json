@@ -1,0 +1,93 @@
+{
+  "id": "t-company",
+  "wave": "w3",
+  "lens": "Art-directed template builder: Process, About, FAQ, Reviews, Contact",
+  "branch": [
+    "w3/t-company"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/company.mjs",
+      "site/src/styles/64-company.css",
+      "site/src/styles/50-legacy-*-t-company.css",
+      "site/tests/e2e/company.spec.mjs",
+      "site/tests/unit/t-company-*.test.mjs",
+      "site/src/components/ui/{trust,faq}.mjs",
+      "site/src/styles/{44-ui-trust,46-ui-faq}.css",
+      ".orchestra/requests/t-company.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/pages/{process,about,faq,reviews,contact}.json",
+    "content/testimonials/*.json",
+    "content/site.json"
+  ],
+  "deliverables": [
+    "/process/ with maintenance and installation tracks and deliverables per step + guarantee",
+    "/about/ (named owner token, 3–6 people max, credentials row tokens only), /faq/ grouped, /reviews/ (labelled Sample, Google link, no review schema), /contact/ with fallback contact panel"
+  ],
+  "acceptance": [
+    "A13#34: Lead with 3–6 key people with real bios — verified by e2e/company.spec#about-people",
+    "A12#2: Named, phased process with deliverables — verified by e2e/company.spec#process-tracks",
+    "A12#4: Real-crew credibility (faces and roles, only when real) — verified by check-honesty#no-stock-people",
+    "P2#12: Process page (two tracks), FAQ page, accessibility statement — verified by e2e/company.spec#process-faq-statement",
+    "No Review or AggregateRating markup anywhere (check-honesty)",
+    "t-company legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4435
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-company.md (never edit a file outside owns; describe the change there)"
+}

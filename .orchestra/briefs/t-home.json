@@ -1,0 +1,94 @@
+{
+  "id": "t-home",
+  "wave": "w3",
+  "lens": "Art-directed template builder: Home",
+  "branch": [
+    "w3/t-home"
+  ],
+  "owns": {
+    "w3": [
+      "site/src/pages/home.mjs",
+      "site/src/styles/60-home.css",
+      "site/src/styles/50-legacy-*-t-home.css",
+      "site/tests/e2e/home.spec.mjs",
+      "site/tests/unit/t-home-*.test.mjs",
+      "site/src/components/ui/{cards,cta}.mjs",
+      "site/src/styles/{42-ui-cards,47-ui-cta}.css",
+      ".orchestra/requests/t-home.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "brand/**",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "brand/tokens.json",
+    "brand/tokens.css",
+    "media/images.json",
+    "site/src/components/layout.mjs",
+    "site/src/components/living.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/{routes,_shared}.mjs"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    "site/COMPONENTS.md",
+    "research/cedar-springs-teardown-blueprint.md C2",
+    "content/pages/home.json",
+    "content/pages/process.json",
+    "content/projects/*.json",
+    "content/testimonials/*.json",
+    "content/regional.json"
+  ],
+  "deliverables": [
+    "C2 Home sections 1–10: living split hero (H1 + CTAs, scene slot), four service tiles, featured project spec strip (no budget), 4-step timeline, reviews band with Google link, local-rules teaser, area map + list, short FAQ (4), living CTA band, footer",
+    "Remove the routes.mjs:64 regex hack (feature now lives in home.mjs)"
+  ],
+  "acceptance": [
+    "A13#11: Reviews band on home and service pages linking to Google — verified by e2e/home.spec#reviews-band-google-link (+ services.spec)",
+    "A13#16: Static, user-controlled project rail (no auto-advance) — verified by motion-audit#no-auto-advance",
+    "C2.1: Home wireframe sections 1–10 — verified by e2e/home.spec#sections",
+    "H1 is the LCP element; no reveal animation on it",
+    "t-home legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Art director + blueprint auditor: C2 section order, both themes at 5 widths, motion on/off, no-JS",
+  "port": {
+    "w3": 4431
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/t-home.md (never edit a file outside owns; describe the change there)"
+}

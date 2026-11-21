@@ -1,0 +1,95 @@
+{
+  "id": "ds-core",
+  "wave": "w2",
+  "lens": "Design-token and accessibility engineer (DTCG, WCAG contrast maths, cascade layers)",
+  "branch": [
+    "w2/ds-core"
+  ],
+  "owns": {
+    "w2": [
+      "brand/tokens.json",
+      "brand/tokens.css",
+      "brand/build-tokens.mjs",
+      "brand/check-contrast.mjs",
+      "site/src/styles/0?-*.css",
+      "site/src/styles/1?-*.css",
+      "site/src/styles/2?-*.css",
+      "site/src/styles/9?-*.css",
+      "site/src/styles/50-legacy-*-ds-core.css",
+      "site/build.mjs",
+      "site/fixtures/brand/**",
+      "site/tests/unit/ds-core-*.test.mjs",
+      ".orchestra/requests/ds-core.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "site/src/components/**",
+    "site/src/scripts/**",
+    "site/src/styles/{3,4,6,7,8}?-*.css"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "DESIGN-DIRECTION.md",
+    ".orchestra/direction/tokens-proposal.json",
+    ".orchestra/direction/motion-policy.md",
+    ".orchestra/direction/effects-approved.json",
+    "brand/**",
+    "CONTRACT.md §Attribute contract, §CSS"
+  ],
+  "deliverables": [
+    "tokens.json: dark-first defaults ($extensions[\"ca.rnc.default\"]:\"dark\"), light values under [data-theme=light]; C3 fluid type scale; glass minimum alphas; two-tone focus ring tokens; manifest colours as tokens",
+    "check-contrast.mjs: every text/surface and focus/surface pair in both themes, solid fallbacks, glass worst cases over the art-palette extremes from tokens-proposal.json",
+    "00-layers.css (layer order), 01-reset, 02-base, 03-type, 05-layout, 08-utilities, 95-motion.css (T0–T4 tiers, the only place besides tokens.css allowed to mention prefers-reduced-motion), 99-print.css",
+    "prefers-reduced-transparency, prefers-contrast: more and forced-colors rules; build.mjs reads manifest/theme colours from tokens"
+  ],
+  "acceptance": [
+    "A13#15: No loader; native View Transitions honouring reduced motion — verified by motion-audit#vt-and-loader",
+    "A12#6: Restraint: two-tone palette, big imagery, white space (superseded on aesthetics by the alive direction; hard constraints kept) — verified by f-visual#restraint-review (W4 screenshot matrix)",
+    "C3.1: Keep / adapt / drop (no loaders, sliders, lowercase source, third-party embeds) — verified by check-motion-policy#banned-effects",
+    "C3.2: Fluid type scale (display…small, Inter 400/600/700, Newsreader italic quotes only) — verified by unit/ds-core-tokens.test#type-scale",
+    "C3.3: Colour usage and contrast incl. dark focus token — verified by check-contrast#all-pairs",
+    "C3.5: Motion rules (transform/opacity, VT where supported, reduced motion, nothing autoplays) — verified by motion-audit#policy-tiers",
+    "P0#3: Dark-mode focus ring ≥ 3:1 on Fir night; re-test all focus states — verified by check-contrast#focus-pairs",
+    "P4#18: Glass limited to chrome, solid content, fluid type, reduced motion, no loaders/sliders/autoplay — superseded on aesthetics, hard constraints kept — verified by check-contrast#glass-worst-case",
+    "Every surface has ≥ 1 ring colour ≥ 3:1 and the two ring colours are ≥ 3:1 against each other",
+    "Without data-theme the page renders dark; [data-theme=light] renders light; no flash (HEAD_SCRIPT applies stored choice before paint)",
+    "ds-core legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Contrast mathematician: recompute every pair, test forced-colors and 200 % zoom, grep for stray prefers-reduced-motion",
+  "port": {
+    "w2": 4421
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/ds-core.md (never edit a file outside owns; describe the change there)"
+}

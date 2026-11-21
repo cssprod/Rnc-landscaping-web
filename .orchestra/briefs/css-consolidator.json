@@ -1,0 +1,84 @@
+{
+  "id": "css-consolidator",
+  "wave": [
+    "w3",
+    "w3b"
+  ],
+  "lens": "CSS architect (cascade layers, dead-code removal, pixel-diff discipline)",
+  "branch": [
+    "w3/css-consolidator",
+    "w3/css-consolidator--lock"
+  ],
+  "owns": {
+    "w3": [
+      "site/tools/check-css.mjs",
+      "site/tests/unit/css-*.test.mjs",
+      ".orchestra/requests/css-consolidator.md"
+    ],
+    "w3b": [
+      "site/src/styles/**",
+      "site/tools/check-css.mjs",
+      "site/tests/unit/css-*.test.mjs",
+      ".orchestra/requests/css-consolidator.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "content/**",
+    "site/src/components/**",
+    "site/src/pages/**",
+    "site/src/scripts/**",
+    "brand/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/legacy-css-map.json",
+    ".orchestra/direction/motion-policy.md",
+    "CONTRACT.md §CSS"
+  ],
+  "deliverables": [
+    "w3 (parallel with families): tools/check-css.mjs — no 50-legacy-* files, no duplicate selectors across files, every animation/transition routed through the motion policy custom properties, prefers-reduced-motion only in tokens.css/95-motion.css, layer declared in every file",
+    "w3b (exclusive lock after the family merges): delete leftover legacy slices, dedupe, consolidate"
+  ],
+  "acceptance": [
+    "≤ 0.1 % pixel diff across the screenshot matrix before/after w3b",
+    "CSS gz per page ≤ 28 KB warn / 36 KB fail"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+    "node tools/lighthouse.mjs --runs=3   # quiet slot only"
+  ],
+  "verifierLens": "Cascade forensics: per-selector diff of computed styles across the screenshot matrix",
+  "port": {
+    "w3": 4437,
+    "w3b": 4437
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/css-consolidator.md (never edit a file outside owns; describe the change there)"
+}

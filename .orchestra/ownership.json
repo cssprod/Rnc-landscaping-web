@@ -1,0 +1,1300 @@
+{
+  "$comment": "Exclusive write sets per wave. A stream may write ONLY paths matched by its owns globs (and must not write anything matched by forbidden, which lists hazards explicitly; everything not owned is forbidden). site/tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch> enforces this before every merge. Globs: ** any depth, * one segment, ? one char, {a,b} alternatives. Owners change only at wave barriers. w3b is the css-consolidator lock that runs after the W3 family merges (its own barrier). Integrator-only (never a stream): tools/rewrite-links.mjs --write, regenerating brand/tokens.css after merges, .orchestra/carry.json outside W4, tags and pushes.",
+  "version": 3,
+  "generatedOn": "2026-11-21",
+  "globSyntax": {
+    "**": "zero or more path segments",
+    "*": "any chars except /",
+    "?": "one char except /",
+    "{a,b}": "alternatives (may contain globs)"
+  },
+  "seedOnly": [
+    "site/src/lib/head-scripts.mjs"
+  ],
+  "integratorOnly": [
+    "brand/tokens.css (regeneration after merges)",
+    "tools/rewrite-links.mjs --write (link codemod over content/** and site/src/**)",
+    "git tags wave-<n>-int",
+    "pushes to ccr-384bdb88-mx8gtv"
+  ],
+  "frozen": {
+    "always": [
+      "CONTRACT.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      "research/**",
+      "cedar-springs-teardown-blueprint.md"
+    ],
+    "afterW1": [
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json"
+    ],
+    "w3": [
+      "site/src/components/ui/actions.mjs",
+      "site/src/components/ui/heads.mjs",
+      "site/src/styles/40-ui-actions.css",
+      "site/src/styles/41-ui-heads.css",
+      "brand/tokens.json",
+      "brand/tokens.css",
+      "media/images.json",
+      "site/src/components/layout.mjs",
+      "site/src/components/living.mjs",
+      "site/src/pages/_shared.mjs"
+    ]
+  },
+  "mergeOrder": {
+    "w1": [
+      "build",
+      "ia",
+      "areas-content",
+      "content",
+      "codemod"
+    ],
+    "w2": [
+      "ds-core",
+      "ds-chrome",
+      "ds-comp",
+      "living",
+      "seo",
+      "quote",
+      "qa",
+      "areas-content",
+      "content",
+      "codemod"
+    ],
+    "w3": [
+      "t-editorial",
+      "t-company",
+      "t-services",
+      "t-areas",
+      "t-projects",
+      "t-home",
+      "css-consolidator"
+    ],
+    "w3b": [
+      "css-consolidator"
+    ]
+  },
+  "waves": {
+    "w0": {
+      "a1": {
+        "owns": [
+          "CONTRACT.md",
+          "REDESIGN-PLAN.md",
+          "site/COMPONENTS.md",
+          ".orchestra/{ownership,url-map,legacy-css-map,traceability}.json",
+          ".orchestra/briefs/**",
+          ".orchestra/tools/**",
+          ".orchestra/requests/a1.md"
+        ],
+        "forbidden": [
+          "site/src/**",
+          "content/**"
+        ]
+      },
+      "art-direction": {
+        "owns": [
+          ".orchestra/direction/**",
+          "DESIGN-DIRECTION.md",
+          ".orchestra/requests/art-direction.md"
+        ],
+        "forbidden": [
+          "site/src/**",
+          "content/**"
+        ]
+      },
+      "reports": {
+        "owns": [
+          ".orchestra/reports/**",
+          ".orchestra/requests/reports.md"
+        ],
+        "forbidden": [
+          "site/src/**",
+          "content/**"
+        ]
+      },
+      "r1": {
+        "owns": [
+          "research/area-facts/**",
+          "research/area-sources.md",
+          ".orchestra/requests/r1.md"
+        ],
+        "forbidden": [
+          "site/src/**",
+          "content/**"
+        ]
+      }
+    },
+    "w1": {
+      "build": {
+        "owns": [
+          "site/build.mjs",
+          "site/src/lib/build/**",
+          "site/src/scripts/**",
+          "site/src/styles/**",
+          "site/src/components/sprite.mjs",
+          "site/tools/{csp,dev-setup,check-ownership,serve,lib,check-all,budgets,screenshots}.mjs",
+          "site/tests/unit/build-*.test.mjs",
+          "site/tests/fixtures/build/**",
+          "site/playwright.config.mjs",
+          "site/jsconfig.json",
+          "netlify.toml",
+          ".github/workflows/ci.yml",
+          ".gitignore",
+          "site/.gitignore",
+          ".orchestra/requests/build.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "content/**",
+          "site/src/pages/**",
+          "site/src/components/{layout,ui,map,forms,living}.mjs",
+          "site/src/components/ui/**",
+          "brand/**",
+          "media/**"
+        ]
+      },
+      "ia": {
+        "owns": [
+          "site/src/pages/**",
+          "site/src/components/{layout,ui,map,forms,living}.mjs",
+          "site/src/components/ui/**",
+          "site/src/lib/{seo,schema,data,tokens,dates}.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "site/tools/{check-links,check-html,rewrite-links,check-content}.mjs",
+          "site/tools/schemas/**",
+          "site/tests/e2e/**",
+          "site/tests/helpers/**",
+          "site/tests/site.spec.mjs",
+          "site/tests/unit/ia-*.test.mjs",
+          "site/fixtures/**",
+          ".orchestra/requests/ia.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "content/{areas,projects,services,resources,testimonials,pages}/**",
+          "content/regional.json",
+          "site/src/styles/**",
+          "site/src/scripts/**",
+          "site/build.mjs",
+          "brand/**",
+          "media/**",
+          "netlify.toml"
+        ]
+      },
+      "areas-content": {
+        "owns": [
+          "content/areas/**",
+          "content/regional.json",
+          "content/pages/areas.json",
+          ".orchestra/requests/areas-content.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/**",
+          "content/{projects,services,resources,testimonials}/**",
+          "content/site.json"
+        ]
+      },
+      "content": {
+        "owns": [
+          "content/{projects,services,resources,testimonials}/**",
+          "content/pages/{404,about,accessibility,commercial,contact,faq,home,portfolio,projects,privacy,process,quote,resources,reviews,services,terms}.json",
+          "site/CONTENT-GUIDE.md",
+          ".orchestra/requests/content.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/**",
+          "site/tools/**",
+          "content/areas/**",
+          "content/regional.json",
+          "content/site.json",
+          "content/pages/areas.json"
+        ]
+      }
+    },
+    "w2": {
+      "areas-content": {
+        "owns": [
+          "content/areas/**",
+          "content/regional.json",
+          "content/pages/areas.json",
+          ".orchestra/requests/areas-content.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "site/**",
+          "content/{projects,services,resources,testimonials}/**"
+        ]
+      },
+      "content": {
+        "owns": [
+          "content/{projects,services,resources,testimonials}/**",
+          "content/pages/{404,about,accessibility,commercial,contact,faq,home,portfolio,projects,privacy,process,resources,reviews,services,terms}.json",
+          "site/CONTENT-GUIDE.md",
+          ".orchestra/requests/content.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "site/src/**",
+          "site/tools/**",
+          "content/areas/**",
+          "content/regional.json",
+          "content/pages/areas.json"
+        ]
+      },
+      "ds-core": {
+        "owns": [
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "brand/build-tokens.mjs",
+          "brand/check-contrast.mjs",
+          "site/src/styles/0?-*.css",
+          "site/src/styles/1?-*.css",
+          "site/src/styles/2?-*.css",
+          "site/src/styles/9?-*.css",
+          "site/src/styles/50-legacy-*-ds-core.css",
+          "site/build.mjs",
+          "site/fixtures/brand/**",
+          "site/tests/unit/ds-core-*.test.mjs",
+          ".orchestra/requests/ds-core.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "site/src/components/**",
+          "site/src/scripts/**",
+          "site/src/styles/{3,4,6,7,8}?-*.css"
+        ]
+      },
+      "ds-chrome": {
+        "owns": [
+          "site/src/components/{layout,sprite}.mjs",
+          "site/src/scripts/main.js",
+          "site/src/scripts/lib/**",
+          "site/src/styles/30-chrome.css",
+          "site/src/styles/50-legacy-*-ds-chrome.css",
+          "site/src/lib/tokens.mjs",
+          "site/tests/e2e/chrome.spec.mjs",
+          "site/tests/unit/ds-chrome-*.test.mjs",
+          ".orchestra/requests/ds-chrome.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/**",
+          "site/src/pages/**"
+        ]
+      },
+      "ds-comp": {
+        "owns": [
+          "site/src/components/ui/{actions,heads,cards,projects,trust,faq,cta,seasons,callouts}.mjs",
+          "site/src/styles/{40,41,42,43,44,46,47,48,49}-ui-*.css",
+          "site/src/styles/80-styleguide.css",
+          "site/src/styles/50-legacy-*-ds-comp.css",
+          "site/src/pages/styleguide.mjs",
+          "site/COMPONENTS.md",
+          "site/tests/unit/ui-api.test.mjs",
+          "site/tests/unit/ds-comp-*.test.mjs",
+          "site/tests/e2e/components.spec.mjs",
+          ".orchestra/requests/ds-comp.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/{layout,living,map,forms}.mjs",
+          "site/src/pages/{home,services,areas,projects,company,editorial,quote,routes,_shared}.mjs"
+        ]
+      },
+      "living": {
+        "owns": [
+          "site/src/lib/{art,images}.mjs",
+          "site/src/components/living.mjs",
+          "site/src/styles/45-living.css",
+          "site/src/styles/50-legacy-*-living.css",
+          "site/src/scripts/living.js",
+          "media/images.json",
+          "media/shot-list.md",
+          "media/photos/**",
+          "media/photos.json",
+          "site/static/img/**",
+          "site/tools/process-images.mjs",
+          "site/fixtures/media/**",
+          "site/tests/unit/living-*.test.mjs",
+          "site/tests/e2e/living.spec.mjs",
+          ".orchestra/requests/living.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/tokens.json",
+          "site/src/components/ui/**",
+          "site/src/pages/**"
+        ]
+      },
+      "seo": {
+        "owns": [
+          "site/src/lib/{schema,seo}.mjs",
+          "site/src/pages/redirects.mjs",
+          "site/tools/{check-seo,og-cards}.mjs",
+          "site/static/og/**",
+          "site/tests/unit/seo-*.test.mjs",
+          "site/tests/e2e/redirects.spec.mjs",
+          ".orchestra/requests/seo.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "site/src/components/**",
+          "site/src/styles/**"
+        ]
+      },
+      "quote": {
+        "owns": [
+          "site/src/components/forms.mjs",
+          "site/src/scripts/quote.js",
+          "site/src/styles/70-quote.css",
+          "site/src/styles/50-legacy-*-quote.css",
+          "site/src/pages/quote.mjs",
+          "content/pages/quote.json",
+          "site/event-schema.yaml",
+          "site/event-schema.d.ts",
+          "site/tools/gen-event-types.mjs",
+          "site/tests/unit/quote-*.test.mjs",
+          "site/tests/e2e/quote.spec.mjs",
+          ".orchestra/requests/quote.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "site/src/components/{layout,ui}/**",
+          "site/src/components/layout.mjs",
+          "brand/**"
+        ]
+      },
+      "qa": {
+        "owns": [
+          "site/playwright.config.mjs",
+          "site/tests/helpers/**",
+          "site/tests/e2e/global.spec.mjs",
+          "site/tools/{a11y,lighthouse,measure,motion-audit,text-over-media,check-honesty,check-motion-policy,budgets,screenshots,check-all,check-html,check-links,check-placeholders,check-tokens,check-content,check-ownership,serve,lib,csp,dev-setup}.mjs",
+          "site/tools/schemas/**",
+          "site/lighthouserc.json",
+          ".github/workflows/ci.yml",
+          "netlify.toml",
+          "site/tests/unit/qa-*.test.mjs",
+          ".orchestra/requests/qa.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "site/src/**",
+          "brand/**"
+        ]
+      }
+    },
+    "w3": {
+      "t-home": {
+        "owns": [
+          "site/src/pages/home.mjs",
+          "site/src/styles/60-home.css",
+          "site/src/styles/50-legacy-*-t-home.css",
+          "site/tests/e2e/home.spec.mjs",
+          "site/tests/unit/t-home-*.test.mjs",
+          "site/src/components/ui/{cards,cta}.mjs",
+          "site/src/styles/{42-ui-cards,47-ui-cta}.css",
+          ".orchestra/requests/t-home.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "t-services": {
+        "owns": [
+          "site/src/pages/services.mjs",
+          "site/src/styles/61-services.css",
+          "site/src/styles/50-legacy-*-t-services.css",
+          "site/tests/e2e/services.spec.mjs",
+          "site/tests/unit/t-services-*.test.mjs",
+          "site/src/components/ui/{seasons,callouts}.mjs",
+          "site/src/styles/{48-ui-seasons,49-ui-callouts}.css",
+          ".orchestra/requests/t-services.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "t-areas": {
+        "owns": [
+          "site/src/pages/areas.mjs",
+          "site/src/styles/62-areas.css",
+          "site/src/styles/50-legacy-*-t-areas.css",
+          "site/tests/e2e/areas.spec.mjs",
+          "site/tests/unit/t-areas-*.test.mjs",
+          "site/src/components/map.mjs",
+          "site/src/scripts/areas.js",
+          ".orchestra/requests/t-areas.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "t-projects": {
+        "owns": [
+          "site/src/pages/projects.mjs",
+          "site/src/styles/63-projects.css",
+          "site/src/styles/50-legacy-*-t-projects.css",
+          "site/tests/e2e/projects.spec.mjs",
+          "site/tests/unit/t-projects-*.test.mjs",
+          "site/src/components/ui/projects.mjs",
+          "site/src/styles/43-ui-projects.css",
+          "site/src/scripts/projects.js",
+          ".orchestra/requests/t-projects.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "t-company": {
+        "owns": [
+          "site/src/pages/company.mjs",
+          "site/src/styles/64-company.css",
+          "site/src/styles/50-legacy-*-t-company.css",
+          "site/tests/e2e/company.spec.mjs",
+          "site/tests/unit/t-company-*.test.mjs",
+          "site/src/components/ui/{trust,faq}.mjs",
+          "site/src/styles/{44-ui-trust,46-ui-faq}.css",
+          ".orchestra/requests/t-company.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "t-editorial": {
+        "owns": [
+          "site/src/pages/editorial.mjs",
+          "site/src/styles/65-editorial.css",
+          "site/src/styles/50-legacy-*-t-editorial.css",
+          "site/tests/e2e/editorial.spec.mjs",
+          "site/tests/unit/t-editorial-*.test.mjs",
+          ".orchestra/requests/t-editorial.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "brand/**",
+          "site/src/components/ui/actions.mjs",
+          "site/src/components/ui/heads.mjs",
+          "site/src/styles/40-ui-actions.css",
+          "site/src/styles/41-ui-heads.css",
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "media/images.json",
+          "site/src/components/layout.mjs",
+          "site/src/components/living.mjs",
+          "site/src/pages/_shared.mjs",
+          "site/src/pages/{routes,_shared}.mjs"
+        ]
+      },
+      "css-consolidator": {
+        "owns": [
+          "site/tools/check-css.mjs",
+          "site/tests/unit/css-*.test.mjs",
+          ".orchestra/requests/css-consolidator.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "site/src/components/**",
+          "site/src/pages/**",
+          "site/src/scripts/**",
+          "brand/**"
+        ]
+      }
+    },
+    "w3b": {
+      "css-consolidator": {
+        "owns": [
+          "site/src/styles/**",
+          "site/tools/check-css.mjs",
+          "site/tests/unit/css-*.test.mjs",
+          ".orchestra/requests/css-consolidator.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json",
+          "content/**",
+          "site/src/components/**",
+          "site/src/pages/**",
+          "site/src/scripts/**",
+          "brand/**"
+        ]
+      }
+    },
+    "w4": {
+      "w4-evidence": {
+        "owns": [
+          ".orchestra/reports/w4/**",
+          ".orchestra/requests/w4-evidence.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "w4-triage": {
+        "owns": [
+          ".orchestra/tickets/**",
+          ".orchestra/carry.json",
+          ".orchestra/requests/w4-triage.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "fix-system": {
+        "owns": [
+          "brand/tokens.json",
+          "brand/tokens.css",
+          "brand/check-contrast.mjs",
+          "brand/build-tokens.mjs",
+          "site/build.mjs",
+          "site/src/lib/{tokens,data,html,dates}.mjs",
+          "site/src/components/{layout,sprite}.mjs",
+          "site/src/components/ui/{actions,heads}.mjs",
+          "site/src/scripts/main.js",
+          "site/src/scripts/lib/**",
+          "site/src/styles/{0,1,2,9}?-*.css",
+          "site/src/styles/30-chrome.css",
+          "site/src/styles/{40-ui-actions,41-ui-heads}.css",
+          "site/tests/e2e/chrome.spec.mjs",
+          ".orchestra/requests/fix-system.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "fix-features": {
+        "owns": [
+          "site/src/lib/{art,images,schema,seo}.mjs",
+          "site/src/components/{living,forms}.mjs",
+          "site/src/scripts/{living,quote}.js",
+          "site/src/styles/{45-living,70-quote,80-styleguide}.css",
+          "site/src/pages/{quote,styleguide,redirects}.mjs",
+          "site/src/components/ui/{cards,cta,seasons,callouts,trust,faq,projects}.mjs",
+          "site/src/styles/{42,43,44,46,47,48,49}-ui-*.css",
+          "media/**",
+          "site/static/**",
+          "site/event-schema.*",
+          "site/tests/e2e/{quote,living,components,redirects}.spec.mjs",
+          ".orchestra/requests/fix-features.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "fix-pages": {
+        "owns": [
+          "site/src/pages/{home,services,areas,projects,company,editorial}.mjs",
+          "site/src/styles/6?-*.css",
+          "site/src/components/map.mjs",
+          "site/src/scripts/{areas,projects}.js",
+          "site/tests/e2e/{home,services,areas,projects,company,editorial}.spec.mjs",
+          ".orchestra/requests/fix-pages.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "fix-qa": {
+        "owns": [
+          "site/tools/**",
+          "site/tests/helpers/**",
+          "site/tests/e2e/global.spec.mjs",
+          "site/tests/unit/**",
+          "site/playwright.config.mjs",
+          "site/lighthouserc.json",
+          "site/jsconfig.json",
+          ".github/workflows/ci.yml",
+          "netlify.toml",
+          ".orchestra/requests/fix-qa.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      },
+      "fix-content": {
+        "owns": [
+          "content/{areas,projects,services,resources,testimonials,pages}/**",
+          "content/regional.json",
+          ".orchestra/requests/fix-content.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md",
+          "site/src/pages/routes.mjs",
+          "site/src/components/ui/index.mjs",
+          "site/site.config.mjs",
+          "content/site.json"
+        ]
+      }
+    },
+    "w5": {
+      "og-render": {
+        "owns": [
+          "site/static/og/**",
+          ".orchestra/requests/og-render.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md"
+        ]
+      },
+      "docs": {
+        "owns": [
+          "README.md",
+          "site/README.md",
+          "CONTRACT.md",
+          "REDESIGN-PLAN.md",
+          "TRACEABILITY.md",
+          "site/CHANGELOG.md",
+          "site/LAUNCH-CHECKLIST.md",
+          "site/CONTENT-GUIDE.md",
+          "site/COMPONENTS.md",
+          "brand/brand.md",
+          "DESIGN-DIRECTION.md",
+          ".orchestra/requests/docs.md"
+        ],
+        "forbidden": [
+          "site/src/lib/head-scripts.mjs",
+          "content/**",
+          "site/src/**"
+        ]
+      },
+      "ci": {
+        "owns": [
+          ".github/workflows/ci.yml",
+          "site/lighthouserc.json",
+          "site/playwright.config.mjs",
+          "netlify.toml",
+          ".orchestra/requests/ci.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md"
+        ]
+      },
+      "release-gate": {
+        "owns": [
+          ".orchestra/requests/release-gate.md"
+        ],
+        "forbidden": [
+          "CONTRACT.md",
+          "site/src/lib/head-scripts.mjs",
+          ".orchestra/ownership.json",
+          ".orchestra/briefs/**",
+          ".orchestra/traceability.json",
+          ".orchestra/url-map.json",
+          ".orchestra/legacy-css-map.json",
+          "research/**",
+          "cedar-springs-teardown-blueprint.md"
+        ]
+      }
+    }
+  },
+  "plannedFiles": [
+    ".orchestra/carry.json",
+    ".orchestra/direction/P1.md",
+    ".orchestra/reports/effects-lab.json",
+    ".orchestra/reports/w4/axe.json",
+    ".orchestra/requests/a1.md",
+    ".orchestra/requests/areas-content.md",
+    ".orchestra/requests/art-direction.md",
+    ".orchestra/requests/build.md",
+    ".orchestra/requests/ci.md",
+    ".orchestra/requests/content.md",
+    ".orchestra/requests/css-consolidator.md",
+    ".orchestra/requests/docs.md",
+    ".orchestra/requests/ds-chrome.md",
+    ".orchestra/requests/ds-comp.md",
+    ".orchestra/requests/ds-core.md",
+    ".orchestra/requests/fix-content.md",
+    ".orchestra/requests/fix-features.md",
+    ".orchestra/requests/fix-pages.md",
+    ".orchestra/requests/fix-qa.md",
+    ".orchestra/requests/fix-system.md",
+    ".orchestra/requests/ia.md",
+    ".orchestra/requests/living.md",
+    ".orchestra/requests/og-render.md",
+    ".orchestra/requests/qa.md",
+    ".orchestra/requests/quote.md",
+    ".orchestra/requests/r1.md",
+    ".orchestra/requests/release-gate.md",
+    ".orchestra/requests/reports.md",
+    ".orchestra/requests/seo.md",
+    ".orchestra/requests/t-areas.md",
+    ".orchestra/requests/t-company.md",
+    ".orchestra/requests/t-editorial.md",
+    ".orchestra/requests/t-home.md",
+    ".orchestra/requests/t-projects.md",
+    ".orchestra/requests/t-services.md",
+    ".orchestra/requests/w4-evidence.md",
+    ".orchestra/requests/w4-triage.md",
+    ".orchestra/tickets/T001.json",
+    "DESIGN-DIRECTION.md",
+    "TRACEABILITY.md",
+    "content/pages/process.json",
+    "content/pages/projects.json",
+    "content/regional.json",
+    "content/site.json",
+    "media/photos.json",
+    "media/photos/home-hero.jpg",
+    "research/area-facts/oak-bay.json",
+    "research/area-sources.md",
+    "site/lighthouserc.json",
+    "site/src/components/living.mjs",
+    "site/src/components/ui/actions.mjs",
+    "site/src/components/ui/callouts.mjs",
+    "site/src/components/ui/cards.mjs",
+    "site/src/components/ui/cta.mjs",
+    "site/src/components/ui/faq.mjs",
+    "site/src/components/ui/heads.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/src/components/ui/projects.mjs",
+    "site/src/components/ui/seasons.mjs",
+    "site/src/components/ui/trust.mjs",
+    "site/src/lib/build/dist-guard.mjs",
+    "site/src/lib/build/lastmod.mjs",
+    "site/src/lib/build/minify-css.mjs",
+    "site/src/lib/build/modules.mjs",
+    "site/src/lib/build/sprite-shake.mjs",
+    "site/src/lib/dates.mjs",
+    "site/src/lib/head-scripts.mjs",
+    "site/src/lib/seo.mjs",
+    "site/src/pages/_shared.mjs",
+    "site/src/pages/areas.mjs",
+    "site/src/pages/company.mjs",
+    "site/src/pages/editorial.mjs",
+    "site/src/pages/home.mjs",
+    "site/src/pages/projects.mjs",
+    "site/src/pages/quote.mjs",
+    "site/src/pages/redirects.mjs",
+    "site/src/pages/routes.mjs",
+    "site/src/pages/services.mjs",
+    "site/src/pages/styleguide.mjs",
+    "site/src/scripts/areas.js",
+    "site/src/scripts/lib/prefs.js",
+    "site/src/scripts/lib/track.js",
+    "site/src/scripts/living.js",
+    "site/src/scripts/main.js",
+    "site/src/scripts/projects.js",
+    "site/src/scripts/quote.js",
+    "site/src/styles/00-layers.css",
+    "site/src/styles/01-reset.css",
+    "site/src/styles/02-base.css",
+    "site/src/styles/03-type.css",
+    "site/src/styles/05-layout.css",
+    "site/src/styles/08-utilities.css",
+    "site/src/styles/30-chrome.css",
+    "site/src/styles/40-ui-actions.css",
+    "site/src/styles/41-ui-heads.css",
+    "site/src/styles/42-ui-cards.css",
+    "site/src/styles/43-ui-projects.css",
+    "site/src/styles/44-ui-trust.css",
+    "site/src/styles/45-living.css",
+    "site/src/styles/46-ui-faq.css",
+    "site/src/styles/47-ui-cta.css",
+    "site/src/styles/48-ui-seasons.css",
+    "site/src/styles/49-ui-callouts.css",
+    "site/src/styles/50-legacy-01-ds-core.css",
+    "site/src/styles/50-legacy-02-ds-comp.css",
+    "site/src/styles/50-legacy-03-ds-core.css",
+    "site/src/styles/50-legacy-04-living.css",
+    "site/src/styles/50-legacy-05-ds-comp.css",
+    "site/src/styles/50-legacy-06-living.css",
+    "site/src/styles/50-legacy-07-ds-chrome.css",
+    "site/src/styles/50-legacy-08-ds-comp.css",
+    "site/src/styles/50-legacy-09-t-editorial.css",
+    "site/src/styles/50-legacy-10-ds-comp.css",
+    "site/src/styles/50-legacy-11-t-home.css",
+    "site/src/styles/50-legacy-12-ds-comp.css",
+    "site/src/styles/50-legacy-13-t-services.css",
+    "site/src/styles/50-legacy-14-ds-comp.css",
+    "site/src/styles/50-legacy-15-t-areas.css",
+    "site/src/styles/50-legacy-16-t-projects.css",
+    "site/src/styles/50-legacy-17-t-editorial.css",
+    "site/src/styles/50-legacy-18-t-company.css",
+    "site/src/styles/50-legacy-19-quote.css",
+    "site/src/styles/50-legacy-20-t-projects.css",
+    "site/src/styles/50-legacy-21-ds-chrome.css",
+    "site/src/styles/50-legacy-22-ds-chrome.css",
+    "site/src/styles/50-legacy-23-ds-comp.css",
+    "site/src/styles/50-legacy-24-ds-core.css",
+    "site/src/styles/50-legacy-25-living.css",
+    "site/src/styles/50-legacy-26-quote.css",
+    "site/src/styles/50-legacy-27-t-areas.css",
+    "site/src/styles/50-legacy-28-t-company.css",
+    "site/src/styles/50-legacy-29-t-home.css",
+    "site/src/styles/50-legacy-30-t-projects.css",
+    "site/src/styles/50-legacy-31-t-services.css",
+    "site/src/styles/50-legacy-32-ds-core.css",
+    "site/src/styles/50-legacy-90-ds-core.css",
+    "site/src/styles/60-home.css",
+    "site/src/styles/61-services.css",
+    "site/src/styles/62-areas.css",
+    "site/src/styles/63-projects.css",
+    "site/src/styles/64-company.css",
+    "site/src/styles/65-editorial.css",
+    "site/src/styles/70-quote.css",
+    "site/src/styles/80-styleguide.css",
+    "site/src/styles/95-motion.css",
+    "site/src/styles/99-print.css",
+    "site/static/img/home-hero-480.avif",
+    "site/static/og/home.jpg",
+    "site/tests/e2e/areas.spec.mjs",
+    "site/tests/e2e/chrome.spec.mjs",
+    "site/tests/e2e/company.spec.mjs",
+    "site/tests/e2e/components.spec.mjs",
+    "site/tests/e2e/editorial.spec.mjs",
+    "site/tests/e2e/global.spec.mjs",
+    "site/tests/e2e/home.spec.mjs",
+    "site/tests/e2e/living.spec.mjs",
+    "site/tests/e2e/projects.spec.mjs",
+    "site/tests/e2e/quote.spec.mjs",
+    "site/tests/e2e/redirects.spec.mjs",
+    "site/tests/e2e/services.spec.mjs",
+    "site/tests/fixtures/build/strings.css",
+    "site/tests/helpers/server.mjs",
+    "site/tests/unit/build-minify.test.mjs",
+    "site/tests/unit/css-lint.test.mjs",
+    "site/tests/unit/ds-chrome-prefs.test.mjs",
+    "site/tests/unit/ds-comp-markup.test.mjs",
+    "site/tests/unit/ds-core-tokens.test.mjs",
+    "site/tests/unit/ia-routes.test.mjs",
+    "site/tests/unit/living-scenes.test.mjs",
+    "site/tests/unit/qa-tools.test.mjs",
+    "site/tests/unit/quote-builder.test.mjs",
+    "site/tests/unit/seo-graph.test.mjs",
+    "site/tests/unit/t-areas-map.test.mjs",
+    "site/tests/unit/t-home-sections.test.mjs",
+    "site/tests/unit/ui-api.test.mjs",
+    "site/tools/a11y.mjs",
+    "site/tools/check-content.mjs",
+    "site/tools/check-css.mjs",
+    "site/tools/check-honesty.mjs",
+    "site/tools/check-motion-policy.mjs",
+    "site/tools/check-ownership.mjs",
+    "site/tools/check-seo.mjs",
+    "site/tools/csp.mjs",
+    "site/tools/dev-setup.mjs",
+    "site/tools/lighthouse.mjs",
+    "site/tools/measure.mjs",
+    "site/tools/motion-audit.mjs",
+    "site/tools/og-cards.mjs",
+    "site/tools/process-images.mjs",
+    "site/tools/rewrite-links.mjs",
+    "site/tools/schemas/project.schema.json",
+    "site/tools/text-over-media.mjs"
+  ]
+}

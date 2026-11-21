@@ -1,0 +1,91 @@
+{
+  "id": "quote",
+  "wave": "w2",
+  "lens": "Conversion-form engineer (progressive enhancement, mailto encoding, accessible validation)",
+  "branch": [
+    "w2/quote"
+  ],
+  "owns": {
+    "w2": [
+      "site/src/components/forms.mjs",
+      "site/src/scripts/quote.js",
+      "site/src/styles/70-quote.css",
+      "site/src/styles/50-legacy-*-quote.css",
+      "site/src/pages/quote.mjs",
+      "content/pages/quote.json",
+      "site/event-schema.yaml",
+      "site/event-schema.d.ts",
+      "site/tools/gen-event-types.mjs",
+      "site/tests/unit/quote-*.test.mjs",
+      "site/tests/e2e/quote.spec.mjs",
+      ".orchestra/requests/quote.md"
+    ]
+  },
+  "forbidden": [
+    "CONTRACT.md",
+    "site/src/lib/head-scripts.mjs",
+    ".orchestra/ownership.json",
+    ".orchestra/briefs/**",
+    ".orchestra/traceability.json",
+    ".orchestra/url-map.json",
+    ".orchestra/legacy-css-map.json",
+    "research/**",
+    "cedar-springs-teardown-blueprint.md",
+    "site/src/pages/routes.mjs",
+    "site/src/components/ui/index.mjs",
+    "site/site.config.mjs",
+    "content/site.json",
+    "site/src/components/{layout,ui}/**",
+    "site/src/components/layout.mjs",
+    "brand/**"
+  ],
+  "reads": [
+    ".orchestra/ownership.json",
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "REDESIGN-PLAN.md §Quote builder",
+    "CONTRACT.md §quote.json, §Analytics events",
+    "research/cedar-springs-teardown-blueprint.md C2 Free quote, C5"
+  ],
+  "deliverables": [
+    "Six inputs: services (4 multi-select cards), municipality <select> of 13 (+ \"somewhere else\"), description, timing (ASAP / this season / planning ahead), name, best way to reach you (email / call / text; phone field appears and becomes required for call or text)",
+    "?area= / ?service= prefill; form action = mailto (method=post enctype=text/plain) so it works without JS; subject \"Free quote request — X — Y\"; URL body ≤ 1,800 chars (truncate + tell them to paste the copied full text)",
+    "Ready panel: Copy request (role=status confirmation), address + copy button, Call / Text (only when PHONE known), Gmail / Outlook web compose links",
+    "Native validation + inline errors (aria-describedby) + error summary on submit; values never cleared; sessionStorage draft",
+    "Plausible events (CONTRACT §Analytics events) with no personal data; pure builder functions exported from quote.js and unit-tested"
+  ],
+  "acceptance": [
+    "A13#10: ≈6 inputs, single name field, no CAPTCHA — verified by e2e/quote.spec#six-inputs",
+    "C2.5: Free quote page wireframe — verified by e2e/quote.spec#page-order",
+    "C5.1: Quote builder six inputs, ?area= prefill — verified by e2e/quote.spec#prefill",
+    "C5.2: mailto submit with encoded subject/body ≤ 1,800 chars; works without JS — verified by unit/quote-builder.test#mailto",
+    "C5.3: Ready panel: copy, address, call/text, webmail links — verified by e2e/quote.spec#ready-panel",
+    "C5.4: Native validation, inline errors, error summary, values kept — verified by e2e/quote.spec#validation",
+    "C5.5: sessionStorage draft — verified by e2e/quote.spec#draft-restore",
+    "C5.6: Plausible custom events, no personal data — verified by unit/quote-events.test#no-pii",
+    "P1#5: Quote builder → mailto, no-JS path, copy, visible email, tel/sms fallbacks + status — verified by e2e/quote.spec#no-js-and-fallbacks",
+    "Free-quote page order: H1 → reassurance strip ([REPLY TIME]) → builder → What happens next (3) → alternative contacts → privacy note",
+    "quote legacy slices deleted"
+  ],
+  "gates": [
+    "cd $WT/site && node tools/dev-setup.mjs --devtools   # once it exists (W1 build); before that: tsc --typeRoots /opt/node-tools/node_modules/@types",
+    "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+    "tsc -p jsconfig.json",
+    "node --test \"tests/unit/**/*.test.mjs\"",
+    "node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build [--strict-redirects from W1 ia on]",
+    "node tools/csp.mjs --check",
+    "PORT=$PORT SITE_DIST=$OUT node node_modules/playwright/cli.js test --trace off",
+    "node tools/check-ownership.mjs --stream=<id> --base=<sha> --head=<branch>",
+    "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # once qa lands; until then axe via the global helper",
+    "node tools/motion-audit.mjs && node tools/text-over-media.mjs"
+  ],
+  "verifierLens": "Mail-client pessimist: length caps, encoding of non-ASCII, no-JS submit, back-navigation draft restore, screen-reader error flow",
+  "port": {
+    "w2": 4426
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "returns": "{branch, head, base, files, gates, acceptance[], requests[]}",
+  "requests": ".orchestra/requests/quote.md (never edit a file outside owns; describe the change there)"
+}
