@@ -31,13 +31,13 @@
       "summary": "For recurring grounds care: mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites.",
       "steps": [
         {
-          "title": "Tell us about the property",
+          "title": "Send a request",
           "body": "Share the address, the type of property and what you need looked after.",
           "deliverable": "A reply within [REPLY TIME] with any questions and a time for a site walk."
         },
         {
           "title": "Site walk",
-          "body": "We walk the property with you or your site contact and note lawn areas, beds, hedges and access.",
+          "body": "We walk the site with you or whoever looks after it, noting the lawn, beds, hedges and how we get in.",
           "deliverable": "Notes on the lawn areas, beds, hedges and access that the quote will cover."
         },
         {
@@ -47,7 +47,7 @@
         },
         {
           "title": "Regular visits",
-          "body": "The crew works to the scope. Questions and changes go through one contact.",
+          "body": "Visits follow the written scope, and one contact handles your questions and changes.",
           "deliverable": "Visit notes on anything that needs attention, passed on before we act."
         },
         {
@@ -75,7 +75,7 @@
         {
           "title": "Plan and written scope",
           "body": "We put the layout, the plant list and the order of work on paper.",
-          "deliverable": "A layout, plant list and written scope, with any permits that may apply named up front."
+          "deliverable": "A drawn layout, a plant list and a written scope that names any permit the work may need."
         },
         {
           "title": "Build in phases",
