@@ -1,0 +1,25 @@
+{
+  "_notes": "Hub lists 16 sample projects filterable by service. Every card shows 'Sample' and images show 'Sample image'. Case studies use the spec strip fields documented in content/projects/*.json _notes.",
+  "seo": {
+    "title": "Projects: sample landscaping case studies | RNC",
+    "description": "Sample case studies of maintenance, installation, irrigation and tree work across Greater Victoria, filterable by service and municipality. No budgets shown."
+  },
+  "h1": "Sample projects",
+  "lede": "Examples of maintenance, installation, irrigation and tree work across Greater Victoria, each with a spec strip and a challenge, approach and result. Every project here is marked Sample.",
+  "sections": [
+    {
+      "id": "about-samples",
+      "heading": "About these projects",
+      "body": [
+        "These sample projects show the scope and approach we bring to typical jobs. Images are labelled Sample image."
+      ]
+    },
+    {
+      "id": "next",
+      "heading": "Have a project in mind?",
+      "body": [
+        "Read about [our services](/services/), see [reviews](/reviews/), or [get a free quote](/free-quote/)."
+      ]
+    }
+  ]
+}

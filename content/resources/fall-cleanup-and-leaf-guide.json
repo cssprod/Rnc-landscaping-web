@@ -1,11 +1,18 @@
 {
+  "_notes": "Seasonal guide (A13 #20). 'date' is the real publish date; 'updated' is added only when the article is actually revised (never invented). 'author' {name, org, href} renders as the byline \"[OWNER NAME], RNC Landscaping\" linking to /about/ (also Article schema author); 'byline' is the ready-made string. Display dates in one format, e.g. \"19 November 2026\".",
   "slug": "fall-cleanup-and-leaf-guide",
   "title": "Fall cleanup and leaf guide for Greater Victoria",
   "seo": {
-    "title": "Fall Garden Cleanup & Leaf Guide for Victoria, BC",
-    "description": "What to cut back, what to leave, and how to handle leaves in Greater Victoria's wet fall, plus lawn care and drainage checks before winter storms. Free quote."
+    "title": "Fall garden cleanup and leaf guide for Victoria, BC",
+    "description": "What to cut back, what to leave and how to handle leaves in Greater Victoria's wet fall, plus lawn care and drainage checks before winter storms."
   },
   "date": "2026-11-19",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "href": "/about/"
+  },
+  "byline": "[OWNER NAME], RNC Landscaping",
   "summary": "What to cut back, what to leave and how to deal with leaves before the winter rain.",
   "image": "res-3",
   "body": [
@@ -61,7 +68,7 @@
       "p": "Shut down and winterize your system before the first hard frost. See our [irrigation start-up and winterization guide](/resources/irrigation-start-up-and-winterization/)."
     },
     {
-      "p": "Book a fall cleanup through [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/)."
+      "p": "Book a fall cleanup through [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/free-quote/)."
     },
     {
       "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."

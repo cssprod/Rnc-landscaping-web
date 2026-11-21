@@ -1,0 +1,39 @@
+/* RNC Landscaping: base layer. Editorial system (Basalt ink on Sea fog, Douglas fir primary).
+   Tokens come from brand/tokens.json (compiled ahead of this file). Files load in name order:
+   00 base · 10 layout · 20 chrome · 30 components · 40 page ports (phase 2 replaces with 6x files) · 70 quote. */
+:root { --focus: var(--color-focus); --header-h: var(--layout-header-h); interpolate-size: allow-keywords; }
+@media (min-width: 64em) { :root { --header-h: 72px; } }
+*, ::before, ::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(--color-bg); scroll-padding-top: calc(var(--header-h) + 1rem); }
+@media (max-width: 63.99em) { html { scroll-padding-bottom: calc(var(--layout-bar-h) + env(safe-area-inset-bottom) + 1rem); } }
+body { margin: 0; min-height: 100vh; background: var(--color-bg); color: var(--color-ink); font: var(--font-weight-regular) var(--font-size-body)/var(--font-leading-body) var(--font-family-sans); letter-spacing: var(--font-tracking-body); font-optical-sizing: auto; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img, svg, video { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+h1, h2, h3, h4 { margin: 0 0 var(--space-4); color: var(--color-ink); font-weight: var(--font-weight-semibold); line-height: var(--font-leading-title); letter-spacing: var(--font-tracking-title); text-wrap: balance; }
+h1 { font-size: var(--font-size-h1); font-weight: var(--font-weight-bold); letter-spacing: var(--font-tracking-display); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); line-height: var(--font-leading-snug); letter-spacing: var(--font-tracking-headline); }
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
+main p, main li { max-inline-size: var(--layout-measure); }
+strong, b { font-weight: var(--font-weight-semibold); }
+small { font-size: var(--font-size-small); }
+a { color: var(--color-brand); text-decoration-thickness: 1px; text-underline-offset: 0.2em; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+/* Focus: Camas on light surfaces; the Camas tint on Fir night bands; tint plus a dark halo on photos (brand/check-contrast.mjs). */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-xs); }
+.on-deep, .glass-card--media { --focus: var(--color-focus-on-deep); }
+.on-media :focus-visible { outline-color: var(--color-focus-on-deep); box-shadow: 0 0 0 8px var(--color-focus-halo); }
+main:focus { outline: none; }
+::selection { background: color-mix(in srgb, var(--color-brand-2) 30%, transparent); }
+.i { flex: none; display: inline-block; vertical-align: middle; }
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link { position: fixed; left: var(--space-4); top: -200px; z-index: calc(var(--z-overlay) + 1); padding: 12px 18px; border-radius: var(--radius-m); background: var(--color-ink); color: var(--color-bg); font-weight: var(--font-weight-semibold); text-decoration: none; }
+.skip-link:focus { top: max(12px, env(safe-area-inset-top)); }
+.note { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0; color: var(--color-ink-3); font-size: var(--font-size-small); }
+/* Tabular figures: spec strips, indices, dates. */
+.num, time, .spec dd, .eyebrow__index { font-variant-numeric: tabular-nums lining-nums; }
+/* Showcase placeholders and sample labels (the launch build looks for these class names). */
+mark.ph { display: inline-block; padding: 0 0.5em; border-radius: var(--radius-xs); background: var(--color-placeholder-bg); color: var(--color-placeholder); font: inherit; font-size: 0.86em; font-weight: var(--font-weight-semibold); line-height: 1.5; white-space: nowrap; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 30%, transparent); }
+:is(.on-deep, .glass-card--media) mark.ph { background: rgba(242, 196, 98, 0.16); color: #F6D27E; box-shadow: inset 0 0 0 1px rgba(242, 196, 98, 0.4); }
+.sample-label { display: inline-flex; align-items: center; min-height: 24px; padding: 0 8px; border-radius: var(--radius-xs); background: var(--color-placeholder-bg); color: var(--color-placeholder); font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 30%, transparent); }

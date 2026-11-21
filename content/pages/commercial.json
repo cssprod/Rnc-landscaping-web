@@ -1,8 +1,8 @@
 {
-  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies.",
+  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies. New: section 'commitments' lists operational commitments (A12 #5) instead of adjectives; each is something the written scope can hold us to.",
   "seo": {
-    "title": "Commercial & Strata Landscaping in Greater Victoria",
-    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a free quote and site visit."
+    "title": "Commercial and strata landscaping in Greater Victoria | RNC",
+    "description": "Grounds and landscape work for stratas, property managers, institutions and contractors in Greater Victoria, with written scopes and visit notes. Free quote."
   },
   "h1": "Commercial, strata and institutional landscaping",
   "lede": "Grounds maintenance, installation, irrigation and tree work for stratas, property managers, public and institutional buyers, and general contractors across Greater Victoria.",
@@ -33,6 +33,39 @@
         {
           "title": "General contractors and developers",
           "body": "Soft and hard landscape packages built to drawings, coordinated through your site supervisor."
+        }
+      ]
+    },
+    {
+      "id": "commitments",
+      "heading": "What you can hold us to",
+      "body": [
+        "These go into the written scope, so council or your facility team can check them."
+      ],
+      "items": [
+        {
+          "title": "A written scope per visit",
+          "body": "Tasks for each visit and a visit calendar, approved before work starts."
+        },
+        {
+          "title": "One named contact",
+          "body": "[OWNER NAME] or a named lead handles questions, owner concerns and changes."
+        },
+        {
+          "title": "Notes after every visit",
+          "body": "A short record of what was done and anything that needs a decision."
+        },
+        {
+          "title": "Issues reported in writing",
+          "body": "Damage, hazards or failing plants reported with photos before we act outside the scope."
+        },
+        {
+          "title": "Work around occupants",
+          "body": "Visits timed around tenants, students, patients or residents, agreed at the start-up meeting."
+        },
+        {
+          "title": "A reply within [REPLY TIME]",
+          "body": "For quote requests and tender questions."
         }
       ]
     },
@@ -106,7 +139,7 @@
       "items": [
         {
           "title": "Send the request",
-          "body": "Use the [quote form](/quote/) or email [EMAIL] with your specification or drawings."
+          "body": "Use the [quote form](/free-quote/) or email [EMAIL] with your specification or drawings."
         },
         {
           "title": "Site review",
@@ -133,7 +166,7 @@
       "id": "cta",
       "heading": "Request a quote or site visit",
       "body": [
-        "[Get a free quote](/quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
+        "[Get a free quote](/free-quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
       ]
     }
   ]

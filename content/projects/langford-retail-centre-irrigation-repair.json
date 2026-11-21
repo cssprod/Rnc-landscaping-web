@@ -1,29 +1,43 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "langford-retail-centre-irrigation-repair",
+  "sample": true,
   "title": "Irrigation repair for a Langford retail centre",
   "service": "irrigation",
   "area": "langford",
   "clientType": "Commercial",
   "seo": {
-    "title": "Sample project: Langford retail irrigation | RNC",
-    "description": "Sample project: irrigation repair for a Langford retail centre's parking islands, scheduled before store hours, with a written record of fixes. Free quote."
+    "title": "Sample project: Langford retail irrigation repair",
+    "description": "Sample case study: leaks traced and repaired in a Langford retail centre's parking-island planters, before store hours, with a repair record."
   },
   "summary": "Leak and coverage repairs across parking-island planters.",
+  "season": "Summer",
+  "duration": "3 mornings",
+  "scopeTags": [
+    "Leak tracing",
+    "Valve replacement",
+    "Drip line repair",
+    "Written repair record"
+  ],
   "scope": [
     "Leak tracing",
     "Valve replacement",
     "Drip line repairs in planters",
     "Written repair record"
   ],
-  "duration": "3 mornings",
+  "challenge": "The property manager of a Langford retail centre saw water running across the parking lot on watering mornings.",
+  "approach": [
+    "We traced the leaks to a failed valve and damaged drip lines in the parking-island planters.",
+    "All work was done before store hours, and the property manager received a written record of each repair and part replaced."
+  ],
+  "result": "Leaks fixed, with a record of what was replaced.",
+  "links": "Read more about [irrigation](/services/irrigation/), see our work in [Langford](/areas/langford/), or [get a free quote](/free-quote/).",
   "story": [
     "The property manager saw water running across the lot on watering mornings.",
     "We traced the leaks to a failed valve and damaged drip lines, worked before store hours and sent a written record of each repair.",
-    "Read more about [irrigation](/services/irrigation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+    "Read more about [irrigation](/services/irrigation/), see our work in [Langford](/areas/langford/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Leaks fixed, with a record of what was replaced.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-4",

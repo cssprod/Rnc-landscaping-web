@@ -1,15 +1,15 @@
 {
   "_notes": "faqs[] rendered grouped by category; also emitted as FAQPage schema.",
   "seo": {
-    "title": "Landscaping FAQ: Quotes, Permits & Scheduling | RNC",
-    "description": "Answers on how quotes work, tree permits, watering rules, scheduling and what our maintenance includes across Greater Victoria. Ask us for a free quote."
+    "title": "Landscaping FAQ: quotes, permits and scheduling | RNC",
+    "description": "Answers on free quotes, reply times, tree permits, CRD watering days, scheduling and our workmanship guarantee for properties across Greater Victoria."
   },
   "h1": "Frequently asked questions",
   "lede": "How quotes work, local rules, scheduling and what to expect.",
   "faqs": [
     {
       "q": "How much does landscaping cost?",
-      "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/quote/).",
+      "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/free-quote/).",
       "category": "Quotes"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "q": "How soon will I hear back?",
-      "a": "We'll get back to you after we receive your request. If it's urgent, call [PHONE].",
+      "a": "We reply to every quote request within [REPLY TIME]. If it's urgent, call [PHONE].",
       "category": "Quotes"
     },
     {
@@ -33,13 +33,23 @@
       "category": "Quotes"
     },
     {
+      "q": "What happens after I send a request?",
+      "a": "We read it, arrange a site visit or ask for photos, and send a free written quote. See [how we work](/process/).",
+      "category": "Quotes"
+    },
+    {
+      "q": "Why is there no email field on the quote form?",
+      "a": "The form opens a new email in your own email app, so your address is already on the message. Nothing you type is stored by this website.",
+      "category": "Quotes"
+    },
+    {
       "q": "Do I need a permit to cut down or prune a tree?",
-      "a": "Often, yes. Each municipality has its own tree bylaw, and many protect Garry oak, arbutus and other native species at small sizes. We check before any work. See [tree permits and winter pruning](/resources/winter-pruning-and-storm-prep/). This is general information, not legal advice.",
+      "a": "Often, yes. Each municipality has its own tree bylaw, and many protect Garry oak, arbutus and other native species at small sizes. We check before any work; your [area page](/areas/) links to the bylaw. See [tree permits and winter pruning](/resources/winter-pruning-and-storm-prep/). This is general information, not legal advice.",
       "category": "Local rules"
     },
     {
       "q": "What are the CRD watering days?",
-      "a": "Under Stage 1 (May 1 to September 30), even addresses water lawns Wednesday and Saturday, odd addresses Thursday and Sunday, 4 to 10 am or 7 to 10 pm. Drip and hand watering of gardens is allowed any day. Check the CRD site for current rules. Read our [watering guide](/resources/crd-watering-rules-guide/).",
+      "a": "Under Stage 1 (May 1 to September 30), even addresses water lawns Wednesday and Saturday, odd addresses Thursday and Sunday, 4 to 10 am or 7 to 10 pm. Drip and hand watering of gardens is allowed any day. Check the [CRD site](https://www.crd.ca/environment/water-conservation/watering-schedule) for current rules. Read our [watering guide](/resources/crd-watering-rules-guide/).",
       "category": "Local rules"
     },
     {
@@ -88,8 +98,8 @@
       "category": "About us"
     },
     {
-      "q": "Do you offer a warranty?",
-      "a": "[WARRANTY]",
+      "q": "Do you guarantee your work?",
+      "a": "Yes. Our workmanship guarantee covers [WARRANTY]. If something we installed or built does not hold up within that time because of how we did the work, tell us and we will put it right. See [how we work](/process/).",
       "category": "About us"
     },
     {
@@ -103,7 +113,7 @@
       "id": "more",
       "heading": "Still have a question?",
       "body": [
-        "[Contact us](/contact/) or [get a free quote](/quote/)."
+        "[Contact us](/contact/) or [get a free quote](/free-quote/)."
       ]
     }
   ]

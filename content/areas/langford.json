@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "langford",
   "name": "Langford",
   "seo": {
-    "title": "Landscaping in Langford, BC | RNC Landscaping",
-    "description": "Landscape installation, grounds care, irrigation and tree work for Langford homes, stratas and new builds, from Bear Mountain to Happy Valley. Free quote."
+    "title": "Landscaping in Langford, BC: New Builds & Stratas | RNC",
+    "description": "New-build landscaping, strata grounds care, irrigation and tree work in Langford, with development permit areas checked first. Get a free quote today."
   },
   "h1": "Landscaping in Langford, BC",
+  "cardSummary": "New subdivisions, hillside lots and townhouse sites, often on thin soil over rock or fill, with permit areas near slopes and lakes.",
   "intro": [
-    "Langford is growing fast. We work on new subdivisions in Westhills and Happy Valley, hillside homes on Bear Mountain, townhouse stratas and retail centres, and new-build sites that need landscape installed to drawings.",
-    "Langford regulates tree and vegetation removal in development permit areas such as steep slopes, sensitive ecosystems and land near lakes and streams, and its Tree Protection Bylaw applies across the city. See [commercial and contractor work](/commercial/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Langford has a lot of new building: subdivisions in Westhills and Happy Valley, hillside homes on Bear Mountain, townhouse stratas, and retail centres along the main corridors. Many yards here start from bare ground.",
+    "Langford’s Tree Protection Bylaw applies across the city, and tree and vegetation removal is also regulated in development permit areas such as steep slopes, sensitive ecosystems and land near lakes and streams. See [commercial and contractor work](/commercial/) or [get a free quote](/free-quote/?area=langford)."
   ],
   "neighbourhoods": [
     "Bear Mountain",
@@ -29,21 +30,60 @@
     "commercial and retail centres",
     "new-build sites needing landscape installation"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "In Langford, the questions are whether a tree is protected and whether the lot falls in a development permit area. Boulevard and public-land trees are a separate matter for the City’s Parks department.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Langford Tree Protection Bylaw",
       "text": "Langford's Tree Protection Bylaw applies across the city. Removing a protected tree on private property needs a Tree Permit (or a Development Permit when part of development); work in designated development permit areas is also regulated, and Parks authorizes all removals on public land and boulevards.",
       "sourceUrl": "https://www.langford.ca/residents/resident-resources/tree-removal/",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Thin soil on new lots",
+      "body": "New-build yards often have a thin layer of topsoil over compacted fill or blasted rock. Checking soil depth before sod or planting goes in saves a lawn that browns out in its first summer."
+    },
+    {
+      "title": "Slopes and rock on Bear Mountain",
+      "body": "Hillside lots are steep and rocky. Retaining walls, drainage and erosion control usually come before planting, and some slopes sit inside development permit areas."
+    },
+    {
+      "title": "Lakes and streams",
+      "body": "Homes near Langford Lake, Florence Lake and Glen Lake may fall under the development permit rules for land near water, so clearing near the shore needs a check."
+    },
+    {
+      "title": "New lawns and watering",
+      "body": "Most subdivisions are on the regional supply. New sod or seed does not need a CRD permit and has its own temporary schedule before the regular lawn days apply."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "landscape-installation",
+      "why": "Bare new-build yards and contractor sites need grading, soil, sod and planting installed to plan."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Young planting at new stratas and homes needs regular care for its first few seasons to establish."
     }
   ],
   "servicesBlurb": {
@@ -53,5 +93,37 @@
     "tree-vegetation": "Tree work on hillside and lakeside lots, with permit areas checked first."
   },
   "featuredProject": "langford-townhouse-landscape-package",
+  "nearbyProjects": [
+    "langford-townhouse-landscape-package",
+    "langford-retail-centre-irrigation-repair",
+    "royal-bay-backyard-patio"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "irrigation",
+      "neighbourhood": "Westhills",
+      "title": "New-sod schedule after handover",
+      "body": "A controller was set to the CRD new-sod schedule after a builder’s handover, then moved back to the regular odd-address lawn days once the sod had rooted."
+    },
+    {
+      "sample": true,
+      "service": "landscape-installation",
+      "neighbourhood": "Happy Valley",
+      "title": "Bare slope behind a townhouse block",
+      "body": "A bare cut slope behind a townhouse block was planted with groundcover and mulched to slow runoff onto the parking area."
+    }
+  ],
+  "neighbours": [
+    "colwood",
+    "view-royal",
+    "highlands",
+    "metchosin"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Langford",
+    "body": "Tell us whether the yard is new or established, and if you are a builder, send the landscape drawings. Slopes and nearby lakes help us check the permit side early.",
+    "href": "/free-quote/?area=langford"
+  },
   "image": "area-langford"
 }

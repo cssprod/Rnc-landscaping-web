@@ -1,16 +1,16 @@
 {
-  "_notes": "Featured items reference services, projects and testimonials by slug.",
+  "_notes": "Featured items reference services, projects and testimonials by slug. Sections 'services','why','audiences','areas','projects','cta' are read by id by the home template. New keys (blueprint C2 Home, C5 trust): 'hero' {eyebrow, h1, lede, proof} (h1/lede mirrored at top level); 'processTeaser' {heading, lede, steps[{title, body}], link {label, href}}; 'reviewsBand' {heading, lede, testimonials[3 slugs], googleLink {label, href:'[GOOGLE PROFILE]'}} (attribution = role + municipality; samples keep their label); 'credentials' {heading, items[{label, value}]} (tokens only, never invented); 'guarantee' {heading, body, link}; 'owner' {heading, name:'[OWNER NAME]', role, body, link, image}; 'localExpertise' {heading, lede, items[{title, body}]} (sourced facts only, links to sources/area pages); 'faq' [{q, a}] (4 short questions).",
   "seo": {
     "title": "Landscaping in Greater Victoria, BC | RNC Landscaping",
-    "description": "Grounds maintenance, landscape installation, irrigation and tree care for homes, stratas and businesses across Greater Victoria. Request your free quote today."
+    "description": "Grounds maintenance, landscape installation, irrigation and tree work for homes, stratas and businesses across Greater Victoria. Written scopes. Free quote."
   },
-  "h1": "Landscaping, grounds care, irrigation and tree work in Greater Victoria",
-  "lede": "One local crew for four services, for homes, stratas and commercial sites. We check the local rules first and tell you what happens next.",
+  "h1": "Landscape care and construction across Greater Victoria",
+  "lede": "Grounds maintenance, landscape installation, irrigation and tree work for homes, stratas and commercial sites. We check the local rules before we quote, and the written scope is what the crew works to.",
   "heroImage": "home-hero",
   "cta": {
     "primary": {
       "label": "Get a free quote",
-      "href": "/quote/"
+      "href": "/free-quote/"
     },
     "secondary": {
       "label": "Call [PHONE]",
@@ -39,7 +39,7 @@
       "id": "services",
       "heading": "What we do",
       "body": [
-        "Four services from one contractor and one point of contact, so nothing falls between trades."
+        "Four service lines from one contractor and one point of contact, so nothing falls between trades."
       ],
       "items": [
         {
@@ -94,7 +94,7 @@
         },
         {
           "title": "Commercial and public buyers",
-          "body": "Work to your specification, with insurance and safety documents on request. [Commercial capability](/commercial/)."
+          "body": "Work to your specification, with insurance and safety documents on request. [Commercial and public sector](/commercial/)."
         }
       ]
     },
@@ -109,15 +109,140 @@
       "id": "projects",
       "heading": "Sample projects",
       "body": [
-        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/portfolio/)."
+        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/projects/)."
       ]
     },
     {
       "id": "cta",
-      "heading": "Ready to talk about your property?",
+      "heading": "Tell us about your property",
       "body": [
-        "Tell us what you need in a few short steps. We'll get back to you to arrange your free quote."
+        "One short form, sent from your own email app. We reply within [REPLY TIME] to arrange your free quote."
       ]
+    }
+  ],
+  "hero": {
+    "eyebrow": "RNC Landscaping, Greater Victoria",
+    "h1": "Landscape care and construction across Greater Victoria",
+    "lede": "Grounds maintenance, landscape installation, irrigation and tree work for homes, stratas and commercial sites. We check the local rules before we quote, and the written scope is what the crew works to.",
+    "proof": "Maintenance · Installation · Irrigation · Tree work — 13 municipalities, Sidney to Sooke"
+  },
+  "processTeaser": {
+    "heading": "How a job runs",
+    "lede": "The site-first process: four steps from your request to scheduled work.",
+    "steps": [
+      {
+        "title": "Request",
+        "body": "A short request from your own email app."
+      },
+      {
+        "title": "Site visit",
+        "body": "We see the property and check the rules."
+      },
+      {
+        "title": "Written quote",
+        "body": "Free, site-specific, with the scope in writing."
+      },
+      {
+        "title": "Scheduled work",
+        "body": "The crew works to the scope."
+      }
+    ],
+    "link": {
+      "label": "How we work",
+      "href": "/process/"
+    }
+  },
+  "reviewsBand": {
+    "heading": "What clients say",
+    "lede": "Quotes marked Sample are illustrative until RNC publishes client reviews with permission.",
+    "testimonials": [
+      "strata-council-sidney",
+      "homeowner-oak-bay",
+      "general-contractor-langford"
+    ],
+    "googleLink": {
+      "label": "Read all reviews on Google",
+      "href": "[GOOGLE PROFILE]"
+    }
+  },
+  "credentials": {
+    "heading": "Insurance and credentials",
+    "items": [
+      {
+        "label": "Liability insurance",
+        "value": "[LIABILITY LIMIT]"
+      },
+      {
+        "label": "WorkSafeBC",
+        "value": "[WORKSAFEBC STATUS]"
+      },
+      {
+        "label": "Business licences",
+        "value": "[LICENCES]"
+      },
+      {
+        "label": "Certifications",
+        "value": "[CERTIFICATIONS]"
+      },
+      {
+        "label": "Memberships",
+        "value": "[MEMBERSHIPS]"
+      }
+    ]
+  },
+  "guarantee": {
+    "heading": "Workmanship guarantee",
+    "body": "Our workmanship guarantee covers [WARRANTY]. If something we installed or built does not hold up within that time because of how we did the work, tell us. We will come and look, explain in writing what we found, and put right anything that is our responsibility.",
+    "link": {
+      "label": "How we work",
+      "href": "/process/"
+    }
+  },
+  "owner": {
+    "heading": "Who you deal with",
+    "name": "[OWNER NAME]",
+    "role": "Owner, RNC Landscaping",
+    "body": "[OWNER BIO]",
+    "image": "about-owner",
+    "link": {
+      "label": "About RNC",
+      "href": "/about/"
+    }
+  },
+  "localExpertise": {
+    "heading": "Local rules, checked before we quote",
+    "lede": "Each municipality has its own tree bylaw, and the CRD sets the lawn watering days. We check what applies to your address first.",
+    "items": [
+      {
+        "title": "Tree bylaws",
+        "body": "Garry oak and arbutus are protected at small sizes in several municipalities, including Saanich and Colwood. Find your rules on your [area page](/areas/)."
+      },
+      {
+        "title": "Watering days",
+        "body": "From May 1 to September 30, lawns on the regional supply are watered on set days by address. Read our [watering guide](/resources/crd-watering-rules-guide/)."
+      },
+      {
+        "title": "Invasive plant disposal",
+        "body": "Invasive plants are kept out of green waste and disposed of following [CRD guidance](https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species)."
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Do you publish prices?",
+      "a": "No. Every property is different, so each quote is written for the site after a visit or from your photos. The quote is free."
+    },
+    {
+      "q": "How soon will you reply?",
+      "a": "We reply to every quote request within [REPLY TIME]."
+    },
+    {
+      "q": "Which areas do you work in?",
+      "a": "All 13 municipalities in Greater Victoria, from Sidney to Sooke. See [service areas](/areas/)."
+    },
+    {
+      "q": "Do you check tree permits?",
+      "a": "Yes. We check your municipality's tree bylaw before any pruning or removal and tell you what applies."
     }
   ]
 }

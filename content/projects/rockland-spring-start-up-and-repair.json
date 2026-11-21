@@ -1,29 +1,43 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "rockland-spring-start-up-and-repair",
+  "sample": true,
   "title": "Spring start-up and repairs in Rockland",
   "service": "irrigation",
   "area": "victoria",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Rockland irrigation start-up | RNC",
-    "description": "Sample project: spring irrigation start-up for a Rockland heritage garden in Victoria, with frost-damage repairs and a CRD-ready controller. Get a free quote."
+    "title": "Sample project: Rockland irrigation start-up",
+    "description": "Sample case study: spring start-up for a Rockland garden in Victoria, with frost-cracked lines repaired and the controller set for CRD rules."
   },
   "summary": "Start-up of a heritage garden's system after a cold snap cracked lines.",
+  "season": "Spring",
+  "duration": "1 day",
+  "scopeTags": [
+    "Spring start-up",
+    "Frost-damage repair",
+    "Head adjustment",
+    "Stage 1 controller set-up"
+  ],
   "scope": [
     "System charge and leak check",
     "Repair of cracked lateral lines",
     "Head adjustment",
     "Controller set for Stage 1"
   ],
-  "duration": "1 day",
+  "challenge": "A Rockland heritage garden's irrigation system had not been drained before a cold snap, and the owners needed it running before the CRD watering season.",
+  "approach": [
+    "We charged the system zone by zone, found two cracked lateral lines and repaired them.",
+    "Heads were turned off the heritage stonework, and the controller was set to the lawn days for the address before Stage 1 began on May 1."
+  ],
+  "result": "System running before the watering season, with a reminder booked for fall shutdown.",
+  "links": "Read more about [irrigation](/services/irrigation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/free-quote/).",
   "story": [
     "The system had not been drained before a cold snap.",
     "We found and repaired two cracked lines, adjusted heads off the heritage stonework and set the controller before May 1.",
-    "Read more about [irrigation](/services/irrigation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+    "Read more about [irrigation](/services/irrigation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/free-quote/)."
   ],
-  "result": "System running before the watering season, with a reminder booked for fall shutdown.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-3",

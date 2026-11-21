@@ -1,97 +1,101 @@
 // @ts-check
 /* RNC Landscaping: progressive-enhancement islands. Every page works without this file. */
 
-/* ---------- analytics (typed by event-schema.yaml; no-op unless a launch build turned Plausible on) ---------- */
-/** @typedef {import('../../event-schema').AnalyticsEvents} AnalyticsEvents */
+/* ---------- analytics (event names in event-schema.yaml; no-op unless a launch build turned Plausible on) ---------- */
 const hasPlausible = !!document.querySelector('script[data-domain][src*="plausible"]');
 if (hasPlausible) {
   // @ts-ignore queue stub documented by Plausible
   window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
 }
-/**
- * @template {keyof AnalyticsEvents} K
- * @param {K} name @param {AnalyticsEvents[K]} [props]
- */
+/** Send an event. Props never carry personal data (only locations, services, areas, providers, steps). @param {string} name @param {Record<string, string|number>} [props] */
 export function track(name, props) {
   // @ts-ignore
   const p = window.plausible;
   if (!hasPlausible || typeof p !== 'function') return;
   p(name, props && Object.keys(props).length ? { props } : {});
 }
+/** Older data-track names still emitted by some templates → current event names. */
+const ALIAS = /** @type {Record<string, string>} */ ({ call_clicked: 'call_click', email_clicked: 'email_click', sms_clicked: 'sms_click' });
+const WITH_LOCATION = new Set(['call_click', 'sms_click', 'email_click']);
 document.addEventListener('click', (e) => {
-  const a = /** @type {HTMLElement|null} */ (/** @type {HTMLElement} */ (e.target).closest('[data-track]'));
+  const a = /** @type {HTMLElement|null} */ (/** @type {HTMLElement} */ (e.target).closest?.('[data-track]'));
   if (!a) return;
-  const ev = a.dataset.track;
-  const location = a.dataset.trackLocation || 'unknown';
-  if (ev === 'call_clicked') track('call_clicked', { location });
-  else if (ev === 'email_clicked') track('email_clicked', { location });
-  else if (ev === 'capability_statement_downloaded') track('capability_statement_downloaded');
+  const raw = a.dataset.track || '';
+  const ev = ALIAS[raw] || raw;
+  if (WITH_LOCATION.has(ev)) track(ev, { location: a.dataset.trackLocation || 'unknown' });
+  else if (ev === 'capability_statement_downloaded') track(ev);
 });
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const DESKTOP = matchMedia('(min-width: 1120px)');
+const DESKTOP = matchMedia('(min-width: 64em)');
+const root = document.documentElement;
 
-/* ---------- header: scrolled state and glass tint over the hero ---------- */
-const header = /** @type {HTMLElement|null} */ (document.querySelector('[data-header]'));
-const heroEl = /** @type {HTMLElement|null} */ (document.querySelector('.hero'));
-if (header) {
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    header.classList.toggle('is-scrolled', scrollY > 8);
-    if (heroEl) header.classList.toggle('is-over-media', heroEl.getBoundingClientRect().bottom > 76);
-  };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-  update();
+/* ---------- disclosure menus (Services, Service areas): buttons with aria-expanded, Esc closes ---------- */
+/** @type {{ btn: HTMLButtonElement, panel: HTMLElement, item: HTMLElement }[]} */
+const menus = [...document.querySelectorAll('[data-menu]')].map((item) => ({
+  item: /** @type {HTMLElement} */ (item),
+  btn: /** @type {HTMLButtonElement} */ (item.querySelector('[data-menu-toggle]')),
+  panel: /** @type {HTMLElement} */ (item.querySelector('[data-menu-panel]')),
+}));
+/** @param {typeof menus[number]} m @param {boolean} open */
+const setMenu = (m, open) => { m.btn.setAttribute('aria-expanded', String(open)); m.panel.classList.toggle('is-open', open); };
+for (const m of menus) {
+  m.btn.addEventListener('click', () => {
+    const open = m.btn.getAttribute('aria-expanded') !== 'true';
+    if (DESKTOP.matches) for (const o of menus) if (o !== m) setMenu(o, false);
+    setMenu(m, open);
+  });
+  m.item.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && m.btn.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); setMenu(m, false); m.btn.focus(); }
+  });
+  m.item.addEventListener('focusout', (e) => { const to = /** @type {Node|null} */ (e.relatedTarget); if (DESKTOP.matches && (!to || !m.item.contains(to))) setMenu(m, false); });
 }
+document.addEventListener('click', (e) => { if (DESKTOP.matches) for (const m of menus) if (!m.item.contains(/** @type {Node} */ (e.target))) setMenu(m, false); });
 
-/* ---------- mobile navigation sheet ---------- */
+/* ---------- mobile sheet nav: inert background, Esc closes, focus returns to the toggle ---------- */
+const header = /** @type {HTMLElement|null} */ (document.querySelector('[data-header]'));
 const toggle = /** @type {HTMLButtonElement|null} */ (document.querySelector('[data-nav-toggle]'));
 const nav = document.getElementById('site-nav');
-if (toggle && nav) {
+if (header && toggle && nav) {
   const label = /** @type {HTMLElement|null} */ (toggle.querySelector('.nav-toggle__label'));
-  const set = (/** @type {boolean} */ open) => {
+  const outside = () => /** @type {HTMLElement[]} */ ([...document.body.children]).filter((el) => el !== header && el.tagName !== 'SCRIPT' && !el.classList.contains('sprite'));
+  const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+  const set = (/** @type {boolean} */ open, returnFocus = false) => {
     toggle.setAttribute('aria-expanded', String(open));
-    nav.classList.toggle('is-open', open);
-    document.documentElement.classList.toggle('nav-open', open);
-    header?.classList.toggle('is-open', open);
-    if (label) label.textContent = open ? 'Close' : 'Menu';
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    if (label) label.textContent = open ? 'Close' : 'Menu';
+    nav.classList.toggle('is-open', open);
+    root.classList.toggle('nav-open', open);
+    for (const el of outside()) el.inert = open;
+    if (!open) for (const m of menus) setMenu(m, false);
+    if (!open && returnFocus) toggle.focus();
   };
-  toggle.setAttribute('aria-label', 'Menu');
-  toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
-  // A tap on the dimmed page behind the sheet closes it.
-  header?.addEventListener('click', (e) => { if (e.target === header && toggle.getAttribute('aria-expanded') === 'true') set(false); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { set(false); toggle.focus(); } });
-  DESKTOP.addEventListener('change', () => set(false));
+  toggle.addEventListener('click', () => set(!isOpen(), true));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) set(false, true); });
+  // A link inside the sheet (same-page anchors included) closes it.
+  nav.addEventListener('click', (e) => { if (/** @type {HTMLElement} */ (e.target).closest('a') && isOpen()) set(false); });
+  DESKTOP.addEventListener('change', () => { if (isOpen()) set(false); });
 }
 
-/* ---------- services panel (disclosure pattern) ---------- */
-for (const item of document.querySelectorAll('[data-mega]')) {
-  const btn = /** @type {HTMLButtonElement} */ (item.querySelector('[data-mega-toggle]'));
-  const panel = /** @type {HTMLElement} */ (item.querySelector('[data-mega-panel]'));
-  const set = (/** @type {boolean} */ open) => { btn.setAttribute('aria-expanded', String(open)); panel.classList.toggle('is-open', open); };
-  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
-  item.addEventListener('keydown', (e) => {
-    if (/** @type {KeyboardEvent} */ (e).key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); set(false); btn.focus(); }
-  });
-  item.addEventListener('focusout', (e) => { const to = /** @type {FocusEvent} */ (e).relatedTarget; if (DESKTOP.matches && (!to || !item.contains(/** @type {Node} */ (to)))) set(false); });
-  document.addEventListener('click', (e) => { if (DESKTOP.matches && !item.contains(/** @type {Node} */ (e.target))) set(false); });
+/* ---------- sticky action bar: hidden while the quote form is in view or the on-screen keyboard is open ---------- */
+const bar = /** @type {HTMLElement|null} */ (document.querySelector('[data-action-bar]'));
+if (bar) {
+  let formInView = false, typing = false;
+  const sync = () => {
+    const hide = formInView || typing;
+    bar.classList.toggle('is-hidden', hide);
+    bar.inert = hide;
+  };
+  const form = document.querySelector('[data-quote-form], form[data-stepper], .quote-form');
+  if (form && 'IntersectionObserver' in window) new IntersectionObserver(([en]) => { formInView = en.isIntersecting; sync(); }).observe(form);
+  const field = (/** @type {EventTarget|null} */ t) => t instanceof HTMLElement && t.matches('input:not([type=checkbox]):not([type=radio]):not([type=range]), textarea, select, [contenteditable]');
+  document.addEventListener('focusin', (e) => { if (field(e.target)) { typing = true; sync(); } });
+  document.addEventListener('focusout', (e) => { if (field(e.target)) { typing = false; sync(); } });
+  const vv = window.visualViewport;
+  if (vv) vv.addEventListener('resize', () => { typing = innerHeight - vv.height > 150 || field(document.activeElement); sync(); });
 }
 
-/* ---------- glass highlight that follows the pointer ---------- */
-if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.addEventListener('pointermove', (e) => {
-    if (reduceMotion.matches) return;
-    const el = /** @type {HTMLElement|null} */ (/** @type {HTMLElement} */ (e.target).closest?.('.glass-card, .tile__link, .btn--glass, .btn--light'));
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
-  }, { passive: true });
-}
-
-/* ---------- portfolio filters ---------- */
+/* ---------- portfolio filters (no-JS: the form submits; with JS: in place, with a View Transition where supported) ---------- */
 const filters = /** @type {HTMLFormElement|null} */ (document.querySelector('[data-filters]'));
 if (filters) {
   const grid = document.querySelector('[data-project-grid]');
@@ -113,12 +117,16 @@ if (filters) {
     const u = new URL(location.href); s ? u.searchParams.set('service', s) : u.searchParams.delete('service'); a ? u.searchParams.set('area', a) : u.searchParams.delete('area');
     history.replaceState(null, '', u);
   };
-  filters.addEventListener('change', apply);
-  filters.addEventListener('submit', (e) => { e.preventDefault(); apply(); });
+  const run = () => {
+    // @ts-ignore startViewTransition is not in every lib.dom yet
+    if (document.startViewTransition && !reduceMotion.matches) document.startViewTransition(apply); else apply();
+  };
+  filters.addEventListener('change', run);
+  filters.addEventListener('submit', (e) => { e.preventDefault(); run(); });
   apply();
 }
 
-/* ---------- before / after slider ---------- */
+/* ---------- before / after ---------- */
 for (const ba of document.querySelectorAll('[data-ba]')) {
   const range = /** @type {HTMLInputElement} */ (ba.querySelector('[data-ba-range]'));
   const set = () => { /** @type {HTMLElement} */ (ba).style.setProperty('--pos', `${range.value}%`); range.setAttribute('aria-valuetext', `${100 - Number(range.value)}% after image shown`); };
@@ -127,6 +135,8 @@ for (const ba of document.querySelectorAll('[data-ba]')) {
   set();
 }
 
+/* ---------- legacy quote stepper (current /free-quote/ markup). The quote builder stream replaces this with
+   src/scripts/quote.js; delete from here down once the page no longer renders form[data-stepper]. ---------- */
 /* ---------- form validation helpers ---------- */
 /** @param {Element} f */
 function fieldValid(f) {

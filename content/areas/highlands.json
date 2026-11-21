@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "highlands",
   "name": "Highlands",
   "seo": {
-    "title": "Landscaping & Tree Work in Highlands, BC | RNC",
-    "description": "Tree work, brush clearing, landscaping and property upkeep for Highlands acreages, with tree permit checks near lakes and steep slopes. Get your free quote."
+    "title": "Landscaping in Highlands, BC: Tree Work & Acreage | RNC",
+    "description": "Clearance pruning, permit-checked tree work, well-water drip irrigation and property upkeep for Highlands forested and lakeside lots. Get a free quote."
   },
   "h1": "Landscaping and tree work in Highlands",
+  "cardSummary": "Forested, rocky lots near lakes and slopes, mostly on wells, where cutting a significant tree is prohibited outright.",
   "intro": [
-    "Highlands is rural and forested, with homes near lakes and on steep, rocky lots around Millstream, Caleb Pike and Fork Lake.",
-    "A tree cutting permit is needed for protected species and for any tree near a watercourse, lake or steep slope, and cutting a significant tree is prohibited. Many homes use wells, so CRD watering rules apply only where connected. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Highlands is rural and forested, with homes on rocky slopes and near lakes around Millstream, Caleb Pike and Fork Lake rather than streets of lawns.",
+    "A tree cutting permit is needed for protected species and for any tree near a watercourse, lake or steep slope, and cutting a significant tree is prohibited. Many homes use wells, so CRD watering rules apply only where a property is connected. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/?area=highlands)."
   ],
   "neighbourhoods": [
     "Millstream area",
@@ -20,21 +21,60 @@
     "rural acreage on forested lots",
     "homes near lakes and watercourses"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "Highlands protects native species including cascara and manzanita, and regulates any tree near a lake, watercourse or steep slope, which covers much of the district. Felling in nesting season needs a bird check.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Highlands Tree Management Bylaw",
       "text": "Under Highlands' Tree Management Bylaw No. 10, cutting a protected tree (Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara, manzanita, Douglas-fir over 60 cm, any tree over 80 cm) or any tree near a watercourse, lake or steep slope needs a permit; cutting a significant tree is prohibited. Check for nesting birds before felling in nesting season.",
       "sourceUrl": "https://www.highlands.ca/node/133",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule (connected properties only)",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Wells, not the regional supply",
+      "body": "Many Highlands homes draw on private wells. Irrigation works well as low-flow drip on a timer, sized to what the well can supply in late summer."
+    },
+    {
+      "title": "Thin soil over rock",
+      "body": "Rocky outcrops and shallow soil are the norm. Planting suits drought-tolerant natives in pockets of soil, and lawns are rarely the right choice."
+    },
+    {
+      "title": "Brush near buildings",
+      "body": "Forested lots build up dry brush, low limbs and fallen debris near houses and outbuildings, which is worth clearing back each spring."
+    },
+    {
+      "title": "Lakes, streams and slopes",
+      "body": "Because trees near water or on steep slopes need a permit, most clearing jobs here start with a look at where the lot sits."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "tree-vegetation",
+      "why": "Clearance pruning over roofs and driveways, and permit-checked removals, are the core work on forested lots."
+    },
+    {
+      "service": "irrigation",
+      "why": "Gardens on well water need small, efficient drip systems rather than lawn sprinklers."
     }
   ],
   "servicesBlurb": {
@@ -44,5 +84,36 @@
     "tree-vegetation": "Clearance pruning and removals after a permit check near lakes and slopes."
   },
   "featuredProject": "highlands-acreage-tree-pruning",
+  "nearbyProjects": [
+    "highlands-acreage-tree-pruning",
+    "sooke-acreage-brush-and-broom-clearing",
+    "langford-townhouse-landscape-package"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Caleb Pike area",
+      "title": "Brush cleared, arbutus kept",
+      "body": "Brush and low limbs were cleared back from a house and workshop, while an arbutus that a permit check showed was protected stayed in place."
+    },
+    {
+      "sample": true,
+      "service": "irrigation",
+      "neighbourhood": "Fork Lake area",
+      "title": "Drip sized for a low-yield well",
+      "body": "A small vegetable garden was put on a timed drip line with low-flow emitters, run early in the morning so the well could recover between cycles."
+    }
+  ],
+  "neighbours": [
+    "langford",
+    "view-royal",
+    "saanich"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Highlands",
+    "body": "Tell us whether the work is near a lake, stream or steep slope, and whether you are on a well. Both shape the permit question and the plan.",
+    "href": "/free-quote/?area=highlands"
+  },
   "image": "area-highlands"
 }

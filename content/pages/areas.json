@@ -1,11 +1,30 @@
 {
-  "_notes": "Hub lists the 13 areas.",
+  "_notes": "Areas hub. Keys: seo, h1, lede, areas (the 13 slugs in display order), sections (rendered by ui.sections). Added for the redesign (optional for templates): intro (paragraphs under the H1, after the lede); map ({heading, lede}: framing for the SVG map); list ({heading, lede}: framing for the area cards/list; each card can use the area file's cardSummary); groups ([{id, heading, areas:[slugs]}]: optional sub-regional grouping for the list, covering all 13 once); lastReviewed (ISO date the local rules on area pages were checked); cta ({heading, body, href}). Section ids: how (how service areas work, with items), rules, next.",
   "seo": {
     "title": "Service Areas in Greater Victoria | RNC Landscaping",
     "description": "RNC Landscaping serves 13 Greater Victoria communities, from Sidney and North Saanich to Langford, Sooke and Metchosin. Find your area and get a free quote."
   },
   "h1": "Areas we serve",
-  "lede": "Thirteen municipalities across Greater Victoria. Each area page covers local neighbourhoods and the tree and watering rules that apply.",
+  "lede": "Thirteen municipalities across Greater Victoria, from the Saanich Peninsula to the West Shore and Sooke. Each area page covers local conditions, the tree and watering rules that apply there, and nearby work.",
+  "intro": [
+    "A garden in Sidney and an acreage in Highlands need different plans. Soils, exposure, deer, water supply and tree bylaws all change from one municipality to the next, so each area has its own page instead of one list of place names.",
+    "Pick your municipality on the map or in the list below. If you are not sure which one your address falls in, tell us the street when you ask for a quote."
+  ],
+  "map": {
+    "heading": "Thirteen municipalities",
+    "lede": "A schematic map, not to scale. Select an area to see its local rules, conditions and nearby projects."
+  },
+  "list": {
+    "heading": "Area guides",
+    "lede": "Each guide summarises what is different about that municipality, with links to the official rules."
+  },
+  "groups": [
+    { "id": "core", "heading": "Victoria and the core", "areas": ["victoria", "oak-bay", "esquimalt", "saanich"] },
+    { "id": "peninsula", "heading": "Saanich Peninsula", "areas": ["central-saanich", "north-saanich", "sidney"] },
+    { "id": "west-shore", "heading": "West Shore and Highlands", "areas": ["view-royal", "langford", "colwood", "highlands"] },
+    { "id": "west", "heading": "Metchosin and Sooke", "areas": ["metchosin", "sooke"] }
+  ],
+  "lastReviewed": "2026-11-19",
   "areas": [
     "victoria",
     "saanich",
@@ -23,18 +42,35 @@
   ],
   "sections": [
     {
+      "id": "how",
+      "heading": "How service areas work",
+      "body": [
+        "We work across all thirteen municipalities on this page. Every quote starts the same way, wherever you are."
+      ],
+      "items": [
+        { "title": "Tell us where and what", "body": "Choose your municipality in the [free quote form](/free-quote/) and describe the work. Area pages link to the form with your municipality already filled in." },
+        { "title": "We check the local rules", "body": "Before quoting tree work, digging near trees or irrigation, we check the bylaw and watering rules for your municipality and say in the quote if a permit may be needed." },
+        { "title": "The plan fits the place", "body": "Plant choices, watering and scheduling are planned for your lot's exposure, soil, deer pressure and water supply, not copied from another job." }
+      ]
+    },
+    {
       "id": "rules",
       "heading": "Local rules differ",
       "body": [
-        "Tree bylaws differ by municipality, and CRD watering rules apply where a property is on the regional supply. Read our [winter pruning and tree permit guide](/resources/winter-pruning-and-storm-prep/)."
+        "Each municipality has its own tree bylaw, with different protected species, size thresholds and permit steps. CRD watering rules apply only where a property is on the regional supply, which matters in rural areas where many homes use wells. Each area page links to the official source and shows when we last checked it. Read our [winter pruning and tree permit guide](/resources/winter-pruning-and-storm-prep/)."
       ]
     },
     {
       "id": "next",
       "heading": "Not on the list?",
       "body": [
-        "If you're nearby, [get a free quote](/quote/) and choose Other, or [contact us](/contact/). See [our services](/services/)."
+        "If you're nearby, [get a free quote](/free-quote/) and choose Other, or [contact us](/contact/). See [our services](/services/)."
       ]
     }
-  ]
+  ],
+  "cta": {
+    "heading": "Get a free quote for your property",
+    "body": "Choose your municipality and describe the work. We reply with questions or a quote, never a price list.",
+    "href": "/free-quote/"
+  }
 }

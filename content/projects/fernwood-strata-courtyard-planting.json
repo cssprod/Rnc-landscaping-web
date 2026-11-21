@@ -1,14 +1,33 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "fernwood-strata-courtyard-planting",
+  "sample": true,
   "title": "Courtyard replanting for a Fernwood strata",
   "service": "landscape-installation",
   "area": "victoria",
   "clientType": "Strata",
   "seo": {
-    "title": "Sample project: Fernwood strata courtyard | RNC",
-    "description": "Sample project: a shaded strata courtyard in Fernwood, Victoria, replanted with shade-tolerant natives and new edging, phased around residents. Free quote."
+    "title": "Sample project: Fernwood strata courtyard",
+    "description": "Sample case study: a shaded Fernwood strata courtyard replanted with shade-tolerant natives, chosen by council from two written options."
   },
   "summary": "A shaded courtyard with failing shrubs replanted with shade-tolerant natives.",
+  "season": "Fall",
+  "duration": "2 weeks",
+  "scopeTags": [
+    "Shade planting",
+    "Native plants",
+    "Soil amendment",
+    "Bed edging",
+    "Phased work"
+  ],
+  "plantPalette": [
+    "Salal",
+    "Sword fern",
+    "Deer fern",
+    "Oregon grape",
+    "Red-flowering currant",
+    "Vine maple"
+  ],
   "scope": [
     "Removal of failed shrubs",
     "Soil amendment",
@@ -16,15 +35,19 @@
     "New bed edging",
     "Mulch"
   ],
-  "duration": "2 weeks",
+  "challenge": "Half the shrubs in a shaded courtyard had died, owners disagreed about what to plant, and residents needed a clear path to their doors throughout.",
+  "approach": [
+    "We gave council two written planting options, each with a plant list suited to deep shade, so the decision could be made at one meeting.",
+    "Work ran in two halves. Failed shrubs came out, the soil was amended and the chosen natives went in with new edging and mulch while the other half stayed open."
+  ],
+  "result": "Council chose a plan from written options, and residents kept access throughout.",
+  "links": "Read more about [landscape installation](/services/landscape-installation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/free-quote/).",
   "story": [
     "Half the courtyard shrubs had died and owners disagreed about what to plant.",
     "We gave council two planting options with a plant list for each. Work was done in halves so residents always had a clear path to their doors.",
-    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Council chose a plan from written options, and residents kept access throughout.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-4",

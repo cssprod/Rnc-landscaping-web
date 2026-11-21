@@ -1,11 +1,11 @@
 {
-  "_notes": "Not found page.",
+  "_notes": "Helpful not-found page (C1). Section 'try' items map, in order, to Services, Areas, Guides and Free quote cards. New: 'moreLinks' [{label, href}] for a search-style list of popular pages.",
   "seo": {
-    "title": "Page Not Found | RNC Landscaping",
-    "description": "Sorry, we couldn't find that page. Try our landscaping services, service areas or seasonal guides, or request a free quote for your Greater Victoria property."
+    "title": "Page not found | RNC Landscaping",
+    "description": "That page has moved or never existed. Find our services, projects, service areas, seasonal guides or the free quote form for your Greater Victoria property."
   },
   "h1": "We couldn't find that page",
-  "lede": "The page may have moved or the link may be wrong.",
+  "lede": "The page may have moved, or the link may be wrong. Old portfolio and quote links now live under Projects and Free quote. These pages are a good place to start.",
   "sections": [
     {
       "id": "try",
@@ -14,21 +14,55 @@
       "items": [
         {
           "title": "Services",
-          "body": "[See our services](/services/)."
+          "body": "Maintenance, installation, irrigation and tree work. [See our services](/services/)."
         },
         {
-          "title": "Areas",
-          "body": "[Find your area](/areas/)."
+          "title": "Service areas",
+          "body": "13 municipalities, Sidney to Sooke. [Find your area](/areas/)."
         },
         {
-          "title": "Guides",
-          "body": "[Read seasonal guides](/resources/)."
+          "title": "Seasonal guides",
+          "body": "Lawns, watering rules and pruning. [Read the guides](/resources/)."
         },
         {
-          "title": "Quote",
-          "body": "[Get a free quote](/quote/)."
+          "title": "Free quote",
+          "body": "One short form. [Get a free quote](/free-quote/)."
         }
       ]
+    }
+  ],
+  "moreLinks": [
+    {
+      "label": "Grounds maintenance",
+      "href": "/services/grounds-maintenance/"
+    },
+    {
+      "label": "Landscape installation",
+      "href": "/services/landscape-installation/"
+    },
+    {
+      "label": "Irrigation",
+      "href": "/services/irrigation/"
+    },
+    {
+      "label": "Tree and vegetation management",
+      "href": "/services/tree-vegetation/"
+    },
+    {
+      "label": "Projects",
+      "href": "/projects/"
+    },
+    {
+      "label": "How we work",
+      "href": "/process/"
+    },
+    {
+      "label": "FAQ",
+      "href": "/faq/"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact/"
     }
   ]
 }

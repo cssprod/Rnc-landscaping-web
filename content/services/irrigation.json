@@ -1,15 +1,16 @@
 {
+  "_notes": "Service page (blueprint C2). Existing keys unchanged in shape. New keys: 'summary' (one line for tiles and the services hub); 'includesHeading' (section heading, \"What's included\"); 'goodFitIf' {heading, items[string]} for the \"Good fit if\" list; 'seasonal' items are the seasonal timeline, in order Spring, Summer, Fall, Winter; 'process' steps now carry an optional 'deliverable' string (what you get at that step); 'localRules' {heading, intro, lastReviewed (ISO date the sources were checked), items[{text, sourceUrl, verify:true}], areasLink (Markdown)} - only sourced facts from research/areas.json, render the source link and the review date; 'relatedProjects' [project slugs, in display order]; 'relatedGuides' [resource slugs]. 'faqs' has 5-6 entries. No prices.",
   "slug": "irrigation",
   "name": "Irrigation",
   "navLabel": "Irrigation",
+  "summary": "Installation, repair, spring start-up and winterization, set to the CRD lawn days.",
   "seo": {
-    "title": "Irrigation Install, Repair & Winterization, Victoria",
-    "description": "Irrigation installation, repairs, spring start-up and winterization in Greater Victoria, set up to suit CRD watering rules. Contact RNC for a free quote."
+    "title": "Irrigation install and repair in Greater Victoria | RNC",
+    "description": "Irrigation installation, repair, spring start-up and winterization in Greater Victoria, with controllers set to the CRD lawn watering days. Free quote."
   },
   "hero": {
     "h1": "Irrigation installation and repair in Greater Victoria",
-    "lede": "New systems, repairs, spring start-up and fall winterization, with controllers set to match CRD watering days and times.",
-    "image": "svc-irrigation-hero"
+    "lede": "New systems, repairs, spring start-up and fall winterization, with controllers set to your address's CRD lawn days before Stage 1 begins on May 1."
   },
   "audiences": [
     {
@@ -25,6 +26,7 @@
       "body": "Repairs and seasonal service scheduled around occupants, with a record of what was checked and changed."
     }
   ],
+  "includesHeading": "What's included",
   "includes": [
     {
       "title": "New installation",
@@ -51,33 +53,21 @@
       "body": "Controllers set to the [CRD lawn watering schedule](/resources/crd-watering-rules-guide/) for your address."
     }
   ],
-  "process": [
-    {
-      "title": "Request a quote",
-      "body": "Tell us about your system or project on the [quote form](/quote/)."
-    },
-    {
-      "title": "Site check",
-      "body": "We run each zone, look at coverage, pressure and the controller, and note problems."
-    },
-    {
-      "title": "Written scope",
-      "body": "You get a list of what needs fixing or installing, and why."
-    },
-    {
-      "title": "Work and test",
-      "body": "We complete the work, then run every zone again to confirm coverage."
-    },
-    {
-      "title": "Schedule and notes",
-      "body": "We set the controller and leave a simple zone map and notes."
-    }
-  ],
+  "goodFitIf": {
+    "heading": "Good fit if…",
+    "items": [
+      "Some lawns are soggy while others brown, and nobody has a zone map",
+      "Your system was not drained before a cold snap",
+      "You want spray zones in beds converted to drip",
+      "Your strata needs start-up and shutdown for the whole complex on one schedule",
+      "You want the controller set to your CRD lawn days and left that way"
+    ]
+  },
   "seasonal": [
     {
       "season": "Spring",
       "items": [
-        "System start-up and zone check",
+        "Spring start-up and zone check",
         "Controller set before CRD Stage 1 begins on May 1",
         "Repairs from winter damage"
       ]
@@ -85,15 +75,15 @@
     {
       "season": "Summer",
       "items": [
-        "Coverage and leak checks",
-        "Schedule adjustments in hot spells within the rules",
+        "Coverage and leak audit",
+        "Schedule adjustments within the rules in hot spells",
         "Drip conversions for beds"
       ]
     },
     {
       "season": "Fall",
       "items": [
-        "Winterization before freezing nights",
+        "Winterization and blow-out before freezing nights",
         "Controller shut-off",
         "Planning upgrades"
       ]
@@ -107,6 +97,71 @@
       ]
     }
   ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Tell us about your system or project on the [quote form](/free-quote/).",
+      "deliverable": "Your request, sent from your own email app"
+    },
+    {
+      "title": "Site check",
+      "body": "We run each zone and look at coverage, pressure and the controller, and note problems.",
+      "deliverable": "A list of what we found, zone by zone"
+    },
+    {
+      "title": "Written scope",
+      "body": "You get a list of what needs fixing or installing, and why.",
+      "deliverable": "A written scope"
+    },
+    {
+      "title": "Work and test",
+      "body": "We complete the work, then run every zone again to confirm coverage.",
+      "deliverable": "A tested system"
+    },
+    {
+      "title": "Schedule and notes",
+      "body": "We set the controller and leave a simple zone map and notes.",
+      "deliverable": "A zone map and controller settings"
+    }
+  ],
+  "localRules": {
+    "heading": "Local rules that affect irrigation",
+    "intro": "The CRD sets the outdoor watering schedule for properties on the regional water supply. Here is what matters for a controller.",
+    "lastReviewed": "2026-11-19",
+    "items": [
+      {
+        "text": "CRD Stage 1 runs May 1 to September 30. Lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Hand watering and drip irrigation of trees, shrubs and gardens is allowed any day.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      },
+      {
+        "text": "The rules apply only where a property is connected to the regional supply; many rural properties use wells.",
+        "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+        "verify": true
+      }
+    ],
+    "areasLink": "See how the rules apply where you live on our [service area pages](/areas/)."
+  },
+  "relatedProjects": [
+    "view-royal-townhouse-irrigation-audit",
+    "rockland-spring-start-up-and-repair",
+    "esquimalt-church-garden-drip-conversion",
+    "langford-retail-centre-irrigation-repair"
+  ],
+  "relatedGuides": [
+    "irrigation-start-up-and-winterization",
+    "crd-watering-rules-guide"
+  ],
   "faqs": [
     {
       "q": "When should I winterize my irrigation system?",
@@ -114,11 +169,19 @@
     },
     {
       "q": "Does drip irrigation follow the same watering days?",
-      "a": "Under CRD Stage 1 rules, drip irrigation of trees, shrubs and gardens is allowed any day; lawn sprinkling has set days and times. Check the current rules on the CRD site."
+      "a": "Under CRD Stage 1 rules, drip irrigation of trees, shrubs and gardens is allowed any day; lawn sprinkling has set days and times. Check the current rules on the [CRD site](https://www.crd.ca/environment/water-conservation/watering-schedule)."
+    },
+    {
+      "q": "Which lawn days apply to a strata complex?",
+      "a": "The [CRD watering schedule](https://www.crd.ca/environment/water-conservation/watering-schedule) says multi-unit complexes use the complex's street address, not each unit's number. We set the controller to match."
     },
     {
       "q": "Can you repair a system someone else installed?",
-      "a": "Yes. We work on most residential and commercial systems."
+      "a": "Yes. Tell us what you know about the system when you request a quote, and photos of the controller and valve box help."
+    },
+    {
+      "q": "Do the CRD rules apply if I am on a well?",
+      "a": "The [CRD schedule](https://www.crd.ca/environment/water-conservation/watering-schedule) applies to properties on the regional water supply. Many rural properties in Highlands and Metchosin use wells; confirm your supply before assuming either way."
     },
     {
       "q": "Do you test backflow preventers?",

@@ -34,7 +34,7 @@ test.describe('every page', () => {
 test('main navigation reaches key sections', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
-  for (const [name, path] of [['Portfolio', '/portfolio/'], ['Areas', '/areas/'], ['Commercial', '/commercial/']]) {
+  for (const [name, path] of [['Portfolio', '/projects/'], ['Areas', '/areas/'], ['Commercial', '/commercial/']]) {
     await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${path}$`));
     await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name, exact: true })).toHaveAttribute('aria-current', 'page');
@@ -88,7 +88,7 @@ test('mobile menu sheet opens and closes', async ({ page }) => {
 });
 
 test('portfolio filter narrows projects and updates the count', async ({ page }) => {
-  await page.goto('/portfolio/');
+  await page.goto('/projects/');
   const cards = page.locator('[data-project-grid] > li');
   const total = await cards.count();
   expect(total).toBeGreaterThanOrEqual(16);
@@ -118,7 +118,7 @@ test('before/after slider is keyboard operable', async ({ page }) => {
 });
 
 test('quote form validates each step and writes the email', async ({ page }) => {
-  await page.goto('/quote/');
+  await page.goto('/free-quote/');
   await expect(page.getByText('Step 1 of 4', { exact: true })).toBeVisible();
   const next = (/** @type {number} */ i) => page.locator(`fieldset[data-step="${i}"]`).locator('[data-next]');
   // step 1: nothing chosen
@@ -173,7 +173,7 @@ test('quote form validates each step and writes the email', async ({ page }) => 
 test('quote form works without JavaScript as one long mailto form', async ({ browser }) => {
   const ctx = await browser.newContext({ javaScriptEnabled: false });
   const page = await ctx.newPage();
-  await page.goto('/quote/');
+  await page.goto('/free-quote/');
   await expect(page.locator('fieldset[data-step]')).toHaveCount(4);
   for (const i of [0, 1, 2, 3]) await expect(page.locator(`fieldset[data-step="${i}"]`)).toBeVisible();
   await expect(page.locator('[data-submit-row] button[type=submit]')).toBeVisible();
@@ -184,7 +184,7 @@ test('quote form works without JavaScript as one long mailto form', async ({ bro
 
 test('site has no backend or sign-in surfaces', async ({ request }) => {
   for (const p of ['/admin/', '/quote/thanks/']) expect((await request.get(p)).status(), p).toBe(404);
-  const html = await (await request.get('/quote/')).text();
+  const html = await (await request.get('/free-quote/')).text();
   expect(html).not.toContain('data-netlify');
   expect(html).not.toContain('netlify-identity');
 });

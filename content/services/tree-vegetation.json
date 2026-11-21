@@ -1,15 +1,16 @@
 {
+  "_notes": "Service page (blueprint C2). Existing keys unchanged in shape. New keys: 'summary' (one line for tiles and the services hub); 'includesHeading' (section heading, \"What's included\"); 'goodFitIf' {heading, items[string]} for the \"Good fit if\" list; 'seasonal' items are the seasonal timeline, in order Spring, Summer, Fall, Winter; 'process' steps now carry an optional 'deliverable' string (what you get at that step); 'localRules' {heading, intro, lastReviewed (ISO date the sources were checked), items[{text, sourceUrl, verify:true}], areasLink (Markdown)} - only sourced facts from research/areas.json, render the source link and the review date; 'relatedProjects' [project slugs, in display order]; 'relatedGuides' [resource slugs]. 'faqs' has 5-6 entries. No prices.",
   "slug": "tree-vegetation",
   "name": "Tree & Vegetation Management",
   "navLabel": "Tree and vegetation",
+  "summary": "Pruning, removals, invasive control and clearing, with a tree bylaw check first.",
   "seo": {
-    "title": "Tree Pruning, Removal & Vegetation Care | Victoria BC",
-    "description": "Tree and shrub pruning, removals, invasive plant control and clearing in Greater Victoria, with permit checks under local tree bylaws. Get a free quote."
+    "title": "Tree and vegetation management in Greater Victoria | RNC",
+    "description": "Tree and hedge pruning, removals, invasive plant control and brush clearing in Greater Victoria, with a tree bylaw check before any cut. Free quote."
   },
   "hero": {
-    "h1": "Tree pruning, removal and vegetation management",
-    "lede": "Pruning, removals, invasive plant control and brush clearing, with a check of your municipality's tree bylaw before any cut.",
-    "image": "svc-tree-vegetation-hero"
+    "h1": "Tree pruning, removal and vegetation management in Greater Victoria",
+    "lede": "Pruning, removals, invasive plant control and brush clearing, with a check of your municipality's tree bylaw before any cut. Garry oak and arbutus are protected at small sizes in many places."
   },
   "audiences": [
     {
@@ -25,6 +26,7 @@
       "body": "Invasive removal, trail-edge clearing and vegetation control to a written plan, with proper disposal."
     }
   ],
+  "includesHeading": "What's included",
   "includes": [
     {
       "title": "Tree and shrub pruning",
@@ -51,35 +53,23 @@
       "body": "Fallen limbs and debris cleared after winter windstorms."
     }
   ],
-  "process": [
-    {
-      "title": "Request a quote",
-      "body": "Send photos of the trees or area on the [quote form](/quote/)."
-    },
-    {
-      "title": "Site visit and bylaw check",
-      "body": "We identify species and size and check whether your municipality's tree bylaw applies."
-    },
-    {
-      "title": "Written scope",
-      "body": "You get the planned work, any permit that may be needed, and nesting-season timing if relevant."
-    },
-    {
-      "title": "Work",
-      "body": "We work safely, protect nearby plants and structures, and clean up."
-    },
-    {
-      "title": "Disposal",
-      "body": "Wood and brush are removed; invasive material goes to an approved disposal site."
-    }
-  ],
+  "goodFitIf": {
+    "heading": "Good fit if…",
+    "items": [
+      "Branches hang over the roof, driveway or sidewalk",
+      "A hedge has outgrown its space and you want it kept as a screen",
+      "Ivy, blackberry or broom is spreading on your lot",
+      "You are not sure whether a tree needs a permit",
+      "You manage a trail edge, park or acreage that needs a written work plan"
+    ]
+  },
   "seasonal": [
     {
       "season": "Spring",
       "items": [
         "Nesting checks before work",
         "Invasive control as growth starts",
-        "Pruning after flowering for spring-blooming shrubs"
+        "Pruning spring-flowering shrubs after bloom"
       ]
     },
     {
@@ -107,10 +97,75 @@
       ]
     }
   ],
+  "process": [
+    {
+      "title": "Request a quote",
+      "body": "Send photos of the trees or area on the [quote form](/free-quote/).",
+      "deliverable": "Your request, sent from your own email app"
+    },
+    {
+      "title": "Site visit and bylaw check",
+      "body": "We identify species and size and check whether your municipality's tree bylaw applies.",
+      "deliverable": "A note on which rules apply"
+    },
+    {
+      "title": "Written scope",
+      "body": "You get the planned work, any permit that may be needed, and nesting-season timing if relevant.",
+      "deliverable": "A written scope with permit and timing notes"
+    },
+    {
+      "title": "Work",
+      "body": "We work safely, protect nearby plants and structures, and clean up.",
+      "deliverable": "A clean site"
+    },
+    {
+      "title": "Disposal",
+      "body": "Wood and brush are removed; invasive material goes to an approved disposal site.",
+      "deliverable": "Disposal following CRD guidance"
+    }
+  ],
+  "localRules": {
+    "heading": "Local rules that affect tree work",
+    "intro": "Tree bylaws differ across the 13 municipalities. These examples show why we check the bylaw for your address before any cut.",
+    "lastReviewed": "2026-11-19",
+    "items": [
+      {
+        "text": "Saanich: a tree cutting permit is required before cutting a protected tree, even if dead or dying. Garry oak, arbutus, Pacific dogwood and Pacific yew are protected at 2 m tall or 4 cm diameter.",
+        "sourceUrl": "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
+        "verify": true
+      },
+      {
+        "text": "North Saanich: topping is prohibited, a permit is needed to remove a regulated tree, and the permit must be posted 48 hours before work.",
+        "sourceUrl": "https://www.northsaanich.ca/node/51",
+        "verify": true
+      },
+      {
+        "text": "Colwood: removal needs a Tree Management Permit; pruning within stated limits (keep at least 50% live crown, no more than 25% removed per season) does not.",
+        "sourceUrl": "https://www.colwood.ca/node/5090",
+        "verify": true
+      },
+      {
+        "text": "CRD: invasive plants must be disposed of properly, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
+        "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
+        "verify": true
+      }
+    ],
+    "areasLink": "Find the tree bylaw for your municipality on our [service area pages](/areas/)."
+  },
+  "relatedProjects": [
+    "highlands-acreage-tree-pruning",
+    "sidney-condo-hedge-reduction",
+    "sooke-acreage-brush-and-broom-clearing",
+    "metchosin-trail-edge-invasive-removal"
+  ],
+  "relatedGuides": [
+    "winter-pruning-and-storm-prep",
+    "native-and-drought-tolerant-planting"
+  ],
   "faqs": [
     {
       "q": "Do I need a permit to remove a tree?",
-      "a": "Often, yes. Every municipality in Greater Victoria has its own rules, and protected species like Garry oak and arbutus are covered at small sizes in many places. We check before any work. See our [area pages](/areas/) for local links."
+      "a": "Often, yes. Each municipality in Greater Victoria has its own rules, and protected species like Garry oak and arbutus are covered at small sizes in many places. We check before any work. See our [area pages](/areas/) for local links."
     },
     {
       "q": "Will you apply for the permit?",
@@ -118,7 +173,15 @@
     },
     {
       "q": "Do you top trees?",
-      "a": "No. Topping harms trees and is prohibited under some local bylaws."
+      "a": "No. Topping harms trees, and [North Saanich's Tree Protection Bylaw](https://www.northsaanich.ca/node/51) prohibits it."
+    },
+    {
+      "q": "Can a dead tree be removed without a permit?",
+      "a": "Not always. Under [Saanich's Tree Protection Bylaw](https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html), for example, a tree cutting permit is required before cutting a protected tree even if it is dead or dying. We check the bylaw for your address first."
+    },
+    {
+      "q": "When can you do work near nests?",
+      "a": "We plan around nesting season and check for active nests before work. Several bylaws, including [Saanich's](https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html) and [View Royal's](https://viewroyal.ca/EN/main/discover/environment/tree-protection/tree-protection-bylaw.html), also protect trees with certain nests."
     },
     {
       "q": "Are your crews certified arborists?",

@@ -1,341 +1,173 @@
 {
-  "_notes": "Four-step quote request. The website stores nothing: the last step opens the visitor's own email app with the request written out (mailto), and a copy-able summary is shown in case no email app opens. 'steps' defines fields; 'messages' covers form-level states. Field names are stable.",
+  "_notes": "Free-quote page (/free-quote/), blueprint C5. One page, six inputs. The website stores nothing: Send opens the visitor's own email app with the request written out (mailto), and an in-page panel offers Copy request, the address, Call/Text (only once PHONE is known) and Gmail/Outlook web links. Keys: seo, h1, lede; reassurance (array of short strings shown as a strip under the H1); fields (the six inputs, in order; field 'name' values are stable and are read by site/src/scripts/quote.js: services, area, description, timing, name, contact, plus the conditional phone input nested in contact.phone); each field has label, optional help, optional placeholder/examples, and errors {required, ...}; options [{value, label, subject?, hint?}] where 'subject' is the short label used in the email subject. errorSummary {heading, intro}; buttons {submit, copy, copied, copyAddress, copiedAddress, reopen, edit, gmail, outlook, call, text}; messages {submitHelp, noJs, privacy, ready {heading, body, noEmail}, truncated, copyFailed, smsBody}; nextSteps {heading, items[{title, body}]} ('What happens next'); credentials {heading, lede} (the row itself is ui.credentialRow tokens); aside {image, heading} (photo slot and heading for the side column); sections[] (other ways to reach us). Retired: the 4-step 'steps' key (replaced by 'fields' with the redesign; nothing else read it). {count} in errorSummary.intro is replaced with the number of problems. [REPLY TIME], [EMAIL], [PHONE] and credential tokens stay as tokens until RNC confirms them.",
   "seo": {
-    "title": "Get a Free Landscaping Quote | RNC Landscaping Victoria",
-    "description": "Tell us about your property and project in a few short steps and RNC Landscaping will follow up to arrange your free quote anywhere in Greater Victoria."
+    "title": "Free landscaping quote in Greater Victoria | RNC",
+    "description": "Ask RNC Landscaping for a free, no-obligation quote in Greater Victoria. Six quick questions, then your own email app sends it. Every quote is site-specific."
   },
   "h1": "Get a free quote",
-  "lede": "Four short steps, then your email app opens with everything written out, ready to send. A quote costs nothing and comes with no obligation.",
-  "aside": {
-    "image": "quote-aside",
-    "heading": "What happens next",
-    "items": [
-      "We read your request.",
-      "We get back to you to ask any questions and arrange a site visit if needed.",
-      "You get a written quote with the scope and schedule."
-    ]
-  },
-  "steps": [
+  "lede": "Six quick questions. Then your own email app opens with the request written out, so you can add photos and send it yourself. Nothing is stored on this website.",
+  "reassurance": [
+    "Free, no obligation",
+    "We reply within [REPLY TIME]",
+    "No prices shown here: every quote is site-specific"
+  ],
+  "fields": [
     {
-      "id": "service",
-      "title": "Service and property",
-      "progressLabel": "Step 1 of 4: Service and property",
-      "fields": [
-        {
-          "name": "services",
-          "type": "checkbox-group",
-          "label": "What do you need help with?",
-          "help": "Choose all that apply.",
-          "required": true,
-          "options": [
-            {
-              "value": "grounds-maintenance",
-              "label": "Grounds maintenance"
-            },
-            {
-              "value": "landscape-installation",
-              "label": "Landscape installation"
-            },
-            {
-              "value": "irrigation",
-              "label": "Irrigation"
-            },
-            {
-              "value": "tree-vegetation",
-              "label": "Tree and vegetation work"
-            },
-            {
-              "value": "not-sure",
-              "label": "Not sure yet"
-            }
-          ],
-          "errors": {
-            "required": "Choose at least one service, or choose Not sure yet."
-          }
-        },
-        {
-          "name": "propertyType",
-          "type": "radio",
-          "label": "What type of property is it?",
-          "required": true,
-          "options": [
-            {
-              "value": "home",
-              "label": "House"
-            },
-            {
-              "value": "acreage",
-              "label": "Acreage or rural property"
-            },
-            {
-              "value": "strata",
-              "label": "Strata or townhouse complex"
-            },
-            {
-              "value": "commercial",
-              "label": "Commercial property"
-            },
-            {
-              "value": "institutional",
-              "label": "Institutional or public site"
-            },
-            {
-              "value": "construction",
-              "label": "Construction project (general contractor)"
-            },
-            {
-              "value": "other",
-              "label": "Other"
-            }
-          ],
-          "errors": {
-            "required": "Choose the type of property."
-          }
-        }
-      ]
-    },
-    {
-      "id": "location",
-      "title": "Location and timing",
-      "progressLabel": "Step 2 of 4: Location and timing",
-      "fields": [
-        {
-          "name": "area",
-          "type": "select",
-          "label": "Where is the property?",
-          "required": true,
-          "placeholder": "Choose an area",
-          "options": [
-            {
-              "value": "victoria",
-              "label": "Victoria"
-            },
-            {
-              "value": "saanich",
-              "label": "Saanich"
-            },
-            {
-              "value": "oak-bay",
-              "label": "Oak Bay"
-            },
-            {
-              "value": "esquimalt",
-              "label": "Esquimalt"
-            },
-            {
-              "value": "langford",
-              "label": "Langford"
-            },
-            {
-              "value": "colwood",
-              "label": "Colwood"
-            },
-            {
-              "value": "view-royal",
-              "label": "View Royal"
-            },
-            {
-              "value": "sooke",
-              "label": "Sooke"
-            },
-            {
-              "value": "central-saanich",
-              "label": "Central Saanich"
-            },
-            {
-              "value": "north-saanich",
-              "label": "North Saanich"
-            },
-            {
-              "value": "sidney",
-              "label": "Sidney"
-            },
-            {
-              "value": "highlands",
-              "label": "Highlands"
-            },
-            {
-              "value": "metchosin",
-              "label": "Metchosin"
-            },
-            {
-              "value": "other",
-              "label": "Other"
-            }
-          ],
-          "errors": {
-            "required": "Choose the area where the property is."
-          }
-        },
-        {
-          "name": "areaOther",
-          "type": "text",
-          "label": "Community name",
-          "help": "Shown when you choose Other.",
-          "requiredWhen": {
-            "area": "other"
-          },
-          "maxLength": 80,
-          "errors": {
-            "required": "Enter the community where the property is."
-          }
-        },
-        {
-          "name": "address",
-          "type": "text",
-          "label": "Street address (optional)",
-          "help": "Helps us plan a site visit. Stratas: use the complex's street address.",
-          "required": false,
-          "maxLength": 160
-        },
-        {
-          "name": "timing",
-          "type": "radio",
-          "label": "When would you like the work done?",
-          "required": true,
-          "options": [
-            {
-              "value": "asap",
-              "label": "As soon as possible"
-            },
-            {
-              "value": "1-3-months",
-              "label": "In the next 1 to 3 months"
-            },
-            {
-              "value": "later",
-              "label": "Later this year or next season"
-            },
-            {
-              "value": "ongoing",
-              "label": "Ongoing or recurring service"
-            },
-            {
-              "value": "flexible",
-              "label": "Flexible"
-            }
-          ],
-          "errors": {
-            "required": "Choose when you would like the work done."
-          }
-        }
-      ]
-    },
-    {
-      "id": "details",
-      "title": "Project details",
-      "progressLabel": "Step 3 of 4: Project details",
-      "fields": [
-        {
-          "name": "details",
-          "type": "textarea",
-          "label": "Tell us about the work",
-          "help": "For example: lawn size, number of hedges, trees you're concerned about, or a specification or tender you want us to quote to.",
-          "required": true,
-          "minLength": 10,
-          "maxLength": 2000,
-          "errors": {
-            "required": "Tell us a little about the work so we can prepare.",
-            "minLength": "Add a few more words so we understand the job (at least 10 characters).",
-            "maxLength": "Keep this under 2,000 characters. You can send more detail later."
-          }
-        }
+      "name": "services",
+      "type": "cards",
+      "label": "What do you need help with?",
+      "help": "Choose all that apply. Not sure? Pick the closest and tell us more below.",
+      "required": true,
+      "options": [
+        { "value": "grounds-maintenance", "label": "Grounds maintenance", "subject": "Grounds maintenance", "hint": "Mowing, beds, pruning, seasonal cleanups" },
+        { "value": "landscape-installation", "label": "Landscape installation", "subject": "Landscape installation", "hint": "Planting, lawns, patios, walls, design-build" },
+        { "value": "irrigation", "label": "Irrigation", "subject": "Irrigation", "hint": "New systems, repairs, start-up, winterizing" },
+        { "value": "tree-vegetation", "label": "Tree and vegetation work", "subject": "Tree and vegetation work", "hint": "Pruning, removals, invasive plants, clearing" }
       ],
-      "intro": "Photos help a lot: you can attach them to the email before you send it."
+      "errors": { "required": "Choose at least one service." }
     },
     {
-      "id": "contact",
-      "title": "Your contact details",
-      "progressLabel": "Step 4 of 4: Contact details",
-      "fields": [
-        {
-          "name": "name",
-          "type": "text",
-          "label": "Your name",
-          "required": true,
-          "autocomplete": "name",
-          "maxLength": 100,
-          "errors": {
-            "required": "Enter your name."
-          }
-        },
-        {
-          "name": "email",
-          "type": "email",
-          "label": "Email (optional)",
-          "required": false,
-          "autocomplete": "email",
-          "errors": {
-            "required": "Enter your email address.",
-            "format": "Enter an email address like name@example.com."
-          },
-          "help": "We reply to the address you send from. Add another if you prefer."
-        },
-        {
-          "name": "phone",
-          "type": "tel",
-          "label": "Phone (optional)",
-          "help": "If you'd rather we call.",
-          "required": false,
-          "autocomplete": "tel",
-          "errors": {
-            "format": "Enter a phone number with area code, like 250 555 0123."
-          }
-        },
-        {
-          "name": "contactPreference",
-          "type": "radio",
-          "label": "How should we contact you?",
-          "required": true,
-          "options": [
-            {
-              "value": "email",
-              "label": "Email"
-            },
-            {
-              "value": "phone",
-              "label": "Phone"
-            }
-          ],
-          "errors": {
-            "required": "Choose how we should contact you.",
-            "phoneNeeded": "Add a phone number, or choose Email."
-          }
-        },
-        {
-          "name": "organization",
-          "type": "text",
-          "label": "Strata, company or organization (optional)",
-          "required": false,
-          "maxLength": 120
-        }
+      "name": "area",
+      "type": "select",
+      "label": "Where is the property?",
+      "placeholder": "Choose a municipality",
+      "required": true,
+      "options": [
+        { "value": "victoria", "label": "Victoria" },
+        { "value": "saanich", "label": "Saanich" },
+        { "value": "oak-bay", "label": "Oak Bay" },
+        { "value": "esquimalt", "label": "Esquimalt" },
+        { "value": "langford", "label": "Langford" },
+        { "value": "colwood", "label": "Colwood" },
+        { "value": "view-royal", "label": "View Royal" },
+        { "value": "sooke", "label": "Sooke" },
+        { "value": "central-saanich", "label": "Central Saanich" },
+        { "value": "north-saanich", "label": "North Saanich" },
+        { "value": "sidney", "label": "Sidney" },
+        { "value": "highlands", "label": "Highlands" },
+        { "value": "metchosin", "label": "Metchosin" }
       ],
-      "intro": "Nothing is sent until you press send in your email app. We use these details only to reply to your request, as set out in the [privacy policy](/privacy/)."
+      "errors": { "required": "Choose the municipality where the property is." }
+    },
+    {
+      "name": "description",
+      "type": "textarea",
+      "label": "Tell us about the property and the job",
+      "help": "A few sentences is plenty. You can attach photos in your email app before you send.",
+      "examples": [
+        "Strata of 24 townhouses, looking for weekly grounds care from March.",
+        "Front yard: remove the lawn, add a small patio and drought-tolerant planting.",
+        "Irrigation system needs a spring start-up and two zones aren't working."
+      ],
+      "required": true,
+      "minLength": 10,
+      "maxLength": 2000,
+      "errors": {
+        "required": "Tell us a little about the job so we can prepare.",
+        "minLength": "Add a few more words (at least 10 characters).",
+        "maxLength": "Keep this under 2,000 characters. You can send more detail later."
+      }
+    },
+    {
+      "name": "timing",
+      "type": "radio",
+      "label": "When would you like the work done?",
+      "required": true,
+      "options": [
+        { "value": "asap", "label": "As soon as possible" },
+        { "value": "this-season", "label": "This season" },
+        { "value": "planning-ahead", "label": "Planning ahead" }
+      ],
+      "errors": { "required": "Choose when you would like the work done." }
+    },
+    {
+      "name": "name",
+      "type": "text",
+      "label": "Your name",
+      "autocomplete": "name",
+      "required": true,
+      "maxLength": 100,
+      "errors": { "required": "Enter your name." }
+    },
+    {
+      "name": "contact",
+      "type": "radio",
+      "label": "Best way to reach you",
+      "help": "You're sending from your own email, so we already have your address.",
+      "required": true,
+      "default": "email",
+      "options": [
+        { "value": "email", "label": "Reply by email" },
+        { "value": "call", "label": "Call me" },
+        { "value": "text", "label": "Text me" }
+      ],
+      "errors": { "required": "Choose how we should reach you." },
+      "phone": {
+        "name": "phone",
+        "label": "Phone number",
+        "labelNoJs": "Phone number (needed if you choose Call me or Text me)",
+        "help": "Include the area code, like 250 555 0123.",
+        "autocomplete": "tel",
+        "errors": {
+          "required": "Enter a phone number so we can call or text you, or choose Reply by email.",
+          "format": "Enter a phone number with the area code, like 250 555 0123."
+        }
+      }
     }
   ],
+  "errorSummary": {
+    "heading": "Check your request",
+    "intro": "{count} answer(s) need a fix before your email can be written:"
+  },
   "buttons": {
-    "next": "Next",
-    "back": "Back",
-    "submit": "Create my email",
+    "submit": "Write my email",
     "copy": "Copy request",
-    "copied": "Copied",
-    "reopen": "Open email again",
-    "restart": "Start over"
+    "copied": "Request copied",
+    "copyAddress": "Copy address",
+    "copiedAddress": "Address copied",
+    "reopen": "Open my email app again",
+    "edit": "Edit my answers",
+    "gmail": "Gmail",
+    "outlook": "Outlook.com",
+    "call": "Call us",
+    "text": "Text us"
   },
   "messages": {
-    "errorSummary": "There is a problem with {count} field(s). Fix the items below and try again.",
+    "submitHelp": "Opens your email app with your request filled in. Nothing is sent until you press send there.",
+    "noJs": "Your email app will open with your answers as plain text. Check them, then press send.",
+    "privacy": "We use your details only to reply to this request. This website stores nothing; see the [privacy policy](/privacy/).",
     "ready": {
-      "heading": "Your email is ready to send",
-      "body": "Your email app should now show your request, addressed to [EMAIL]. Attach any photos, then press send. If nothing opened, copy the request below and email it to us, or call [PHONE]."
+      "heading": "Your email should now be open",
+      "body": "Check it, attach any photos, then press send in your email app. Didn't open? Use one of these instead.",
+      "noEmail": "Our email address will be confirmed soon. Until then, copy your request and keep it handy, or use the [contact page](/contact/)."
     },
-    "noJs": "Without JavaScript, this form opens your email app with your answers as plain text."
+    "truncated": "Your request was too long to fit in an email link, so the email has a shortened version. Copy the full request below and paste it into the email before sending.",
+    "copyFailed": "Couldn't copy automatically. Select the text below and copy it.",
+    "webmailHelp": "Convenience links: they open a new message in your webmail in a new tab, with the same subject and text.",
+    "smsBody": "Hi RNC, I've just sent a free quote request from your website."
+  },
+  "nextSteps": {
+    "heading": "What happens next",
+    "items": [
+      { "title": "We read your request", "body": "We reply within [REPLY TIME], by email, call or text, as you asked." },
+      { "title": "We look at the site", "body": "If the job needs it, we arrange a visit to measure and see the conditions." },
+      { "title": "You get a written quote", "body": "Scope and schedule in writing. No obligation, and nothing is booked until you say yes." }
+    ]
+  },
+  "credentials": {
+    "heading": "Insurance and credentials",
+    "lede": "Details we confirm in writing with every quote."
+  },
+  "aside": {
+    "image": "quote-aside",
+    "heading": "What happens next"
   },
   "sections": [
     {
       "id": "other-ways",
       "heading": "Prefer to talk?",
       "body": [
-        "Call [PHONE] or email [EMAIL]. See [contact details](/contact/) and [common questions](/faq/)."
+        "Hours, service areas and other ways to reach us are on the [contact page](/contact/). Answers to common questions are in the [FAQ](/faq/)."
       ]
     }
   ]

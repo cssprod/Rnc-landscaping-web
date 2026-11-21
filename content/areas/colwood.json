@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "colwood",
   "name": "Colwood",
   "seo": {
-    "title": "Landscaping & Grounds Care in Colwood, BC | RNC",
-    "description": "Landscaping, lawn and bed care, irrigation and tree work for Colwood homes and stratas, including Royal Bay, with permit checks. Request a free quote."
+    "title": "Landscaping in Colwood, BC: New-Build Yards & Patios | RNC",
+    "description": "New-build yards, patios and planting, lawn care and tree work in Colwood, pruned within the Urban Forest Bylaw limits. Request a free quote today."
   },
   "h1": "Landscaping and grounds care in Colwood",
+  "cardSummary": "Royal Bay and Latoria new builds beside older lagoon-side lots, with clear pruning limits under the Urban Forest Bylaw.",
   "intro": [
-    "Colwood mixes new homes in Royal Bay and Latoria with older lots near the lagoon and Colwood Corners, plus townhouse stratas and commercial frontages.",
-    "Colwood's Urban Forest Bylaw protects native species at small sizes and needs a Tree Management Permit for removal. Pruning inside stated limits does not need one. We check which side of that line your work falls on. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Colwood splits between new neighbourhoods in Royal Bay and Latoria and older lots around Esquimalt Lagoon, Wishart and Colwood Corners, with Hatley Park’s woodland in between.",
+    "Colwood’s Urban Forest Bylaw is unusually specific about pruning: work that keeps at least half the live crown and removes no more than a quarter in a season does not need a permit, while removing a protected tree needs a Tree Management Permit. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/free-quote/?area=colwood)."
   ],
   "neighbourhoods": [
     "Royal Bay",
@@ -26,21 +27,56 @@
     "townhouse stratas",
     "commercial frontages"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "Colwood draws a clear line between pruning, which is allowed within set limits, and removal, which needs a Tree Management Permit for protected trees. Native species are protected from very small sizes.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Colwood Urban Forest Bylaw",
       "text": "Colwood's Urban Forest Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm; and any tree over 60 cm or identified as retained, replacement or wildlife tree. Removal needs a Tree Management Permit; pruning within stated limits (keep at least 50% live crown, no more than 25% removed per season) and some hedge work do not.",
       "sourceUrl": "https://www.colwood.ca/node/5090",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Fresh builds in Royal Bay and Latoria",
+      "body": "New yards are often bare, compacted subsoil after construction. Grading, soil and drainage come first, or patios settle and lawns stay patchy."
+    },
+    {
+      "title": "Lagoon and Strait exposure",
+      "body": "Lots near Esquimalt Lagoon and along the Royal Bay shore take wind off the water, so planting there needs to be wind-firm and salt-tolerant."
+    },
+    {
+      "title": "Native trees on older lots",
+      "body": "Older Colwood lots often keep Douglas-fir, Garry oak and arbutus. With oak and arbutus protected from 2 m tall, even young native trees deserve a check before they come out."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "landscape-installation",
+      "why": "Many new-build owners want the bare yard finished: grading, a patio, a retaining wall and planting."
+    },
+    {
+      "service": "tree-vegetation",
+      "why": "The bylaw’s pruning limits let a lot of tree work proceed without a permit, as long as it is done within them."
     }
   ],
   "servicesBlurb": {
@@ -50,5 +86,36 @@
     "tree-vegetation": "Pruning within Colwood's limits, and removals after permit checks."
   },
   "featuredProject": "royal-bay-backyard-patio",
+  "nearbyProjects": [
+    "royal-bay-backyard-patio",
+    "langford-townhouse-landscape-package",
+    "metchosin-trail-edge-invasive-removal"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Latoria",
+      "title": "Second-year lawn rescue",
+      "body": "Builder sod that had thinned over compacted fill was aerated and top-dressed in its second spring instead of being replaced."
+    },
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Wishart",
+      "title": "Driveway clearance inside the limits",
+      "body": "Lower limbs on a Douglas-fir over a driveway were lifted while keeping well over half the live crown, inside the bylaw’s no-permit pruning limits."
+    }
+  ],
+  "neighbours": [
+    "langford",
+    "metchosin",
+    "view-royal"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Colwood",
+    "body": "Tell us whether you are finishing a new yard or caring for an older one. Photos of the bare ground or the trees involved help us plan.",
+    "href": "/free-quote/?area=colwood"
+  },
   "image": "area-colwood"
 }

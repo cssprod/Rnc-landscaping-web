@@ -1,11 +1,18 @@
 {
+  "_notes": "Seasonal guide (A13 #20). 'date' is the real publish date; 'updated' is added only when the article is actually revised (never invented). 'author' {name, org, href} renders as the byline \"[OWNER NAME], RNC Landscaping\" linking to /about/ (also Article schema author); 'byline' is the ready-made string. Display dates in one format, e.g. \"19 November 2026\".",
   "slug": "winter-pruning-and-storm-prep",
   "title": "Winter pruning, storm prep and tree permits",
   "seo": {
-    "title": "Winter Pruning, Storm Prep & Tree Permits | Victoria",
-    "description": "When to prune in Greater Victoria's mild winters, how to ready trees and hedges for wind storms, and how to check your municipality's tree bylaw. Free quote."
+    "title": "Winter pruning, storm prep and tree permits, Victoria",
+    "description": "When to prune in Greater Victoria's mild winters, how to ready trees and hedges for wind storms, and how to check your municipality's tree bylaw."
   },
   "date": "2026-11-19",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "href": "/about/"
+  },
+  "byline": "[OWNER NAME], RNC Landscaping",
   "summary": "Dormant pruning, storm preparation and how to check whether your tree work needs a permit.",
   "image": "res-4",
   "body": [
@@ -50,7 +57,7 @@
       "p": "Topping (cutting the top off a tree) leads to weak regrowth and decay. Proper reduction pruning keeps trees healthier and safer."
     },
     {
-      "p": "Need pruning, a removal or storm cleanup? See [tree and vegetation management](/services/tree-vegetation/) or [get a free quote](/quote/)."
+      "p": "Need pruning, a removal or storm cleanup? See [tree and vegetation management](/services/tree-vegetation/) or [get a free quote](/free-quote/)."
     },
     {
       "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."

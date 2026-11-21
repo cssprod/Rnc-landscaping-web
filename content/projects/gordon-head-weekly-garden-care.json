@@ -1,29 +1,47 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "gordon-head-weekly-garden-care",
+  "sample": true,
   "title": "Weekly garden care for a Gordon Head family home",
   "service": "grounds-maintenance",
   "area": "saanich",
   "clientType": "Homeowner",
   "seo": {
-    "title": "Sample project: Gordon Head garden care | RNC",
-    "description": "Sample project: weekly lawn and bed care for a Gordon Head home in Saanich, with moss control, pruning and fall leaf cleanup on one plan. Get a free quote."
+    "title": "Sample project: Gordon Head garden care",
+    "description": "Sample case study: weekly garden care for a Gordon Head home in Saanich, with a moss plan matched to the shade and fall leaf cleanup."
   },
   "summary": "Regular lawn and bed care for a busy household with a large mossy lawn.",
+  "season": "March to November",
+  "duration": "Ongoing, March to November with winter cleanups",
+  "scopeTags": [
+    "Mowing",
+    "Moss control",
+    "Aeration and overseeding",
+    "Shrub pruning",
+    "Leaf cleanup"
+  ],
+  "plantPalette": [
+    "Native groundcover for deep shade: kinnikinnick, sword fern, salal"
+  ],
   "scope": [
     "Weekly mowing in spring, every other week in summer",
     "Moss assessment, aeration and overseeding",
     "Shrub pruning",
     "Fall leaf removal"
   ],
-  "duration": "Ongoing, March to November with winter cleanups",
+  "challenge": "The lawn under two large Douglas-firs was more moss than grass, and the family had no time for weekends in the yard.",
+  "approach": [
+    "We set a visit schedule and raised the mowing height so the grass could compete with the moss.",
+    "In fall we aerated and overseeded the sunnier areas. In the deepest shade we suggested a mulched bed of native groundcover instead of more lawn."
+  ],
+  "result": "A lawn plan matched to the shade, and a schedule the family did not have to manage.",
+  "links": "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Saanich](/areas/saanich/), or [get a free quote](/free-quote/).",
   "story": [
     "The lawn under two big Douglas-firs was more moss than grass, and the owners had no time for weekends in the yard.",
     "We set a visit schedule, raised the mowing height, and aerated and overseeded the sunnier areas in fall. In the deepest shade we suggested a mulched bed of native groundcover instead of more lawn.",
-    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Saanich](/areas/saanich/), or [get a free quote](/quote/)."
+    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Saanich](/areas/saanich/), or [get a free quote](/free-quote/)."
   ],
-  "result": "A lawn plan matched to the shade, and a schedule the family did not have to manage.",
   "testimonial": "homeowner-gordon-head",
-  "sample": true,
   "images": {
     "before": "svc-grounds-maintenance-before",
     "after": "proj-grounds-maintenance-2",

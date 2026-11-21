@@ -1,44 +1,68 @@
-version: "0.1"
+version: "0.2"
 
-# Custom events sent to Plausible (cookieless) from src/scripts/main.js via track().
+# Custom events sent to Plausible (cookieless). Only launch builds with PLAUSIBLE DOMAIN load Plausible.
+# Sent from src/scripts/main.js (data-track click delegation) and src/scripts/quote.js (quote builder).
+# No personal data in any property: only services, municipalities, providers, link locations.
 # Types are generated into event-schema.d.ts by: node tools/gen-event-types.mjs
 events:
   quote_started:
-    intent: First interaction with the quote form. Top of the quote funnel.
+    intent: First interaction with the free-quote form. Top of the quote funnel.
     properties: {}
 
-  quote_step_completed:
-    intent: A quote step passed validation. Shows where people drop out of the 4-step form (step 4 fires when the email is composed).
-    properties:
-      step:
-        type: number
-        required: true
-        description: Step number just completed (1 to 4).
-        examples: [1, 2, 3, 4]
-
-  quote_submitted:
-    intent: Quote form passed validation and the visitor's email app was opened with the request. Primary conversion.
+  quote_mailto_opened:
+    intent: The quote form passed validation and the visitor's email app was asked to open the request (also fires on "Open my email app again"). Primary conversion.
     properties:
       service:
         type: enum
-        values: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, not-sure]
+        values: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, multiple, none]
+        required: true
+        description: The one service chosen, or multiple.
+      area:
+        type: enum
+        values: [victoria, saanich, oak-bay, esquimalt, langford, colwood, view-royal, sooke, central-saanich, north-saanich, sidney, highlands, metchosin, none]
+        required: true
+        description: Municipality slug chosen in the form.
+
+  quote_copied:
+    intent: The visitor copied the request text or the email address from the after-submit panel (fallback when no email app opened).
+    properties:
+      item:
+        type: enum
+        values: [request, address]
+        required: false
+        description: What was copied.
+
+  quote_webmail_opened:
+    intent: The visitor used a Gmail or Outlook.com compose link from the after-submit panel.
+    properties:
+      provider:
+        type: enum
+        values: [gmail, outlook]
         required: true
 
-  call_clicked:
+  call_click:
     intent: A tel link was tapped. Secondary conversion; location shows which placement earned it.
     properties:
       location:
         type: string
         required: true
-        examples: [header, hero, cta_band, footer, contact_page, quote_aside]
+        examples: [header, hero, action_bar, cta_band, footer, contact_page, quote_aside, quote_panel]
 
-  email_clicked:
-    intent: A mailto link was clicked. Secondary contact signal.
+  sms_click:
+    intent: An sms link was tapped.
     properties:
       location:
         type: string
         required: true
-        examples: [footer, contact_page]
+        examples: [footer, contact_page, quote_aside, quote_panel]
+
+  email_click:
+    intent: A mailto link (outside the quote form) was clicked. Secondary contact signal.
+    properties:
+      location:
+        type: string
+        required: true
+        examples: [header, footer, contact_page, quote_aside]
 
   capability_statement_downloaded:
     intent: Commercial or public buyer downloaded the capability statement PDF. B2B intent signal.

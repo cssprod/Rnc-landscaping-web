@@ -1,14 +1,28 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "metchosin-trail-edge-invasive-removal",
+  "sample": true,
   "title": "Trail-edge invasive removal in Metchosin",
   "service": "tree-vegetation",
   "area": "metchosin",
   "clientType": "Public sector",
   "seo": {
-    "title": "Sample project: Metchosin invasive removal | RNC",
-    "description": "Sample project: English ivy and blackberry removed along a Metchosin trail edge to a written plan, with nesting checks and proper disposal. Get a free quote."
+    "title": "Sample project: Metchosin trail invasive removal",
+    "description": "Sample case study: English ivy and blackberry removed along a Metchosin trail edge, timed around nesting season, with approved disposal."
   },
   "summary": "Ivy and blackberry removed along a public trail edge to a written plan.",
+  "season": "Late summer",
+  "duration": "2 weeks",
+  "scopeTags": [
+    "Nesting check",
+    "English ivy removal",
+    "Blackberry removal",
+    "Approved disposal",
+    "Work notes"
+  ],
+  "plantPalette": [
+    "Native trees and shrubs retained along the trail edge"
+  ],
   "scope": [
     "Nesting check before work",
     "Ivy removal from trunks and ground",
@@ -16,15 +30,19 @@
     "Disposal to approved site",
     "Work notes to the client"
   ],
-  "duration": "2 weeks",
+  "challenge": "English ivy was climbing trees along a public trail edge in Metchosin, and Himalayan blackberry was narrowing the path.",
+  "approach": [
+    "We timed the work outside the main nesting period and checked for active nests before starting.",
+    "Ivy was cut at the base of each trunk and pulled from the ground, blackberry was removed, and all invasive material went to an approved disposal site. The client received work notes for its records."
+  ],
+  "result": "A wider trail edge and trees free of ivy, documented for the client.",
+  "links": "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Metchosin](/areas/metchosin/), or [get a free quote](/free-quote/).",
   "story": [
     "Ivy was climbing trees along a trail edge and blackberry was narrowing the path.",
     "We timed work outside the main nesting period, cut ivy at the base of trunks, pulled ground ivy and blackberry, and kept work notes for the client.",
-    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Metchosin](/areas/metchosin/), or [get a free quote](/quote/)."
+    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Metchosin](/areas/metchosin/), or [get a free quote](/free-quote/)."
   ],
-  "result": "A wider trail edge and trees free of ivy, documented for the client.",
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-3",

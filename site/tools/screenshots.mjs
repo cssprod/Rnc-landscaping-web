@@ -15,7 +15,7 @@ const dark = argv.includes('--dark');
 const full = argv.includes('--full');
 const widths = (argv.find((a) => a.startsWith('--w='))?.slice(4) || '390,1440').split(',').map(Number);
 const pages = argv.filter((a) => !a.startsWith('--'));
-const list = pages.length ? pages : ['/', '/services/irrigation/', '/portfolio/', '/areas/oak-bay/', '/quote/', '/commercial/'];
+const list = pages.length ? pages : ['/', '/services/irrigation/', '/projects/', '/areas/oak-bay/', '/free-quote/', '/commercial/'];
 await new Promise((r) => server.listen(4399, () => r(null)));
 const browser = await chromium.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome' });
 for (const w of widths) {

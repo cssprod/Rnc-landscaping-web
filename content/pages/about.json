@@ -1,11 +1,11 @@
 {
-  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock.",
+  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock. Section 'owner' is rendered by the template's owner block (not the generic sections). New: section 'people' lists key people as tokens only (A13 #34); 'guarantee' and 'credentials' sections are tokens only. Never invent facts about RNC.",
   "seo": {
-    "title": "About RNC Landscaping | Greater Victoria Landscapers",
-    "description": "Meet RNC Landscaping, a local landscaping contractor serving Greater Victoria homes, stratas and businesses. Learn how we work and keep crews safe on site."
+    "title": "About RNC Landscaping | Local landscaper in Greater Victoria",
+    "description": "Meet RNC Landscaping: who runs it, how we work, our values and safety practice, and the credentials we hold. Serving Greater Victoria homes and stratas."
   },
   "h1": "About RNC Landscaping",
-  "lede": "A local contractor for grounds maintenance, landscape installation, irrigation and tree work across Greater Victoria.",
+  "lede": "A local contractor for grounds maintenance, landscape installation, irrigation and tree work across Greater Victoria, run by [OWNER NAME].",
   "images": {
     "owner": "about-owner",
     "crew": "about-crew"
@@ -16,6 +16,13 @@
       "heading": "[OWNER NAME]",
       "body": [
         "[OWNER BIO]"
+      ]
+    },
+    {
+      "id": "people",
+      "heading": "The people on your site",
+      "body": [
+        "You deal with [OWNER NAME] from the first request to the final walkthrough. Crew size: [CREW SIZE]."
       ]
     },
     {
@@ -42,6 +49,13 @@
       ]
     },
     {
+      "id": "process",
+      "heading": "How we work",
+      "body": [
+        "Every job follows the same [site-first process](/process/): a site visit, a written scope, scheduled work and a review. We reply to every request within [REPLY TIME]."
+      ]
+    },
+    {
       "id": "safety",
       "heading": "Safety",
       "body": [
@@ -56,10 +70,17 @@
       ]
     },
     {
+      "id": "guarantee",
+      "heading": "Workmanship guarantee",
+      "body": [
+        "Our workmanship guarantee covers [WARRANTY]. If something we installed or built does not hold up within that time because of how we did the work, tell us. We will come and look, explain in writing what we found, and put right anything that is our responsibility."
+      ]
+    },
+    {
       "id": "next",
       "heading": "Work with us",
       "body": [
-        "See [our services](/services/), browse [sample projects](/portfolio/), or [get a free quote](/quote/)."
+        "See [our services](/services/), browse [sample projects](/projects/), or [get a free quote](/free-quote/)."
       ]
     }
   ]

@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "sidney",
   "name": "Sidney",
   "seo": {
-    "title": "Landscaping & Garden Care in Sidney, BC | RNC",
-    "description": "Garden care, strata grounds maintenance, irrigation and tree work for Sidney homes, condos and businesses, with tree bylaw checks. Request a free quote."
+    "title": "Landscaping in Sidney, BC: Strata Grounds Care | RNC",
+    "description": "Year-round strata and residence grounds care, low-water planting, irrigation and permit-checked hedge work in Sidney by the sea. Get a free quote."
   },
   "h1": "Landscaping and garden care in Sidney",
+  "cardSummary": "A compact seaside town of stratas, seniors’ residences and small lots, with a long list of protected tree species.",
   "intro": [
-    "Sidney is compact: condo and apartment stratas, seniors' residences, small single-family lots and the frontages along Beacon Avenue.",
-    "The Town's Tree Preservation Bylaw protects many native species and any tree over 60 cm in diameter, and a permit may be needed to remove, extensively prune or top a tree. See [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Sidney is a compact seaside town: condo and apartment stratas, seniors’ residences, small single-family lots in West Sidney and Roberts Bay, and the shop frontages along Beacon Avenue.",
+    "The Town’s Tree Preservation Bylaw protects a long list of species, including seaside juniper and cascara alongside the usual natives, and any tree over 60 cm in diameter. A permit may be needed to remove, extensively prune or top a tree. See [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/free-quote/?area=sidney)."
   ],
   "neighbourhoods": [
     "Downtown Sidney",
@@ -23,21 +24,56 @@
     "compact single-family lots",
     "Beacon Avenue commercial frontages"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "Sidney protects a long list of species, and extensive pruning, not only removal, can need a permit. That matters for the big hedges and conifers around many stratas.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Sidney Tree Preservation Bylaw",
       "text": "Sidney's Tree Preservation Bylaw protects species including Garry oak, arbutus, Pacific dogwood, western yew, seaside juniper, cascara, shore pine, Douglas-fir, grand fir, western redcedar and bigleaf maple, plus replacement and permit-required trees, Town trees and any tree over 60 cm diameter. A permit may be needed to remove, extensively prune or top a tree on private property.",
       "sourceUrl": "https://www.sidney.ca/services/trees/tree-preservation-bylaw/",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Salt and wind on the waterfront",
+      "body": "Buildings along the Sidney waterfront and Roberts Bay take salt air and winter wind. Coastal-tolerant shrubs and grasses suit those edges."
+    },
+    {
+      "title": "Drier summers",
+      "body": "Sidney tends to be on the drier side of the region in summer, so drip lines and mulch on beds go a long way, and lawns brown off quickly without them."
+    },
+    {
+      "title": "Shared grounds and residents",
+      "body": "Most work here is on shared grounds used by residents every day. Clear paths, quiet hours and notes to council or management matter as much as the gardening."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "grounds-maintenance",
+      "why": "Stratas and seniors’ residences need year-round care on a predictable schedule with clear reporting."
+    },
+    {
+      "service": "tree-vegetation",
+      "why": "Hedges and conifers around buildings outgrow their space, and extensive pruning may need a permit first."
     }
   ],
   "servicesBlurb": {
@@ -47,5 +83,35 @@
     "tree-vegetation": "Hedge reductions and pruning with the Town's rules checked first."
   },
   "featuredProject": "sidney-strata-seasonal-grounds-care",
+  "nearbyProjects": [
+    "sidney-strata-seasonal-grounds-care",
+    "sidney-condo-hedge-reduction",
+    "deep-cove-acreage-upkeep"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Downtown Sidney",
+      "title": "Leaf-free paths for walkers",
+      "body": "At a seniors’ residence, paths were cleared of leaf litter weekly through fall so walkers and wheelchairs had a safe surface."
+    },
+    {
+      "sample": true,
+      "service": "landscape-installation",
+      "neighbourhood": "Beacon Avenue",
+      "title": "Shopfront planters refreshed",
+      "body": "Street-facing planters at a shopfront were replanted with low-water perennials and topped with mulch to get through the dry months."
+    }
+  ],
+  "neighbours": [
+    "north-saanich",
+    "central-saanich"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Sidney",
+    "body": "For stratas and residences, tell us the size of the grounds and who receives reports. For homes, a few photos of the garden are enough to start.",
+    "href": "/free-quote/?area=sidney"
+  },
   "image": "area-sidney"
 }

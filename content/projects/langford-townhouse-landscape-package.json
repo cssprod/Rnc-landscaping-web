@@ -1,14 +1,28 @@
 {
+  "_notes": "Sample case study (sample: true, render a visible Sample label). Spec strip (A12 #1): area, service, season, duration, scopeTags, plantPalette (optional, only where planting matters). Case study body: challenge (string) -> approach (array of paragraphs) -> result (string). 'story' is the legacy narrative kept for older templates; when challenge/approach exist, render them instead of story (do not render both). 'links' lists the internal follow-on links (service, area, quote) as Markdown. No budgets, prices or invented figures about RNC.",
   "slug": "langford-townhouse-landscape-package",
+  "sample": true,
   "title": "Landscape package for a new Langford townhouse build",
   "service": "landscape-installation",
   "area": "langford",
   "clientType": "General contractor",
   "seo": {
-    "title": "Sample project: Langford townhouse landscape | RNC",
-    "description": "Sample project: soft landscape package for a new Langford townhouse build, installed to the contractor's drawings and schedule. Request a free quote today."
+    "title": "Sample project: Langford townhouse landscape",
+    "description": "Sample case study: soft landscaping for a new Langford townhouse build, installed in phases to the contractor's drawings and schedule."
   },
   "summary": "Soft landscaping for a new townhouse site, built to the general contractor's drawings.",
+  "season": "Spring to summer",
+  "duration": "5 weeks, phased with the build",
+  "scopeTags": [
+    "Topsoil and grading",
+    "Sod",
+    "Tree and shrub planting",
+    "Irrigation to drawings",
+    "Deficiency walkthrough"
+  ],
+  "plantPalette": [
+    "Planting to the landscape architect's schedule"
+  ],
   "scope": [
     "Topsoil placement and fine grading",
     "Sod for common lawns",
@@ -16,15 +30,19 @@
     "Irrigation to the drawings",
     "Deficiency walkthrough"
   ],
-  "duration": "5 weeks, phased with the build",
+  "challenge": "A general contractor needed soft landscaping finished block by block as each building closed out, to drawings and to the site schedule.",
+  "approach": [
+    "We worked to the landscape drawings and planting schedule, and booked deliveries through the site supervisor so materials never blocked other trades.",
+    "At the end of each phase we walked the work with the contractor, listed deficiencies and closed them before moving to the next block."
+  ],
+  "result": "Landscape phases completed to the drawings and handed over with deficiencies closed.",
+  "links": "Read more about [landscape installation](/services/landscape-installation/), see our work in [Langford](/areas/langford/), or [get a free quote](/free-quote/).",
   "story": [
     "The general contractor needed landscaping finished in phases as each building block closed out.",
     "We worked to the landscape drawings, coordinated deliveries with the site supervisor and attended a deficiency walkthrough at the end of each phase.",
-    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Langford](/areas/langford/), or [get a free quote](/free-quote/)."
   ],
-  "result": "Landscape phases completed to the drawings and handed over with deficiencies closed.",
   "testimonial": "general-contractor-langford",
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-2",

@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "metchosin",
   "name": "Metchosin",
   "seo": {
-    "title": "Landscaping & Acreage Care in Metchosin, BC | RNC",
-    "description": "Acreage upkeep, clearing, landscaping, irrigation and tree work for Metchosin properties, with a check of local tree rules first. Request a free quote."
+    "title": "Landscaping in Metchosin, BC: Acreage & Invasives | RNC",
+    "description": "Invasive removal, brush clearing, acreage upkeep and tree work in Metchosin, with riparian rules and a call to the District first. Get a free quote."
   },
   "h1": "Landscaping and acreage care in Metchosin",
+  "cardSummary": "Farms, forest and shoreline, where streams and wetlands can bring provincial riparian rules into garden plans.",
   "intro": [
-    "Metchosin is farms, forested lots and waterfront properties, from Happy Valley to the Witty's Lagoon and William Head areas.",
-    "The District asks owners to call the Municipal Hall before removing trees, and where a stream or wetland is on or next to the property, provincial riparian rules may also apply. See [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Metchosin is farms, forest and shoreline: rural acreages through Happy Valley, waterfront around Witty’s Lagoon and William Head, and wooded lots toward Rocky Point.",
+    "The District regulates tree removal under its Tree Management Bylaw and asks owners to call the Municipal Hall before removing trees. Where a stream or wetland is on or next to a property, the BC Riparian Areas Regulation may also apply. See [tree and vegetation work](/services/tree-vegetation/) or [get a free quote](/free-quote/?area=metchosin)."
   ],
   "neighbourhoods": [
     "Happy Valley",
@@ -22,21 +23,60 @@
     "homes on forested lots",
     "waterfront properties"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "Metchosin’s first step is simple: call the Municipal Hall before removing trees. Streams, wetlands and the lagoon also bring in provincial riparian rules, which matter for clearing and new beds near water.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Metchosin Tree Management Bylaw",
       "text": "Metchosin's Tree Management Bylaw regulates tree removal; the District asks owners to call the Municipal Hall before removing trees. Where a stream or wetland is on or next to the property, the BC Riparian Areas Regulation may also apply.",
       "sourceUrl": "https://www.metchosin.ca/node/485",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule (connected properties only)",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Streams, wetlands and the lagoon",
+      "body": "Many lots have a creek, ditch or wet area. Clearing and new planting near water are kept back and planned with the riparian rules in mind."
+    },
+    {
+      "title": "Field edges and fence lines",
+      "body": "Hayfields, pasture and fence lines fill with broom and blackberry if left. Regular cutting before broom sets seed keeps them open."
+    },
+    {
+      "title": "Deer and wildlife",
+      "body": "Deer are common, so gardens near the house usually need fencing or deer-resistant planting."
+    },
+    {
+      "title": "Check your water supply",
+      "body": "Rural properties may be on wells or on the regional supply. The CRD lawn days apply only where you are connected."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "tree-vegetation",
+      "why": "Invasive removal and brush clearing along trails, fields and fence lines are frequent needs on rural lots."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Acreage and farm properties need mowing, hedge and fence-line upkeep through the growing season."
     }
   ],
   "servicesBlurb": {
@@ -46,5 +86,36 @@
     "tree-vegetation": "Invasive removal, brush clearing and tree work after a check with the District."
   },
   "featuredProject": "metchosin-trail-edge-invasive-removal",
+  "nearbyProjects": [
+    "metchosin-trail-edge-invasive-removal",
+    "sooke-acreage-brush-and-broom-clearing",
+    "royal-bay-backyard-patio"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "tree-vegetation",
+      "neighbourhood": "Happy Valley",
+      "title": "Broom cut before it seeded",
+      "body": "Scotch broom along a hayfield fence line was cut in late spring before seed set, and the material was bagged and labelled for proper disposal."
+    },
+    {
+      "sample": true,
+      "service": "landscape-installation",
+      "neighbourhood": "Witty’s Lagoon area",
+      "title": "New beds kept back from a creek",
+      "body": "New garden beds were laid out well back from a seasonal creek, with the plan discussed with the District before any vegetation came out."
+    }
+  ],
+  "neighbours": [
+    "colwood",
+    "langford",
+    "sooke"
+  ],
+  "cta": {
+    "heading": "Get a free quote in Metchosin",
+    "body": "Tell us about any streams, ditches or wet ground on the property, and what you want cleared or kept. Photos help us plan the visit.",
+    "href": "/free-quote/?area=metchosin"
+  },
   "image": "area-metchosin"
 }

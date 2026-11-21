@@ -1,10 +1,10 @@
 {
-  "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label.",
+  "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label. New: 'googleLink' {label, href:'[GOOGLE PROFILE]'} for the 'Read all reviews on Google' link. No Review or AggregateRating schema.",
   "seo": {
-    "title": "Reviews and Client Feedback | RNC Landscaping",
-    "description": "Read what homeowners, strata councils, property managers and contractors say about landscaping work in Greater Victoria. Then request your own free quote."
+    "title": "Client reviews | RNC Landscaping, Greater Victoria",
+    "description": "What homeowners, strata councils, property managers and contractors say about working with RNC Landscaping in Greater Victoria. Sample quotes are labelled."
   },
-  "h1": "Reviews",
+  "h1": "Client reviews",
   "lede": "What clients say about working with us. Reviews marked Sample are examples until we publish real reviews with permission.",
   "testimonials": [
     "strata-council-sidney",
@@ -28,8 +28,12 @@
       "id": "next",
       "heading": "See the work",
       "body": [
-        "Browse [sample projects](/portfolio/), read about [our services](/services/), or [get a free quote](/quote/)."
+        "Browse [sample projects](/projects/), read about [our services](/services/), or [get a free quote](/free-quote/)."
       ]
     }
-  ]
+  ],
+  "googleLink": {
+    "label": "Read all reviews on Google",
+    "href": "[GOOGLE PROFILE]"
+  }
 }

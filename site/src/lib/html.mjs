@@ -80,3 +80,9 @@ export function typographer(doc) {
       .replace(/\.\.\./g, '…');
   }).join('');
 }
+
+/** "3 February 2026": the one display format for dates (blueprint A13 #22). @param {string} iso */
+export function fmtDate(iso) {
+  const dt = new Date(`${iso}T12:00:00Z`);
+  return isNaN(+dt) ? iso : dt.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}

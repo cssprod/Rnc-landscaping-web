@@ -1,11 +1,18 @@
 {
+  "_notes": "Seasonal guide (A13 #20). 'date' is the real publish date; 'updated' is added only when the article is actually revised (never invented). 'author' {name, org, href} renders as the byline \"[OWNER NAME], RNC Landscaping\" linking to /about/ (also Article schema author); 'byline' is the ready-made string. Display dates in one format, e.g. \"19 November 2026\".",
   "slug": "spring-lawn-and-garden-checklist",
   "title": "Spring lawn and garden checklist for Greater Victoria",
   "seo": {
-    "title": "Spring Lawn & Garden Checklist for Greater Victoria",
-    "description": "A practical list of spring lawn, bed and pruning tasks suited to Greater Victoria's coastal climate, plus the local rules to know first. Need help? Free quote."
+    "title": "Spring lawn and garden checklist for Greater Victoria",
+    "description": "Spring lawn, bed and pruning tasks for Greater Victoria's coastal climate, March to May, plus the watering and invasive plant rules to know first."
   },
   "date": "2026-11-19",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "href": "/about/"
+  },
+  "byline": "[OWNER NAME], RNC Landscaping",
   "summary": "What to do in your lawn and beds from March to May on southern Vancouver Island.",
   "image": "res-1",
   "body": [
@@ -59,7 +66,7 @@
       "p": "Every municipality in the region has its own tree bylaw. If a tree is large, native (like Garry oak or arbutus) or near a slope or stream, check the rules first. Find your municipality's link on our [area pages](/areas/)."
     },
     {
-      "p": "Want this handled for you? [Get a free quote](/quote/) for [grounds maintenance](/services/grounds-maintenance/)."
+      "p": "Want this handled for you? [Get a free quote](/free-quote/) for [grounds maintenance](/services/grounds-maintenance/)."
     },
     {
       "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."

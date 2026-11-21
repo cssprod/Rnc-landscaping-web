@@ -1,15 +1,16 @@
 {
+  "_notes": "Area page content. Existing keys: slug, name, seo, h1, intro (place-specific summary, 2 paragraphs), neighbourhoods, propertyTypes, localNotes, servicesBlurb (one local sentence per service), featuredProject, image. Added for the redesign (all optional for templates): cardSummary (<=130 chars, for the hub card); lastReviewed (ISO date the local rules were checked; show as \"Last reviewed 19 November 2026\"); localRulesIntro (one paragraph above the rules list); localNotes[] items now also carry topic (\"tree\" | \"watering\" | \"invasive\"), title (short heading), verify:true and lastReviewed; conditions[] ({title, body}: local conditions such as exposure, soils, deer, salt spray, water supply, lot types; general and hedged, not RNC claims); topServices[] ({service, why}: the two services that fit this municipality most closely, in order; render under a heading like \"What properties here usually need\", not as RNC demand statistics); nearbyProjects[] (project slugs in or near this area, featuredProject first); jobNotes[] ({sample:true, title, body, service, neighbourhood}: anonymised illustrative job notes; always render a visible Sample label); neighbours[] (bordering or nearby municipality slugs); cta ({heading, body, href} with href /free-quote/?area=<slug>).",
   "slug": "oak-bay",
   "name": "Oak Bay",
   "seo": {
-    "title": "Landscaping & Garden Care in Oak Bay, BC | RNC",
-    "description": "Garden maintenance, landscape renewal, irrigation and tree care for Oak Bay homes and estates, with deer-aware planting and permit checks. Get a free quote."
+    "title": "Landscaping in Oak Bay, BC: Garden Renewal & Care | RNC",
+    "description": "Garden renewal, estate garden care, drip irrigation and permit-checked tree work for Oak Bay homes, with deer-resistant planting. Get a free quote."
   },
   "h1": "Landscaping and garden care in Oak Bay",
+  "cardSummary": "Character lots, estate gardens and Garry oak rock gardens, where deer and the Municipal Arborist permit shape most plans.",
   "intro": [
-    "Oak Bay has large character lots in Uplands and South Oak Bay, estate gardens with mature trees, condo stratas and the village frontages along Oak Bay Avenue.",
-    "Deer are a real factor here. Oak Bay suggests deer-resistant plants, repaired fencing and barriers around accent plants and fruit trees, and we plan new planting with that in mind. Protected trees need a Municipal Arborist permit before cutting. See [landscape installation](/services/landscape-installation/) or [get a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+    "Oak Bay is mostly established residential: large character lots in Uplands, family homes in South and North Oak Bay, condo stratas, and the village frontages along Oak Bay Avenue.",
+    "Deer are a real factor here. Oak Bay itself suggests deer-resistant plants, repaired fencing and barriers around accent plants and fruit trees, and protected trees need a Municipal Arborist permit before they are cut or damaged. See [landscape installation](/services/landscape-installation/) or [get a free quote](/free-quote/?area=oak-bay)."
   ],
   "neighbourhoods": [
     "Uplands",
@@ -25,21 +26,56 @@
     "condo stratas",
     "village commercial frontages"
   ],
+  "lastReviewed": "2026-11-19",
+  "localRulesIntro": "In Oak Bay the deciding step is the Municipal Arborist permit: no protected tree may be cut or damaged without one (or a development permit). Root-zone damage counts, which matters when renewing beds under mature oaks.",
   "localNotes": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
-    },
-    {
+      "topic": "tree",
+      "title": "Oak Bay tree permits",
       "text": "In Oak Bay, no protected tree may be cut down or damaged unless authorized by a Municipal Arborist permit under the Tree Protection Bylaw or by a development permit. Check the bylaw for which trees are protected.",
       "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
     },
     {
+      "topic": "watering",
+      "title": "CRD lawn-watering schedule",
+      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
+      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    },
+    {
+      "topic": "invasive",
+      "title": "Invasive plants and disposal",
       "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
       "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "verify": true,
+      "lastReviewed": "2026-11-19"
+    }
+  ],
+  "conditions": [
+    {
+      "title": "Deer pressure",
+      "body": "Deer browse freely through Oak Bay gardens. New planting is chosen for deer resistance, and young or prized plants usually need a barrier until they are established."
+    },
+    {
+      "title": "Garry oak and rock in Uplands",
+      "body": "Uplands and the streets around it have Garry oaks, rocky outcrops and mossy meadow edges. Those spots suit native, dry-summer planting better than thirsty lawn, and it helps to keep summer water away from oak trunks."
+    },
+    {
+      "title": "Salt air along the shore",
+      "body": "Homes along Beach Drive near Willows Beach and McNeill Bay take salt spray and winter wind, which can scorch tender shrubs. Coastal-tolerant plants hold up better there."
+    }
+  ],
+  "topServices": [
+    {
+      "service": "landscape-installation",
+      "why": "Many older gardens are ready for renewal, and replanting with deer-resistant species is often the first request."
+    },
+    {
+      "service": "grounds-maintenance",
+      "why": "Estate and character gardens need detailed bed, hedge and leaf work that a quick mow-and-go visit does not cover."
     }
   ],
   "servicesBlurb": {
@@ -49,5 +85,35 @@
     "tree-vegetation": "Pruning and removals only after Oak Bay's tree permit rules have been checked."
   },
   "featuredProject": "oak-bay-front-garden-renewal",
+  "nearbyProjects": [
+    "oak-bay-front-garden-renewal",
+    "rockland-spring-start-up-and-repair",
+    "gordon-head-weekly-garden-care"
+  ],
+  "jobNotes": [
+    {
+      "sample": true,
+      "service": "grounds-maintenance",
+      "neighbourhood": "Uplands",
+      "title": "Fall cleanup in a rock garden",
+      "body": "Oak leaves were cleared from moss and rock pockets by hand rather than blown, and perennials were cut back while leaving seed heads standing over winter."
+    },
+    {
+      "sample": true,
+      "service": "irrigation",
+      "neighbourhood": "Estevan",
+      "title": "Spray moved off an oak’s root zone",
+      "body": "A spray zone under a mature Garry oak was capped and the surrounding beds moved to drip, so the trunk and root zone stay dry through summer."
+    }
+  ],
+  "neighbours": [
+    "victoria",
+    "saanich"
+  ],
+  "cta": {
+    "heading": "Get a free quote for your Oak Bay garden",
+    "body": "Let us know what deer have been eating and whether any large trees are near the work. Both shape the plan and the permit question.",
+    "href": "/free-quote/?area=oak-bay"
+  },
   "image": "area-oak-bay"
 }
