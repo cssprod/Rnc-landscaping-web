@@ -126,7 +126,8 @@ test('the fixture content is a passing schema-v3 example #schema-v3', () => {
 });
 
 test('check-content validates against the v3 schemas: enums, forbidden price keys, $ amounts, slugs, link targets #schema-v3', () => {
-  const p = real('content/projects/oak-bay-front-garden-renewal.json');
+  // Drop "season" explicitly so the missing-required assertion never depends on the live content's shape.
+  const { season: _season, ...p } = real('content/projects/oak-bay-front-garden-renewal.json');
   const root = repo({
     'content/projects/oak-bay-front-garden-renewal.json': { ...p, clientType: 'Landlord', budget: '10k', summary: 'Cost was $4,000.', slug: 'other-slug' },
     'content/pages/faq.json': { ...real('content/pages/faq.json'), lede: 'See [this](/no-such-page/).' },
@@ -185,7 +186,7 @@ test('check-content wants a plain guarantee built around [WARRANTY] #guarantee',
 
 test('check-content wants a per-visit table and four seasons on each service #service-tables', () => {
   const s = real('content/services/irrigation.json');
-  const r = content(repo({ 'content/services/irrigation.json': { ...s, perVisit: { caption: 'Each visit', rows: [{ task: 'Check', detail: 'From $90' }, { task: 'Adjust', detail: 'Heads' }, { task: 'Report', detail: 'Notes' }] }, seasonal: s.seasonal.slice(0, 2) } }), 'service-tables');
+  const r = content(repo({ 'content/services/irrigation.json': { ...s, perVisit: { caption: 'Each visit', rows: [{ task: 'Check', detail: 'From $90' }, { task: 'Adjust', detail: 'Heads' }, { task: 'Report', detail: 'Notes' }] }, seasonal: s.seasonal.filter((/** @type {{season: string}} */ x) => !/^(Fall|Winter)$/i.test(x.season)) } }), 'service-tables');
   assert.match(r.out, /irrigation\.json: \[service-tables\] perVisit row 1 mentions a price/);
   assert.match(r.out, /irrigation\.json: \[service-tables\] seasonal table has no (Fall|Winter) items/);
 });
@@ -219,7 +220,7 @@ test('check-content aligns site.json with the Google profile facts: 13 areas, 4 
   const sj = real('content/site.json');
   const r = content(repo({ 'content/site.json': { ...sj, services: [...sj.services.slice(0, 3), { slug: 'tree-vegetation', name: 'Tree Care', navLabel: 'Trees' }] } }), 'gbp-alignment');
   assert.match(r.out, /tree-vegetation\.json: \[gbp-alignment\] name\/navLabel/);
-  const ok = content(repo({}), 'gbp-alignment');
+  const ok = content(join(SITE, 'fixtures'), 'gbp-alignment'); // the passing example, not the live content
   assert.equal(ok.code, 0, ok.out);
 });
 
@@ -227,7 +228,7 @@ test('check-content keeps one NAP value in one place #nap-consistency', () => {
   const sj = real('content/site.json');
   const r = content(repo({ 'content/site.json': { ...sj, nap: { ...sj.nap, phone: '250-382-1234' } } }), 'nap-consistency');
   assert.match(r.out, /content\/site\.json: \[nap-consistency\] nap\.phone must be "\[PHONE\]"/);
-  const ok = content(repo({}), 'nap-consistency');
+  const ok = content(join(SITE, 'fixtures'), 'nap-consistency'); // the passing example, not the live content
   assert.equal(ok.code, 0, ok.out);
 });
 
