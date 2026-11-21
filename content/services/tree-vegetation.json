@@ -140,9 +140,9 @@
     }
   ],
   "localRulesRefs": [
-    "regional-bc-wildlife-act-nests",
-    "regional-crd-invasive-disposal",
-    "regional-bc-rapr"
+    "bc-bird-nests",
+    "crd-invasives",
+    "bc-riparian"
   ],
   "faqs": [
     {

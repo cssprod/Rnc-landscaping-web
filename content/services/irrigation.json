@@ -144,9 +144,9 @@
     }
   ],
   "localRulesRefs": [
-    "regional-crd-stage1-watering",
-    "regional-crd-water-systems",
-    "regional-bc-private-well-drought"
+    "crd-watering",
+    "crd-water-systems",
+    "bc-private-wells"
   ],
   "faqs": [
     {

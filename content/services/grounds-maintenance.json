@@ -148,8 +148,8 @@
     }
   ],
   "localRulesRefs": [
-    "regional-crd-stage1-watering",
-    "regional-crd-invasive-disposal"
+    "crd-watering",
+    "crd-invasives"
   ],
   "faqs": [
     {

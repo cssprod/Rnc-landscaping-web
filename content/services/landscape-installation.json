@@ -145,8 +145,8 @@
     }
   ],
   "localRulesRefs": [
-    "regional-crd-stage1-watering",
-    "regional-bc-rapr"
+    "crd-watering",
+    "bc-riparian"
   ],
   "faqs": [
     {
