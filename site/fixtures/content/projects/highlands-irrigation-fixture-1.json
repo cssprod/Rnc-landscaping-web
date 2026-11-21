@@ -23,6 +23,21 @@
     "after": "proj-irrigation-1",
     "gallery": [
       "svc-irrigation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-highlands-irrigation-fixture-1-art"
+  },
+  "seo": {
+    "title": "Highlands irrigation project 1 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample irrigation project in Highlands."
+  },
+  "season": "Year-round",
+  "tags": [
+    "irrigation",
+    "highlands"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

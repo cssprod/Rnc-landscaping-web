@@ -7,8 +7,8 @@
   },
   "h1": "Landscaping and grounds care in Highlands",
   "intro": [
-    "Fixture introduction for Highlands: how properties here differ and what owners ask for most.",
-    "Fixture second paragraph about soils, exposure or typical lot sizes."
+    "Fixture introduction written only for Highlands.",
+    "Fixture second paragraph about Highlands soils and lots."
   ],
   "neighbourhoods": [
     "Fixture neighbourhood A",
@@ -20,7 +20,7 @@
   ],
   "localNotes": [
     {
-      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "text": "Fixture local note for Highlands.",
       "sourceUrl": "https://www.crd.bc.ca/",
       "verify": true
     }
@@ -32,5 +32,56 @@
     "tree-vegetation": "Fixture local sentence about tree and vegetation in Highlands."
   },
   "featuredProject": "sooke-irrigation-fixture-4",
-  "image": "area-highlands"
+  "image": "area-highlands",
+  "summary": [
+    "Fixture summary written only for Highlands."
+  ],
+  "localRules": [
+    {
+      "id": "highlands-tree-rule",
+      "topic": "trees",
+      "text": "Fixture local rule for Highlands.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture source for Highlands",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt for Highlands.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "conditions": [
+    {
+      "id": "highlands-soils",
+      "kind": "soils",
+      "text": "Fixture condition for Highlands.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture condition source for Highlands",
+      "sourceType": "secondary",
+      "excerpt": "Fixture condition excerpt for Highlands.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "sooke-irrigation-fixture-4"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Fixture job note for Highlands.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "irrigation"
+  ],
+  "neighbours": [
+    "langford"
+  ]
 }

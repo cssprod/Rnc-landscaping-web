@@ -22,7 +22,7 @@
       ]
     },
     {
-      "p": "Fixture closing paragraph with a [link to the quote form](/quote/)."
+      "p": "Fixture closing paragraph with a [link to the quote form](/free-quote/)."
     }
   ],
   "sources": [
@@ -30,5 +30,12 @@
       "label": "Capital Regional District",
       "url": "https://www.crd.bc.ca/"
     }
-  ]
+  ],
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": null
 }

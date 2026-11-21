@@ -1,0 +1,58 @@
+{
+  "seo": {
+    "title": "How we work | RNC Landscaping",
+    "description": "Fixture description for the process page of RNC Landscaping: request, site visit, written quote and scheduled work across Greater Victoria."
+  },
+  "h1": "How we work",
+  "lede": "Fixture lede for the process page.",
+  "overview": [
+    {
+      "title": "Request",
+      "body": "Fixture."
+    },
+    {
+      "title": "Site visit",
+      "body": "Fixture."
+    },
+    {
+      "title": "Written quote",
+      "body": "Fixture."
+    },
+    {
+      "title": "Scheduled work",
+      "body": "Fixture."
+    }
+  ],
+  "tracks": [
+    {
+      "id": "maintenance",
+      "name": "Maintenance track",
+      "summary": "Fixture.",
+      "steps": [
+        {
+          "title": "Fixture step",
+          "body": "Fixture.",
+          "deliverable": "Fixture deliverable."
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "name": "Installation track",
+      "summary": "Fixture.",
+      "steps": [
+        {
+          "title": "Fixture step",
+          "body": "Fixture.",
+          "deliverable": "Fixture deliverable."
+        }
+      ]
+    }
+  ],
+  "guarantee": {
+    "heading": "Our workmanship guarantee",
+    "body": [
+      "Fixture paragraph built around [WARRANTY]."
+    ]
+  }
+}

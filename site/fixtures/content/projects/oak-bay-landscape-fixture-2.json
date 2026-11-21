@@ -23,6 +23,27 @@
     "after": "proj-landscape-installation-2",
     "gallery": [
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-oak-bay-landscape-fixture-2-art"
+  },
+  "seo": {
+    "title": "Oak Bay landscape installation project 2 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample landscape installation project in Oak Bay."
+  },
+  "season": "Winter",
+  "tags": [
+    "landscape-installation",
+    "oak-bay"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": [
+    {
+      "common": "Fixture plant",
+      "botanical": "Fixturea exemplaris",
+      "note": "Fixture note"
+    }
+  ]
 }

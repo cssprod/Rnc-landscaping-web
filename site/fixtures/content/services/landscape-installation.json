@@ -98,11 +98,49 @@
     },
     {
       "q": "How do I get a quote?",
-      "a": "Use the [free quote form](/quote/) or call [PHONE]."
+      "a": "Use the [free quote form](/free-quote/) or call [PHONE]."
+    },
+    {
+      "q": "Fixture question 3 about landscape installation & construction?",
+      "a": "Fixture answer 3."
+    },
+    {
+      "q": "Fixture question 4 about landscape installation & construction?",
+      "a": "Fixture answer 4."
+    },
+    {
+      "q": "Fixture question 5 about landscape installation & construction?",
+      "a": "Fixture answer 5."
     }
   ],
   "detailImages": [
     "svc-landscape-installation-detail-1",
     "svc-landscape-installation-detail-2"
+  ],
+  "localContext": "Fixture sentence of Greater Victoria context for landscape installation & construction.",
+  "goodFitIf": [
+    "Fixture fit statement one.",
+    "Fixture fit statement two.",
+    "Fixture fit statement three."
+  ],
+  "perVisit": {
+    "caption": "What happens on each visit",
+    "rows": [
+      {
+        "task": "Fixture task 1",
+        "detail": "Fixture detail 1."
+      },
+      {
+        "task": "Fixture task 2",
+        "detail": "Fixture detail 2."
+      },
+      {
+        "task": "Fixture task 3",
+        "detail": "Fixture detail 3."
+      }
+    ]
+  },
+  "localRulesRefs": [
+    "crd-watering"
   ]
 }

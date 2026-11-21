@@ -23,6 +23,21 @@
     "after": "proj-irrigation-2",
     "gallery": [
       "svc-irrigation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-saanich-irrigation-fixture-2-art"
+  },
+  "seo": {
+    "title": "Saanich irrigation project 2 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample irrigation project in Saanich."
+  },
+  "season": "Year-round",
+  "tags": [
+    "irrigation",
+    "saanich"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

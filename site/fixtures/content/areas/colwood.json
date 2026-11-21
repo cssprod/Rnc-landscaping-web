@@ -7,8 +7,8 @@
   },
   "h1": "Landscaping and grounds care in Colwood",
   "intro": [
-    "Fixture introduction for Colwood: how properties here differ and what owners ask for most.",
-    "Fixture second paragraph about soils, exposure or typical lot sizes."
+    "Fixture introduction written only for Colwood.",
+    "Fixture second paragraph about Colwood soils and lots."
   ],
   "neighbourhoods": [
     "Fixture neighbourhood A",
@@ -20,7 +20,7 @@
   ],
   "localNotes": [
     {
-      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "text": "Fixture local note for Colwood.",
       "sourceUrl": "https://www.crd.bc.ca/",
       "verify": true
     }
@@ -32,5 +32,56 @@
     "tree-vegetation": "Fixture local sentence about tree and vegetation in Colwood."
   },
   "featuredProject": "oak-bay-landscape-fixture-2",
-  "image": "area-colwood"
+  "image": "area-colwood",
+  "summary": [
+    "Fixture summary written only for Colwood."
+  ],
+  "localRules": [
+    {
+      "id": "colwood-tree-rule",
+      "topic": "trees",
+      "text": "Fixture local rule for Colwood.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture source for Colwood",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt for Colwood.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "conditions": [
+    {
+      "id": "colwood-soils",
+      "kind": "soils",
+      "text": "Fixture condition for Colwood.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture condition source for Colwood",
+      "sourceType": "secondary",
+      "excerpt": "Fixture condition excerpt for Colwood.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "oak-bay-landscape-fixture-2"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Fixture job note for Colwood.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "irrigation"
+  ],
+  "neighbours": [
+    "esquimalt"
+  ]
 }

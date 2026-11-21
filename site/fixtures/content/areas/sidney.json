@@ -7,8 +7,8 @@
   },
   "h1": "Landscaping and grounds care in Sidney",
   "intro": [
-    "Fixture introduction for Sidney: how properties here differ and what owners ask for most.",
-    "Fixture second paragraph about soils, exposure or typical lot sizes."
+    "Fixture introduction written only for Sidney.",
+    "Fixture second paragraph about Sidney soils and lots."
   ],
   "neighbourhoods": [
     "Fixture neighbourhood A",
@@ -20,7 +20,7 @@
   ],
   "localNotes": [
     {
-      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "text": "Fixture local note for Sidney.",
       "sourceUrl": "https://www.crd.bc.ca/",
       "verify": true
     }
@@ -32,5 +32,56 @@
     "tree-vegetation": "Fixture local sentence about tree and vegetation in Sidney."
   },
   "featuredProject": "langford-irrigation-fixture-3",
-  "image": "area-sidney"
+  "image": "area-sidney",
+  "summary": [
+    "Fixture summary written only for Sidney."
+  ],
+  "localRules": [
+    {
+      "id": "sidney-tree-rule",
+      "topic": "trees",
+      "text": "Fixture local rule for Sidney.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture source for Sidney",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt for Sidney.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "conditions": [
+    {
+      "id": "sidney-soils",
+      "kind": "soils",
+      "text": "Fixture condition for Sidney.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture condition source for Sidney",
+      "sourceType": "secondary",
+      "excerpt": "Fixture condition excerpt for Sidney.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "langford-irrigation-fixture-3"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Fixture job note for Sidney.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "irrigation"
+  ],
+  "neighbours": [
+    "sooke"
+  ]
 }

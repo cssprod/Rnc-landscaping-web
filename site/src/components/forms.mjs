@@ -89,7 +89,7 @@ export function quoteForm(data, page) {
   const b = page?.buttons || {};
   const ready = page?.messages?.ready || {};
   const email = tok('EMAIL');
-  return html`<form class="quote-form glass-card" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" data-stepper data-email="${email}" data-label-next="${b.next || 'Next'}" data-label-back="${b.back || 'Back'}" data-label-copied="${b.copied || 'Copied'}">
+  return html`<form class="quote-form glass-card" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" data-stepper data-quote-form data-email="${email}" data-label-next="${b.next || 'Next'}" data-label-back="${b.back || 'Back'}" data-label-copied="${b.copied || 'Copied'}">
   <ol class="stepper" data-stepper-progress>${steps.map((s, i) => html`<li data-step-label="${i}"${i === 0 ? raw(' class="is-current"') : ''}><span class="stepper__n">${i + 1}</span><span class="stepper__t">${s.title}</span></li>`)}</ol>
   <p class="vh" role="status" aria-live="polite" data-stepper-status></p>
   ${steps.map((s, i) => html`<fieldset class="step" data-step="${i}" id="step-${i + 1}">

@@ -1,0 +1,18 @@
+{
+  "blocks": [
+    {
+      "id": "crd-watering",
+      "heading": "Fixture regional watering block",
+      "text": "Fixture regional text.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Capital Regional District",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt.",
+      "verify": true,
+      "reviewedOn": null,
+      "appliesTo": [
+        "all"
+      ]
+    }
+  ]
+}

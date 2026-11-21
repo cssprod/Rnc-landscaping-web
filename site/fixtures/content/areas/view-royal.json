@@ -7,8 +7,8 @@
   },
   "h1": "Landscaping and grounds care in View Royal",
   "intro": [
-    "Fixture introduction for View Royal: how properties here differ and what owners ask for most.",
-    "Fixture second paragraph about soils, exposure or typical lot sizes."
+    "Fixture introduction written only for View Royal.",
+    "Fixture second paragraph about View Royal soils and lots."
   ],
   "neighbourhoods": [
     "Fixture neighbourhood A",
@@ -20,7 +20,7 @@
   ],
   "localNotes": [
     {
-      "text": "Fixture local note. Watering rules are set by the Capital Regional District and may change.",
+      "text": "Fixture local note for View Royal.",
       "sourceUrl": "https://www.crd.bc.ca/",
       "verify": true
     }
@@ -32,5 +32,56 @@
     "tree-vegetation": "Fixture local sentence about tree and vegetation in View Royal."
   },
   "featuredProject": "colwood-landscape-fixture-3",
-  "image": "area-view-royal"
+  "image": "area-view-royal",
+  "summary": [
+    "Fixture summary written only for View Royal."
+  ],
+  "localRules": [
+    {
+      "id": "view-royal-tree-rule",
+      "topic": "trees",
+      "text": "Fixture local rule for View Royal.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture source for View Royal",
+      "sourceType": "official",
+      "excerpt": "Fixture excerpt for View Royal.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "conditions": [
+    {
+      "id": "view-royal-soils",
+      "kind": "soils",
+      "text": "Fixture condition for View Royal.",
+      "sourceUrl": "https://www.crd.bc.ca/",
+      "sourceTitle": "Fixture condition source for View Royal",
+      "sourceType": "secondary",
+      "excerpt": "Fixture condition excerpt for View Royal.",
+      "verify": true,
+      "reviewedOn": null
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "colwood-landscape-fixture-3"
+    },
+    {
+      "kind": "job-note",
+      "service": "irrigation",
+      "text": "Fixture job note for View Royal.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "irrigation"
+  ],
+  "neighbours": [
+    "central-saanich"
+  ]
 }
