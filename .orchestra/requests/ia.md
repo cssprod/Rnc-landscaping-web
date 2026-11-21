@@ -12,6 +12,8 @@ Changes ia needs in files it does not own, plus notes for the streams its checks
 ## build (W1): tool interfaces ia relies on
 - `tools/check-links.mjs --strict-redirects` spawns `node tools/serve.mjs` with `PORT` and `SITE_DIST` in the environment. For both `/old/` and `/old` it expects `301` with `Location: <url-map new>`, and then `200` on the target. Please keep `serve.mjs` runnable that way.
 - `check-links`, `check-html` and `check-content` call `report('<tool name>', failures)`. Each failure is `{ rule, path, message }` with a `toString()`, so the seed `report(title, string[])` and the new `report(tool, failures[])` both work. The first argument is the tool name, which matches `.orchestra/baselines/<tool>.json`.
+- `build.mjs` messages still say "set it in site.config.mjs" (for unresolved tokens and `DOMAIN`). Token values now live in `content/site.json` `tokens`, and `site.config.mjs` reads them from there. Please point the messages at `content/site.json`.
+- A fixture build (no `content/` folder) builds all 56 pages from `site/fixtures/content/**` (schema v3) and passes check-html. `check-links#sitemap-matches-url-map` reports the fixture slugs as not in the url-map, which is expected: the url-map describes the real content.
 - `check-all` discovery picks up `check-content.mjs`. On Netlify (`check-all --no-build`), links that go through a 301 are warnings, not errors. They become errors with `--strict` or `SITE_MODE=launch`.
 
 ## Integrator / orchestrator (W1 barrier)
