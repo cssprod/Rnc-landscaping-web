@@ -3,11 +3,18 @@
   "title": "Fall cleanup and leaf guide for Greater Victoria",
   "seo": {
     "title": "Fall Garden Cleanup & Leaf Guide for Victoria, BC",
-    "description": "What to cut back, what to leave, and how to handle leaves in Greater Victoria's wet fall, plus lawn care and drainage checks before winter storms. Free quote."
+    "description": "What to cut back, what to leave and how to handle leaves in Greater Victoria's wet fall, plus lawn care and drainage checks before winter storms."
   },
-  "date": "2026-11-19",
   "summary": "What to cut back, what to leave and how to deal with leaves before the winter rain.",
   "image": "res-3",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": null,
+  "date": "2026-11-19",
   "body": [
     {
       "p": "Fall on southern Vancouver Island means the rain returns, leaves come down in large amounts and soil stays warm enough for roots to grow. It is a good season to plant and to get the garden ready for winter storms."
@@ -64,7 +71,7 @@
       "p": "Book a fall cleanup through [grounds maintenance](/services/grounds-maintenance/) or [get a free quote](/quote/)."
     },
     {
-      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+      "p": "Drop-off dates and disposal rules change from year to year. Check the CRD page linked below and your municipality before you haul garden waste. This guide was prepared in November 2026."
     }
   ],
   "sources": [

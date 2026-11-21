@@ -3,11 +3,18 @@
   "title": "Native and drought-tolerant planting for Greater Victoria",
   "seo": {
     "title": "Native & Drought-Tolerant Planting in Victoria, BC",
-    "description": "Plants that handle Greater Victoria's dry summers and wet winters, how to plant them well, and which invasive species to keep out of your garden. Free quote."
+    "description": "Plants that handle Greater Victoria's dry summers and wet winters, how to plant them well, and which invasive species to keep out of your garden."
   },
-  "date": "2026-11-19",
   "summary": "How to choose and plant for dry summers and wet winters, and which invasive plants to avoid.",
   "image": "res-5",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": null,
+  "date": "2026-11-19",
   "body": [
     {
       "p": "Greater Victoria has wet, mild winters and long dry summers. Plants that suit that pattern need less water once established, which matters when lawn watering is limited from May to September."
@@ -51,7 +58,7 @@
       "p": "Planning new planting? See [landscape installation](/services/landscape-installation/), the [fall cleanup guide](/resources/fall-cleanup-and-leaf-guide/) or [get a free quote](/quote/)."
     },
     {
-      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+      "p": "The CRD reviews its list of priority invasive species over time. Check the CRD pages linked below before you plant or dispose of plants. This guide was prepared in November 2026."
     }
   ],
   "sources": [
