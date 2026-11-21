@@ -35,7 +35,7 @@ const smsHref = () => telHref().replace(/^tel:/, 'sms:');
 
 /** Header call action: a tel: link once PHONE is known; "Call [PHONE]" as plain text in showcase builds; nothing in launch (CONTRACT §3). @param {Env} env */
 function headerCall(env) {
-  if (has('PHONE')) return html`<a class="icon-btn phone-link" href="${telHref()}" data-track="call_clicked" data-track-location="header">${icon('phone', { size: 18 })}<span class="phone-link__label">Call [PHONE]</span></a>`;
+  if (has('PHONE')) return html`<a class="icon-btn phone-link" href="${telHref()}" data-track="call_clicked" data-track-location="header">${icon('phone', { size: 18 })}<span class="phone-link__label">Call ${siteJson.nap.phone}</span></a>`;
   return env.launch ? '' : html`<span class="site-nav__call">${icon('phone', { size: 16 })}Call ${siteJson.nap.phone}</span>`;
 }
 

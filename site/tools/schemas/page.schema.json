@@ -1,0 +1,23 @@
+{
+  "$id": "page.schema.json",
+  "title": "content/pages/<name>.json (v2 shape kept): seo, h1, lede, sections",
+  "x-files": ["pages/*.json"],
+  "type": "object",
+  "required": ["seo", "h1"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+    "h1": { "$ref": "_defs.schema.json#/definitions/text" },
+    "lede": { "type": "string" },
+    "updated": { "$ref": "_defs.schema.json#/definitions/dateOrNull" },
+    "sections": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/section" } },
+    "faqs": {
+      "type": "array",
+      "items": { "type": "object", "required": ["q", "a"], "properties": { "q": { "$ref": "_defs.schema.json#/definitions/text" }, "a": { "$ref": "_defs.schema.json#/definitions/text" }, "category": { "type": "string" } } }
+    },
+    "featuredProjects": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slug" } },
+    "featuredTestimonials": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slug" } },
+    "heroImage": { "$ref": "_defs.schema.json#/definitions/slot" },
+    "images": { "type": "object", "additionalProperties": { "$ref": "_defs.schema.json#/definitions/slot" } }
+  }
+}

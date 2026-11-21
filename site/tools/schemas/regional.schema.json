@@ -1,0 +1,26 @@
+{
+  "$id": "regional.schema.json",
+  "title": "content/regional.json: each CRD-wide rule exists once (rendered inside [data-shared])",
+  "x-files": ["regional.json"],
+  "type": "object",
+  "required": ["blocks"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "_defs.schema.json#/definitions/sourced" },
+          {
+            "type": "object",
+            "required": ["heading", "appliesTo"],
+            "properties": {
+              "heading": { "$ref": "_defs.schema.json#/definitions/text" },
+              "appliesTo": { "type": "array", "minItems": 1, "items": { "anyOf": [{ "const": "all" }, { "$ref": "_defs.schema.json#/definitions/area" }] } }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

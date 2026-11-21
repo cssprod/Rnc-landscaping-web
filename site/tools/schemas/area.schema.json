@@ -1,0 +1,61 @@
+{
+  "$id": "area.schema.json",
+  "title": "content/areas/<slug>.json (schema v3): facts from research/area-facts, every rule sourced",
+  "x-files": ["areas/*.json"],
+  "type": "object",
+  "required": ["slug", "name", "seo", "h1", "summary", "neighbourhoods", "propertyTypes", "localRules", "conditions", "sharedRegional", "proof", "topServices", "servicesBlurb", "neighbours", "featuredProject", "image"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "slug": { "$ref": "_defs.schema.json#/definitions/area" },
+    "name": { "$ref": "_defs.schema.json#/definitions/text" },
+    "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+    "h1": { "$ref": "_defs.schema.json#/definitions/text" },
+    "summary": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "neighbourhoods": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "propertyTypes": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "localRules": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "_defs.schema.json#/definitions/sourced" },
+          { "type": "object", "required": ["topic"], "properties": { "topic": { "enum": ["trees", "watering", "wells", "burning", "invasives", "other"] } } }
+        ]
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          { "$ref": "_defs.schema.json#/definitions/sourced" },
+          { "type": "object", "required": ["kind"], "properties": { "kind": { "enum": ["soils", "exposure", "deer", "salt-spray", "water-supply", "wells", "lot-types", "other"] } } }
+        ]
+      }
+    },
+    "sharedRegional": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slug" } },
+    "proof": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "type": "object", "required": ["kind", "project"], "properties": { "kind": { "const": "project" }, "project": { "$ref": "_defs.schema.json#/definitions/slug" } } },
+          { "type": "object", "required": ["kind", "service", "text", "sample"], "properties": { "kind": { "const": "job-note" }, "service": { "$ref": "_defs.schema.json#/definitions/service" }, "text": { "$ref": "_defs.schema.json#/definitions/text" }, "sample": { "type": "boolean" } } }
+        ]
+      }
+    },
+    "topServices": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/service" } },
+    "servicesBlurb": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "grounds-maintenance": { "type": "string" },
+        "landscape-installation": { "type": "string" },
+        "irrigation": { "type": "string" },
+        "tree-vegetation": { "type": "string" }
+      }
+    },
+    "neighbours": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/area" } },
+    "featuredProject": { "type": ["string", "null"] },
+    "image": { "$ref": "_defs.schema.json#/definitions/slot" },
+    "intro": { "$ref": "_defs.schema.json#/definitions/paras", "x-deprecated": "use summary (removed after W3)" },
+    "localNotes": { "type": "array", "x-deprecated": "split into localRules + sharedRegional (removed after W3)" }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$id": "service.schema.json",
+  "title": "content/services/<slug>.json (schema v3)",
+  "x-files": ["services/*.json"],
+  "type": "object",
+  "required": ["slug", "name", "navLabel", "seo", "hero", "audiences", "includes", "process", "seasonal", "faqs", "localContext", "goodFitIf", "perVisit", "localRulesRefs"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "slug": { "$ref": "_defs.schema.json#/definitions/service" },
+    "name": { "$ref": "_defs.schema.json#/definitions/text" },
+    "navLabel": { "$ref": "_defs.schema.json#/definitions/text" },
+    "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+    "hero": {
+      "type": "object",
+      "required": ["h1", "lede"],
+      "properties": { "h1": { "$ref": "_defs.schema.json#/definitions/text" }, "lede": { "$ref": "_defs.schema.json#/definitions/text" }, "image": { "$ref": "_defs.schema.json#/definitions/slot" } }
+    },
+    "audiences": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/titleBody" } },
+    "includes": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/titleBody" } },
+    "process": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/titleBody" } },
+    "seasonal": {
+      "type": "array",
+      "items": { "type": "object", "required": ["season", "items"], "properties": { "season": { "$ref": "_defs.schema.json#/definitions/season" }, "items": { "$ref": "_defs.schema.json#/definitions/paras" } } }
+    },
+    "detailImages": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slot" } },
+    "faqs": {
+      "type": "array",
+      "items": { "type": "object", "required": ["q", "a"], "properties": { "q": { "$ref": "_defs.schema.json#/definitions/text" }, "a": { "$ref": "_defs.schema.json#/definitions/text" } } }
+    },
+    "localContext": { "$ref": "_defs.schema.json#/definitions/text" },
+    "goodFitIf": { "type": "array", "minItems": 3, "maxItems": 5, "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+    "perVisit": {
+      "type": "object",
+      "required": ["caption", "rows"],
+      "properties": {
+        "caption": { "$ref": "_defs.schema.json#/definitions/text" },
+        "rows": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["task", "detail"], "properties": { "task": { "$ref": "_defs.schema.json#/definitions/text" }, "detail": { "$ref": "_defs.schema.json#/definitions/text" } } } }
+      }
+    },
+    "localRulesRefs": { "type": "array", "items": { "$ref": "_defs.schema.json#/definitions/slug" } }
+  }
+}

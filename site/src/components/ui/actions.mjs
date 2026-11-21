@@ -5,6 +5,7 @@
  */
 import { html } from '../../lib/html.mjs';
 import { has, telHref } from '../../lib/tokens.mjs';
+import { siteJson } from '../../../site.config.mjs';
 import { icon, SERVICE_ICON } from '../sprite.mjs';
 
 /** Visible "Sample" chip. The class name is what the launch build looks for. */
@@ -22,7 +23,7 @@ export const quoteBtn = (o = {}) => html`<a class="btn btn--${o.tone || 'primary
  */
 export function secondaryBtn(location, o = {}) {
   const cls = `btn btn--${o.tone || 'secondary'}${o.size ? ` btn--${o.size}` : ''}`;
-  if (has('PHONE')) return html`<a class="${cls}" href="${telHref()}" data-track="call_clicked" data-track-location="${location}">${icon('phone', { size: 18 })} Call [PHONE]</a>`;
+  if (has('PHONE')) return html`<a class="${cls}" href="${telHref()}" data-track="call_clicked" data-track-location="${location}">${icon('phone', { size: 18 })} Call ${siteJson.nap.phone}</a>`;
   return html`<a class="${cls}" href="/projects/">See our work</a>`;
 }
 
