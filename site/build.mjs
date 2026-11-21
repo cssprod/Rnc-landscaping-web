@@ -5,25 +5,30 @@
  *   node build.mjs                      showcase build (default): placeholders shown as chips, noindex
  *   SITE_MODE=launch node build.mjs     launch build: fails on [TOKENS], samples or fixtures; indexable
  *   node build.mjs --offline-images     generated illustrations instead of CDN photos (tests, screenshots)
+ *   node build.mjs --out=/tmp/x         write somewhere other than site/dist (parallel work, CI)
  */
 import { mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, cpSync, readdirSync, statSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, resolve, relative } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { loadAll, sharedFile, paths, fallbacks } from './src/lib/data.mjs';
 import { initImages, renderArt } from './src/lib/images.mjs';
 import { finalizeTokens, tok, has } from './src/lib/tokens.mjs';
 import { typographer } from './src/lib/html.mjs';
 import { routes } from './src/pages/routes.mjs';
+import { redirects } from './src/pages/redirects.mjs';
 import { JS_FLAG } from './src/components/layout.mjs';
 import { site } from './site.config.mjs';
 import { generate as tokensCss, readTokens } from '../brand/build-tokens.mjs';
 
 const t0 = Date.now();
-const args = new Set(process.argv.slice(2));
+const argv = process.argv.slice(2);
+const args = new Set(argv);
 const context = process.env.CONTEXT || 'dev';
 const launch = process.env.SITE_MODE === 'launch';
 const offline = args.has('--offline-images');
-const DIST = join(paths.site, 'dist');
+const outArg = argv.find((a) => a.startsWith('--out='))?.slice(6);
+const DIST = outArg ? resolve(outArg) : join(paths.site, 'dist');
 /** @type {string[]} */
 const issues = [];
 /** @type {string[]} */
@@ -50,12 +55,24 @@ const minifyCss = (src) => src
   .replace(/([,:])\s+(?![^(]*\)\s*(?:and|or)\b)/g, '$1')
   .replace(/;}/g, '}')
   .trim();
-const css = minifyCss(`${tokens}\n${readFileSync(join(paths.site, 'src/styles/site.css'), 'utf8')}`);
-const js = readFileSync(join(paths.site, 'src/scripts/main.js'), 'utf8');
+// Every src/styles/*.css file, in file-name order (numeric prefixes set the cascade order).
+const styleDir = join(paths.site, 'src/styles');
+const styleFiles = readdirSync(styleDir).filter((f) => f.endsWith('.css')).sort();
+const css = minifyCss(`${tokens}\n${styleFiles.map((f) => readFileSync(join(styleDir, f), 'utf8')).join('\n')}`);
 const h = (/** @type {string} */ s) => createHash('sha256').update(s).digest('hex').slice(0, 10);
-const assets = { css: `/assets/build/site.${h(css)}.css`, js: `/assets/build/main.${h(js)}.js` };
+// Every src/scripts/*.js file becomes its own content-hashed module: main.js loads on every page,
+// the others only where a page asks for them (layout option `scripts: ['quote']`).
+const scriptDir = join(paths.site, 'src/scripts');
+/** @type {Record<string, string>} */
+const scripts = {};
+for (const f of readdirSync(scriptDir).filter((x) => x.endsWith('.js')).sort()) {
+  const src = readFileSync(join(scriptDir, f), 'utf8');
+  const name = f.replace(/\.js$/, '');
+  scripts[name] = `/assets/build/${name}.${h(src)}.js`;
+  writeFileSync(join(DIST, scripts[name]), src);
+}
+const assets = { css: `/assets/build/site.${h(css)}.css`, js: scripts.main, scripts };
 writeFileSync(join(DIST, assets.css), css);
-writeFileSync(join(DIST, assets.js), js);
 
 /* ---- CSP: one policy for every path; its hash must match the inline JS flag ---- */
 const flagHash = `sha256-${createHash('sha256').update(JS_FLAG).digest('base64')}`;
@@ -106,13 +123,29 @@ for (const r of list) {
 const art = renderArt();
 for (const a of art) writeFileSync(join(DIST, 'assets', 'art', `${a.id}.svg`), a.svg);
 
-/* ---- sitemap, robots, manifest, headers ---- */
-const indexable = list.filter((r) => r.path !== '/404.html');
+/* ---- sitemap (lastmod from the git commit date of each route's sources), robots, manifest, headers, redirects ---- */
+const indexable = list.filter((r) => r.path !== '/404.html' && !r.noindex);
 const today = new Date().toISOString().slice(0, 10);
+/** Most recent commit date per repo-relative file, from one git call; empty when git or history is unavailable. */
+const gitDates = (() => {
+  /** @type {Map<string, string>} */ const m = new Map();
+  try {
+    const log = execFileSync('git', ['log', '--format=@%cs', '--name-only', '--', 'content', 'site/src', 'media'], { cwd: paths.root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
+    let date = '';
+    for (const line of log.split('\n')) { if (line.startsWith('@')) date = line.slice(1); else if (line && !m.has(line)) m.set(line, date); }
+  } catch { /* no git: fall back to today */ }
+  return m;
+})();
+/** @param {string[]|undefined} sources repo-relative files or folders */
+const lastmod = (sources) => {
+  let best = '';
+  for (const src of sources || []) for (const [f, dt] of gitDates) if ((f === src || f.startsWith(`${src.replace(/\/$/, '')}/`)) && dt > best) best = dt;
+  return best || [...gitDates.values()].sort().pop() || today;
+};
 const smOrigin = origin || 'https://[DOMAIN]';
 writeFileSync(join(DIST, 'sitemap.xml'), finalizeTokens(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${indexable.map((r) => `  <url><loc>${smOrigin}${r.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
+${indexable.map((r) => `  <url><loc>${smOrigin}${r.path}</loc><lastmod>${lastmod(r.sources)}</lastmod></url>`).join('\n')}
 </urlset>
 `, { launch, file: 'sitemap.xml', issues, html: false }));
 writeFileSync(join(DIST, 'robots.txt'), launch
@@ -130,6 +163,9 @@ writeFileSync(join(DIST, 'site.webmanifest'), JSON.stringify({
 }, null, 2));
 // Headers in netlify.toml are global; the showcase noindex header is written here.
 if (!launch) writeFileSync(join(DIST, '_headers'), `/*\n  X-Robots-Tag: noindex, nofollow\n`);
+const redirectList = redirects(env);
+writeFileSync(join(DIST, '_redirects'), `# Retired URLs (generated by build.mjs from src/pages/redirects.mjs)\n${redirectList.map(([from, to, st]) => `${from}  ${to}  ${st}`).join('\n')}\n`);
+for (const [from] of redirectList) if (list.some((r) => r.path === from)) issues.push(`redirect source ${from} is also a live page`);
 
 /* ---- fixture / data checks ---- */
 const fb = [...new Set(fallbacks)];
@@ -162,4 +198,4 @@ if (issues.length) {
   console.error(`\nBuild ${launch ? 'FAILED' : 'has problems'} (${launch ? 'launch' : 'showcase'}, ${context}). Fix before publishing:\n${issues.map((i) => `  - ${i}`).join('\n')}\n`);
   if (launch || issues.some((i) => i.startsWith('netlify.toml') || i.startsWith('missing'))) process.exit(1);
 }
-console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}) into dist/ (${kb(DIST)} KB) in ${Date.now() - t0} ms`);
+console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}) into ${relative(paths.site, DIST) || '.'}/ (${kb(DIST)} KB) in ${Date.now() - t0} ms`);

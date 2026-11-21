@@ -9,7 +9,7 @@
   "faqs": [
     {
       "q": "How much does landscaping cost?",
-      "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/quote/).",
+      "a": "Every property is different, so we don't publish prices. We quote from a site visit or your photos and a written scope that lists the work, frequency and schedule. The quote is free. [Get a free quote](/free-quote/).",
       "category": "Quotes"
     },
     {
@@ -103,7 +103,7 @@
       "id": "more",
       "heading": "Still have a question?",
       "body": [
-        "[Contact us](/contact/) or [get a free quote](/quote/)."
+        "[Contact us](/contact/) or [get a free quote](/free-quote/)."
       ]
     }
   ]

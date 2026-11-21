@@ -10,7 +10,7 @@
   "cta": {
     "primary": {
       "label": "Get a free quote",
-      "href": "/quote/"
+      "href": "/free-quote/"
     },
     "secondary": {
       "label": "Call [PHONE]",
@@ -109,7 +109,7 @@
       "id": "projects",
       "heading": "Sample projects",
       "body": [
-        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/portfolio/)."
+        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/projects/)."
       ]
     },
     {

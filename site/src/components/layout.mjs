@@ -6,8 +6,7 @@
 import { html, raw } from '../lib/html.mjs';
 import { site } from '../../site.config.mjs';
 import { has, telHref, telLink, mailLink } from '../lib/tokens.mjs';
-import { ogUrl } from '../lib/images.mjs';
-import * as schema from '../lib/schema.mjs';
+import { headMeta, jsonLd } from '../lib/seo.mjs';
 import { sprite, icon, logo, SERVICE_ICON } from './sprite.mjs';
 
 /** Inline script that flags JS support before first paint (hash pinned in netlify.toml CSP). */
@@ -15,14 +14,14 @@ export const JS_FLAG = "document.documentElement.classList.add('js')";
 
 /**
  * @typedef {{ name: string, path: string }} Crumb
- * @typedef {{ launch: boolean, context: string, origin: string, data: any, assets: { css: string, js: string }, hasCapability?: boolean, analyticsDomain?: string|null }} Env
+ * @typedef {{ launch: boolean, context: string, origin: string, data: any, assets: { css: string, js: string, scripts?: Record<string, string> }, hasCapability?: boolean, analyticsDomain?: string|null }} Env
  */
 
 /** @param {Env} env @param {string} name */
 const serviceName = (env, name) => env.data.services[name]?.navLabel || env.data.services[name]?.name || name;
 
 const NAV = [
-  ['Portfolio', '/portfolio/'], ['Areas', '/areas/'], ['Commercial', '/commercial/'],
+  ['Portfolio', '/projects/'], ['Areas', '/areas/'], ['Commercial', '/commercial/'],
   ['About', '/about/'], ['Resources', '/resources/'], ['Contact', '/contact/'],
 ];
 
@@ -54,7 +53,7 @@ function header(env, path) {
       </ul>
       <div class="site-nav__actions">
         ${has('PHONE') ? html`<a class="icon-btn phone-link" href="${telHref()}" data-track="call_clicked" data-track-location="header">${icon('phone', { size: 18 })}<span class="phone-link__label">Call [PHONE]</span></a>` : ''}
-        <a class="btn btn--primary btn--sm" href="/quote/">Get a free quote</a>
+        <a class="btn btn--primary btn--sm" href="/free-quote/">Get a free quote</a>
       </div>
     </nav>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle><span class="nav-toggle__bars" aria-hidden="true"></span><span class="nav-toggle__label">Menu</span></button>
@@ -77,12 +76,12 @@ function footer(env) {
     <div class="site-footer__brand">
       <a class="brand brand--footer" href="/" aria-label="RNC Landscaping home">${logo()}</a>
       <p>Grounds care, landscape installation, irrigation and tree work for homes, stratas and managed sites across ${site.region}.</p>
-      <a class="btn btn--light" href="/quote/">Get a free quote</a>
+      <a class="btn btn--light" href="/free-quote/">Get a free quote</a>
     </div>
     <nav aria-label="Services" class="site-footer__col"><h2>Services</h2><ul>${site.services.map((s) => html`<li><a href="/services/${s}/">${serviceName(env, s)}</a></li>`)}<li><a href="/commercial/">Commercial and public sector</a></li></ul></nav>
     <nav aria-label="Service areas" class="site-footer__col site-footer__areas"><h2>Areas we serve</h2><ul>${site.areas.map((a) => html`<li><a href="/areas/${a}/">${env.data.areas[a]?.name || a}</a></li>`)}</ul></nav>
     <nav aria-label="Company" class="site-footer__col"><h2>Company</h2><ul>
-      <li><a href="/about/">About</a></li><li><a href="/portfolio/">Portfolio</a></li><li><a href="/reviews/">Reviews</a></li>
+      <li><a href="/about/">About</a></li><li><a href="/projects/">Portfolio</a></li><li><a href="/reviews/">Reviews</a></li>
       <li><a href="/resources/">Resources</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Contact</a></li></ul></nav>
     <div class="site-footer__col site-footer__contact"><h2>Contact</h2>
       <address>
@@ -103,14 +102,10 @@ function footer(env) {
 
 /**
  * @param {Env} env
- * @param {{ path: string, title: string, description: string, crumbs?: Crumb[], body: any, jsonld?: object[], ogImage?: string, bodyClass?: string, noindex?: boolean, hero?: boolean }} p
+ * @param {{ path: string, title: string, description: string, crumbs?: Crumb[], body: any, jsonld?: object[], ogImage?: string, bodyClass?: string, noindex?: boolean, hero?: boolean, scripts?: string[] }} p
  */
 export function layout(env, p) {
   const crumbs = p.crumbs || [{ name: 'Home', path: '/' }];
-  const canonical = env.launch ? `${env.origin}${p.path}` : p.path;
-  const og = (p.ogImage && ogUrl(p.ogImage)) || ogUrl('og-default');
-  const ld = [schema.business(env), ...(crumbs.length > 1 ? [schema.breadcrumbs(env, crumbs)] : []), ...(p.jsonld || [])];
-  const noindex = !env.launch || p.noindex;
   // Breadcrumbs sit inside the page head or hero (marker), else at the top of <main>.
   let body = String(p.body);
   const nav = String(breadcrumbNav(crumbs));
@@ -120,21 +115,7 @@ export function layout(env, p) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>${p.title}</title>
-<meta name="description" content="${p.description}">
-<link rel="canonical" href="${canonical}">
-${noindex ? raw('<meta name="robots" content="noindex, nofollow">') : ''}
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="${site.name}">
-<meta property="og:locale" content="en_CA">
-<meta property="og:title" content="${p.title}">
-<meta property="og:description" content="${p.description}">
-<meta property="og:url" content="${canonical}">
-${og ? html`<meta property="og:image" content="${og}">` : ''}
-<meta name="twitter:card" content="${og ? 'summary_large_image' : 'summary'}">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#F4F6F2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0A0E0C" media="(prefers-color-scheme: dark)">
+${headMeta(env, p, crumbs)}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/brand/icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -144,8 +125,9 @@ ${og ? html`<meta property="og:image" content="${og}">` : ''}
 <link rel="stylesheet" href="${env.assets.css}">
 <script>${raw(JS_FLAG)}</script>
 <script type="module" src="${env.assets.js}"></script>
+${(p.scripts || []).map((n) => env.assets.scripts?.[n] ? html`<script type="module" src="${env.assets.scripts[n]}"></script>` : '')}
 ${env.analyticsDomain ? html`<script defer data-domain="${env.analyticsDomain}" src="https://plausible.io/js/script.js"></script>` : ''}
-${ld.map((o) => html`<script type="application/ld+json">${raw(JSON.stringify(o).replace(/</g, '\\u003c'))}</script>`)}
+${jsonLd(env, p, crumbs)}
 </head>
 <body class="${p.bodyClass || ''}${p.hero ? ' has-hero' : ''}">
 ${sprite()}

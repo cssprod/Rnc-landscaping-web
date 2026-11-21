@@ -1,0 +1,51 @@
+{
+  "_notes": "Single source of truth for business facts (NAP), hours, credentials, the service list and the municipality list. site/site.config.mjs reads this file; the header, footer, JSON-LD, quote builder and every page take their facts from here. A null value renders as its bracket token (for example [PHONE]): a placeholder chip in showcase builds, a build failure in launch builds. Fill these in before going live. Never publish a value you cannot verify.",
+  "business": {
+    "name": "RNC Landscaping",
+    "shortName": "RNC",
+    "region": "Greater Victoria, BC",
+    "locale": "en-CA"
+  },
+  "tokens": {
+    "PHONE": null,
+    "EMAIL": null,
+    "HOURS": null,
+    "ADDRESS": null,
+    "LEGAL NAME": null,
+    "YEAR": null,
+    "CREW SIZE": null,
+    "OWNER NAME": null,
+    "OWNER BIO": null,
+    "LIABILITY LIMIT": null,
+    "WORKSAFEBC STATUS": null,
+    "LICENCES": null,
+    "CERTIFICATIONS": null,
+    "MEMBERSHIPS": null,
+    "WARRANTY": null,
+    "REPLY TIME": null,
+    "GOOGLE PROFILE": null,
+    "FOUNDED": null,
+    "DOMAIN": null,
+    "PLAUSIBLE DOMAIN": null
+  },
+  "tokenNotes": {
+    "PHONE": "Public phone, e.g. \"250-555-0100\". Turns on tel: and sms: links everywhere.",
+    "EMAIL": "Public address the quote builder writes to.",
+    "HOURS": "Human-readable hours, e.g. \"Mon–Fri 7:30 am – 5 pm\".",
+    "ADDRESS": "Mailing or yard address, or \"Serving Greater Victoria\" if the Google Business Profile hides the address.",
+    "REPLY TIME": "Reply-time promise used in the quote reassurance strip, e.g. \"two business days\".",
+    "GOOGLE PROFILE": "Full https URL of the Google Business Profile (reviews link). Until set, the reviews link shows as a placeholder.",
+    "FOUNDED": "Optional founding year. Only used in JSON-LD foundingDate; never shown as a years-in-business claim.",
+    "WARRANTY": "Length and scope of the workmanship guarantee, e.g. \"one year on plants and installations\"."
+  },
+  "optionalTokens": ["PLAUSIBLE DOMAIN", "FOUNDED"],
+  "openingHours": null,
+  "openingHoursExample": [{ "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:30", "closes": "17:00" }],
+  "services": ["grounds-maintenance", "landscape-installation", "irrigation", "tree-vegetation"],
+  "areas": [
+    "victoria", "saanich", "oak-bay", "esquimalt", "langford", "colwood", "view-royal",
+    "sooke", "central-saanich", "north-saanich", "sidney", "highlands", "metchosin"
+  ],
+  "sameAs": [],
+  "capabilityStatement": "/downloads/rnc-capability-statement.pdf"
+}

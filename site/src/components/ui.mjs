@@ -2,7 +2,7 @@
 /**
  * Shared presentational components for the Liquid Glass design.
  */
-import { html, md, paras, raw } from '../lib/html.mjs';
+import { html, md, paras, raw, fmtDate } from '../lib/html.mjs';
 import { picture, hasPhoto } from '../lib/images.mjs';
 import { site } from '../../site.config.mjs';
 import { has, telHref, telLink, mailLink } from '../lib/tokens.mjs';
@@ -14,8 +14,8 @@ export const sampleLabel = () => html`<span class="sample-label">Sample</span>`;
 /** @param {string} slug */
 export const serviceIcon = (slug) => SERVICE_ICON[/** @type {keyof typeof SERVICE_ICON} */ (slug)] || 'leaf';
 
-/** Primary call to action. @param {{ tone?: 'primary'|'light', size?: string }} [o] */
-export const quoteBtn = (o = {}) => html`<a class="btn btn--${o.tone || 'primary'}${o.size ? ` btn--${o.size}` : ''}" href="/quote/">Get a free quote</a>`;
+/** Primary call to action. `href` lets municipality pages prefill the area (/free-quote/?area=oak-bay). @param {{ tone?: 'primary'|'light', size?: string, href?: string }} [o] */
+export const quoteBtn = (o = {}) => html`<a class="btn btn--${o.tone || 'primary'}${o.size ? ` btn--${o.size}` : ''}" href="${o.href || '/free-quote/'}">Get a free quote</a>`;
 
 /**
  * Secondary action: call once the number is known, otherwise the portfolio.
@@ -24,7 +24,7 @@ export const quoteBtn = (o = {}) => html`<a class="btn btn--${o.tone || 'primary
 export function secondaryBtn(location, o = {}) {
   const cls = `btn btn--${o.tone || 'secondary'}${o.size ? ` btn--${o.size}` : ''}`;
   if (has('PHONE')) return html`<a class="${cls}" href="${telHref()}" data-track="call_clicked" data-track-location="${location}">${icon('phone', { size: 18 })} Call [PHONE]</a>`;
-  return html`<a class="${cls}" href="/portfolio/">See our work</a>`;
+  return html`<a class="${cls}" href="/projects/">See our work</a>`;
 }
 
 /** Arrow link ("See all …"). @param {string} href @param {any} label */
@@ -32,7 +32,7 @@ export const linkMore = (href, label) => html`<a class="link-more" href="${href}
 
 /**
  * Full-bleed photographic hero with the headline on a scrim and glass actions.
- * @param {{ h1: string, lede?: string, image: string, ctas?: boolean, variant?: 'home'|'page', dock?: any, extra?: any }} p
+ * @param {{ h1: string, lede?: string, image: string, ctas?: boolean, variant?: 'home'|'page', dock?: any, extra?: any, quoteHref?: string }} p
  */
 export function hero(p) {
   return html`<section class="hero hero--${p.variant || 'page'}" aria-labelledby="page-title">
@@ -42,7 +42,7 @@ export function hero(p) {
     <!--crumbs-->
     <h1 id="page-title" class="hero__title">${p.h1}</h1>
     ${p.lede ? html`<p class="hero__lede">${md(p.lede)}</p>` : ''}
-    ${p.ctas !== false ? html`<div class="hero__ctas">${quoteBtn({ tone: 'light', size: 'lg' })}${secondaryBtn('hero', { tone: 'glass', size: 'lg' })}</div>` : ''}
+    ${p.ctas !== false ? html`<div class="hero__ctas">${quoteBtn({ tone: 'light', size: 'lg', href: p.quoteHref })}${secondaryBtn('hero', { tone: 'glass', size: 'lg' })}</div>` : ''}
     ${p.extra || ''}
   </div>
   ${p.dock || ''}
@@ -132,7 +132,7 @@ export function projectCard(data, p, o = {}) {
   const img = p.images?.after || p.images?.gallery?.[0] || `proj-${p.service}-1`;
   const H = `h${o.headingLevel || 3}`;
   return html`<li class="card project-card" data-service="${p.service}" data-area="${p.area}">
-  <a href="/portfolio/${p.service}/${p.slug}/" class="card__link">
+  <a href="/projects/${p.slug}/" class="card__link">
     <div class="card__media">${picture(img, { sizes: '(min-width: 1100px) 380px, (min-width: 640px) 50vw, 100vw', sample: !p.sample && hasPhoto(img), credit: false, aspect: '4:3' })}${p.sample ? sampleLabel() : ''}</div>
     <div class="card__body">
       <span class="card__meta">${icon(serviceIcon(p.service), { size: 16 })}${data.services[p.service]?.navLabel || p.service} · ${data.areas[p.area]?.name || p.area}</span>
@@ -156,7 +156,7 @@ export function projectGrid(data, projects, o = {}) {
     <p class="filters__count" role="status" aria-live="polite" data-filters-count>${projects.length} projects shown</p>
   </form>` : '';
   return html`${filters}<ul class="card-grid" data-project-grid>${projects.map((p) => projectCard(data, p, o))}</ul>
-  ${o.filters ? html`<p class="filters__empty" data-filters-empty hidden>No projects match those filters yet. <a href="/portfolio/">Show all projects</a>.</p>` : ''}`;
+  ${o.filters ? html`<p class="filters__empty" data-filters-empty hidden>No projects match those filters yet. <a href="/projects/">Show all projects</a>.</p>` : ''}`;
 }
 
 /** Keyboard-operable before/after comparison (only rendered when both photos exist). @param {string} before @param {string} after @param {string} label */
@@ -208,7 +208,7 @@ export function trustBand() {
 </section>`;
 }
 
-/** @param {{ heading?: string, body?: string, secondary?: any, image?: string }} [p] */
+/** @param {{ heading?: string, body?: string, secondary?: any, image?: string, quoteHref?: string }} [p] */
 export function ctaBand(p = {}) {
   return html`<section class="cta-band" aria-labelledby="cta-h">
   <div class="cta-band__bg" aria-hidden="true"></div>
@@ -216,7 +216,7 @@ export function ctaBand(p = {}) {
     <div class="cta-band__panel glass-card glass-card--media">
       <h2 id="cta-h">${p.heading || 'Tell us about your property'}</h2>
       <p>${p.body || 'Free quotes, no obligation. Share a few details and photos and we will follow up to arrange a site visit.'}</p>
-      <div class="cta-band__actions">${quoteBtn({ tone: 'light', size: 'lg' })}${p.secondary || secondaryBtn('cta_band', { tone: 'glass', size: 'lg' })}</div>
+      <div class="cta-band__actions">${quoteBtn({ tone: 'light', size: 'lg', href: p.quoteHref })}${p.secondary || secondaryBtn('cta_band', { tone: 'glass', size: 'lg' })}</div>
     </div>
   </div>
 </section>`;
@@ -252,3 +252,9 @@ export function contactCards() {
     <li class="glass-card contact-card"><span class="icon-tile">${icon('pin', { size: 22 })}</span><h3>Address</h3><p><span class="contact-card__value">[ADDRESS]</span></p></li>
   </ul>`;
 }
+
+/** Seasonal guide cards. @param {any[]} list @param {{ headingLevel?: number }} [o] */
+export const resourceCards = (list, o = {}) => html`<ul class="card-grid">${list.map((r) => html`<li class="card res-card"><a class="card__link" href="/resources/${r.slug}/">
+    <div class="card__media">${picture(r.image, { sizes: '(min-width: 1100px) 380px, (min-width: 640px) 50vw, 100vw', credit: false, aspect: '3:2' })}</div>
+    <div class="card__body"><span class="card__meta">${icon('calendar', { size: 16 })}<time datetime="${r.date}">${fmtDate(r.date)}</time></span>${raw(`<h${o.headingLevel || 3} class="card__title">`)}${r.title}${raw(`</h${o.headingLevel || 3}>`)}<p class="card__text">${r.summary}</p></div>
+  </a></li>`)}</ul>`;
