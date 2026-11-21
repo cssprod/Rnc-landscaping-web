@@ -8,7 +8,7 @@
   "h1": "Landscaping and grounds care in Colwood",
   "summary": [
     "Much of Colwood's new housing is in Royal Bay, on land with a century-long history as a gravel operation, so many backyards start from bare new-build ground. Older lots sit near Esquimalt Lagoon, a federal migratory bird sanctuary bordered by old coastal Douglas-fir forest.",
-    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. Arbutus, Garry oak, Pacific dogwood and Pacific yew are protected in Colwood from 2 m tall or 4 cm across."
+    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. In Colwood even a young arbutus or Garry oak can be protected: for those two, and for Pacific dogwood and Pacific yew, the threshold is 2 m in height or 4 cm in trunk diameter."
   ],
   "neighbourhoods": [
     "Royal Bay",
@@ -73,7 +73,7 @@
     {
       "id": "colwood-pruning-hedge-exempt",
       "topic": "trees",
-      "text": "Colwood needs no permit for pruning done to sound arboricultural practice. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
+      "text": "Routine pruning in Colwood that follows sound arboricultural practice is exempt from the permit. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
       "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
       "sourceTitle": "Tree Permits - City of Colwood",
       "sourceType": "official",
@@ -117,7 +117,7 @@
     {
       "id": "colwood-pesticide-bylaw",
       "topic": "other",
-      "text": "Colwood's Pesticide Use Bylaw generally bars pesticides on lawns, trees, shrubs, flowers and other ornamental plants at homes, duplexes, townhouses, apartments and condominiums. Listed lower-risk products are allowed without a permit, and a permit may be issued for invasive species, noxious weeds or infestations that threaten a sensitive ecosystem. The bylaw does not apply to commercial, institutional or industrial properties.",
+      "text": "Colwood's Pesticide Use Bylaw generally bars pesticides on lawns, trees, shrubs, flowers and other ornamental plants at homes, duplexes, townhouses, apartments and condominiums. Listed lower-risk products are allowed without a permit, and a permit may be issued for invasive species, noxious weeds or infestations that threaten a sensitive ecosystem. Commercial, institutional and industrial properties in Colwood sit outside this bylaw.",
       "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/pesticides",
       "sourceTitle": "Pesticides - City of Colwood",
       "sourceType": "official",
@@ -232,8 +232,7 @@
   "image": "area-colwood",
   "intro": [
     "Much of Colwood's new housing is in Royal Bay, on land with a century-long history as a gravel operation, so many backyards start from bare new-build ground. Older lots sit near Esquimalt Lagoon, a federal migratory bird sanctuary bordered by old coastal Douglas-fir forest.",
-    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. Arbutus, Garry oak, Pacific dogwood and Pacific yew are protected in Colwood from 2 m tall or 4 cm across.",
-    "Finishing a bare Royal Bay yard is [landscape installation](/services/landscape-installation/), keeping a strata tidy is [grounds maintenance](/services/grounds-maintenance/), and a Colwood [free quote](/free-quote/) works for either."
+    "Open burning is not allowed in the city at any time, so yard debris is chipped, hauled or taken to the City's Branch Drop Off, which accepts broom, ivy, holly and blackberry. In Colwood even a young arbutus or Garry oak can be protected: for those two, and for Pacific dogwood and Pacific yew, the threshold is 2 m in height or 4 cm in trunk diameter."
   ],
   "localNotes": [
     {
@@ -242,7 +241,7 @@
       "verify": true
     },
     {
-      "text": "Colwood needs no permit for pruning done to sound arboricultural practice. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
+      "text": "Routine pruning in Colwood that follows sound arboricultural practice is exempt from the permit. That does not cover lift pruning below a 50% live crown ratio, removing more than 25% of the crown in one season, topping, or cutting a structural root in the critical root zone. Hedges (five or more trees under 5 m tall planted 1.25 m apart) can be pruned or removed without a permit.",
       "sourceUrl": "https://www.colwood.ca/sustainability-climate-action/tree-permits",
       "verify": true
     },

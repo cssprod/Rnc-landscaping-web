@@ -8,7 +8,7 @@
   "h1": "Landscaping in Central Saanich",
   "summary": [
     "Central Saanich is mostly farmland: 61% of the District is in the Agricultural Land Reserve and 18% inside the Urban Containment Boundary, so village lots in Brentwood Bay and Saanichton sit close to working fields. The Keating area adds business parks with frontages and parking islands to keep up.",
-    "Under the 2021 Tree Management Bylaw, any tree 30 cm or more across needs a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected."
+    "Under the 2021 Tree Management Bylaw, most trees 30 cm or more across (other than hedges) need a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected."
   ],
   "neighbourhoods": [
     "Brentwood Bay",
@@ -51,7 +51,7 @@
       "topic": "trees",
       "text": "Central Saanich protects Garry oak, arbutus, Pacific dogwood, Pacific yew, shore pine and trembling aspen once they are over 50 cm tall. Trees of any size are protected in the Erosion District, in Environmentally Sensitive Areas and on District land.",
       "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
-      "sourceTitle": "Central Saanich Tree Management Bylaw 2065, 2021 (District of Central Saanich)",
+      "sourceTitle": "Central Saanich Tree Management Bylaw No. 2065, 2021 (District of Central Saanich)",
       "sourceType": "official",
       "excerpt": "“Protected Species” means a tree over 50 centimeters in height of the following species:",
       "verify": true,
@@ -73,7 +73,7 @@
       "topic": "other",
       "text": "Central Saanich has a mapped Erosion District (Schedule F of the tree bylaw) where trees of any size are protected. Removing them can require a professional engineer's report certifying the cutting will not create a flooding or erosion danger.",
       "sourceUrl": "https://www.centralsaanich.ca/sites/default/files/uploads/bylaws/2065_-_tree_management_bylaw.pdf",
-      "sourceTitle": "Central Saanich Tree Management Bylaw 2065, 2021 (District of Central Saanich)",
+      "sourceTitle": "Central Saanich Tree Management Bylaw No. 2065, 2021 (District of Central Saanich)",
       "sourceType": "official",
       "excerpt": "a report from a Registered professional engineer be provided certifying that the proposed cutting of trees will not create a danger from flooding or erosion",
       "verify": true,
@@ -139,7 +139,7 @@
     {
       "id": "cs-aquifers",
       "kind": "wells",
-      "text": "Provincial groundwater mapping lists aquifers under the Saanich Peninsula and describes them as a significant source of water for farm irrigation, so some Central Saanich farm-edge lots water from wells rather than the regional mains.",
+      "text": "Provincial groundwater mapping describes Saanich Peninsula aquifers as a significant source of water for farm irrigation, so a farm-edge property's supply in Central Saanich is checked before irrigation is planned.",
       "sourceUrl": "https://www.env.gov.bc.ca/wsd/plan_protect_sustain/groundwater/aquifers/aquifers_crd/aquif_crd.html",
       "sourceTitle": "Aquifers of the Capital Regional District (BC Water Protection & Sustainability Branch)",
       "sourceType": "official",
@@ -175,7 +175,7 @@
   "servicesBlurb": {
     "grounds-maintenance": "Keating business parks and Brentwood Bay stratas need scheduled frontage and bed care through the growing season.",
     "landscape-installation": "Replanting after a removal in Central Saanich can mean up to three new trees per protected tree, held by a surety for a year after planting.",
-    "irrigation": "Farm-edge homes on the peninsula may draw on wells rather than the Saanich Peninsula system, so the supply is checked first.",
+    "irrigation": "On a farm-edge lot near Saanichton or Keating, where the water comes from is confirmed before any sprinkler zones are drawn up.",
     "tree-vegetation": "Pruning branches over 10 cm on a permit tree needs a permit unless a certified arborist does it, and the District's form says not to book a tree contractor before the permit is issued."
   },
   "neighbours": [
@@ -186,8 +186,7 @@
   "image": "area-central-saanich",
   "intro": [
     "Central Saanich is mostly farmland: 61% of the District is in the Agricultural Land Reserve and 18% inside the Urban Containment Boundary, so village lots in Brentwood Bay and Saanichton sit close to working fields. The Keating area adds business parks with frontages and parking islands to keep up.",
-    "Under the 2021 Tree Management Bylaw, any tree 30 cm or more across needs a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected.",
-    "Business-park and village upkeep is [grounds maintenance](/services/grounds-maintenance/), permit trees and hedgerows are [tree and vegetation management](/services/tree-vegetation/), and a [free quote](/free-quote/) suits either in Central Saanich."
+    "Under the 2021 Tree Management Bylaw, most trees 30 cm or more across (other than hedges) need a permit to remove, and Garry oak, arbutus, shore pine and trembling aspen are protected from 50 cm tall. In the mapped Erosion District, trees of any size are protected."
   ],
   "localNotes": [
     {

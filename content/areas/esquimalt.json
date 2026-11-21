@@ -31,7 +31,7 @@
       "topic": "trees",
       "text": "Esquimalt's Tree Protection Bylaw, 2022, 3076 protects any tree 30 cm or more in diameter at breast height (1.4 m). It also protects native Douglas-fir, grand fir and western redcedar once 4 m tall, and arbutus, bigleaf maple, Garry oak, Pacific dogwood and Pacific yew from 4 cm DBH. Trees on steep slopes, wildlife and nest trees, and replacement trees are protected too.",
       "sourceUrl": "https://www.esquimalt.ca/media/file/tree-protection-bylaw-2022-no-3076",
-      "sourceTitle": "Tree Protection Bylaw, 2022, 3076 (Township of Esquimalt)",
+      "sourceTitle": "Tree Protection Bylaw, 2022, No. 3076 (Township of Esquimalt)",
       "sourceType": "official",
       "excerpt": "any tree regardless of species having a DBH of 30 centimetres or more",
       "verify": true,
@@ -86,7 +86,7 @@
       "topic": "other",
       "text": "Esquimalt's DPA 1 guidelines ask that land within 7.5 m of the Gorge Waterway's high-water mark be kept as natural as possible, and restored with native trees and plants where it has been altered.",
       "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
-      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceTitle": "DPA No. 1: Natural Environment guidelines (Township of Esquimalt)",
       "sourceType": "official",
       "excerpt": "Land within 7.5m of the high watermark of the Gorge Waterway shall be retained in as natural a state as possible.",
       "verify": true,
@@ -97,7 +97,7 @@
       "topic": "other",
       "text": "Esquimalt's DPA 1 guidelines ask designers to avoid disturbing or compacting natural soil, to frame public views rather than block them, to prefer natural topography over blasting or retaining walls, and to aim to meet the Canadian Landscape Standards.",
       "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
-      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceTitle": "DPA No. 1: Natural Environment guidelines (Township of Esquimalt)",
       "sourceType": "official",
       "excerpt": "Avoid disturbing, compacting and removing areas of natural soil",
       "verify": true,
@@ -108,7 +108,7 @@
       "topic": "other",
       "text": "Esquimalt's DPA 1 guidelines say new landscaping should be mostly native plants and trees, preferably Coastal Douglas-fir zone species, with 'nature out front' in front yards. Plants should be chosen for site conditions, including wind exposure and sea-spray tolerance.",
       "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
-      "sourceTitle": "DPA 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceTitle": "DPA No. 1: Natural Environment guidelines (Township of Esquimalt)",
       "sourceType": "official",
       "excerpt": "New landscaping shall consist predominantly of native plant and tree species.",
       "verify": true,
@@ -130,7 +130,7 @@
       "topic": "other",
       "text": "Under Esquimalt's Boulevard Maintenance Bylaw 2860, changing a boulevard needs a Boulevard Alteration Permit. Boulevard shrubs must be drought tolerant and kept under 0.5 m, rocks and gravel need a permit, grass is kept at 15 cm or less, and noxious or invasive plants are not allowed.",
       "sourceUrl": "https://www.esquimalt.ca/media/file/2019-07-bylaw-2860-boulevard-maintenance-consolidation",
-      "sourceTitle": "Boulevard Maintenance Bylaw 2860, consolidated July 2019 (Township of Esquimalt)",
+      "sourceTitle": "Boulevard Maintenance Bylaw No. 2860, consolidated July 2019 (Township of Esquimalt)",
       "sourceType": "official",
       "excerpt": "noxious weeds or invasive plants are not permitted",
       "verify": true,
@@ -139,15 +139,15 @@
   ],
   "conditions": [
     {
-      "id": "es-garry-oak-remnant",
-      "kind": "other",
-      "text": "Esquimalt holds one of Victoria Harbour's last Garry oak sites, the 2.4-acre Matson Conservation Area run by a local land trust, according to the trust's own page. Gardens nearby suit native, invasive-free planting.",
-      "sourceUrl": "https://hat.bc.ca/matson",
-      "sourceTitle": "Matson Conservation Area (Habitat Acquisition Trust)",
-      "sourceType": "secondary",
-      "excerpt": "Victoria Harbour's last Garry oak",
+      "id": "es-dpa1-exposure",
+      "kind": "exposure",
+      "text": "Esquimalt's shoreline runs along both the Strait of Juan de Fuca and the Gorge Waterway, and the Township's DPA 1 guidelines treat exposure as a planting question: wind and sea spray tolerance are listed next to shade, sun, heat and year-round moisture when trees and plants are placed.",
+      "sourceUrl": "https://www.esquimalt.ca/sites/default/files/docs/business-development/OCP/DPA/DPA_1-Natural_Environment.pdf",
+      "sourceTitle": "DPA No. 1: Natural Environment guidelines (Township of Esquimalt)",
+      "sourceType": "official",
+      "excerpt": "Choose trees and plants for site conditions; consider shade, sunlight, heat, wind-exposure, sea spray tolerance, and year round moisture requirements in their placement.",
       "verify": true,
-      "reviewedOn": null
+      "reviewedOn": "2026-11-21"
     }
   ],
   "sharedRegional": [
@@ -185,8 +185,7 @@
   "image": "area-esquimalt",
   "intro": [
     "Esquimalt is compact and close to the water, from older homes near Saxe Point and West Bay to stratas in the village and lots on the Gorge. Its Natural Environment permit area covers much new landscaping and asks for mostly native plants chosen for wind and sea spray.",
-    "Trees are protected in the Township from 30 cm across, and arbutus, Garry oak and Pacific dogwood from just 4 cm. Along the Gorge, the first 7.5 m from the high-water mark is kept as natural as possible, and new buildings stay 20 m back.",
-    "Spray-to-drip work and system repairs fall under [irrigation](/services/irrigation/), native replanting under [landscape installation](/services/landscape-installation/), and an Esquimalt address can go straight to a [free quote](/free-quote/)."
+    "Trees are protected in the Township from 30 cm across, and arbutus, Garry oak and Pacific dogwood from just 4 cm. Along the Gorge, the first 7.5 m from the high-water mark is kept as natural as possible, and new buildings stay 20 m back."
   ],
   "localNotes": [
     {

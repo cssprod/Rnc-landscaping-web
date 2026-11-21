@@ -39,7 +39,7 @@
       "topic": "trees",
       "text": "Saanich protects arbutus, Garry oak, Pacific dogwood and Pacific yew once they reach 2 m tall or 4 cm in diameter at breast height.",
       "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
-      "sourceTitle": "Tree Protection Bylaw 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
       "sourceType": "official",
       "excerpt": "Protected at 2m or more in height or 4cm or more in DBH",
       "verify": true,
@@ -50,7 +50,7 @@
       "topic": "trees",
       "text": "In Saanich, Douglas-fir, grand fir, western redcedar and bigleaf maple are protected from 30 cm in diameter at breast height, and any other species from 60 cm. Even dead or dying protected trees need a permit before removal.",
       "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
-      "sourceTitle": "Tree Protection Bylaw 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
       "sourceType": "official",
       "excerpt": "All species of trees within the District of Saanich are protected at 60cm or more in DBH",
       "verify": true,
@@ -61,7 +61,7 @@
       "topic": "trees",
       "text": "On Saanich lots inside a mapped Steep Slope Area (Schedule A of the bylaw), a permit may be needed for trees as small as 10 cm in diameter or 5 m tall.",
       "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
-      "sourceTitle": "Tree Protection Bylaw 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
       "sourceType": "official",
       "excerpt": "A permit may be required for trees that are 10 cm or more in diameter, or 5 metres in height, that are growing in a Steep Slope Areas",
       "verify": true,
@@ -83,7 +83,7 @@
       "topic": "trees",
       "text": "Saanich needs no permit to prune a protected tree, other than a Significant Tree, if the work follows ISA or ANSI standards. Removing 25% of the live crown, re-topping, or cutting roots in the protected root zone counts as altering and needs a permit.",
       "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
-      "sourceTitle": "Tree Protection Bylaw 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
       "sourceType": "official",
       "excerpt": "A permit is required for “altering” a Protected Tree, including removing 25% of the live crown of the tree, re-topping a tree",
       "verify": true,
@@ -138,7 +138,7 @@
       "topic": "other",
       "text": "Saanich's Boulevard Regulation Bylaw (9487) keeps boulevard grass at 15 cm or less. Other landscaping must stay below 1.0 m within 3.3 m of the curb and below 1.5 m farther back, at least 0.5 m from sidewalks and at least 2 m from fire hydrants. Plants allowed under a permit come from the bylaw's approved boulevard list, or need written approval from the Director of Parks.",
       "sourceUrl": "https://www.saanich.ca/assets/Local~Government/Documents/Engineering/Blvd-Regulation-Bylaw.pdf",
-      "sourceTitle": "Boulevard Regulation Bylaw, 2018, 9487 (District of Saanich)",
+      "sourceTitle": "Boulevard Regulation Bylaw, 2018, No. 9487 (District of Saanich)",
       "sourceType": "official",
       "excerpt": "below a maximum height of 1.0 metres, measured from the grade of the boulevard, within 3.3 metres of the curb of the roadway",
       "verify": true,
@@ -173,7 +173,7 @@
       "kind": "other",
       "text": "Saanich has an Interface Fire Development Permit Area. There, the tree bylaw allows removal of protected trees identified as a fire hazard to property when the risk cannot be reduced another way, so wildfire clearance is a real local issue on some lots.",
       "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
-      "sourceTitle": "Tree Protection Bylaw 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
       "sourceType": "official",
       "excerpt": "Interface Fire Development Permit Area: Trees that have been identified as a fire hazard to property and risk cannot be otherwise be removed or reduced",
       "verify": true,
@@ -231,8 +231,7 @@
   "image": "area-saanich",
   "intro": [
     "Saanich is two places in one. Inside the Urban Containment Boundary are suburban streets in Gordon Head, Cadboro Bay and Royal Oak; outside it, policy keeps lots large and rural, and many homes and farms draw on groundwater.",
-    "The District's tree bylaw reaches small trees: arbutus, Garry oak, Pacific dogwood and Pacific yew are protected from 2 m tall or 4 cm across, and streamside and steep-slope trees from 10 cm. A rewrite is under way, but the 2014 bylaw applies until a new one passes.",
-    "Regular lawn and bed visits are covered under [grounds maintenance](/services/grounds-maintenance/), work around Saanich's protected and streamside trees under [tree and vegetation management](/services/tree-vegetation/), and you can [request a free quote](/free-quote/) for a suburban or rural Saanich lot."
+    "The District's tree bylaw reaches small trees: arbutus, Garry oak, Pacific dogwood and Pacific yew are protected from 2 m tall or 4 cm across, and streamside and steep-slope trees from 10 cm. A rewrite is under way, but the 2014 bylaw applies until a new one passes."
   ],
   "localNotes": [
     {

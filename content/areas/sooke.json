@@ -41,7 +41,7 @@
       "topic": "trees",
       "text": "Sooke's Policy 11.6 (2005) covers trees on District boulevards, parks and trails. A request to trim or remove a municipal tree for a better view is reviewed by the Municipal Engineer, who may allow trimming; removal must be authorized by Council, at the applicant's expense and liability. Trees the District considers dangerous are removed by its own tree contractor.",
       "sourceUrl": "https://www.sooke.ca/media/d3ueotd0/trees-on-municipal-property-policy-no-116-2005.pdf",
-      "sourceTitle": "Trees on Municipal Property: Boulevards, Parks and Trails (Policy 11.6, District of Sooke, adopted January 24, 2005)",
+      "sourceTitle": "Trees on Municipal Property: Boulevards, Parks and Trails (Policy No. 11.6, District of Sooke, adopted January 24, 2005)",
       "sourceType": "official",
       "excerpt": "The Municipal Engineer may grant permission for the trimming of these trees.",
       "verify": true,
@@ -52,7 +52,7 @@
       "topic": "other",
       "text": "Sooke adopted Official Community Plan Bylaw 800 on December 8, 2025. Its Part 7 sets out nine development permit areas: Energy and Water, General, Foreshore Area, Riparian Area, Steep Slopes, Town Centre, Intensive Residential, Neighbourhood Commercial and Employment Lands. Inside them, land alteration, building and subdivision need a development permit unless an exemption applies, and a DPA Viewer map shows which may apply to a property.",
       "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
-      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceTitle": "OCP Bylaw No. 800, Part 7 - Development Permit Areas (District of Sooke)",
       "sourceType": "official",
       "excerpt": "issuance of a Development Permit is required prior to any proposed land alteration, building and subdivision within a DPA.",
       "verify": true,
@@ -63,7 +63,7 @@
       "topic": "other",
       "text": "Sooke's OCP exempts yard or garden work within an existing landscaped area from development permits. It also exempts planting native trees, shrubs or groundcover to improve habitat or soil stability, and removing invasive plants (such as gorse, Scotch broom, knotweed, English ivy and daphne) by low-disturbance hand or mechanical methods, as long as native plants go back in right away.",
       "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
-      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceTitle": "OCP Bylaw No. 800, Part 7 - Development Permit Areas (District of Sooke)",
       "sourceType": "official",
       "excerpt": "Yard or garden work within an existing landscaped area;",
       "verify": true,
@@ -74,7 +74,7 @@
       "topic": "trees",
       "text": "In Sooke's permit areas, removing hazardous trees is exempt only with an ISA Certified Arborist's report accepted by the District beforehand. In riparian and foreshore areas, the removal must also be supervised or confirmed by a Qualified Environmental Professional.",
       "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
-      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceTitle": "OCP Bylaw No. 800, Part 7 - Development Permit Areas (District of Sooke)",
       "sourceType": "official",
       "excerpt": "In riparian or foreshore Development Permit Areas, hazardous tree removal must be supervised or confirmed by a Qualified Environmental Professional (QEP)",
       "verify": true,
@@ -85,7 +85,7 @@
       "topic": "other",
       "text": "Sooke's Foreshore Area permit area deals with grading, vegetation removal or structural works within about 15 m of the sea's natural boundary. It is not meant to regulate routine maintenance or gardening in existing yards, and its guidelines ask that existing trees and native vegetation be kept within at least 15 m upland of the shore.",
       "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
-      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceTitle": "OCP Bylaw No. 800, Part 7 - Development Permit Areas (District of Sooke)",
       "sourceType": "official",
       "excerpt": "The intent is not to regulate routine property maintenance, gardening, or enjoyment of existing residential yards",
       "verify": true,
@@ -96,7 +96,7 @@
       "topic": "other",
       "text": "Sooke's Steep Slopes permit area (DPA 5) covers mapped parcels and any land with slopes over 30% across at least 10 m horizontally. Land clearing and other site disturbance there is reviewed to protect slope stability and properties downhill.",
       "sourceUrl": "https://sooke-012-ca.govstack.com/media/nj4fhgls/part-7-development-permit-areas.pdf",
-      "sourceTitle": "OCP Bylaw 800, Part 7 - Development Permit Areas (District of Sooke)",
+      "sourceTitle": "OCP Bylaw No. 800, Part 7 - Development Permit Areas (District of Sooke)",
       "sourceType": "official",
       "excerpt": "have slopes greater than 30% for a minimum horizontal distance of 10m.",
       "verify": true,
@@ -242,8 +242,7 @@
   "image": "area-sooke",
   "intro": [
     "Sooke properties are often rural and forested, from acreages in Saseenos and Broomhill to waterfront homes near Whiffin Spit, where fall and winter storms bring higher tides and storm surges. Most of the town's tree canopy is on private land, and the District's FireSmart advice keeps shrubs spaced and branches pruned up to 2 m on these lots.",
-    "Water supply varies here: Sooke is on the CRD's Juan de Fuca system, but some rural lots beyond the mains are reported to use wells or hauled water, so the supply is confirmed before irrigation is planned. Bears, cougars and deer pass through Sooke neighbourhoods, and Bylaw 392 requires attractants such as fallen fruit and compost to be secured.",
-    "Broom, blackberry and brush come under [tree and vegetation management](/services/tree-vegetation/), lawn and acreage upkeep under [grounds maintenance](/services/grounds-maintenance/), and a [free quote](/free-quote/) can start with a Sooke site visit."
+    "Water supply varies here: Sooke is on the CRD's Juan de Fuca system, but some rural lots beyond the mains are reported to use wells or hauled water, so the supply is confirmed before irrigation is planned. Bears, cougars and deer pass through Sooke neighbourhoods, and Bylaw 392 requires attractants such as fallen fruit and compost to be secured."
   ],
   "localNotes": [
     {

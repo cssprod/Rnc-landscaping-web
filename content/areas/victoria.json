@@ -58,7 +58,7 @@
     {
       "id": "vic-tree-native-height",
       "topic": "trees",
-      "text": "Victoria protects four native species, Garry oak, arbutus, Pacific yew and Pacific dogwood, once they are over 50 cm tall. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
+      "text": "Under Victoria's bylaw, a Garry oak, arbutus, Pacific yew or Pacific dogwood becomes a protected tree once it stands more than 50 cm above natural grade. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
       "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
       "sourceTitle": "Property Owners: What You Need to Know About the New Tree Protection Bylaw (City of Victoria info sheet)",
       "sourceType": "official",
@@ -137,7 +137,7 @@
       "topic": "other",
       "text": "Victoria's Pesticide Use Reduction Bylaw (07-094) bans non-essential pesticide use to maintain trees, shrubs, flowers, ornamental plants and turf on private and public land. Other pesticide use for that purpose needs a City permit. Listed low-risk pesticides and designated invasive species are among the exemptions.",
       "sourceUrl": "https://www.victoria.ca/media/file/pesticide-use-reduction-bylaw-07-094-consolidated",
-      "sourceTitle": "Pesticide Use Reduction Bylaw 07-094, consolidated May 22, 2019 (City of Victoria)",
+      "sourceTitle": "Pesticide Use Reduction Bylaw No. 07-094, consolidated May 22, 2019 (City of Victoria)",
       "sourceType": "official",
       "excerpt": "A person must not apply or otherwise use pesticides on public land or private land, for the purpose of maintaining outdoor trees, shrubs, flowers, or other ornamental plants",
       "verify": true,
@@ -148,7 +148,7 @@
       "topic": "other",
       "text": "In residential areas, Victoria's Noise Bylaw allows leaf blowers only from 9 am to 8 pm on weekdays and 9 am to 5 pm on weekends and holidays. They must also stay under 65 dBA measured at 15.2 m.",
       "sourceUrl": "https://www.victoria.ca/media/file/noise-bylaw-03-012",
-      "sourceTitle": "Noise Bylaw 03-012, consolidated February 1, 2015 (City of Victoria)",
+      "sourceTitle": "Noise Bylaw No. 03-012, consolidated February 1, 2015 (City of Victoria)",
       "sourceType": "official",
       "excerpt": "between 9:00 a.m. and 8:00 p.m. on a weekday, or (ii) between 9:00 a.m. and 5:00 p.m. on a Saturday, Sunday or holiday",
       "verify": true,
@@ -159,7 +159,7 @@
     {
       "id": "vic-salt-spray",
       "kind": "salt-spray",
-      "text": "Salt spray is a garden factor near Victoria's shoreline: in a UBC Botanical Garden forum thread, a Victoria gardener living a block from the water reports plants and trees scorched by it every year. Seaside beds there do better with salt-tolerant plants.",
+      "text": "Salt spray is a garden factor near Victoria's shoreline: in a UBC Botanical Garden forum thread, a Victoria gardener reports plants and trees scorched by it every year. Seaside beds there do better with salt-tolerant plants.",
       "sourceUrl": "https://forums.botanicalgarden.ubc.ca/threads/oceanfront-plants.73692/",
       "sourceTitle": "Oceanfront Plants (UBC Botanical Garden forums, Victoria gardener thread)",
       "sourceType": "secondary",
@@ -208,8 +208,7 @@
   "image": "area-victoria",
   "intro": [
     "Victoria lots run from heritage gardens in Rockland and Fairfield to strata courtyards downtown and homes along the Gorge Waterway. Many hold trees the City protects: any tree over 30 cm across, and Garry oak, arbutus, Pacific yew and Pacific dogwood once they pass 50 cm tall.",
-    "Boulevards have their own guidelines in the city, and in-ground irrigation is not allowed on them, so sprinkler zones belong on the yard side of the property line. On Gorge and Victoria Arm lots, the first 7 m from the high-water mark stays natural and free of chemical pesticides and fertilizers.",
-    "For a courtyard or front garden in a city neighbourhood, start with [landscape installation](/services/landscape-installation/); for work near a protected oak or arbutus, see [tree and vegetation management](/services/tree-vegetation/), or [ask for a free quote](/free-quote/) for your Victoria address."
+    "Boulevards have their own guidelines in the city, and in-ground irrigation is not allowed on them, so sprinkler zones belong on the yard side of the property line. On Gorge and Victoria Arm lots, the first 7 m from the high-water mark stays natural and free of chemical pesticides and fertilizers."
   ],
   "localNotes": [
     {
@@ -218,7 +217,7 @@
       "verify": true
     },
     {
-      "text": "Victoria protects four native species, Garry oak, arbutus, Pacific yew and Pacific dogwood, once they are over 50 cm tall. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
+      "text": "Under Victoria's bylaw, a Garry oak, arbutus, Pacific yew or Pacific dogwood becomes a protected tree once it stands more than 50 cm above natural grade. Even a young oak or arbutus in a bed can need a permit before it is pruned or removed.",
       "sourceUrl": "https://www.victoria.ca/media/file/tree-protection-bylaw-info-sheet-property-owners",
       "verify": true
     },

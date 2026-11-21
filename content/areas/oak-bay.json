@@ -41,7 +41,7 @@
       "topic": "trees",
       "text": "Oak Bay protects six native species, Garry oak, arbutus, Pacific yew, black hawthorn, shore pine and Pacific dogwood, once the trunk is over 4 cm across at the root collar or the tree is over 1 m tall. It also protects any tree over 30 cm DBH, plus nest trees, replacement trees, covenant trees and trees counted toward a lot's canopy target.",
       "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
-      "sourceTitle": "Tree Protection Bylaw 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
       "sourceType": "official",
       "excerpt": "which has either a basal diameter greater than 4 centimetres or a height above the point of germination in excess of 1 metre",
       "verify": true,
@@ -52,7 +52,7 @@
       "topic": "trees",
       "text": "Oak Bay's bylaw also covers pruning. Removing living branches over 5 cm in diameter from the six listed native species, or over 10 cm from any other protected tree, counts as pruning and needs a permit. Heavy limb work on an oak needs a check first.",
       "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
-      "sourceTitle": "Tree Protection Bylaw 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
       "sourceType": "official",
       "excerpt": "remove living branches of a protected tree, which for a tree described in subsection 1 (a) to (f) of the definition of “protected tree” are greater than 5 centimetres",
       "verify": true,
@@ -63,7 +63,7 @@
       "topic": "trees",
       "text": "Oak Bay's tree work permit form says each tree removed needs a replacement tree in a location the Manager of Parks Services approves. The replacement is backed by a per-tree security deposit held for one year from the permit date.",
       "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/4742_TreeProtectionBylaw_2022.pdf",
-      "sourceTitle": "Bylaw 4742 Tree Work Application and Permit form (District of Oak Bay)",
+      "sourceTitle": "Bylaw No. 4742 Tree Work Application and Permit form (District of Oak Bay)",
       "sourceType": "official",
       "excerpt": "a replacement tree is required for each tree removed in locations approved by the Manager of Parks Services",
       "verify": true,
@@ -116,9 +116,9 @@
     {
       "id": "ob-pesticide-bylaw",
       "topic": "other",
-      "text": "Oak Bay's Pesticide Regulation Bylaw (4518, 2011) bars using pesticides to maintain outdoor trees, shrubs, flowers, ornamental plants and turf on residential and public land, with exemptions that include listed permitted pesticides. A permit is possible when an infestation threatens a sensitive ecosystem or will cause significant economic loss.",
+      "text": "Under Oak Bay's 2011 Pesticide Regulation Bylaw (4518), no one may use a pesticide to keep up outdoor trees, shrubs, flowers, other ornamental plants or turf on private or public land, though listed permitted pesticides are among its exemptions. A permit is possible when an infestation threatens a sensitive ecosystem or will cause significant economic loss.",
       "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4518-pesticide-regulation-2011.pdf",
-      "sourceTitle": "Pesticide Regulation Bylaw, 2011, 4518 (District of Oak Bay)",
+      "sourceTitle": "Pesticide Regulation Bylaw, 2011, No. 4518 (District of Oak Bay)",
       "sourceType": "official",
       "excerpt": "no person may apply or otherwise use a pesticide for the purpose of maintaining outdoor trees, shrubs, flowers, other ornamental plants and turf, on private land or public land",
       "verify": true,
@@ -129,7 +129,7 @@
       "topic": "other",
       "text": "Oak Bay's Anti-Noise Bylaw bans running any leaf blower, electric or gas, outside 9 am–5 pm on weekends and holidays, or outside 8 am–8 pm on weekdays.",
       "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/Noise-Bylaw.pdf",
-      "sourceTitle": "Anti-Noise Bylaw, 1977 (3210), consolidated up to July 27, 2026 (District of Oak Bay)",
+      "sourceTitle": "Anti-Noise Bylaw, 1977 (No. 3210), consolidated up to July 27, 2026 (District of Oak Bay)",
       "sourceType": "official",
       "excerpt": "on Saturday, Sunday or a holiday, the operation of a leaf blower at a time outside the hours of 9:00 a.m. to 5:00 p.m.",
       "verify": true,
@@ -196,8 +196,7 @@
   "image": "area-oak-bay",
   "intro": [
     "Oak Bay gardens sit on character lots in the Uplands, South Oak Bay and the Prospect Heritage Conservation Area, where District guidelines shape fences, driveways and planting. Deer move through all of it, and the District's flyer suggests fencing selected beds and rotating repellents.",
-    "The tree bylaw protects six native species from 1 m tall and any tree over 30 cm across, and removing living oak branches over 5 cm counts as pruning that needs a permit. Leaf blowers, electric ones included, run only within set hours on weekdays and weekends.",
-    "A tired lawn or bed in Oak Bay is a job for [landscape installation](/services/landscape-installation/), heavy limb work on an oak starts with [tree and vegetation management](/services/tree-vegetation/), and one [free quote](/free-quote/) can cover both."
+    "The tree bylaw protects six native species from 1 m tall and any tree over 30 cm across, and removing living oak branches over 5 cm counts as pruning that needs a permit. Leaf blowers, electric ones included, run only within set hours on weekdays and weekends."
   ],
   "localNotes": [
     {
