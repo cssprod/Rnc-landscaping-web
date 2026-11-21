@@ -31,7 +31,18 @@ if (checkOnly) {
 // site/node_modules must be a real directory (holding the links), never itself a symlink into /opt/node-tools.
 try { if (lstatSync(NM).isSymbolicLink()) { unlinkSync(NM); console.warn('dev-setup: replaced the site/node_modules symlink with a real directory'); } } catch {}
 mkdirSync(NM, { recursive: true });
-try { execFileSync('git', ['check-ignore', '-q', NM], { cwd: SITE }); } catch { console.error('dev-setup: site/node_modules is not git-ignored (add node_modules/ to .gitignore)'); process.exit(1); }
+// The links must never be committable. Outside a git work tree (a git-archive copy, say) there is nothing to commit
+// them into, so warn and go on; inside one, `git check-ignore` exits 1 for "not ignored" and 128 for a real error.
+let inWorkTree = false;
+try { inWorkTree = execFileSync('git', ['rev-parse', '--is-inside-work-tree'], { cwd: SITE, stdio: ['ignore', 'pipe', 'ignore'], encoding: 'utf8' }).trim() === 'true'; } catch {}
+if (!inWorkTree) console.warn('dev-setup: not inside a git work tree, so the git-ignore check is skipped; creating the links anyway');
+else {
+  try { execFileSync('git', ['check-ignore', '-q', NM], { cwd: SITE, stdio: 'ignore' }); } catch (e) {
+    const status = /** @type {{ status?: number }} */ (e).status;
+    console.error(status === 1 ? 'dev-setup: site/node_modules is not git-ignored (add node_modules/ to .gitignore)' : `dev-setup: git check-ignore failed (exit ${status ?? '?'}); cannot confirm site/node_modules is git-ignored`);
+    process.exit(1);
+  }
+}
 let made = 0;
 for (const p of LINKS) {
   const to = join(NM, p); const from = join(SRC, p);

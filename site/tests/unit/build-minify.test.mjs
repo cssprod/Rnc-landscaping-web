@@ -1,8 +1,8 @@
 // @ts-check
 // CSS and JS minifiers: golden outputs (tests/fixtures/build) and, where Chromium is available, CSSOM equality.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, writeFileSync, mkdtempSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
@@ -11,6 +11,11 @@ import { minifyCss } from '../../src/lib/build/minify-css.mjs';
 import { minifyJs } from '../../src/lib/build/minify-js.mjs';
 import { bundleCss } from '../../src/lib/build/css.mjs';
 import { generate as tokensCss, readTokens } from '../../../brand/build-tokens.mjs';
+
+/** Every temporary directory of this file lives under one root, removed when the file's tests end. */
+const TMP_ROOT = mkdtempSync(join(tmpdir(), 'rnc-test-'));
+after(() => rmSync(TMP_ROOT, { recursive: true, force: true }));
+const tmp = (/** @type {string} */ p) => mkdtempSync(join(TMP_ROOT, p));
 
 const FIX = fileURLToPath(new URL('../fixtures/build/', import.meta.url));
 const SITE = fileURLToPath(new URL('../../', import.meta.url));
@@ -44,7 +49,7 @@ test('minify-js golden: tricky.js #minify-js-golden', () => {
 });
 
 test('minify-js output of every site module and the fixture still parses and behaves the same', () => {
-  const dir = mkdtempSync(join(tmpdir(), 'rnc-minjs-'));
+  const dir = tmp('rnc-minjs-');
   const run = (/** @type {string} */ code, /** @type {string} */ name) => { const f = join(dir, name); writeFileSync(f, code); return execFileSync(process.execPath, [f], { encoding: 'utf8' }); };
   assert.equal(run(minifyJs(read('tricky.js')), 'b.mjs'), run(read('tricky.js'), 'a.mjs'));
   const scripts = join(SITE, 'src/scripts');

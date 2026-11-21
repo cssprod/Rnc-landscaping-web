@@ -1,9 +1,9 @@
 // @ts-check
 // --out / SITE_DIST, the .rnc-dist guard, parallel builds, showcaseOnly/sitemap rules, and the inline-script policy
 // end to end: an injected unhashed inline <script> fails the build AND is blocked by the CSP that serve.mjs sends.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawn, spawnSync } from 'node:child_process';
@@ -12,9 +12,13 @@ import { prepareDist, DistGuardError, MARKER } from '../../src/lib/build/dist-gu
 import { inlineScriptProblems, cspScriptHashes, sha256 } from '../../src/lib/build/inline-scripts.mjs';
 import { INLINE_SCRIPTS } from '../../src/lib/head-scripts.mjs';
 
+/** Every temporary directory of this file lives under one root, removed when the file's tests end. */
+const TMP_ROOT = mkdtempSync(join(tmpdir(), 'rnc-test-'));
+after(() => rmSync(TMP_ROOT, { recursive: true, force: true }));
+const tmp = (/** @type {string} */ p) => mkdtempSync(join(TMP_ROOT, p));
+
 const SITE = fileURLToPath(new URL('../../', import.meta.url));
 const REPO = join(SITE, '..');
-const tmp = (/** @type {string} */ p) => mkdtempSync(join(tmpdir(), p));
 
 /** @param {string} cwd @param {string[]} args @param {Record<string, string>} [env] */
 const build = (cwd, args, env = {}) => spawnSync(process.execPath, ['build.mjs', '--offline-images', ...args], { cwd, encoding: 'utf8', env: { ...process.env, SITE_DIST: '', ...env } });
@@ -38,6 +42,43 @@ test('the guard refuses a directory that is neither empty nor marked, and clears
   prepareDist(fresh);
   assert.ok(existsSync(join(fresh, MARKER)));
   assert.throws(() => prepareDist('/'), DistGuardError);
+});
+
+/** A directory with the fingerprint of a pre-marker build, plus a file that is not part of any build. @param {string} dir */
+function legacyLooking(dir) {
+  mkdirSync(join(dir, 'assets', 'build'), { recursive: true });
+  for (const f of ['index.html', 'sitemap.xml', 'robots.txt']) writeFileSync(join(dir, f), 'x');
+  writeFileSync(join(dir, 'my-notes.md'), 'precious');
+  return dir;
+}
+const listing = (/** @type {string} */ dir) => readdirSync(dir, { recursive: true }).map(String).sort();
+
+test('only the default site/dist may be a pre-marker build; a legacy-looking --out with user files is refused untouched #dist-guard', () => {
+  const other = legacyLooking(tmp('rnc-legacy-out-'));
+  const before = listing(other);
+  assert.throws(() => prepareDist(other), DistGuardError, 'no legacyDir: refused');
+  assert.throws(() => prepareDist(other, { legacyDir: join(tmp('rnc-legacy-default-'), 'dist') }), DistGuardError, 'legacyDir names another path: refused');
+  assert.deepEqual(listing(other), before);
+  assert.equal(readFileSync(join(other, 'my-notes.md'), 'utf8'), 'precious');
+
+  // The default path itself (what build.mjs passes as legacyDir) is accepted once and marked.
+  const def = legacyLooking(join(tmp('rnc-legacy-site-'), 'dist'));
+  assert.deepEqual(prepareDist(def, { legacyDir: def }), { dir: def, legacy: true });
+  assert.deepEqual(readdirSync(def), [MARKER]);
+  // A directory at the default path without the fingerprint is still refused.
+  const plain = join(tmp('rnc-legacy-plain-'), 'dist');
+  mkdirSync(plain); writeFileSync(join(plain, 'notes.md'), 'mine');
+  assert.throws(() => prepareDist(plain, { legacyDir: plain }), DistGuardError);
+  assert.deepEqual(readdirSync(plain), ['notes.md']);
+});
+
+test('build.mjs --out refuses a legacy-looking directory that is not site/dist #dist-guard', () => {
+  const other = legacyLooking(tmp('rnc-legacy-build-'));
+  const before = listing(other);
+  const r = build(SITE, [`--out=${other}`]);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /refusing to delete/);
+  assert.deepEqual(listing(other), before);
 });
 
 test('build.mjs --out refuses a non-dist directory and leaves it untouched #dist-guard', () => {
@@ -78,6 +119,10 @@ test('inline scripts must be INLINE_SCRIPTS entries whose hash is in the CSP #in
   const ok = `<script>${INLINE_SCRIPTS[0]}</script><script type="speculationrules">${INLINE_SCRIPTS[1]}</script><script type="application/ld+json">{"a":1}</script><script type="module" src="/m.js"></script>`;
   assert.deepEqual(inlineScriptProblems(ok, { allowed: INLINE_SCRIPTS, cspHashes }), []);
   assert.equal(inlineScriptProblems(`${ok}<script>alert(1)</script>`, { allowed: INLINE_SCRIPTS, cspHashes }).length, 1);
+  // Whole attribute names only: data-src is not src, data-type is not type.
+  assert.equal(inlineScriptProblems('<script data-src="x">alert(1)</script>', { allowed: INLINE_SCRIPTS, cspHashes }).length, 1, 'data-src is not an external script');
+  assert.equal(inlineScriptProblems('<script data-type="application/ld+json">alert(1)</script>', { allowed: INLINE_SCRIPTS, cspHashes }).length, 1, 'data-type is not a JSON-LD type');
+  assert.deepEqual(inlineScriptProblems('<script id="ld" type="application/ld+json" data-x>{"a":1}</script><script defer src=/a.js></script>', { allowed: INLINE_SCRIPTS, cspHashes }), []);
   assert.equal(inlineScriptProblems(`<script>${INLINE_SCRIPTS[0]} </script>`, { allowed: INLINE_SCRIPTS, cspHashes }).length, 1, 'byte-equal, not similar');
   assert.match(inlineScriptProblems(`<script>${INLINE_SCRIPTS[0]}</script>`, { allowed: INLINE_SCRIPTS, cspHashes: [] })[0], /missing from the netlify.toml CSP/);
 });

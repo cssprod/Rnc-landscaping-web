@@ -36,7 +36,8 @@ const offline = args.has('--offline-images');
 const minify = !args.has('--no-minify');
 const outArg = argv.find((a) => a.startsWith('--out='))?.slice(6);
 if (argv.includes('--out')) { console.error('build: use --out=DIR'); process.exit(2); }
-const DIST = resolve(outArg || process.env.SITE_DIST || join(paths.site, 'dist'));
+const DEFAULT_DIST = join(paths.site, 'dist');
+const DIST = resolve(outArg || process.env.SITE_DIST || DEFAULT_DIST);
 /** @type {string[]} */
 const issues = [];
 /** @type {string[]} */
@@ -45,7 +46,7 @@ const warnings = [];
 const fatal = [];
 
 try {
-  const { legacy } = prepareDist(DIST);
+  const { legacy } = prepareDist(DIST, { legacyDir: DEFAULT_DIST });
   if (legacy) warnings.push(`${DIST} was a build from before the .rnc-dist marker; it was replaced and is marked now`);
 } catch (e) {
   if (!(e instanceof DistGuardError)) throw e;

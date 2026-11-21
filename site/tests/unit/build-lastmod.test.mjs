@@ -1,17 +1,22 @@
 // @ts-check
 // Sitemap <lastmod> from git (CONTRACT §14, P3#15): the latest commit date of a route's sources, with the build-date
 // fallback on shallow clones.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { gitLastmod } from '../../src/lib/build/lastmod.mjs';
 
+/** Every temporary directory of this file lives under one root, removed when the file's tests end. */
+const TMP_ROOT = mkdtempSync(join(tmpdir(), 'rnc-test-'));
+after(() => rmSync(TMP_ROOT, { recursive: true, force: true }));
+const tmp = (/** @type {string} */ p) => mkdtempSync(join(TMP_ROOT, p));
+
 /** A throwaway repository with commits at fixed dates. */
 function fixtureRepo() {
-  const dir = mkdtempSync(join(tmpdir(), 'rnc-lastmod-'));
+  const dir = tmp('rnc-lastmod-');
   const git = (/** @type {string[]} */ a, /** @type {string} */ date = '2026-01-01T12:00:00Z') => execFileSync('git', a, {
     cwd: dir, stdio: 'pipe', env: { ...process.env, GIT_AUTHOR_DATE: date, GIT_COMMITTER_DATE: date, GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@example.invalid', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@example.invalid' },
   });
@@ -43,7 +48,7 @@ test('lastmod is the latest commit date of the route sources #git-lastmod', () =
 
 test('a shallow clone falls back to the build date with a reason #git-lastmod', () => {
   const repo = fixtureRepo();
-  const shallow = mkdtempSync(join(tmpdir(), 'rnc-lastmod-shallow-'));
+  const shallow = tmp('rnc-lastmod-shallow-');
   execFileSync('git', ['clone', '-q', '--depth', '1', `file://${repo}`, shallow], { stdio: 'pipe' });
   const lm = gitLastmod(shallow);
   assert.equal(lm.reason, 'shallow');
@@ -51,7 +56,7 @@ test('a shallow clone falls back to the build date with a reason #git-lastmod', 
 });
 
 test('outside a git repository the reason is no-git #git-lastmod', () => {
-  const lm = gitLastmod(mkdtempSync(join(tmpdir(), 'rnc-lastmod-nogit-')));
+  const lm = gitLastmod(tmp('rnc-lastmod-nogit-'));
   assert.equal(lm.reason, 'no-git');
   assert.equal(lm.dateFor(['x']), null);
 });

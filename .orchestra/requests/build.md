@@ -47,8 +47,11 @@ Each item names the owner. None of these blocks build's own gates; they are for 
     (`site/src/lib/build/minify-js.mjs`: comments, indentation and blank lines only; every line break kept, strings,
     templates and regex literals verbatim). The page's JS graph is 4.9 KB gzip against 5.0 KB for the seed's single
     file. `--no-minify` turns off both minifiers. Please record this in CONTRACT §12/§14 in W5.
-11. **Pre-marker `site/dist`**: the dist guard accepts, once, an existing directory that looks like an old build of this
-    site (`index.html`, `sitemap.xml`, `robots.txt` and `assets/build/`), so existing checkouts keep building; it warns
-    and writes the marker. Any other non-empty, unmarked directory is refused.
+11. **Pre-marker `site/dist`**: the dist guard accepts an unmarked, non-empty directory only at the default path
+    `site/dist` (never an `--out` or `SITE_DIST` path), and only when it has an old build's fingerprint (`index.html`,
+    `sitemap.xml`, `robots.txt` and `assets/build/`), so existing checkouts keep building; it warns and writes the
+    marker. Every other non-empty, unmarked directory is refused and left untouched (unit test `#dist-guard`). If the
+    orchestrator prefers no exemption at all, delete `legacyDir` in `build.mjs`: `site/dist` is git-ignored, so a user
+    can empty it by hand.
 12. **Shallow clones**: `<lastmod>` falls back to the build date on a shallow clone (one warning). CI now checks out with
     `fetch-depth: 0`. If Netlify's clone is shallow for this site, the Deploy Preview sitemap carries the build date.

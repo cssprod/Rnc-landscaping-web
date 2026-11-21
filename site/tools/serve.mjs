@@ -3,8 +3,10 @@
 /**
  * Static server for a build, behaving like the Netlify CDN so Playwright sees what visitors get (CONTRACT §14):
  *   - pretty URLs (/x/ → /x/index.html) and 404.html with status 404;
- *   - dist/_redirects: one rule per line "from to [status]", exact paths, trailing-slash tolerant, the destination's
- *     query kept (otherwise the request's query is passed through); 3xx redirects, 200 rewrites;
+ *   - dist/_redirects: one rule per line "from to [status][!]", exact paths, trailing-slash tolerant, the destination's
+ *     query kept (otherwise the request's query is passed through); 3xx redirects, 200 rewrites. No shadowing: a rule
+ *     without "!" is skipped when the path is an existing file (or a directory with index.html), as on Netlify, so a
+ *     stale page left at an old URL is served here exactly as production would serve it; "301!" always applies;
  *   - headers from the netlify.toml [[headers]] blocks (CSP included) and dist/_headers, matched by path pattern;
  *   - gzip like the CDN.
  *
@@ -74,24 +76,37 @@ export function parseHeadersFile(text) {
 const patternRe = (pattern) => new RegExp(`^${pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/:[A-Za-z]\w*/g, '[^/]+')}$`);
 
 /**
- * dist/_redirects: [{ from, to, status }]. Exact paths only (CONTRACT §5: no splats).
+ * dist/_redirects: [{ from, to, status, force }]. Exact paths only (CONTRACT §5: no splats). `force` is the "!" suffix.
  * @param {string} text
  */
 export function parseRedirects(text) {
-  /** @type {{ from: string, to: string, status: number }[]} */
+  /** @type {{ from: string, to: string, status: number, force: boolean }[]} */
   const out = [];
   for (const raw of text.split('\n')) {
     const line = raw.replace(/#.*$/, '').trim();
     if (!line) continue;
     const [from, to, st] = line.split(/\s+/);
     if (!from || !to) continue;
-    out.push({ from, to, status: Number(String(st || '301').replace(/!$/, '')) || 301 });
+    out.push({ from, to, status: Number(String(st || '301').replace(/!$/, '')) || 301, force: /!$/.test(st || '') });
   }
   return out;
 }
 
 /** @param {string} p */
 const noSlash = (p) => (p.length > 1 ? p.replace(/\/+$/, '') : p);
+
+/**
+ * Whether a request path resolves to a file in dist: the file itself, or a directory's index.html.
+ * @param {string} dist @param {string} pathname
+ */
+function shadowed(dist, pathname) {
+  const f = join(dist, normalize(pathname).replace(/^(\.\.[/\\])+/, ''));
+  if (!f.startsWith(dist)) return false;
+  try {
+    const st = statSync(f);
+    return st.isFile() || (st.isDirectory() && statSync(join(f, 'index.html')).isFile());
+  } catch { return false; }
+}
 
 /**
  * @param {{ dist?: string, toml?: string }} [o]
@@ -111,6 +126,7 @@ export function createSiteServer(o = {}) {
     /* ---- redirects ---- */
     for (const r of parseRedirects(readOpt('_redirects'))) {
       if (noSlash(r.from) !== noSlash(pathname)) continue;
+      if (!r.force && shadowed(dist, pathname)) continue; // Netlify: an existing file wins over an unforced rule
       if (r.status === 200) { pathname = r.to.split('?')[0]; break; } // rewrite
       const dest = r.to.includes('?') || !url.search ? r.to : `${r.to}${url.search}`;
       res.writeHead(r.status, { Location: dest, 'Content-Type': 'text/plain; charset=utf-8' });

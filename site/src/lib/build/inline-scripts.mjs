@@ -28,6 +28,21 @@ export function cspScriptHashes(toml) {
 }
 
 /**
+ * Attribute names (lower-cased) to values, the way an HTML parser reads them: whole names only (so `data-src` is not
+ * `src` and `data-type` is not `type`), and the first occurrence of a repeated name wins.
+ * @param {string} s the text between `<script` and `>`
+ */
+export function parseAttrs(s) {
+  /** @type {Map<string, string>} */
+  const out = new Map();
+  for (const a of s.matchAll(/([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
+    const name = a[1].toLowerCase();
+    if (!out.has(name)) out.set(name, a[2] ?? a[3] ?? a[4] ?? '');
+  }
+  return out;
+}
+
+/**
  * @param {string} html
  * @param {{ allowed: readonly string[], cspHashes: readonly string[] }} o
  * @returns {string[]} one message per offending script
@@ -36,9 +51,9 @@ export function inlineScriptProblems(html, o) {
   /** @type {string[]} */
   const out = [];
   for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)) {
-    const attrs = m[1];
-    if (/\bsrc\s*=/i.test(attrs)) continue;
-    const type = ((attrs.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || '').toLowerCase();
+    const attrs = parseAttrs(m[1]);
+    if (attrs.has('src')) continue;
+    const type = (attrs.get('type') || '').trim().toLowerCase();
     if (type === 'application/ld+json') continue;
     const body = m[2];
     const h = sha256(body);

@@ -1,8 +1,8 @@
 // @ts-check
 // Module-graph hashing, modulepreload links, sprite tree-shaking and the legacy CSS slices.
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -11,12 +11,17 @@ import { shakeSprite } from '../../src/lib/build/sprite-shake.mjs';
 import { styleFiles } from '../../src/lib/build/css.mjs';
 import { sprite, icon, logo } from '../../src/components/sprite.mjs';
 
+/** Every temporary directory of this file lives under one root, removed when the file's tests end. */
+const TMP_ROOT = mkdtempSync(join(tmpdir(), 'rnc-test-'));
+after(() => rmSync(TMP_ROOT, { recursive: true, force: true }));
+const tmp = (/** @type {string} */ p) => mkdtempSync(join(TMP_ROOT, p));
+
 const SITE = fileURLToPath(new URL('../../', import.meta.url));
 const REPO = join(SITE, '..');
 
 /** @param {Record<string, string>} files */
 function scripts(files) {
-  const dir = mkdtempSync(join(tmpdir(), 'rnc-mods-'));
+  const dir = tmp('rnc-mods-');
   for (const [f, c] of Object.entries(files)) { mkdirSync(join(dir, f, '..'), { recursive: true }); writeFileSync(join(dir, f), c); }
   return dir;
 }
