@@ -154,7 +154,14 @@ if (!existsSync(DIST)) {
   const indexable = sitemap ? sitemap.filter((p) => built.has(p)) : [...built].filter((p) => p !== '/404.html');
   for (const p of indexable) if (p !== '/' && !inbound.get(p)?.size) fail('orphans', p, 'no other page links here');
   const home = pages.includes('index.html') ? read('index.html') : '';
-  const menu = (/** @type {string} */ id) => home.match(new RegExp(`<div[^>]*\\sid="${id}"[\\s\\S]*?</div>\\s*</div>`))?.[0] || '';
+  /** A header disclosure panel: from its id to the next disclosure or the end of the nav. @param {string} id */
+  const menu = (id) => {
+    const at = home.search(new RegExp(`\\sid="${id}"`));
+    if (at < 0) return '';
+    const rest = home.slice(at + 1);
+    const end = rest.search(/aria-controls="menu-|<\/nav>/);
+    return end < 0 ? rest : rest.slice(0, end);
+  };
   if (home) {
     const svcMenu = menu('menu-services');
     const areaMenu = menu('menu-areas');
