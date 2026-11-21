@@ -1,16 +1,31 @@
-// Usage: node check-contrast.mjs  — reads tokens.css and prints WCAG ratios.
-import { readFileSync } from "node:fs";
-const css = readFileSync(new URL("./tokens.css", import.meta.url), "utf8");
-const t = Object.fromEntries([...css.matchAll(/--(color-[\w-]+):\s*(#[0-9a-f]{6})/gi)].map(m => [m[1], m[2]]));
-const lum = h => { const c = [1,3,5].map(i => parseInt(h.slice(i,i+2),16)/255).map(v => v <= 0.03928 ? v/12.92 : ((v+0.055)/1.055)**2.4); return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]; };
-const ratio = (a,b) => { const [x,y] = [lum(a),lum(b)].sort((p,q)=>q-p); return (x+0.05)/(y+0.05); };
+#!/usr/bin/env node
+// Usage: node brand/check-contrast.mjs — reads tokens.json and prints WCAG ratios for light and dark appearances.
+import { readFileSync } from 'node:fs';
+const t = JSON.parse(readFileSync(new URL('./tokens.json', import.meta.url), 'utf8')).color;
+const val = (k, mode) => { const n = t[k]; const v = mode === 'dark' ? (n.$extensions?.['ca.rnc.dark'] ?? n.$value) : n.$value; return /^\{color\.(.+)\}$/.test(v) ? val(v.slice(7, -1), mode) : v; };
+const rgb = (s) => s.startsWith('#') ? [1, 3, 5].map((i) => parseInt(s.slice(i, i + 2), 16)) : s.match(/[\d.]+/g).slice(0, 3).map(Number);
+const alpha = (s) => (s.startsWith('rgba') ? Number(s.match(/[\d.]+/g)[3]) : 1);
+const over = (fg, bg) => { const a = alpha(fg), f = rgb(fg), b = rgb(bg); return f.map((c, i) => Math.round(c * a + b[i] * (1 - a))); };
+const lum = (c) => { const l = c.map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * l[0] + 0.7152 * l[1] + 0.0722 * l[2]; };
+const ratio = (fg, bg) => { const [x, y] = [lum(over(fg, bg)), lum(rgb(bg))].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
 const P = [
- ["ink","bg",4.5],["ink","surface",4.5],["ink","surface-2",4.5],["ink-muted","bg",4.5],["ink-muted","surface",4.5],["ink-muted","surface-2",4.5],
- ["brand","bg",4.5],["brand-ink","brand",4.5],["brand-ink","brand-deep",4.5],["accent-ink","accent",4.5],["accent","bg",4.5],
- ["success","bg",4.5],["error","bg",4.5],["error","surface",4.5],["placeholder","bg",4.5],
- ["line","bg",3],["line","surface",3],["focus","bg",3],["focus","surface-2",3],["brand-ink","accent",3]];
+  ['ink', 'bg', 4.5], ['ink', 'bg-elevated', 4.5], ['ink', 'bg-grouped', 4.5], ['ink', 'bg-tint', 4.5],
+  ['ink-2', 'bg', 4.5], ['ink-2', 'bg-elevated', 4.5], ['ink-2', 'bg-grouped', 4.5],
+  ['ink-3', 'bg', 4.5], ['ink-3', 'bg-elevated', 4.5], ['ink-3', 'bg-grouped', 4.5],
+  ['brand', 'bg', 4.5], ['brand', 'bg-elevated', 4.5], ['brand', 'bg-tint', 4.5], ['brand-ink', 'brand', 4.5], ['brand-2', 'bg-elevated', 3],
+  ['on-deep', 'deep', 4.5], ['on-deep-2', 'deep', 4.5], ['focus', 'bg', 3], ['focus', 'bg-elevated', 3], ['focus-on-deep', 'deep', 3],
+  ['placeholder', 'placeholder-bg', 4.5], ['success', 'bg', 4.5], ['error', 'bg', 4.5], ['error', 'bg-elevated', 4.5],
+  ['line-strong', 'bg', 3], ['line-strong', 'bg-elevated', 3],
+];
 let fail = 0;
-console.log("| Foreground | Background | Ratio | Required | Pass |\n|---|---|---|---|---|");
-for (const [f,b,req] of P) { const r = ratio(t["color-"+f], t["color-"+b]); if (r < req) fail++;
-  console.log(`| ${f} ${t["color-"+f]} | ${b} ${t["color-"+b]} | ${r.toFixed(2)}:1 | ${req}:1 | ${r>=req?"yes":"NO"} |`); }
+for (const mode of ['light', 'dark']) {
+  console.log(`\n${mode}\n| Foreground | Background | Ratio | Required | Pass |\n|---|---|---|---|---|`);
+  for (const [f, b, req] of P) {
+    const bg = val(b, mode);
+    const base = alpha(bg) < 1 ? `rgb(${over(bg, val('bg-elevated', mode)).join(',')})` : bg;
+    const r = ratio(val(f, mode), base.startsWith('rgb(') ? `#${base.match(/\d+/g).map((n) => Number(n).toString(16).padStart(2, '0')).join('')}` : base);
+    if (r < req) fail++;
+    console.log(`| ${f} | ${b} | ${r.toFixed(2)}:1 | ${req}:1 | ${r >= req ? 'yes' : 'NO'} |`);
+  }
+}
 process.exit(fail ? 1 : 0);

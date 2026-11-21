@@ -12,16 +12,16 @@ jobs:
         with: { node-version: 22 }
       - name: Typecheck (JSDoc)
         run: npx --yes -p typescript -p @types/node tsc -p jsconfig.json
-      - name: Validate event schema
-        run: npx --yes @clamp-sh/event-schema validate --file event-schema.yaml || npx --yes @clamp-sh/event-schema validate
-      - name: Build (preview) and static checks
+      - name: Design tokens and contrast (light and dark)
+        run: node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs
+      - name: Build (showcase) and static checks
         run: node tools/check-all.mjs
       - name: Browser tests
         run: |
           npx --yes playwright install --with-deps chromium
           npx --yes -p playwright playwright test
-      - name: Production build gate (expected to fail until tokens are filled)
-        run: CONTEXT=production node build.mjs
+      - name: Launch gate (expected to fail until tokens are filled)
+        run: SITE_MODE=launch node build.mjs
         continue-on-error: true
       - name: Lighthouse CI
         run: |

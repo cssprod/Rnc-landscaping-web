@@ -8,7 +8,7 @@ events:
     properties: {}
 
   quote_step_completed:
-    intent: A quote step passed validation. Shows where people drop out of the 4-step form.
+    intent: A quote step passed validation. Shows where people drop out of the 4-step form (step 4 fires when the email is composed).
     properties:
       step:
         type: number
@@ -17,7 +17,7 @@ events:
         examples: [1, 2, 3, 4]
 
   quote_submitted:
-    intent: Quote form sent after passing validation. Primary conversion.
+    intent: Quote form passed validation and the visitor's email app was opened with the request. Primary conversion.
     properties:
       service:
         type: enum

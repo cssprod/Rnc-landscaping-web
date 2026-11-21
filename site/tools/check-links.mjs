@@ -5,9 +5,9 @@ import { existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { DIST, files, read, report } from './lib.mjs';
 import { site } from '../site.config.mjs';
-// Files RNC still has to supply: reported as warnings on previews, errors in production.
+// Files RNC still has to supply: warnings in showcase builds, errors in launch builds.
 const pending = new Set([site.capabilityStatement].filter(Boolean));
-const strict = process.env.CONTEXT === 'production';
+const strict = process.env.SITE_MODE === 'launch';
 const warned = new Set();
 const errors = [];
 for (const f of files()) {

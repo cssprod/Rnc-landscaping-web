@@ -2,7 +2,6 @@
 /**
  * Tiny escaping tagged-template engine. Interpolated values are HTML-escaped
  * unless wrapped with raw() or produced by html``. Arrays are joined.
- * (Astro port: these become .astro components; html`` maps to JSX-like markup.)
  */
 
 export class Safe {
@@ -55,3 +54,29 @@ export const paras = (paras) => (Array.isArray(paras) ? paras : paras ? [paras] 
 
 /** @param {string} s */
 export const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const TYPO_SKIP = /(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<textarea[\s\S]*?<\/textarea>|<code[\s\S]*?<\/code>|<pre[\s\S]*?<\/pre>|<!--[\s\S]*?-->|<[^>]+>)/;
+
+/**
+ * Typographer: curly quotes and apostrophes, en dashes in number ranges,
+ * spaced en dashes for " - ", and ellipses. Text nodes only; tags,
+ * attributes, scripts and form values are never touched.
+ * @param {string} doc full HTML document
+ */
+export function typographer(doc) {
+  return doc.split(TYPO_SKIP).map((part, i) => {
+    if (i % 2 === 1 || !part) return part;
+    return part
+      .replace(/&#39;|'/g, "'")
+      .replace(/(\w)'(\w)/g, '$1’$2') // don't, RNC's
+      .replace(/(\d)'(?=s\b)/g, '$1’') // 1990's
+      .replace(/(^|[\s(\[{—–-])'/g, '$1‘') // opening single
+      .replace(/'/g, '’') // closing single / trailing apostrophe
+      .replace(/&quot;|"/g, '"')
+      .replace(/(^|[\s(\[{—–-])"/g, '$1“') // opening double
+      .replace(/"/g, '”') // closing double
+      .replace(/(^|[^\d-])(\d{1,2})-(\d{1,2})(?![\d-])/g, '$1$2–$3') // short ranges 1–3, 4–10 (never phone numbers or dates)
+      .replace(/ - /g, ' – ')
+      .replace(/\.\.\./g, '…');
+  }).join('');
+}

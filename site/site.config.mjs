@@ -3,19 +3,19 @@
  * Single source of truth for business facts and site settings.
  *
  * Every value in `tokens` that is still `null` renders as its bracket token
- * (for example "[PHONE]"). On staging/preview builds the token is highlighted
- * with <mark class="ph">. A production build (CONTEXT=production) fails while
- * any token is still unresolved, so fill these in before launch.
+ * (for example "[PHONE]"). Showcase builds (the default) display unresolved
+ * tokens as small placeholder chips. A launch build (SITE_MODE=launch) fails
+ * while any token is still unresolved, so fill these in before going live.
  *
  * Only the token names listed in CONTRACT.md are allowed here.
  */
 
-/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'PLAUSIBLE DOMAIN'|'SHEET WEBHOOK URL'} TokenName */
+/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'PLAUSIBLE DOMAIN'} TokenName */
 
 /** @type {Record<TokenName, string|null>} */
 export const tokens = {
   PHONE: null, // e.g. "250-555-0100"
-  EMAIL: null, // public contact address shown on the site
+  EMAIL: null, // public contact address; the quote form composes an email to it
   HOURS: null, // e.g. "Mon–Fri 7:30 am – 5 pm"
   ADDRESS: null, // mailing or service address (or "Serving Greater Victoria")
   'LEGAL NAME': null,
@@ -29,10 +29,12 @@ export const tokens = {
   CERTIFICATIONS: null,
   MEMBERSHIPS: null,
   WARRANTY: null,
-  DOMAIN: null, // bare host, e.g. "rnclandscaping.ca"
-  'PLAUSIBLE DOMAIN': null, // usually the same as DOMAIN
-  'SHEET WEBHOOK URL': null, // used in docs only; never rendered on pages
+  DOMAIN: null, // bare host, e.g. "rnclandscaping.ca" (required for SITE_MODE=launch)
+  'PLAUSIBLE DOMAIN': null, // optional: set to turn on cookieless analytics in launch builds
 };
+
+/** Tokens a launch build may leave empty (features that simply stay off). */
+export const optionalTokens = /** @type {TokenName[]} */ (['PLAUSIBLE DOMAIN']);
 
 export const site = {
   name: 'RNC Landscaping',
@@ -48,11 +50,10 @@ export const site = {
   ],
   /** Social profiles once they exist (used for sameAs in JSON-LD). */
   sameAs: /** @type {string[]} */ ([]),
-  /** Public path of the capability statement PDF (copy agent links to it). Put the file at static/downloads/. */
+  /** Public path of the capability statement PDF (copy links to it). Put the file at static/downloads/. */
   capabilityStatement: '/downloads/rnc-capability-statement.pdf',
-  /** Quote photo limits (Netlify: one file per field, 8 MB per request, 30 s upload timeout). */
-  upload: { maxFiles: 3, maxFileMB: 5, maxTotalMB: 7.5, accept: '.jpg,.jpeg,.png,.heic,.heif,.webp' },
-  imageWidths: [480, 800, 1200, 1600, 2000],
+  /** Responsive widths requested from the photo CDN. */
+  imageWidths: [480, 800, 1200, 1600, 2000, 2400],
 };
 
-export default { tokens, site };
+export default { tokens, site, optionalTokens };

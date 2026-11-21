@@ -2,24 +2,26 @@
 // @ts-check
 /**
  * Zero-dependency static site generator for the RNC Landscaping site.
- *   node build.mjs                    staging build (tokens highlighted, noindex)
- *   CONTEXT=production node build.mjs production build (fails on tokens/samples/fixtures)
- *   node build.mjs --offline-images   SVG placeholders instead of CDN photos
+ *   node build.mjs                      showcase build (default): placeholders shown as chips, noindex
+ *   SITE_MODE=launch node build.mjs     launch build: fails on [TOKENS], samples or fixtures; indexable
+ *   node build.mjs --offline-images     generated illustrations instead of CDN photos (tests, screenshots)
  */
 import { mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, cpSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadAll, sharedFile, paths, fallbacks } from './src/lib/data.mjs';
-import { initImages } from './src/lib/images.mjs';
-import { finalizeTokens, tok } from './src/lib/tokens.mjs';
+import { initImages, renderArt } from './src/lib/images.mjs';
+import { finalizeTokens, tok, has } from './src/lib/tokens.mjs';
+import { typographer } from './src/lib/html.mjs';
 import { routes } from './src/pages/routes.mjs';
 import { JS_FLAG } from './src/components/layout.mjs';
 import { site } from './site.config.mjs';
+import { generate as tokensCss, readTokens } from '../brand/build-tokens.mjs';
 
 const t0 = Date.now();
 const args = new Set(process.argv.slice(2));
 const context = process.env.CONTEXT || 'dev';
-const production = context === 'production';
+const launch = process.env.SITE_MODE === 'launch';
 const offline = args.has('--offline-images');
 const DIST = join(paths.site, 'dist');
 /** @type {string[]} */
@@ -29,81 +31,109 @@ const warnings = [];
 
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(join(DIST, 'assets', 'brand'), { recursive: true });
+mkdirSync(join(DIST, 'assets', 'build'), { recursive: true });
+mkdirSync(join(DIST, 'assets', 'fonts'), { recursive: true });
+mkdirSync(join(DIST, 'assets', 'art'), { recursive: true });
 
 const data = loadAll();
 initImages(data.images, { offline });
 
-/* ---- CSS: tokens + components, one file, content-hashed ---- */
+/* ---- CSS: tokens (compiled from brand/tokens.json) + components, one content-hashed file ---- */
+const tokens = tokensCss(readTokens());
 const tokensFile = sharedFile('brand', 'tokens.css');
-let tokensCss = tokensFile ? readFileSync(tokensFile, 'utf8') : '';
-const importUrl = tokensCss.match(/@import\s+url\(["']?([^"')]+)["']?\)\s*;?/)?.[1] || null;
-tokensCss = tokensCss.replace(/@import\s+url\([^)]*\)[^;]*;/g, '').replace(/@import\s+["'][^"']*["'][^;]*;/g, '');
-const fontsUrl = data.tokensJson?.fonts?.googleCssUrl || importUrl;
-const css = `${tokensCss}\n${readFileSync(join(paths.site, 'src/styles/site.css'), 'utf8')}`;
+if (tokensFile && readFileSync(tokensFile, 'utf8') !== tokens) warnings.push('brand/tokens.css is stale: run node brand/build-tokens.mjs (the build uses tokens.json directly)');
+/** Conservative CSS minifier: comments and whitespace only (never touches values inside strings or url()). @param {string} src */
+const minifyCss = (src) => src
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s+/g, ' ')
+  .replace(/\s*([{};>])\s*/g, '$1')
+  .replace(/([,:])\s+(?![^(]*\)\s*(?:and|or)\b)/g, '$1')
+  .replace(/;}/g, '}')
+  .trim();
+const css = minifyCss(`${tokens}\n${readFileSync(join(paths.site, 'src/styles/site.css'), 'utf8')}`);
 const js = readFileSync(join(paths.site, 'src/scripts/main.js'), 'utf8');
 const h = (/** @type {string} */ s) => createHash('sha256').update(s).digest('hex').slice(0, 10);
-const assets = { css: `/assets/site.${h(css)}.css`, js: `/assets/main.${h(js)}.js` };
+const assets = { css: `/assets/build/site.${h(css)}.css`, js: `/assets/build/main.${h(js)}.js` };
 writeFileSync(join(DIST, assets.css), css);
 writeFileSync(join(DIST, assets.js), js);
 
-/* ---- CSP hash for the one inline script must match netlify.toml ---- */
+/* ---- CSP: one policy for every path; its hash must match the inline JS flag ---- */
 const flagHash = `sha256-${createHash('sha256').update(JS_FLAG).digest('base64')}`;
-const toml = readFileSync(join(paths.site, 'netlify.toml'), 'utf8');
-if (!toml.includes(flagHash)) issues.push(`netlify.toml CSP is missing '${flagHash}' for the inline JS flag script`);
+const tomlPath = join(paths.root, 'netlify.toml');
+const toml = existsSync(tomlPath) ? readFileSync(tomlPath, 'utf8') : '';
+if (!toml) issues.push('netlify.toml not found at the repository root');
+else {
+  if (!/for = "\/\*"[\s\S]*?Content-Security-Policy/.test(toml)) issues.push('netlify.toml has no Content-Security-Policy header for "/*"');
+  if (!toml.includes(flagHash)) issues.push(`netlify.toml CSP is missing '${flagHash}' for the inline JS flag script`);
+}
 
-/* ---- static files, brand assets ---- */
+/* ---- static files, fonts, brand assets ---- */
 if (existsSync(join(paths.site, 'static'))) cpSync(join(paths.site, 'static'), DIST, { recursive: true });
-for (const f of ['logo.svg', 'logo-mark.svg', 'logo-reversed.svg', 'favicon.svg']) {
+for (const f of ['logo.svg', 'logo-mark.svg', 'logo-reversed.svg', 'favicon.svg', 'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png']) {
   const src = sharedFile('brand', f);
-  if (src) cpSync(src, join(DIST, 'assets', 'brand', f));
+  if (src) cpSync(src, join(DIST, 'assets', 'brand', f.replace(/^icons\//, '')));
   else warnings.push(`brand/${f} missing`);
 }
+for (const f of ['inter-latin-var.woff2', 'newsreader-latin-italic-var.woff2', 'OFL-Inter.txt', 'OFL-Newsreader.txt']) {
+  const src = sharedFile('brand', `fonts/${f}`);
+  if (src) cpSync(src, join(DIST, 'assets', 'fonts', f));
+  else issues.push(`missing font file brand/fonts/${f}`);
+}
 if (existsSync(join(DIST, 'assets/brand/favicon.svg'))) cpSync(join(DIST, 'assets/brand/favicon.svg'), join(DIST, 'favicon.svg'));
+if (existsSync(join(DIST, 'assets/brand/apple-touch-icon.png'))) cpSync(join(DIST, 'assets/brand/apple-touch-icon.png'), join(DIST, 'apple-touch-icon.png'));
 
 /* ---- origin ---- */
-const origin = production ? `https://${tok('DOMAIN')}` : (process.env.DEPLOY_PRIME_URL || '');
+if (launch && !has('DOMAIN')) issues.push('SITE_MODE=launch needs DOMAIN in site.config.mjs');
+const origin = launch ? `https://${tok('DOMAIN')}` : '';
 const hasCapability = !!site.capabilityStatement && existsSync(join(DIST, site.capabilityStatement));
-if (!hasCapability) (production ? issues : warnings).push(`capability statement PDF missing: add static${site.capabilityStatement}`);
-const env = { production, context, origin, data, assets, fontsUrl, hasCapability };
+if (!hasCapability) (launch ? issues : warnings).push(`capability statement PDF missing: add static${site.capabilityStatement}`);
+const analyticsDomain = launch && has('PLAUSIBLE DOMAIN') ? tok('PLAUSIBLE DOMAIN') : null;
+const env = { launch, context, origin, data, assets, hasCapability, analyticsDomain };
 
 /* ---- pages ---- */
 const list = routes(env);
-for (const sec of new Set(list.map((r) => (r.path === '/' || r.path.endsWith('.html') ? r.path : `/${r.path.split('/')[1]}/*`)))) {
-  if (!toml.includes(`for = "${sec}"`)) issues.push(`netlify.toml has no Content-Security-Policy block for "${sec}"`);
-}
 let pageCount = 0;
 for (const r of list) {
-  const out = finalizeTokens(String(r.render()), { production, file: r.file, issues, html: true });
-  if (production && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
+  const out = typographer(finalizeTokens(String(r.render()), { launch, file: r.file, issues, html: true }));
+  if (launch && /class="sample-label"/.test(out)) issues.push(`${r.file}: renders sample content (sample: true)`);
   const file = join(DIST, r.file);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, out);
   pageCount++;
 }
 
+/* ---- illustrations for slots without a photo ---- */
+const art = renderArt();
+for (const a of art) writeFileSync(join(DIST, 'assets', 'art', `${a.id}.svg`), a.svg);
+
 /* ---- sitemap, robots, manifest, headers ---- */
-const indexable = list.filter((r) => !['/404.html', '/quote/thanks/'].includes(r.path));
+const indexable = list.filter((r) => r.path !== '/404.html');
 const today = new Date().toISOString().slice(0, 10);
 const smOrigin = origin || 'https://[DOMAIN]';
 writeFileSync(join(DIST, 'sitemap.xml'), finalizeTokens(`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${indexable.map((r) => `  <url><loc>${smOrigin}${r.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}
 </urlset>
-`, { production, file: 'sitemap.xml', issues, html: false }));
-writeFileSync(join(DIST, 'robots.txt'), production
-  ? finalizeTokens(`User-agent: *\nAllow: /\nDisallow: /admin/\n\nSitemap: https://[DOMAIN]/sitemap.xml\n`, { production, file: 'robots.txt', issues, html: false })
-  : `# Preview build (${context}): not for indexing\nUser-agent: *\nDisallow: /\n`);
+`, { launch, file: 'sitemap.xml', issues, html: false }));
+writeFileSync(join(DIST, 'robots.txt'), launch
+  ? finalizeTokens(`User-agent: *\nAllow: /\n\nSitemap: https://[DOMAIN]/sitemap.xml\n`, { launch, file: 'robots.txt', issues, html: false })
+  : `# Showcase build (${context}): not for indexing\nUser-agent: *\nDisallow: /\n`);
 writeFileSync(join(DIST, 'site.webmanifest'), JSON.stringify({
   name: site.name, short_name: site.shortName, start_url: '/', display: 'browser', lang: 'en-CA',
-  background_color: '#F4F5F1', theme_color: '#2E4A3B',
-  icons: [{ src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }],
+  background_color: '#F4F6F2', theme_color: '#1D4A33',
+  icons: [
+    { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+    { src: '/assets/brand/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+    { src: '/assets/brand/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+    { src: '/assets/brand/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+  ],
 }, null, 2));
-// Headers in netlify.toml are global; per-context noindex is written here.
-if (!production) writeFileSync(join(DIST, '_headers'), `/*\n  X-Robots-Tag: noindex, nofollow\n`);
+// Headers in netlify.toml are global; the showcase noindex header is written here.
+if (!launch) writeFileSync(join(DIST, '_headers'), `/*\n  X-Robots-Tag: noindex, nofollow\n`);
 
 /* ---- fixture / data checks ---- */
 const fb = [...new Set(fallbacks)];
-if (fb.length) (production ? issues : warnings).push(`using ${fb.length} fixture file(s) instead of real shared files: ${fb.slice(0, 8).join(', ')}${fb.length > 8 ? ', …' : ''}`);
+if (fb.length) (launch ? issues : warnings).push(`using ${fb.length} fixture file(s) instead of real shared files: ${fb.slice(0, 8).join(', ')}${fb.length > 8 ? ', …' : ''}`);
 for (const s of site.services) if (!data.services[s]) issues.push(`missing service content: ${s}`);
 for (const a of site.areas) if (!data.areas[a]) issues.push(`missing area content: ${a}`);
 
@@ -129,7 +159,7 @@ const kb = (/** @type {string} */ dir) => {
 };
 for (const w of warnings) console.warn(`warn: ${w}`);
 if (issues.length) {
-  console.error(`\nBuild ${production ? 'FAILED' : 'has problems'} (${context}). Fix before publishing:\n${issues.map((i) => `  - ${i}`).join('\n')}\n`);
-  if (production || issues.some((i) => i.startsWith('netlify.toml') || i.startsWith('missing'))) process.exit(1);
+  console.error(`\nBuild ${launch ? 'FAILED' : 'has problems'} (${launch ? 'launch' : 'showcase'}, ${context}). Fix before publishing:\n${issues.map((i) => `  - ${i}`).join('\n')}\n`);
+  if (launch || issues.some((i) => i.startsWith('netlify.toml') || i.startsWith('missing'))) process.exit(1);
 }
-console.log(`Built ${pageCount} pages (${context}${offline ? ', offline images' : ''}) into dist/ (${kb(DIST)} KB) in ${Date.now() - t0} ms`);
+console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}) into dist/ (${kb(DIST)} KB) in ${Date.now() - t0} ms`);
