@@ -1,0 +1,110 @@
+/* 70 · Free-quote builder (/free-quote/, blueprint C5). Self-contained: only .quote-* classes,
+   design tokens (brand/tokens.json) and the generic .btn / .wrap / .vh primitives. Solid content
+   surfaces (no glass), hairline rules, 16px+ inputs so iOS does not zoom, targets ≥ 44px. */
+
+.quote-page [hidden] { display: none !important; }
+
+/* ---- head + reassurance strip ---- */
+.quote-head { padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 3vw, 2.5rem); }
+.quote-head h1 { margin: 0 0 var(--space-3); }
+.quote-head__lede { max-width: var(--layout-measure, 65ch); margin: 0; color: var(--color-ink-2); font-size: var(--font-size-lede, 1.125rem); }
+.quote-reassure { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: var(--space-5) 0 0; padding: var(--space-3) 0 0; border-top: 1px solid var(--color-rule); list-style: none; font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); }
+.quote-reassure li { display: inline-flex; align-items: center; gap: 6px; }
+.quote-reassure svg { flex: none; color: var(--color-brand); }
+
+/* ---- layout ---- */
+.quote-layout { display: grid; gap: var(--space-7, 3rem); padding-bottom: var(--space-section, 4rem); }
+@media (min-width: 64em) { .quote-layout { grid-template-columns: minmax(0, 1fr) minmax(18rem, 23rem); align-items: start; gap: var(--space-8, 4rem); } }
+.quote-main { min-width: 0; }
+
+/* ---- form surface ---- */
+.quote-form { padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--color-line); border-radius: var(--radius-l); background: var(--color-bg-elevated); }
+.quote-field { min-width: 0; margin: 0 0 var(--space-6, 2rem); padding: 0; border: 0; }
+.quote-label { display: block; margin: 0 0 6px; padding: 0; font-weight: var(--font-weight-semibold); font-size: 1.0625rem; color: var(--color-ink); }
+.quote-help { margin: 0 0 10px; color: var(--color-ink-2); font-size: var(--font-size-small); max-width: var(--layout-measure, 65ch); }
+
+.quote-input, .quote-select select { box-sizing: border-box; display: block; width: 100%; min-height: 48px; margin: 0; padding: 10px 14px; border: 1px solid var(--color-line-strong); border-radius: var(--radius-m); background: var(--color-bg); color: var(--color-ink); font: inherit; font-size: max(1rem, 16px); line-height: 1.4; }
+textarea.quote-input { min-height: 9rem; resize: vertical; }
+.quote-input:focus-visible, .quote-select select:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-brand); }
+.quote-select { position: relative; max-width: 24rem; }
+.quote-select select { appearance: none; -webkit-appearance: none; padding-right: 44px; cursor: pointer; }
+.quote-select svg { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--color-ink-2); }
+.quote-phone { margin: var(--space-4) 0 0; max-width: 24rem; }
+
+/* service cards (multi-select) */
+.quote-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: var(--space-3); }
+.quote-card { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: var(--space-3); min-height: 72px; padding: var(--space-4); border: 1px solid var(--color-line-strong); border-radius: var(--radius-m); background: var(--color-bg); cursor: pointer; transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.quote-card input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.quote-card__icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--radius-s); background: var(--color-bg-tint); color: var(--color-brand); }
+.quote-card__text { display: grid; gap: 2px; }
+.quote-card__title { font-weight: var(--font-weight-semibold); }
+.quote-card__hint { color: var(--color-ink-2); font-size: var(--font-size-small); }
+.quote-card__check { display: grid; place-items: center; width: 24px; height: 24px; border: 1.5px solid var(--color-line-strong); border-radius: var(--radius-xs, 6px); color: transparent; }
+.quote-card:hover { border-color: var(--color-brand); }
+.quote-card:has(input:checked) { border-color: var(--color-brand); box-shadow: inset 0 0 0 1px var(--color-brand); background: var(--color-bg-tint); }
+.quote-card:has(input:checked) .quote-card__check { border-color: var(--color-brand); background: var(--color-brand); color: var(--color-brand-ink); }
+.quote-card:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+
+/* radios (timing, best way to reach you) */
+.quote-choices { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.quote-choice { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 16px; border: 1px solid var(--color-line-strong); border-radius: var(--radius-pill); background: var(--color-bg); cursor: pointer; }
+.quote-choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--color-brand); }
+.quote-choice:has(input:checked) { border-color: var(--color-brand); box-shadow: inset 0 0 0 1px var(--color-brand); background: var(--color-bg-tint); }
+.quote-choice:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.quote-choice input:focus-visible { outline: none; }
+
+/* examples under the description */
+.quote-examples { margin: 0 0 10px; padding: var(--space-3) var(--space-4); border-left: 2px solid var(--color-rule); color: var(--color-ink-2); font-size: var(--font-size-small); }
+.quote-examples__h { margin: 0 0 4px; font-weight: var(--font-weight-semibold); }
+.quote-examples ul { margin: 0; padding-left: 1.1em; }
+.quote-examples li + li { margin-top: 2px; }
+
+/* errors */
+.quote-error { display: flex; align-items: center; gap: 6px; margin: 8px 0 0; color: var(--color-error); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); }
+.quote-error svg { flex: none; }
+.has-error .quote-input, .has-error .quote-select select, .has-error .quote-card, .has-error .quote-choice { border-color: var(--color-error); }
+.quote-errors { margin: 0 0 var(--space-6, 2rem); padding: var(--space-4) var(--space-5); border: 1px solid var(--color-error); border-left-width: 4px; border-radius: var(--radius-m); background: var(--color-bg); }
+.quote-errors:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.quote-errors h2 { margin: 0 0 4px; font-size: var(--font-size-h3, 1.25rem); }
+.quote-errors p { margin: 0 0 6px; }
+.quote-errors ul { margin: 0; padding-left: 1.1em; }
+.quote-errors a { color: var(--color-error); font-weight: var(--font-weight-semibold); }
+
+/* submit row */
+.quote-submit { display: grid; gap: var(--space-3); justify-items: start; padding-top: var(--space-5); border-top: 1px solid var(--color-rule); }
+.quote-submit .quote-help { margin: 0; }
+.quote-privacy { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-small); }
+@media (max-width: 39.99em) { .quote-submit .btn { width: 100%; } }
+
+/* ---- after-submit panel ---- */
+.quote-panel { margin-top: var(--space-6, 2rem); padding: clamp(1.25rem, 4vw, 2.5rem); border: 1px solid var(--color-line); border-top: 4px solid var(--color-brand); border-radius: var(--radius-l); background: var(--color-bg-elevated); scroll-margin-top: calc(var(--layout-header-h, 64px) + 16px); }
+.quote-panel:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.quote-panel__head { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+.quote-panel__head h2 { margin: 0; }
+.quote-panel__tick { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--color-success); color: #fff; }
+.quote-panel__notice { padding: var(--space-3) var(--space-4); border-left: 4px solid var(--color-accent, var(--color-brand)); background: var(--color-bg-tint); font-weight: var(--font-weight-semibold); }
+.quote-status { min-height: 1.5em; margin: 0 0 var(--space-2); color: var(--color-success); font-weight: var(--font-weight-semibold); }
+.quote-panel__actions, .quote-way__links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-5); }
+.quote-panel__text { min-height: 12rem; font-size: var(--font-size-small); white-space: pre-wrap; background: var(--color-bg); }
+.quote-panel__ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--space-5); margin-top: var(--space-6, 2rem); padding-top: var(--space-5); border-top: 1px solid var(--color-rule); }
+.quote-way h3 { margin: 0 0 var(--space-2); font-size: var(--font-size-h3, 1.25rem); }
+.quote-way__links { margin: 0; }
+.quote-address { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-2); font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+
+/* ---- aside: what happens next, credentials, other ways ---- */
+.quote-aside { display: grid; gap: var(--space-7, 3rem); min-width: 0; }
+.quote-aside h2 { margin: 0 0 var(--space-4); font-size: var(--font-size-h2, 1.5rem); }
+.quote-aside__media { overflow: hidden; border-radius: var(--radius-l); }
+.quote-aside__media img { display: block; width: 100%; height: auto; }
+.quote-steps { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+.quote-steps li { display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--color-rule); }
+.quote-steps__n { font-variant-numeric: tabular-nums; font-weight: var(--font-weight-semibold); color: var(--color-brand); }
+.quote-steps h3 { margin: 0 0 4px; font-size: 1.0625rem; }
+.quote-steps p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-small); }
+.quote-creds .creds { margin: 0; }
+.quote-contacts { display: grid; gap: var(--space-2); margin: 0 0 var(--space-3); padding: 0; list-style: none; }
+.quote-contacts li { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.quote-contacts svg { flex: none; color: var(--color-brand); }
+.quote-other p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-small); }
+
+@media (prefers-reduced-motion: reduce) { .quote-card { transition: none; } }

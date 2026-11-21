@@ -3,7 +3,7 @@
   "template": 1,
   "cards": {
     "about.jpg": "468c15b3ff0b",
-    "accessibility.jpg": "6771ea68a500",
+    "accessibility.jpg": "58d7ee00d82e",
     "areas-central-saanich.jpg": "c8ec333f171c",
     "areas-colwood.jpg": "51392e6ec802",
     "areas-esquimalt.jpg": "27945bd45ee0",
@@ -20,11 +20,11 @@
     "areas.jpg": "064bb939d94f",
     "commercial.jpg": "911b0f6c2d08",
     "contact.jpg": "9ecf0e4d7174",
-    "default.jpg": "9d075d0c936f",
+    "default.jpg": "83ec7117abd2",
     "faq.jpg": "4bd968d03839",
     "free-quote.jpg": "9ba4a6319bc7",
-    "home.jpg": "e68570b604fa",
-    "privacy.jpg": "0de6668780fe",
+    "home.jpg": "49d35ea32ca6",
+    "privacy.jpg": "3257cad4e881",
     "process.jpg": "13ace73505cd",
     "projects-deep-cove-acreage-upkeep.jpg": "d48019b79a13",
     "projects-esquimalt-church-garden-drip-conversion.jpg": "45a1e2a68d1e",
@@ -56,6 +56,6 @@
     "services-landscape-installation.jpg": "1d202f9c51ee",
     "services-tree-vegetation.jpg": "bed537756d0c",
     "services.jpg": "d18defa864fd",
-    "terms.jpg": "46990dd463e8"
+    "terms.jpg": "687ebb98e664"
   }
 }
