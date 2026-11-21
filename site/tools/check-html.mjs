@@ -81,5 +81,6 @@ for (const f of existsSync(DIST) ? files() : []) {
   for (const m of h.matchAll(/\s(href|action|formaction|src)="([^"]*)"/g)) if (/\[[A-Z][A-Z ]*\]|%5B[A-Z][A-Z %20]*%5D/i.test(m[2])) e('footer-tel-mailto', `token inside an ${m[1]}: ${m[2].slice(0, 80)} (render the text and the chip instead)`);
 }
 const ok = report('check-html', /** @type {any} */ (failures));
-if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);
+// exitCode, not process.exit(): a long report written to a pipe is flushed before the process ends.
+if (import.meta.url === `file://${process.argv[1]}`) process.exitCode = ok ? 0 : 1;
 export default ok;

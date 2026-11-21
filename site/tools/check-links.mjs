@@ -226,5 +226,6 @@ async function httpCheck() {
 
 for (const w of warnings) console.warn(`  warn: ${w}`);
 const ok = report('check-links', /** @type {any} */ (failures));
-if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);
+// exitCode, not process.exit(): a long report written to a pipe is flushed before the process ends.
+if (import.meta.url === `file://${process.argv[1]}`) process.exitCode = ok ? 0 : 1;
 export default ok;
