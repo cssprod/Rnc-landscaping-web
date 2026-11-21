@@ -1,35 +1,66 @@
 {
   "slug": "royal-bay-backyard-patio",
+  "sample": true,
   "title": "Backyard patio and planting in Royal Bay",
   "service": "landscape-installation",
   "area": "colwood",
   "clientType": "Homeowner",
   "seo": {
     "title": "Sample project: Royal Bay backyard patio | RNC",
-    "description": "Sample project: a bare new-build backyard in Royal Bay, Colwood, finished with a paver patio, low retaining wall, sod and native shrubs. Get a free quote."
+    "description": "Sample project: a sloping new-build yard in Royal Bay, Colwood, regraded with a paver patio, low retaining wall and native shrub border."
   },
   "summary": "A bare new-build backyard finished with a patio, retaining wall and planting.",
+  "season": "Summer",
+  "duration": "4 weeks",
   "scope": [
     "Grading and drainage",
     "Paver patio",
     "Low block retaining wall",
     "Sod and native shrub border"
   ],
-  "duration": "4 weeks",
-  "story": [
-    "The yard sloped toward the house and held water in winter.",
-    "We regraded away from the foundation, built a low retaining wall to level the patio area and planted the border with native shrubs that handle dry summers.",
-    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Colwood](/areas/colwood/), or [get a free quote](/quote/)."
+  "tags": [
+    "patio",
+    "retaining-wall",
+    "drainage",
+    "native-plants"
+  ],
+  "challenge": "The bare new-build yard sloped toward the house and held water every winter.",
+  "approach": [
+    "We regraded the yard to fall away from the foundation and built a low block retaining wall to level the patio area.",
+    "After the paver patio and sod went in, we planted the border with native shrubs that handle dry summers."
   ],
   "result": "A level, usable yard that drains away from the house.",
+  "plantPalette": [
+    {
+      "common": "Oregon grape",
+      "botanical": "Mahonia aquifolium"
+    },
+    {
+      "common": "Snowberry",
+      "botanical": "Symphoricarpos albus"
+    },
+    {
+      "common": "Red-flowering currant",
+      "botanical": "Ribes sanguineum"
+    },
+    {
+      "common": "Mock orange",
+      "botanical": "Philadelphus lewisii"
+    }
+  ],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-3",
     "gallery": [
       "svc-landscape-installation-after",
       "svc-landscape-installation-detail-2"
-    ]
-  }
+    ],
+    "art": "proj-royal-bay-backyard-patio-art"
+  },
+  "story": [
+    "The bare new-build yard sloped toward the house and held water every winter.",
+    "We regraded the yard to fall away from the foundation and built a low block retaining wall to level the patio area.",
+    "After the paver patio and sod went in, we planted the border with native shrubs that handle dry summers."
+  ]
 }

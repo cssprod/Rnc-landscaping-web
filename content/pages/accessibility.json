@@ -21,7 +21,7 @@
       "items": [
         {
           "title": "Contrast",
-          "body": "Text and controls meet AA contrast ratios."
+          "body": "We test text and controls against WCAG AA contrast ratios."
         },
         {
           "title": "Keyboard",

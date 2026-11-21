@@ -1,14 +1,17 @@
 {
   "slug": "sidney-strata-seasonal-grounds-care",
+  "sample": true,
   "title": "Seasonal grounds care for a Sidney condo strata",
   "service": "grounds-maintenance",
   "area": "sidney",
   "clientType": "Strata",
   "seo": {
     "title": "Sample project: Sidney strata grounds care | RNC",
-    "description": "Sample project: a year-round grounds plan for a Sidney condo strata, with set visits, bed care, hedge trimming and one contact for council. Get a free quote."
+    "description": "Sample project: a year-round written grounds plan for a Sidney condo strata, with visit notes and one contact for council."
   },
   "summary": "A written, year-round grounds plan for a mid-size condo strata near Beacon Avenue.",
+  "season": "Year-round",
+  "duration": "Ongoing: 12-month agreement",
   "scope": [
     "Mowing and edging on a seasonal schedule",
     "Bed weeding, mulching and deadheading",
@@ -16,21 +19,32 @@
     "Spring and fall cleanups",
     "Visit notes to the property manager"
   ],
-  "duration": "Ongoing, 12-month agreement",
-  "story": [
-    "The council wanted the same standard across the whole year and one person to call when owners had concerns.",
-    "We wrote a scope that listed tasks for each visit and a calendar for hedges and cleanups. After each visit the property manager got a short note of what was done and anything that needed a decision.",
-    "Read more about [grounds maintenance](/services/grounds-maintenance/), see our work in [Sidney](/areas/sidney/), or [get a free quote](/quote/)."
+  "tags": [
+    "strata",
+    "written-scope",
+    "visit-notes",
+    "recurring-visits"
+  ],
+  "challenge": "The council wanted the same standard all year and one person to call when owners had concerns.",
+  "approach": [
+    "We wrote a scope that listed the tasks for each visit, with a calendar for hedge trims and spring and fall cleanups.",
+    "After each visit the property manager got a short note of what was done and anything that needed a decision."
   ],
   "result": "Council had a written scope to review each season and a single contact for owner concerns.",
+  "plantPalette": [],
   "testimonial": "strata-council-sidney",
-  "sample": true,
   "images": {
     "before": "svc-grounds-maintenance-before",
     "after": "proj-grounds-maintenance-1",
     "gallery": [
       "svc-grounds-maintenance-after",
       "svc-grounds-maintenance-detail-2"
-    ]
-  }
+    ],
+    "art": "proj-sidney-strata-seasonal-grounds-care-art"
+  },
+  "story": [
+    "The council wanted the same standard all year and one person to call when owners had concerns.",
+    "We wrote a scope that listed the tasks for each visit, with a calendar for hedge trims and spring and fall cleanups.",
+    "After each visit the property manager got a short note of what was done and anything that needed a decision."
+  ]
 }

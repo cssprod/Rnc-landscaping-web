@@ -1,0 +1,102 @@
+{
+  "_notes": "C1 /process/ (A12 #2). overview feeds the home 4-step timeline. Steps are taken from the service files' process lists; every deliverable is something the service copy already promises. The guarantee is built on [WARRANTY] and makes no promise beyond it. Owner to confirm each step before launch.",
+  "seo": {
+    "title": "How We Work: Steps and Guarantee | RNC Landscaping",
+    "description": "How RNC Landscaping goes from your request to finished work, what you receive at each step, and how our workmanship guarantee works. No prices online."
+  },
+  "h1": "How we work",
+  "lede": "What happens from your first request to finished work, and what you receive at each step.",
+  "overview": [
+    {
+      "title": "Request",
+      "body": "Tell us about the property and the work on our [free quote form](/free-quote/). Photos help. We reply within [REPLY TIME]."
+    },
+    {
+      "title": "Site visit",
+      "body": "If the job needs one, we visit to measure, look at access and check the local rules that apply."
+    },
+    {
+      "title": "Written quote",
+      "body": "You get a written scope and schedule before any work starts. The quote is free."
+    },
+    {
+      "title": "Scheduled work",
+      "body": "Work goes ahead on the agreed dates, with one contact for questions and changes."
+    }
+  ],
+  "tracks": [
+    {
+      "id": "maintenance",
+      "name": "Maintenance track",
+      "summary": "For recurring grounds care: mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites.",
+      "steps": [
+        {
+          "title": "Send a request",
+          "body": "Share the address, the type of property and what you need looked after.",
+          "deliverable": "A reply within [REPLY TIME] with any questions and a time for a site walk."
+        },
+        {
+          "title": "Site walk",
+          "body": "We walk the site with you or whoever looks after it, noting the lawn, beds, hedges and how we get in.",
+          "deliverable": "Notes on the lawn areas, beds, hedges and access that the quote will cover."
+        },
+        {
+          "title": "Written scope and schedule",
+          "body": "We turn the walk into a quote that you or your council can review.",
+          "deliverable": "A written quote listing the tasks for each visit, how often we come and the season it covers."
+        },
+        {
+          "title": "Regular visits",
+          "body": "Visits follow the written scope, and one contact handles your questions and changes.",
+          "deliverable": "Visit notes on anything that needs attention, passed on before we act."
+        },
+        {
+          "title": "Seasonal check-in",
+          "body": "Before each season we review what is working and what should change.",
+          "deliverable": "An updated plan for the season ahead."
+        }
+      ]
+    },
+    {
+      "id": "installation",
+      "name": "Installation track",
+      "summary": "For one-time projects: planting, sod, patios, paths, retaining walls, new irrigation and larger tree work.",
+      "steps": [
+        {
+          "title": "Tell us what you have in mind",
+          "body": "Describe the project and send photos or drawings if you have them.",
+          "deliverable": "A reply within [REPLY TIME] and a time for a site visit."
+        },
+        {
+          "title": "Site visit and rule check",
+          "body": "We measure, check soil, slope, sun and access, and look for protected trees, root zones or watercourses near the work.",
+          "deliverable": "A note of any bylaw or permit that may apply, before design work goes further."
+        },
+        {
+          "title": "Plan and written scope",
+          "body": "We put the layout, the plant list and the order of work on paper.",
+          "deliverable": "A drawn layout, a plant list and a written scope that names any permit the work may need."
+        },
+        {
+          "title": "Build in phases",
+          "body": "We prepare the ground, build the hardscape, then plant and mulch.",
+          "deliverable": "An update as each phase finishes."
+        },
+        {
+          "title": "Walkthrough and care notes",
+          "body": "We walk the finished work with you and go over anything you want changed.",
+          "deliverable": "Watering and care notes for the first season."
+        }
+      ]
+    }
+  ],
+  "guarantee": {
+    "heading": "Our workmanship guarantee",
+    "body": [
+      "If something we built, planted or repaired is not right, tell us. Our workmanship guarantee is: [WARRANTY].",
+      "To raise a concern, [contact us](/contact/) with the address, what you noticed and a photo if you can. We reply within [REPLY TIME] and arrange a time to look at it with you.",
+      "If you want the guarantee explained for your job, ask us before you accept the quote."
+    ]
+  },
+  "sections": []
+}

@@ -1,35 +1,49 @@
 {
   "slug": "highlands-acreage-tree-pruning",
+  "sample": true,
   "title": "Clearance pruning on a Highlands acreage",
   "service": "tree-vegetation",
   "area": "highlands",
   "clientType": "Homeowner",
   "seo": {
     "title": "Sample project: Highlands tree pruning | RNC",
-    "description": "Sample project: clearance pruning near a Highlands home and driveway, with a check of the District's tree bylaw near the lake first. Request a free quote."
+    "description": "Sample project: clearance pruning over a Highlands roof and driveway near a lake, with a District tree bylaw check before any cut."
   },
   "summary": "Clearance pruning over a driveway and roof on a forested lot near a lake.",
+  "season": "Winter",
+  "duration": "2 days",
   "scope": [
     "Bylaw check for work near the lake",
     "Clearance pruning over the roof and driveway",
     "Deadwood removal",
     "Brush chipping"
   ],
-  "duration": "2 days",
-  "story": [
-    "Branches hung over the roof and scraped vehicles on the driveway.",
-    "Because the lot is near a lake, we checked the District's tree rules first and confirmed which cuts needed a permit. We pruned for clearance and left the canopy intact.",
-    "Read more about [tree and vegetation work](/services/tree-vegetation/), see our work in [Highlands](/areas/highlands/), or [get a free quote](/quote/)."
+  "tags": [
+    "clearance-pruning",
+    "bylaw-check",
+    "acreage",
+    "near-water"
+  ],
+  "challenge": "Branches hung over the roof and scraped vehicles on the driveway of a forested lot near a lake.",
+  "approach": [
+    "Before any cutting we checked whether the planned cuts would count as cutting under the District of Highlands tree bylaw, because the lot is close to a lake.",
+    "We pruned for clearance over the roof and driveway, removed deadwood and left the canopy intact. The work was booked for winter, outside the main nesting season."
   ],
   "result": "Clear roof and driveway, with the bylaw question answered before work.",
+  "plantPalette": [],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-tree-vegetation-before",
     "after": "proj-tree-vegetation-2",
     "gallery": [
       "svc-tree-vegetation-after",
       "svc-tree-vegetation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-highlands-acreage-tree-pruning-art"
+  },
+  "story": [
+    "Branches hung over the roof and scraped vehicles on the driveway of a forested lot near a lake.",
+    "Before any cutting we checked whether the planned cuts would count as cutting under the District of Highlands tree bylaw, because the lot is close to a lake.",
+    "We pruned for clearance over the roof and driveway, removed deadwood and left the canopy intact. The work was booked for winter, outside the main nesting season."
+  ]
 }

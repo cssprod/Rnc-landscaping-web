@@ -11,6 +11,13 @@
     "lede": "New systems, repairs, spring start-up and fall winterization, with controllers set to match CRD watering days and times.",
     "image": "svc-irrigation-hero"
   },
+  "localContext": "Properties on the CRD regional water supply follow Stage 1 lawn watering days from May 1 to September 30, while many rural lots run on private wells instead.",
+  "goodFitIf": [
+    "Your controller has not been checked since it was installed, or you are not sure it matches the CRD lawn watering days.",
+    "Some lawn areas are soggy while others turn brown.",
+    "You want beds converted from spray heads to drip.",
+    "Your strata needs start-up, shutdown and repairs handled for the whole complex, with a zone map on file."
+  ],
   "audiences": [
     {
       "title": "Homeowners",
@@ -51,6 +58,35 @@
       "body": "Controllers set to the [CRD lawn watering schedule](/resources/crd-watering-rules-guide/) for your address."
     }
   ],
+  "perVisit": {
+    "caption": "What happens at each stage",
+    "rows": [
+      {
+        "task": "Site check",
+        "detail": "Each zone run, with coverage, pressure and the controller checked and problems noted."
+      },
+      {
+        "task": "Spring start-up",
+        "detail": "System charged slowly, each zone run, heads adjusted off paths and buildings, controller set before May 1."
+      },
+      {
+        "task": "Repairs",
+        "detail": "Broken heads, leaking valves and damaged lines fixed, then every zone run again to confirm coverage."
+      },
+      {
+        "task": "Summer check",
+        "detail": "Coverage and leak checks, and schedule changes in hot spells that stay within the watering rules."
+      },
+      {
+        "task": "Fall winterization",
+        "detail": "Controller off, supply shut off and the system drained or blown out before freezing nights."
+      },
+      {
+        "task": "Records",
+        "detail": "A simple zone map and notes on what was checked and changed."
+      }
+    ]
+  },
   "process": [
     {
       "title": "Request a quote",
@@ -107,6 +143,11 @@
       ]
     }
   ],
+  "localRulesRefs": [
+    "crd-watering",
+    "crd-water-systems",
+    "bc-private-wells"
+  ],
   "faqs": [
     {
       "q": "When should I winterize my irrigation system?",
@@ -118,11 +159,19 @@
     },
     {
       "q": "Can you repair a system someone else installed?",
-      "a": "Yes. We work on most residential and commercial systems."
+      "a": "Often, yes. Tell us the make and age of the system and its controller when you request a quote, and we will say whether we can service it."
     },
     {
       "q": "Do you test backflow preventers?",
       "a": "Tell us about your system when you request a quote and we will let you know what we can do: [CERTIFICATIONS]."
+    },
+    {
+      "q": "How do you set a controller for the watering rules?",
+      "a": "On the regional water supply, lawn zones go on the CRD lawn days and times for your address, and drip zones are set separately. A strata uses the complex's street address. The [CRD watering rules guide](/resources/crd-watering-rules-guide/) has the schedule and the official link."
+    },
+    {
+      "q": "We are on a private well. Does the CRD schedule apply?",
+      "a": "The CRD schedule covers properties connected to its water systems, so a property on a private well is not on it. The Province still asks well owners to conserve water year-round, so ask us about zones and run times that suit what your well can supply."
     }
   ],
   "detailImages": [

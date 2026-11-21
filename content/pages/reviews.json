@@ -1,5 +1,5 @@
 {
-  "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label.",
+  "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label. googleLink has only a label; templates take the URL from site.json googleProfile (the optional [GOOGLE PROFILE] token): showcase renders the label as plain text plus the chip, launch omits it while the token is unset (CONTRACT section 3). No Review or AggregateRating schema.",
   "seo": {
     "title": "Reviews and Client Feedback | RNC Landscaping",
     "description": "Read what homeowners, strata councils, property managers and contractors say about landscaping work in Greater Victoria. Then request your own free quote."
@@ -16,6 +16,9 @@
     "facilities-volunteer-esquimalt",
     "homeowner-sooke"
   ],
+  "googleLink": {
+    "label": "Read all reviews on Google"
+  },
   "sections": [
     {
       "id": "sample-note",

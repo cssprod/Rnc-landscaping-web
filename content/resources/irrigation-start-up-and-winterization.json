@@ -3,14 +3,21 @@
   "title": "Irrigation start-up and winterization guide",
   "seo": {
     "title": "Irrigation Start-Up & Winterizing in Victoria, BC",
-    "description": "When and how to start up and winterize an irrigation system on southern Vancouver Island, with a zone checklist and CRD watering days to set. Get a free quote."
+    "description": "When and how to start up and winterize an irrigation system on southern Vancouver Island, with a zone checklist and the CRD watering days to set."
   },
-  "date": "2026-11-19",
   "summary": "A spring start-up checklist and a fall shutdown guide for home and strata irrigation systems.",
   "image": "res-6",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": "2026-11-21",
+  "date": "2026-11-19",
   "body": [
     {
-      "p": "Freezing nights are not frequent here, but one hard frost can crack pipes and valves in a system full of water. A proper fall shutdown and a careful spring start-up prevent most repairs."
+      "p": "Freezing nights are not frequent here, but one hard frost can crack pipes and valves in a system full of water. A proper fall shutdown and a careful spring start-up prevent many common repairs."
     },
     {
       "h2": "Spring start-up (April)"
@@ -55,7 +62,7 @@
       "p": "Book start-up or winterization through [irrigation services](/services/irrigation/), read the [CRD watering rules guide](/resources/crd-watering-rules-guide/), or [get a free quote](/quote/)."
     },
     {
-      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+      "p": "Confirm the current CRD schedule on the page linked below each spring, and ask your water supplier about backflow testing. This guide dates from November 2026."
     }
   ],
   "sources": [

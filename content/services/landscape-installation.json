@@ -11,6 +11,14 @@
     "lede": "Planting, sod, patios, paths and retaining walls, planned around your soil, slope, sun and the bylaws that apply to your lot.",
     "image": "svc-landscape-installation-hero"
   },
+  "localContext": "Wet winters, dry summers, deer in many neighbourhoods and municipal tree bylaws all shape what we plant here and where we dig.",
+  "goodFitIf": [
+    "You want a front garden, backyard patio or new planting plan built in clear phases.",
+    "Your yard holds water in winter or slopes toward the house.",
+    "Deer keep eating what you plant, or the lawn struggles every summer.",
+    "Your strata needs a courtyard or entrance renewed with as little disruption to residents as possible.",
+    "You are a general contractor who needs a landscape package built to drawings and schedule."
+  ],
   "audiences": [
     {
       "title": "Homeowners",
@@ -51,6 +59,35 @@
       "body": "Drip or spray zones added during the build through our [irrigation service](/services/irrigation/)."
     }
   ],
+  "perVisit": {
+    "caption": "What happens at each stage",
+    "rows": [
+      {
+        "task": "Site visit",
+        "detail": "Measurements, soil, slope, sun and access checked, with protected trees and root zones near the work noted."
+      },
+      {
+        "task": "Plan and written scope",
+        "detail": "A layout, plant list and written scope, naming any permit the work may need."
+      },
+      {
+        "task": "Ground preparation",
+        "detail": "Grading, drainage fixes and soil amendment, so new planting is not sitting in winter water."
+      },
+      {
+        "task": "Hardscape",
+        "detail": "Patios, paths, steps, edging and low retaining walls, built before planting starts."
+      },
+      {
+        "task": "Planting and irrigation",
+        "detail": "Trees, shrubs, perennials or sod installed and mulched, with drip or spray zones added where planned."
+      },
+      {
+        "task": "Walkthrough",
+        "detail": "We walk the finished work with you and hand over first-season care notes."
+      }
+    ]
+  },
   "process": [
     {
       "title": "Request a quote",
@@ -107,13 +144,17 @@
       ]
     }
   ],
+  "localRulesRefs": [
+    "crd-watering",
+    "bc-riparian"
+  ],
   "faqs": [
     {
       "q": "Do I need a permit for my landscape project?",
-      "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Read our [tree permit notes](/resources/winter-pruning-and-storm-prep/)."
+      "a": "Many projects do not, but work near protected trees, on steep slopes or near watercourses may. We check the rules for your municipality and tell you what applies before we start. Each of our [area pages](/areas/) links to the official sources for local rules."
     },
     {
-      "q": "When is the best time to plant?",
+      "q": "When should we plant?",
       "a": "Fall is often a good time on southern Vancouver Island because rain returns and roots grow through the mild winter. Spring works too, with careful watering through summer."
     },
     {
@@ -123,6 +164,14 @@
     {
       "q": "How do you price a project?",
       "a": "We price each project from a site visit and a written scope. There is no charge for the quote."
+    },
+    {
+      "q": "Will you check for protected trees before digging?",
+      "a": "Yes. At the site visit we look for trees and root zones near the planned work and check your municipality's tree bylaw. If a permit may be needed, the written scope says so before any digging starts."
+    },
+    {
+      "q": "Is new planting covered by a guarantee?",
+      "a": "The guarantee on our workmanship is [WARRANTY]. New plants also need steady water through their first summers, so the care notes from the walkthrough explain what to do and when. [Raising a concern](/process/) is covered on our process page."
     }
   ],
   "detailImages": [

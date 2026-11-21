@@ -1,14 +1,17 @@
 {
   "slug": "fernwood-strata-courtyard-planting",
+  "sample": true,
   "title": "Courtyard replanting for a Fernwood strata",
   "service": "landscape-installation",
   "area": "victoria",
   "clientType": "Strata",
   "seo": {
     "title": "Sample project: Fernwood strata courtyard | RNC",
-    "description": "Sample project: a shaded strata courtyard in Fernwood, Victoria, replanted with shade-tolerant natives and new edging, phased around residents. Free quote."
+    "description": "Sample project: a shaded strata courtyard in Fernwood, Victoria, replanted with shade-tolerant natives in two phases so residents kept access."
   },
   "summary": "A shaded courtyard with failing shrubs replanted with shade-tolerant natives.",
+  "season": "Fall",
+  "duration": "2 weeks",
   "scope": [
     "Removal of failed shrubs",
     "Soil amendment",
@@ -16,21 +19,49 @@
     "New bed edging",
     "Mulch"
   ],
-  "duration": "2 weeks",
-  "story": [
-    "Half the courtyard shrubs had died and owners disagreed about what to plant.",
-    "We gave council two planting options with a plant list for each. Work was done in halves so residents always had a clear path to their doors.",
-    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+  "tags": [
+    "strata",
+    "shade-planting",
+    "native-plants",
+    "phased-work"
+  ],
+  "challenge": "Half the shrubs in a shaded courtyard had died, and owners disagreed about what to plant instead.",
+  "approach": [
+    "We gave council two planting options, each with its own plant list, so the decision could be made at a meeting.",
+    "The work was done in two halves, so residents always had a clear path to their doors, and the new beds were edged and mulched."
   ],
   "result": "Council chose a plan from written options, and residents kept access throughout.",
+  "plantPalette": [
+    {
+      "common": "Sword fern",
+      "botanical": "Polystichum munitum"
+    },
+    {
+      "common": "Deer fern",
+      "botanical": "Blechnum spicant"
+    },
+    {
+      "common": "Salal",
+      "botanical": "Gaultheria shallon"
+    },
+    {
+      "common": "Oregon grape",
+      "botanical": "Mahonia aquifolium"
+    }
+  ],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-4",
     "gallery": [
       "svc-landscape-installation-after",
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-fernwood-strata-courtyard-planting-art"
+  },
+  "story": [
+    "Half the shrubs in a shaded courtyard had died, and owners disagreed about what to plant instead.",
+    "We gave council two planting options, each with its own plant list, so the decision could be made at a meeting.",
+    "The work was done in two halves, so residents always had a clear path to their doors, and the new beds were edged and mulched."
+  ]
 }

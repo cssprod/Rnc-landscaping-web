@@ -1,14 +1,17 @@
 {
   "slug": "langford-townhouse-landscape-package",
+  "sample": true,
   "title": "Landscape package for a new Langford townhouse build",
   "service": "landscape-installation",
   "area": "langford",
   "clientType": "General contractor",
   "seo": {
     "title": "Sample project: Langford townhouse landscape | RNC",
-    "description": "Sample project: soft landscape package for a new Langford townhouse build, installed to the contractor's drawings and schedule. Request a free quote today."
+    "description": "Sample project: a soft landscape package for a new Langford townhouse site, built to the contractor's drawings in phases."
   },
   "summary": "Soft landscaping for a new townhouse site, built to the general contractor's drawings.",
+  "season": "Spring",
+  "duration": "5 weeks, phased with the build",
   "scope": [
     "Topsoil placement and fine grading",
     "Sod for common lawns",
@@ -16,21 +19,32 @@
     "Irrigation to the drawings",
     "Deficiency walkthrough"
   ],
-  "duration": "5 weeks, phased with the build",
-  "story": [
-    "The general contractor needed landscaping finished in phases as each building block closed out.",
-    "We worked to the landscape drawings, coordinated deliveries with the site supervisor and attended a deficiency walkthrough at the end of each phase.",
-    "Read more about [landscape installation](/services/landscape-installation/), see our work in [Langford](/areas/langford/), or [get a free quote](/quote/)."
+  "tags": [
+    "general-contractor",
+    "new-build",
+    "to-drawings",
+    "phased-work"
+  ],
+  "challenge": "The general contractor needed the landscaping finished in phases as each building block closed out.",
+  "approach": [
+    "We worked to the landscape drawings: topsoil and fine grading, sod for the common lawns, planting and irrigation. Plant species and sizes came from the drawings.",
+    "Deliveries were coordinated with the site supervisor, and we attended a deficiency walkthrough at the end of each phase."
   ],
   "result": "Landscape phases completed to the drawings and handed over with deficiencies closed.",
+  "plantPalette": [],
   "testimonial": "general-contractor-langford",
-  "sample": true,
   "images": {
     "before": "svc-landscape-installation-before",
     "after": "proj-landscape-installation-2",
     "gallery": [
       "svc-landscape-installation-after",
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-langford-townhouse-landscape-package-art"
+  },
+  "story": [
+    "The general contractor needed the landscaping finished in phases as each building block closed out.",
+    "We worked to the landscape drawings: topsoil and fine grading, sod for the common lawns, planting and irrigation. Plant species and sizes came from the drawings.",
+    "Deliveries were coordinated with the site supervisor, and we attended a deficiency walkthrough at the end of each phase."
+  ]
 }
