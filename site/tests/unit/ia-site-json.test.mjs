@@ -43,13 +43,13 @@ test('header, footer and JSON-LD follow site.json NAP, hours, founding year and 
   try {
     const h = page('/');
     const f = footer(h);
-    assert.match(f, /href="tel:2505550199"/);
-    assert.match(f, /href="sms:2505550199"/);
+    assert.match(f, /href="tel:\+12505550199"/);
+    assert.match(f, /href="sms:\+12505550199"/);
     assert.match(f, /href="mailto:hello@example.test"/);
     assert.ok(f.includes('1 Test Road, Victoria'));
     assert.ok(f.includes('Mon–Fri 8–4'));
     assert.match(f, /href="https:\/\/g\.page\/example-test"[^>]*>Google profile/);
-    assert.match(header(h), /href="tel:2505550199"/);
+    assert.match(header(h), /href="tel:\+12505550199"/);
     const b = business(h);
     assert.equal(b.telephone, '250-555-0199');
     assert.equal(b.email, 'hello@example.test');
@@ -58,6 +58,17 @@ test('header, footer and JSON-LD follow site.json NAP, hours, founding year and 
     assert.ok(!f.includes('2001') && !header(h).includes('2001'), 'the founding year never shows in visible copy');
     assert.ok(h.includes('Licence TEST-1'), 'credentials band reads site.json credentials');
     assert.ok(page('/contact/').includes('Mon–Fri 8–4'), 'contact cards read site.json hours');
+  } finally { Object.assign(tokens, saved); }
+});
+
+test('the footer copyright takes the legal name as it is, with one period after "Ltd." #consumers', () => {
+  const saved = { ...tokens };
+  try {
+    Object.assign(tokens, { 'LEGAL NAME': 'RNC Test Ltd.', YEAR: '2026' });
+    const f = footer(page('/'));
+    assert.ok(f.includes('© 2026 RNC Test Ltd. Serving'), f.match(/©[^<]*/)?.[0]);
+    Object.assign(tokens, { 'LEGAL NAME': 'RNC Test Inc' });
+    assert.ok(footer(page('/')).includes('© 2026 RNC Test Inc. Serving'));
   } finally { Object.assign(tokens, saved); }
 });
 

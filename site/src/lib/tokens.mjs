@@ -22,8 +22,17 @@ export const val = (name) => tokens[name] ?? undefined;
 /** @param {TokenName} name */
 export const has = (name) => tokens[name] != null && tokens[name] !== '';
 
-/** Digits-only tel: target. */
-export const telHref = () => (tokens.PHONE ? `tel:${tokens.PHONE.replace(/[^\d+]/g, '')}` : 'tel:[PHONE]');
+/** E.164 digits for a North American number ("250-555-0100" → "+12505550100"); other forms keep their digits. @param {string} s */
+export const e164 = (s) => {
+  const d = s.replace(/[^\d+]/g, '');
+  if (d.startsWith('+')) return d;
+  if (/^\d{10}$/.test(d)) return `+1${d}`;
+  if (/^1\d{10}$/.test(d)) return `+${d}`;
+  return d;
+};
+
+/** tel: target with the country code (tel:+1…). Call it only once PHONE is known. */
+export const telHref = () => (tokens.PHONE ? `tel:${e164(tokens.PHONE)}` : 'tel:[PHONE]');
 
 /**
  * Phone number as a link once it is known; until then the [PHONE] chip as plain text.

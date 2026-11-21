@@ -141,7 +141,7 @@ function footer(env) {
     </div>
   </div>
   <div class="wrap site-footer__legal">
-    <p>© [YEAR] ${siteJson.nap.legalName}. Serving ${siteJson.region}.</p>
+    <p>© [YEAR] ${siteJson.nap.legalName}${/\.$/.test(String(val('LEGAL NAME') ?? siteJson.nap.legalName)) ? '' : '.'} Serving ${siteJson.region}.</p>
     <ul><li><a href="/privacy/">Privacy</a></li><li><a href="/terms/">Terms</a></li><li><a href="/accessibility/">Accessibility</a></li>${googleProfile(env)}</ul>
   </div>
   ${env.launch ? '' : html`<p class="wrap site-footer__note">Showcase edition: highlighted details are placeholders still to be confirmed, and work labelled Sample is illustrative.</p>`}

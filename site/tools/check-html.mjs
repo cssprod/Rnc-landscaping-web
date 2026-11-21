@@ -6,7 +6,8 @@
  *   no-href-hash       no href="#" / empty href anywhere; menus are <button aria-expanded aria-controls> disclosures
  *                      (never a link with aria-expanded) whose aria-controls target exists (A13 #8).
  *   footer-tel-mailto  the footer carries tel:, sms: and mailto: links once [PHONE]/[EMAIL] are known, the
- *                      placeholder text (chip) until then, and never a token inside an href (A13 #26, CONTRACT §3).
+ *                      placeholder text (chip) until then, and never a token inside an href (A13 #26, CONTRACT §3);
+ *                      the token check covers every page and every href/action/formaction/src attribute.
  * Exits 0 when there is no dist. Failures are { rule, path, message }.
  */
 import { existsSync } from 'node:fs';
@@ -75,8 +76,9 @@ for (const f of existsSync(DIST) ? files() : []) {
     if (!/<a\b[^>]*\shref="sms:\+?\d/.test(foot) && !chip('PHONE')) e('footer-tel-mailto', 'footer has neither an sms: link nor the [PHONE] placeholder');
     if (!/<a\b[^>]*\shref="mailto:[^"[\]@\s]+@[^"[\]\s]+"/.test(foot) && !chip('EMAIL')) e('footer-tel-mailto', 'footer has neither a mailto: link nor the [EMAIL] placeholder');
     if (/<a\b[^>]*\shref="tel:\+?\d/.test(foot) === false && /<a\b[^>]*\shref="sms:\+?\d/.test(foot)) e('footer-tel-mailto', 'footer has an sms: link but no tel: link');
-    for (const m of foot.matchAll(/\shref="((?:tel|sms|mailto):[^"]*|https?:\/\/[^"]*)"/g)) if (/\[|%5B/i.test(m[1])) e('footer-tel-mailto', `token inside an href: ${m[1]} (render the text and the chip instead)`);
   }
+  // CONTRACT §3, every page: no URL attribute (href, action, formaction, src) is built on a bracket token.
+  for (const m of h.matchAll(/\s(href|action|formaction|src)="([^"]*)"/g)) if (/\[[A-Z][A-Z ]*\]|%5B[A-Z][A-Z %20]*%5D/i.test(m[2])) e('footer-tel-mailto', `token inside an ${m[1]}: ${m[2].slice(0, 80)} (render the text and the chip instead)`);
 }
 const ok = report('check-html', /** @type {any} */ (failures));
 if (import.meta.url === `file://${process.argv[1]}`) process.exit(ok ? 0 : 1);

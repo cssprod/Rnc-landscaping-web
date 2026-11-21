@@ -51,6 +51,11 @@ test('check-html wants tel:/sms:/mailto: (or their placeholders) in the footer a
   assert.match(missing.out, /\[footer-tel-mailto\] footer has neither a mailto: link/);
   const token = run('check-html', [], { SITE_DIST: dist({ 'index.html': page('Home', '', { foot: '<footer class="site-footer"><a href="tel:[PHONE]">[PHONE]</a><a href="mailto:[EMAIL]">[EMAIL]</a></footer>' }) }) });
   assert.match(token.out, /\[footer-tel-mailto\] token inside an href: tel:\[PHONE\]/);
+  const body = run('check-html', [], { SITE_DIST: dist({ 'index.html': page('Home', '<form action="mailto:[EMAIL]?subject=x"></form><a href="https://[DOMAIN]/x/">x</a>') }) });
+  assert.match(body.out, /\[footer-tel-mailto\] token inside an action: mailto:\[EMAIL\]\?subject=x/);
+  assert.match(body.out, /\[footer-tel-mailto\] token inside an href: https:\/\/\[DOMAIN\]\/x\//);
+  const empty = run('check-html', [], { SITE_DIST: dist({ 'index.html': page('Home', '<form action="mailto:?subject=x"></form>') }) });
+  assert.equal(empty.code, 0, empty.out);
   const linked = run('check-html', [], { SITE_DIST: dist({ 'index.html': page('Home', '', { foot: '<footer class="site-footer"><a href="tel:2505550100">Call</a> <a href="sms:2505550100">Text</a> <a href="mailto:hi@example.test">Email</a></footer>' }) }) });
   assert.equal(linked.code, 0, linked.out);
 });
@@ -219,4 +224,36 @@ test('check-content keeps one NAP value in one place #nap-consistency', () => {
   assert.match(r.out, /content\/site\.json: \[nap-consistency\] nap\.phone must be "\[PHONE\]"/);
   const ok = content(repo({}), 'nap-consistency');
   assert.equal(ok.code, 0, ok.out);
+});
+
+test('check-content lets a sourced third-party contact pass and flags a bare phone in page copy #single-source', () => {
+  const a = real('content/areas/metchosin.json');
+  const rule = { id: 'metchosin-hall', topic: 'trees', text: 'The District asks owners to call the Municipal Hall (250-474-3167) or write to trees@metchosin.ca first.', sourceUrl: 'https://www.metchosin.ca/x', excerpt: 'x', verify: true, reviewedOn: null };
+  const note = { text: 'Permits: treepermits@victoria.ca, 250-361-0600.', sourceUrl: 'https://www.victoria.ca/x', verify: true };
+  const root = repo({
+    'content/areas/metchosin.json': { ...a, localRules: [...(a.localRules || []), rule], localNotes: [...(a.localNotes || []), note] },
+    'content/pages/about.json': { ...real('content/pages/about.json'), lede: 'Call us at 250-382-1234.' },
+  });
+  const r = content(root, 'single-source');
+  assert.doesNotMatch(r.out, /metchosin\.json: \[single-source\]/);
+  assert.match(r.out, /about\.json: \[single-source\] phone number typed at lede \(250-382-1234\): if this is RNC's contact, use \[PHONE\]; a third-party contact needs a sourceUrl/);
+  // RNC's own value is flagged even inside a sourced object.
+  const sj = real('content/site.json');
+  const own = content(repo({ 'content/site.json': { ...sj, tokens: { ...sj.tokens, PHONE: '250-474-3167' } }, 'content/areas/metchosin.json': { ...a, localRules: [...(a.localRules || []), rule] } }), 'single-source');
+  assert.match(own.out, /metchosin\.json: \[single-source\] PHONE value typed at localRules\[\d+\]\.text: use \[PHONE\]/);
+});
+
+test('check-content compares the footer NAP after the build typographer: digit ranges and apostrophes #nap-consistency', async () => {
+  const { typographer } = await import('../../src/lib/html.mjs');
+  const sj = real('content/site.json');
+  const HOURS = 'Mon-Fri 8:00-17:00, Sat 9-1 (O\'Brien\'s "yard" days)';
+  const root = repo({ 'content/site.json': { ...sj, tokens: { ...sj.tokens, HOURS } } });
+  const ld = `<script type="application/ld+json">${JSON.stringify({ '@type': 'LocalBusiness', name: sj.nap.name })}</script>`;
+  const foot = typographer(`<footer class="site-footer"><p>[PHONE] [EMAIL] [ADDRESS]</p><p>${HOURS.replace(/"/g, '&quot;')}</p></footer>`);
+  assert.match(foot, /8:00–17:00/); // the build really rewrites it
+  const d = dist({ 'index.html': `<!doctype html><html><head>${ld}</head><body><main></main>${foot}</body></html>` });
+  const r = run('check-content', [`--root=${root}`, '--rules=nap-consistency', '--all'], { SITE_DIST: d });
+  assert.doesNotMatch(r.out, /footer does not show HOURS/, r.out);
+  const bad = dist({ 'index.html': `<!doctype html><html><head>${ld}</head><body><main></main><footer class="site-footer"><p>[PHONE] [EMAIL] [ADDRESS]</p><p>Mon–Fri 9–5</p></footer></body></html>` });
+  assert.match(run('check-content', [`--root=${root}`, '--rules=nap-consistency', '--all'], { SITE_DIST: bad }).out, /footer does not show HOURS/);
 });

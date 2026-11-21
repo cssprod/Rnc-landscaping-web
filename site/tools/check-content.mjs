@@ -9,6 +9,9 @@
  *                          optional until W2); inline links and path fields point at real pages; cross references exist.
  *   single-source          no NAP value, founding year or business-fact token typed into a template (site/src) and no
  *                          phone number, email address or founding-year claim typed into content: they live in site.json.
+ *                          A third-party phone or email inside a sourced object (one with a sourceUrl: area localRules,
+ *                          conditions, localNotes, regional blocks) is a sourced fact and passes; RNC's own token values
+ *                          never pass.
  *   municipality-list      site.json holds the one list of the 13 municipalities; one content/areas file per municipality
  *                          (and one built page each); no second list in content or templates.
  *   resource-byline-dates  guides: author "[OWNER NAME]", "RNC Landscaping", "/about/"; real ISO published date (not in
@@ -209,13 +212,20 @@ function run() {
     for (const [f, d] of docs) {
       if (f === 'site.json') continue;
       const file = `content/${f}`;
-      visit(d, (_k, val, path) => {
+      // A string inside an object that carries a sourceUrl (area localRules, conditions, localNotes, regional blocks) quotes
+      // a third party, so a municipal phone number or email there is a sourced fact, not RNC's contact: only RNC's own token
+      // values are flagged there. Elsewhere a phone or email is flagged with both ways out (RNC's token, or a source).
+      visitSourced(d, (val, path, sourced) => {
         if (typeof val !== 'string' || /(^|\.)(sourceUrl|url|excerpt|sourceTitle)$/.test(path)) return;
         if (val.includes('[FOUNDED]')) fail('single-source', file, `[FOUNDED] at ${path}: the founding year appears only in JSON-LD`);
         if (FOUNDING_RE.test(val)) fail('single-source', file, `founding-year or years-in-business claim at ${path} ("${val.match(FOUNDING_RE)?.[0]}")`);
-        if (realPhone(val)) fail('single-source', file, `phone number typed at ${path}: use [PHONE]`);
-        if (realEmail(val)) fail('single-source', file, `email address typed at ${path}: use [EMAIL]`);
-        for (const [k, v] of values) if (val.includes(v)) fail('single-source', file, `${k} value typed at ${path}: use [${k}]`);
+        const own = values.filter(([, v]) => val.includes(v));
+        for (const [k] of own) fail('single-source', file, `${k} value typed at ${path}: use [${k}]`);
+        if (sourced || own.length) return;
+        const ph = realPhone(val);
+        if (ph) fail('single-source', file, `phone number typed at ${path} (${ph}): if this is RNC's contact, use [PHONE]; a third-party contact needs a sourceUrl`);
+        const em = realEmail(val);
+        if (em) fail('single-source', file, `email address typed at ${path} (${em}): if this is RNC's contact, use [EMAIL]; a third-party contact needs a sourceUrl`);
       });
     }
   }
@@ -387,12 +397,14 @@ function run() {
     if (siteJson.nap?.name !== siteJson.name) fail('nap-consistency', 'content/site.json', 'nap.name differs from name');
     const credTok = { insurance: 'LIABILITY LIMIT', worksafebc: 'WORKSAFEBC STATUS', licences: 'LICENCES', certifications: 'CERTIFICATIONS', memberships: 'MEMBERSHIPS' };
     for (const c of siteJson.credentials || []) { const t = /** @type {any} */ (credTok)[c.id]; if (t && c.value !== `[${t}]`) fail('nap-consistency', 'content/site.json', `credentials.${c.id}.value must be "[${t}]"`); }
-    const shown = (/** @type {string} */ t) => tokens[t] ? escHtml(String(tokens[t])) : `[${t}]`;
+    // build.mjs runs typographer() over every page (8-5 → 8–5, ' → ’, " → “”), so both sides are compared in plain form.
+    const shown = (/** @type {string} */ t) => tokens[t] ? plainTypo(escHtml(String(tokens[t]))) : `[${t}]`;
     for (const f of distPages) {
       const html = readFileSync(join(DIST, f), 'utf8');
       const foot = html.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0];
       if (!foot) { fail('nap-consistency', f, 'no footer'); continue; }
-      for (const t of ['PHONE', 'EMAIL', 'ADDRESS', 'HOURS']) if (!foot.includes(shown(t))) fail('nap-consistency', f, `footer does not show ${t} as site.json has it (${shown(t)})`);
+      const plainFoot = plainTypo(foot);
+      for (const t of ['PHONE', 'EMAIL', 'ADDRESS', 'HOURS']) if (!plainFoot.includes(shown(t))) fail('nap-consistency', f, `footer does not show ${t} as site.json has it (${shown(t)})`);
       const gp = tokens['GOOGLE PROFILE'];
       if (gp && !foot.includes(`href="${escHtml(gp)}"`)) fail('nap-consistency', f, 'footer has no link to the Google profile');
       if (!gp && !/Google profile/.test(foot) && !/<meta name="robots" content="noindex/.test(html)) warnings.push(`${f}: no Google profile link (optional until [GOOGLE PROFILE] is set)`);
@@ -414,6 +426,10 @@ function isIso(v) {
   const d = new Date(`${v}T00:00:00Z`);
   return !isNaN(+d) && d.toISOString().slice(0, 10) === v;
 }
+/** Undo the build's typographer() (src/lib/html.mjs) so a token value and its rendering compare equal. @param {string} s */
+function plainTypo(s) {
+  return s.replace(/&quot;|&#34;|[“”]/g, '"').replace(/&#39;|&apos;|[‘’]/g, "'").replace(/[–—]/g, '-').replace(/…/g, '...');
+}
 /** @param {string} s */
 function escHtml(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 /** Sentences of a text, normalised; short fragments (< 6 words) are ignored. @param {string} t */
@@ -428,6 +444,18 @@ function stripComments(code) {
  * Depth-first walk over JSON. @param {any} v @param {(key: string, val: any, path: string) => void} fn
  * @param {string} [path] @param {string} [key]
  */
+/**
+ * Like visit(), and also tells fn whether a containing object carries a sourceUrl (a sourced third-party fact).
+ * @param {any} v @param {(val: any, path: string, sourced: boolean) => void} fn @param {string} [path] @param {boolean} [sourced]
+ */
+function visitSourced(v, fn, path = '', sourced = false) {
+  fn(v, path, sourced);
+  if (Array.isArray(v)) v.forEach((x, i) => visitSourced(x, fn, `${path}[${i}]`, sourced));
+  else if (v && typeof v === 'object') {
+    const s = sourced || (typeof v.sourceUrl === 'string' && v.sourceUrl !== '');
+    for (const [k, x] of Object.entries(v)) visitSourced(x, fn, path ? `${path}.${k}` : k, s);
+  }
+}
 function visit(v, fn, path = '', key = '') {
   fn(key, v, path);
   if (Array.isArray(v)) v.forEach((x, i) => visit(x, fn, `${path}[${i}]`, key));
