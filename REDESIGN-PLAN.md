@@ -1,6 +1,6 @@
 # RNC redesign plan (Cedar Springs blueprint, v2)
 
-This is the working brief for the redesign. The source of every requirement is `research/cedar-springs-teardown-blueprint.md` (the "blueprint"; section numbers below refer to it). Read the blueprint, `CONTRACT.md` and this file before changing anything. The goal: Cedar Springs-grade art direction (editorial layout, large photography, project spec strips, a named process) on top of RNC's fast, accessible static build, fixing every Cedar Springs fault the blueprint lists (A13 #1–36) and delivering the full RNC blueprint (C1–C8 and the P0–P4 checklist).
+This is the working brief for the redesign. The source of every requirement is `research/cedar-springs-teardown-blueprint.md` (the "blueprint"; section numbers below refer to it). Read the blueprint, `CONTRACT.md` and this file before changing anything. The goal: High-grade art direction (editorial layout, large photography, project spec strips, a named process) on top of RNC's fast, accessible static build, fixing every fault the blueprint lists (A13 #1–36) and delivering the full RNC blueprint (C1–C8 and the P0–P4 checklist).
 
 ## Already done (foundation commit)
 - `content/site.json` is the single source of truth (NAP, hours, credentials, services, municipalities); `site/site.config.mjs` reads it. New tokens: `[REPLY TIME]`, `[GOOGLE PROFILE]` (reviews link), `[FOUNDED]` (optional, JSON-LD only).
