@@ -10,11 +10,12 @@
  *   output: /assets/build/<name>.<hash10>.js
  *   result: { main: { src, deps: [every transitive dependency's src, leaves first] }, … }
  *
- *   buildModules(scriptsDir) → { modules, files: [{ url, code }] }
+ *   buildModules(scriptsDir, { minify }) → { modules, files: [{ url, code, name }] }   minify (default true): minify-js.mjs
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, relative, resolve, dirname, sep } from 'node:path';
+import { minifyJs } from './minify-js.mjs';
 
 const hash10 = (/** @type {string} */ s) => createHash('sha256').update(s).digest('hex').slice(0, 10);
 
@@ -47,7 +48,7 @@ export const moduleName = (rel) => rel.replace(/\.m?js$/, '').split(/[\\/]/).joi
 
 /**
  * @param {string} scriptsDir absolute path of site/src/scripts
- * @param {{ base?: string }} [o] public URL directory for the outputs
+ * @param {{ base?: string, minify?: boolean }} [o] base: public URL directory for the outputs
  */
 export function buildModules(scriptsDir, o = {}) {
   const base = o.base || '/assets/build';
@@ -64,7 +65,9 @@ export function buildModules(scriptsDir, o = {}) {
   /** @type {Map<string, { code: string, imports: { spec: string, start: number, end: number, dep: string|null }[] }>} */
   const src = new Map();
   for (const rel of rels) {
-    const code = readFileSync(join(scriptsDir, rel), 'utf8');
+    const text = readFileSync(join(scriptsDir, rel), 'utf8');
+    let code;
+    try { code = o.minify === false ? text : minifyJs(text); } catch (e) { throw new Error(`scripts/${rel}: ${e instanceof Error ? e.message : e}`); }
     const imports = findImports(code).map((im) => {
       if (!/^\.\.?\//.test(im.spec)) return { ...im, dep: null }; // bare or absolute: left alone
       const abs = resolve(dirname(join(scriptsDir, rel)), im.spec);

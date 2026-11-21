@@ -7,7 +7,7 @@
  *   node build.mjs --offline-images     generated illustrations instead of CDN photos (tests, screenshots)
  *   node build.mjs --out=DIR            build into DIR (default: $SITE_DIST, else site/dist). The build empties DIR first,
  *                                       but only when it is empty or carries the .rnc-dist marker (CONTRACT §14).
- *   node build.mjs --no-minify          readable CSS (debugging)
+ *   node build.mjs --no-minify          readable CSS and JS (debugging)
  */
 import { mkdirSync, writeFileSync, readFileSync, existsSync, cpSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -68,7 +68,7 @@ const h = (/** @type {string} */ s) => createHash('sha256').update(s).digest('he
 const { css } = bundleCss({ tokens, stylesDir: join(paths.site, 'src/styles'), minify });
 
 /* ---- JS: every site/src/scripts module, hashed leaves first with import specifiers rewritten (CONTRACT §12) ---- */
-const { modules, files: moduleFiles } = buildModules(join(paths.site, 'src/scripts'));
+const { modules, files: moduleFiles } = buildModules(join(paths.site, 'src/scripts'), { minify });
 for (const f of moduleFiles) writeFileSync(join(DIST, f.url), f.code);
 if (!modules.main) issues.push('missing src/scripts/main.js');
 /** env.assets.js (main) and env.assets.css keep their seed meaning; env.assets.modules[name] = { src, deps[] }. */
@@ -208,4 +208,4 @@ if (issues.length) {
   if (launch || issues.some((i) => i.startsWith('missing'))) process.exit(1);
 }
 const shown = DIST.startsWith(`${paths.site}/`) ? DIST.slice(paths.site.length + 1) : DIST;
-console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}${minify ? '' : ', unminified CSS'}) into ${shown}/ (${kb(DIST)} KB; sprite tree-shaking saved ${((spriteBefore - spriteAfter) / 1024 / Math.max(1, pageCount)).toFixed(1)} KB per page) in ${Date.now() - t0} ms`);
+console.log(`Built ${pageCount} pages and ${art.length} illustrations (${launch ? 'launch' : 'showcase'}, ${context}${offline ? ', offline images' : ''}${minify ? '' : ', unminified'}) into ${shown}/ (${kb(DIST)} KB; sprite tree-shaking saved ${((spriteBefore - spriteAfter) / 1024 / Math.max(1, pageCount)).toFixed(1)} KB per page) in ${Date.now() - t0} ms`);
