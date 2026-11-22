@@ -10,8 +10,9 @@
   .card[hidden] { display: none; }
   .card__link { display: flex; flex-direction: column; gap: var(--space-4); height: 100%; color: inherit; text-decoration: none; }
   .card__media { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--radius-m); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
-  .card__media .media { aspect-ratio: 4 / 3; }
-  .area-card .card__media .media { aspect-ratio: 16 / 9; }
+  /* picture() writes the slot's aspect-ratio inline; cards frame every slot the same way, hence !important. */
+  .card__media .media { aspect-ratio: 4 / 3 !important; }
+  .area-card .card__media .media { aspect-ratio: 16 / 9 !important; }
   .card__media img { transition: transform var(--dur-t0) var(--ease-out); }
   .card__link:hover .card__media img { transform: scale(1.03); }
   .card__media .sample-label { position: absolute; top: 12px; left: 12px; z-index: 2; background: #FFF3D1; color: #6B4800; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
@@ -22,7 +23,7 @@
   .card__link:hover .card__title { color: var(--color-brand); }
   .card__text { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); line-height: 1.5; }
   /* A roomy card lays its media beside the text. */
-  @container (min-width: 36em) {
+  @container (min-width: 40em) {
     .card__link { flex-direction: row; align-items: center; gap: var(--space-5); }
     .card__media { flex: 0 0 48%; }
   }
@@ -30,7 +31,7 @@
   /* ================= before / after ================= */
   .ba { container-type: inline-size; margin: 0; }
   .ba__stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  @container (min-width: 30em) { .ba__stage { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 40em) { .ba__stage { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .ba__img { position: relative; }
   .ba__img .media { border-radius: var(--radius-l); }
   .ba__img .media__chip, .ba__img .media__credit { display: none; }
@@ -68,7 +69,7 @@
   .plant-palette { container-type: inline-size; padding: clamp(1.25rem, 3vw, 1.75rem); border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); }
   .plant-palette__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); font-size: var(--font-size-title-3); }
   .plant-palette__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
-  @container (min-width: 36em) { .plant-palette__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 40em) { .plant-palette__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .plant { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--space-3); align-items: start; }
   .plant__icon { grid-row: span 2; margin-top: 3px; color: var(--color-brand); }
   .plant__names { min-width: 0; }

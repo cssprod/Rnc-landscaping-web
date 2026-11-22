@@ -4,7 +4,7 @@
 @layer components {
   /* ================= seasons ================= */
   .seasons { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
-  @container (min-width: 30em) { .seasons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 40em) { .seasons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @container (min-width: 64em) { .seasons { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .season { --tint: #7CC596; min-width: 0; padding: 24px; border-radius: var(--radius-l); background: linear-gradient(180deg, color-mix(in srgb, var(--tint) 16%, transparent), transparent 58%), var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
   .season--summer { --tint: #E9C25F; } .season--fall, .season--autumn { --tint: #DC8E53; } .season--winter { --tint: #86ACD6; }
@@ -40,5 +40,5 @@
   .visit-table tbody th { width: 34%; font-weight: var(--font-weight-semibold); color: var(--color-ink); }
   .visit-table td { color: var(--color-ink-2); }
   .visit-table tbody tr + tr :is(th, td) { border-top: 1px solid var(--color-line); }
-  @container (max-width: 24em) { .visit-table th, .visit-table td { padding: 10px 12px; } .visit-table tbody th { width: 40%; } }
+  @container (max-width: 39.99em) { .visit-table th, .visit-table td { padding: 10px 12px; } .visit-table tbody th { width: 40%; } }
 }

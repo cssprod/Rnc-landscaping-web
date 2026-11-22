@@ -22,7 +22,7 @@
   .deep-band h2, .deep-band h3 { color: #fff; }
   .deep-band__glow { position: absolute; inset: -30% -10% -30% 40%; z-index: -1; pointer-events: none; opacity: var(--stage-opacity); background: radial-gradient(closest-side, rgba(108, 196, 144, 0.26), transparent), radial-gradient(40% 40% at 20% 80%, rgba(111, 224, 210, 0.12), transparent); }
   .trust__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); margin: 0; }
-  @container (min-width: 30em) { .trust__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 40em) { .trust__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @container (min-width: 64em) { .trust__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .trust__item { min-width: 0; padding: 20px 22px; border-radius: var(--radius-m); background: rgba(255, 255, 255, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.08); }
   .trust__item dt { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--color-on-deep-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
@@ -35,7 +35,6 @@
   .review__quote p { margin: 0; color: var(--color-ink); font-family: var(--font-family-serif); font-style: italic; font-weight: 420; font-size: clamp(1.1875rem, 1.1rem + 0.45vw, 1.4375rem); line-height: 1.4; letter-spacing: -0.006em; }
   .review__by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: auto; color: var(--color-ink-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
   .review__who { flex-basis: 100%; color: var(--color-ink); font-weight: var(--font-weight-semibold); }
-  @container (min-width: 26em) { .review__who { flex-basis: auto; } }
 
   /* ================= reviews band ================= */
   .reviews { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
@@ -48,7 +47,7 @@
   /* ================= credentials row ================= */
   .credentials { container-type: inline-size; }
   .credentials__list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); margin: 0; }
-  @container (min-width: 30em) { .credentials__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 40em) { .credentials__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @container (min-width: 64em) { .credentials__list { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
   .credentials__item { min-width: 0; padding: 14px 16px; border-radius: var(--radius-m); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); }
   .credentials__item dt { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
