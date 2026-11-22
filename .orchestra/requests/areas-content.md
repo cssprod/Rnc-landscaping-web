@@ -1,4 +1,35 @@
-# Requests and hand-offs from areas-content (W1)
+# Requests and hand-offs from areas-content
+
+## W2 (branch `w2/areas-content`, base `wave-1-int` a3a99dd)
+Files written in W2: `content/areas/*.json` (13), `content/regional.json` and this file. `content/pages/areas.json` is unchanged; the hub copy waits for t-areas (§4 below).
+
+### W2-1. Review-date retry, 2026-11-22
+Every fact with `reviewedOn: null` was tried again, with curl and with WebFetch. All of these hosts are still refused: `forums.botanicalgarden.ubc.ca`, `www.env.gov.bc.ca`, `www.sookenewsmirror.com`, `hat.bc.ca`, `metchosin.civicweb.net`, `a100.gov.bc.ca` and `www.bcwatertool.ca`. WebFetch fails on them with ENOTFOUND, which means they are outside the session's allowed network. No null fact could be reviewed on its own source, so no `reviewedOn` was added from a fetch of a refused page. The other refused hosts in §1 were not tried again.
+
+**Facts in content that are still `reviewedOn: null` (3 of 184; was 4).** For `.orchestra/carry.json`:
+
+| Area | Fact id | Source host | Status |
+|---|---|---|---|
+| central-saanich | `cs-aquifers` | www.env.gov.bc.ca (refused) | Unchanged. Search shows the same claim in the provincial aquifer classification reports on a100.gov.bc.ca, which is also refused. Central Saanich's own sitemap has no aquifer page. Its 2021 notice "New Requirements for Groundwater Users" (reachable) covers provincial water licensing, not the aquifers, so it was not used. |
+| sooke | `sooke-tree-bylaw-status` | www.sookenewsmirror.com (refused) | Unchanged. On 2026-11-22 the District's Urban Forest and Tree Care page and its bylaw list in `sitemap.xml` still show no private-tree bylaw, only Policy 116 (municipal trees). So the status note stays, and it still never says "no bylaw exists". |
+| sooke | `sooke-water-edges` | www.sookenewsmirror.com (refused) | Unchanged. The CRD Juan de Fuca page lists Sooke among the system's municipalities, but it says nothing on wells. OCP Bylaw 800 (as adopted 8 December 2025, fetched and searched) has no wells or hauled-water policy either. |
+
+**Resolved in W2.**
+- **victoria `vic-salt-spray` was taken out of content** and replaced by a new official condition, `vic-shore-storms` (kind `exposure`). The source is the City of Victoria news notice "Be prepared: Wind Warning and Potential Coastal Flooding" (6 November 2025). curl fetched it on 2026-11-22 and the excerpt is on the page, so `reviewedOn` is `2026-11-22`. The notice names the Ross Bay Seawall and the Little Ross Bay, Gonzales and Holland Point closures, and gusts up to 90 km/h. This was the carry item "find an official Victoria source on shoreline exposure". The salt-spray claim itself still has no primary source. It stays in research only and can come back once `forums.botanicalgarden.ubc.ca` is allowed, or once an official Victoria salt source turns up.
+- **The optional federal nest excerpt (requests/content.md #18) is done as a new regional block, `ca-migratory-bird-nests`.** It is sourced from the same BC Timber Sales legislation sheet that `bc-bird-nests` cites, fetched on 2026-11-22. The verbatim excerpt is "All migratory bird nests are protected when they contain a live bird or viable egg." The block also says that the nests of the 18 Schedule 1 species are protected at all times. It has `appliesTo: ["all"]`, and all 13 areas list it in `sharedRegional` right after `bc-bird-nests`.
+  - **content:** you can now add the qualified sentence ("federal rules also protect active nests of migratory birds") to the tree-vegetation FAQ and the spring checklist, and reference `ca-migratory-bird-nests` in `localRulesRefs`.
+  - **seo / t-areas:** this makes 7 regional block ids.
+
+### W2-2. Facts that are not in research (for the verifier and the research owner)
+`vic-shore-storms` and `ca-migratory-bird-nests` are not R1 facts. Both come from official pages fetched in this session, with verbatim excerpts. The same thing was done in W1 for `es-dpa1-exposure`. **Request (research/ is forbidden to this stream):** whoever owns `research/area-facts/` should add them to `victoria.json` and `_regional.json` with `note: "W2 areas-content, fetched 2026-11-22"`, so that the research files stay the single record.
+
+### W2-3. Re-checked conflicts and caveats (2026-11-22)
+- **View Royal, still in conflict.** The Tree Removal page still says "greater than 30cm D.B.H.", while the consolidated bylaw says 20 cm. The copy is unchanged and still says to confirm with the Town.
+- **Sooke DPA rules.** Five `sooke-*` DPA excerpts were cited from the Part 7 PDF. All five were checked and found word for word in OCP Bylaw 800 as adopted on 8 December 2025, so they still match the adopted plan.
+
+---
+
+# W1 record
 
 Branch `w1/areas-content` (fix round 1 on `w1/areas-content--fix1`), based on seed `064d569`. Files written: `content/areas/*.json` (13), `content/regional.json`, `content/pages/areas.json` and this file.
 
@@ -40,6 +71,7 @@ To review these facts later, the network must allow: `www.env.gov.bc.ca`, `bcrfc
 | `crd-invasives` | `regional-crd-invasive-disposal`, `crd-invasive-disposal` | all |
 | `bc-riparian` | `regional-bc-rapr` | all except victoria and esquimalt |
 | `bc-bird-nests` | `regional-bc-wildlife-act-nests` | all |
+| `ca-migratory-bird-nests` | none (added in W2, see W2-2) | all |
 | `bc-private-wells` | `regional-bc-private-well-drought`, `prov-private-well-drought` | saanich, sooke, central-saanich, north-saanich, highlands, metchosin |
 
 - **content** (services `localRulesRefs`): please use these ids. CONTRACT §6 already gives `crd-watering` and `crd-invasives` as its examples.

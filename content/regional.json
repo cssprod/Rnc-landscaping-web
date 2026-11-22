@@ -89,6 +89,20 @@
       ]
     },
     {
+      "id": "ca-migratory-bird-nests",
+      "heading": "Migratory bird nests (federal)",
+      "text": "The federal Migratory Birds Regulations also protect the nests of migratory birds such as swallows, woodpeckers and hummingbirds while a nest holds a live bird or viable egg. The nests of the 18 species on Schedule 1 of those regulations, the great blue heron and pileated woodpecker among them, are protected at all times. Hedges and shrubs are checked for active nests before they are trimmed in nesting season.",
+      "sourceUrl": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf",
+      "sourceTitle": "Migratory Birds and Breeding Birds: Federal and Provincial Legislation (BC Timber Sales, March 2024)",
+      "sourceType": "official",
+      "excerpt": "All migratory bird nests are protected when they contain a live bird or viable egg.",
+      "verify": true,
+      "reviewedOn": "2026-11-22",
+      "appliesTo": [
+        "all"
+      ]
+    },
+    {
       "id": "bc-private-wells",
       "heading": "Gardens on private wells",
       "text": "The Province advises owners of private wells to conserve water year-round, including through drought-friendly landscaping. It also suggests following local watering restrictions, checking nearby observation wells in the same aquifer, and collecting rainwater for gardens.",
