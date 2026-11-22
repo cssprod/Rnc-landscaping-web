@@ -129,6 +129,8 @@ test('og:locale en_US, og:type article on a static page, a missing og:image or o
   assert.ok(fired(run({ 'about/index.html': (h) => h.replace(/<meta property="og:image"[^>]*>/, '') }), 'og-tags', 'about/index.html').length);
   assert.ok(fired(run({ 'about/index.html': (h) => h.replace('og:url" content="/about/"', 'og:url" content="/about"') }), 'og-tags', 'about/index.html').length);
   assert.ok(fired(run({ 'resources/crd-watering-rules-guide/index.html': (h) => h.replace('og:type" content="article"', 'og:type" content="website"') }), 'og-tags').length, 'guides are articles');
+  const pf = 'projects/oak-bay-front-garden-renewal/index.html';
+  assert.ok(fired(run({ [pf]: (h) => h.replace(/<meta property="og:image" content="[^"]*">/, '<meta property="og:image" content="https://images.unsplash.com/photo-1?w=1200">') }), 'og-tags', pf).length, 'no stock under /projects/');
 });
 
 test('&amp;amp; in a title and an entity inside JSON-LD fire #double-encoding', () => {

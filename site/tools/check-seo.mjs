@@ -14,7 +14,8 @@
  *   decorative-duplicate    no short display text (2+ words) twice in <main> where both copies are exposed to assistive
  *                           technology: mark the decorative copy aria-hidden="true" or render it once (A13 #17)
  *   og-tags                 one each of og:type/title/description/url/image/locale/site_name; en_CA; "article" on guides
- *                           and "website" elsewhere; og:url = canonical; og:title = <title>; the image resolves (A13 #18)
+ *                           and "website" elsewhere; og:url = canonical; og:title = <title>; the image resolves; no stock image
+ *                           on /projects/ pages (A13 #18; CONTRACT §2)
  *   double-encoding         no "&amp;amp;"-style entity in HTML and no HTML entity inside JSON-LD (A13 #19)
  *   slug-lint               lowercase-hyphen slugs ≤ 60 characters, area/service slugs from site.json, no truncated words
  *                           (every slug word appears in the page's title, H1 or description) (A13 #21)
@@ -367,6 +368,7 @@ export function checkSite(site) {
       else if (ogImg.startsWith('/')) { if (launch) e('og-tags', `og:image must be absolute in launch builds: ${ogImg}`); if (!exists(ogImg)) e('og-tags', `og:image ${ogImg} is not in the build`); }
       else if (origin && ogImg.startsWith(origin) && !exists(ogImg.slice(origin.length))) e('og-tags', `og:image ${ogImg} is not in the build`);
       else if (!/^https:\/\//.test(ogImg)) e('og-tags', `og:image is neither https nor root-relative: ${ogImg}`);
+      if (p.path.startsWith('/projects/') && /^https:\/\//.test(ogImg) && !(origin && ogImg.startsWith(origin))) e('og-tags', `stock og:image on a project page: ${ogImg} (no stock under /projects/)`);
     }
 
     /* ---- double-encoding (A13 #19) ---- */

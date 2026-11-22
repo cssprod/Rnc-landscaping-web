@@ -15,6 +15,7 @@ import { finalizeTokens } from '../../src/lib/tokens.mjs';
 import { routes } from '../../src/pages/routes.mjs';
 import * as schema from '../../src/lib/schema.mjs';
 import { graph, headMeta, jsonLd, ldJson, ogCard, ogKey, ogType, pageType } from '../../src/lib/seo.mjs';
+import { initImages } from '../../src/lib/images.mjs';
 import { testEnv } from '../helpers/env.mjs';
 
 /** Render one route like build.mjs (tokens resolved, chips in showcase). @param {string} path @param {any} [env] */
@@ -220,4 +221,15 @@ test('per-page OG card with fallback: the page card, else the default card, else
   assert.equal(ogCard('/areas/sooke/', dir), '/og/areas-sooke.jpg');
   const meta = String(headMeta(testEnv(), { path: '/nowhere/', title: 'T', description: 'D' }));
   assert.match(meta, /og:image" content="\/(og\/[\w-]+\.(jpg|png)|assets\/brand\/icon-512\.png)"/, 'offline builds fall back to a local image');
+});
+
+test('online builds: a photo og:image outside /projects/, never a stock photo on a project page #graph', () => {
+  const env = testEnv();
+  initImages(env.data.images, { offline: false });
+  try {
+    const svc = String(headMeta(env, { path: '/services/irrigation/', title: 'T', description: 'D', ogImage: 'home-hero' }));
+    assert.match(svc, /og:image" content="https:\/\/images\.unsplash\.com\//);
+    const proj = String(headMeta(env, { path: '/projects/oak-bay-front-garden-renewal/', title: 'T', description: 'D', ogImage: 'home-hero' }));
+    assert.doesNotMatch(proj, /og:image" content="https:\/\/images\.unsplash\.com\//);
+  } finally { initImages(env.data.images, { offline: true }); }
 });

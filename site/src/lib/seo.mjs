@@ -7,7 +7,8 @@
  * Canonical and og:url are absolute (https://<DOMAIN>) only in launch builds. Showcase builds are noindex and use the
  * root-relative path, so no href is ever built on the unresolved [DOMAIN] token (CONTRACT §3).
  * OG image per page: the page's card in site/static/og/<key>.(png|jpg) when og-render (W5) has committed it
- * (tools/og-cards.mjs), else the page's photo slot (online builds), else the og-default slot, else the brand icon.
+ * (tools/og-cards.mjs), else the default card, else the page's photo slot (online builds; never under /projects/, where
+ * stock is not allowed), else the og-default slot, else the brand icon.
  * Strings are escaped exactly once, by the html`` template; JSON-LD is raw JSON with "<" written as <.
  */
 import { existsSync } from 'node:fs';
@@ -56,7 +57,8 @@ export const isNoindex = (env, p) => !env.launch || !!p.noindex;
 export function ogImage(env, p) {
   const card = ogCard(p.path) || ogCard('/default/');
   if (card) return { url: schema.abs(env, card), ...OG_SIZE, kind: 'card' };
-  for (const id of [p.ogImage, 'og-default']) if (id && hasPhoto(id)) { const u = ogUrl(id); if (u) return { url: u, kind: 'photo' }; }
+  // Stock photos are never shown as RNC's work: no photo card under /projects/ (CONTRACT §2, §7).
+  if (!p.path.startsWith('/projects/')) for (const id of [p.ogImage, 'og-default']) if (id && hasPhoto(id)) { const u = ogUrl(id); if (u) return { url: u, kind: 'photo' }; }
   return { url: schema.abs(env, '/assets/brand/icon-512.png'), width: 512, height: 512, kind: 'icon' };
 }
 
