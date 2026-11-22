@@ -91,7 +91,7 @@
   "process": [
     {
       "title": "Request a quote",
-      "body": "Tell us what you have in mind on the [quote form](/free-quote/). Photos help."
+      "body": "Tell us what you have in mind on the [quote form](/free-quote/?service=landscape-installation). You can attach photos or drawings to the email it opens."
     },
     {
       "title": "Site visit",
