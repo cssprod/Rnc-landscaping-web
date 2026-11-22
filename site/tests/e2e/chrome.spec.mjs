@@ -102,7 +102,9 @@ test('mobile menu sheet opens and closes', async ({ page }) => {
   await expect(toggle).toHaveAccessibleName('Menu');
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-  await expect(toggle).toHaveAccessibleName('Close menu');
+  // The name stays "Menu" while open (COMPONENTS.md §Chrome; aria-expanded carries the state, WCAG 2.5.3).
+  await expect(toggle).toHaveAccessibleName('Menu');
+  await expect(toggle).not.toHaveAttribute('aria-label', /close/i);
   await expect(nav.getByRole('button', { name: 'Services', exact: true })).toBeVisible();
   await expect(nav.getByRole('link', { name: 'Get a free quote' })).toBeVisible();
   await page.keyboard.press('Escape');
@@ -149,6 +151,21 @@ test('footer: services, municipalities, NAP, hours, tel/sms/mailto, legal and Go
 const TRACK_NAMES = ['call_click', 'sms_click', 'email_click', 'capability_statement_downloaded'];
 /** Pages that carry every kind of chrome and contact link. */
 const CONTACT_PAGES = ['/', '/about/', '/contact/', '/free-quote/', '/services/irrigation/'];
+
+/** The WCAG 1.4.12 Text Spacing override (line height 1.5, letter .12em, word .16em, paragraph 2em). */
+const TEXT_SPACING = '* { line-height: 1.5 !important; letter-spacing: .12em !important; word-spacing: .16em !important; } p { margin-bottom: 2em !important; }';
+
+/** Overlaps between consecutive header-row parts (logo · nav list · Call / Free quote · toggles), and capsule overflow. @param {import('playwright/test').Page} page */
+async function rowOverlaps(page) {
+  return page.evaluate(() => {
+    const parts = [...document.querySelectorAll('.nav-capsule > .brand, .site-nav__list, .site-nav__actions, .site-tools')].map((e) => e.getBoundingClientRect());
+    const bad = [];
+    for (let i = 1; i < parts.length; i++) if (parts[i].left < parts[i - 1].right - 0.5) bad.push(`part ${i} starts at ${parts[i].left}, part ${i - 1} ends at ${parts[i - 1].right}`);
+    const cap = /** @type {HTMLElement} */ (document.querySelector('.nav-capsule'));
+    if (cap.scrollWidth > cap.clientWidth) bad.push(`capsule overflows by ${cap.scrollWidth - cap.clientWidth}px`);
+    return bad;
+  });
+}
 
 /** @param {import('playwright/test').Locator} loc */
 async function box(loc) {
@@ -228,6 +245,22 @@ test('header Call and Free quote at >= 64em only; logo, toggles and Menu at ever
     expect(cap.sw).toBeLessThanOrEqual(cap.cw);
     await expect(page.locator('[data-action-bar]')).toBeHidden();
     await expect(page.locator('[data-nav-toggle]')).toBeHidden();
+  }
+  // WCAG 1.4.12 Text Spacing: with the standard override the row degrades (data-fit: icon toggles, tighter items, then
+  // the tile without the wordmark) instead of overlapping, and every control keeps its name and its 44 px.
+  for (const width of [1024, 1100, 1280, 1366, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/about/');
+    await page.addStyleTag({ content: TEXT_SPACING });
+    await expect(page.locator('header.site-header')).toHaveAttribute('data-fit', /^(compact|tight)$/);
+    await expect.poll(() => rowOverlaps(page), `header row overlap with text spacing at ${width}`).toEqual([]);
+    for (const sel of ['.nav-capsule > .brand', '.site-nav__quote', '.site-nav__call', '[data-pref="theme"]', '[data-pref="motion"]']) {
+      const b = await box(page.locator(sel));
+      expect(b.height, `${sel} height with text spacing at ${width}`).toBeGreaterThanOrEqual(44);
+      expect(b.width, `${sel} width with text spacing at ${width}`).toBeGreaterThanOrEqual(44);
+    }
+    await expect(page.locator('.nav-capsule > .brand')).toHaveAccessibleName('RNC Landscaping home');
+    await expect(page.getByRole('button', { name: 'Dark theme' })).toBeVisible();
   }
   for (const width of [320, 390, 768, 1023]) {
     await page.setViewportSize({ width, height: 800 });
@@ -351,12 +384,18 @@ test('sticky bar hides over the quote form, while the keyboard is open and while
   const form = page.locator('[data-quote-form]');
   await form.scrollIntoViewIfNeeded();
   await expect(bar).toHaveClass(/is-hidden/);
-  await expect(bar).toHaveJSProperty('inert', true);
+  // Hidden = slid out and visibility: hidden (out of the tab order and the accessibility tree). The scroll-driven hide
+  // flips only the class, never inert / aria-hidden (motion-audit #no-auto-advance).
+  await expect(bar).toHaveCSS('visibility', 'hidden');
+  await expect(bar).toBeHidden();
+  await expect(bar).toHaveJSProperty('inert', false);
+  await expect(bar).not.toHaveAttribute('aria-hidden', /.*/);
   await expect(bar).not.toBeInViewport();
   // Past the form (the footer), the bar comes back.
   await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
   await expect(bar).not.toHaveClass(/is-hidden/);
-  await expect(bar).toHaveJSProperty('inert', false);
+  await expect(bar).toHaveCSS('visibility', 'visible');
+  await expect(bar.getByRole('link', { name: 'Get a free quote' })).toBeVisible();
   await expect(bar).toBeInViewport();
   // On-screen keyboard: the visual viewport shrinks by more than 150 px.
   await page.evaluate(() => {
@@ -450,6 +489,76 @@ test('disclosure-button menus (never href="#"), one Main nav, breadcrumbs on eve
     const last = crumbs.locator('ol > li').last().getByRole('link');
     await expect(last).toHaveAttribute('aria-current', 'page');
     await expect(last).toHaveAttribute('href', path);
+  }
+});
+
+test('a desktop disclosure stays open when its own panel is clicked; Tab out or a click outside closes it #disclosure-breadcrumbs', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/about/');
+  const btn = page.getByRole('button', { name: 'Services', exact: true });
+  const panel = page.locator('#menu-services');
+  await btn.click();
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+  // A click on non-focusable panel content (the aside text, the panel padding) blurs the button with no relatedTarget.
+  await panel.locator('.mega__aside p').click();
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+  await panel.click({ position: { x: 5, y: 60 } }); // the panel's 10 px padding, clear of the rounded corner
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+  await expect(panel).toBeVisible();
+  // Keyboard focus leaving the item closes it.
+  await btn.focus();
+  const links = await panel.locator('a').count();
+  for (let i = 0; i <= links; i++) await page.keyboard.press('Tab');
+  await expect(btn).toHaveAttribute('aria-expanded', 'false');
+  // A click outside closes it.
+  await btn.click();
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+  await page.mouse.click(5, 890);
+  await expect(btn).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('breadcrumbs over the hero reach 4.5:1 against the art behind them, in both themes #disclosure-breadcrumbs', async ({ page }) => {
+  for (const themeName of ['light', 'dark']) {
+    await page.addInitScript((t) => { try { localStorage.setItem('rnc-theme', t); } catch { /* blocked storage */ } }, themeName);
+    for (const width of [320, 390, 1024, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const path of ['/about/', '/services/irrigation/', '/commercial/', '/areas/oak-bay/']) {
+        await page.goto(path);
+        const links = page.locator('.hero .crumbs a');
+        if (!(await links.count())) continue;
+        await expect(page.locator('html')).toHaveAttribute('data-theme', themeName);
+        const colours = await links.evaluateAll((els) => els.map((e) => getComputedStyle(e).color));
+        // Photograph the background under each crumb with the text made transparent, then find its lightest pixel.
+        const style = await page.addStyleTag({ content: '.hero .crumbs a, .hero .crumbs__sep { color: transparent !important; }' });
+        const boxes = await links.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().toJSON()));
+        for (let i = 0; i < boxes.length; i++) {
+          const b = boxes[i];
+          const png = await page.screenshot({ clip: { x: b.x, y: b.y, width: Math.max(1, b.width), height: Math.max(1, b.height) }, animations: 'disabled' });
+          const ratio = await page.evaluate(async ([b64, fg]) => {
+            const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+            const bmp = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
+            const cv = new OffscreenCanvas(bmp.width, bmp.height);
+            const ctx = /** @type {OffscreenCanvasRenderingContext2D} */ (cv.getContext('2d'));
+            ctx.drawImage(bmp, 0, 0);
+            const px = ctx.getImageData(0, 0, bmp.width, bmp.height).data;
+            const lin = (/** @type {number} */ c) => { const v = c / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+            const lum = (/** @type {number[]} */ c) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
+            const m = /** @type {RegExpMatchArray} */ (fg.match(/[\d.]+/g)).map(Number);
+            const a = m.length > 3 ? m[3] : 1;
+            let worst = Infinity;
+            for (let k = 0; k < px.length; k += 4) {
+              const bg = [px[k], px[k + 1], px[k + 2]];
+              const text = [0, 1, 2].map((j) => m[j] * a + bg[j] * (1 - a));
+              const [l1, l2] = [lum(text), lum(bg)].sort((x, y) => y - x);
+              worst = Math.min(worst, (l1 + 0.05) / (l2 + 0.05));
+            }
+            return worst;
+          }, [png.toString('base64'), colours[i]]);
+          expect(ratio, `${themeName} ${width}px ${path} crumb ${i + 1} (${colours[i]})`).toBeGreaterThanOrEqual(4.5);
+        }
+        await style.evaluate((s) => s.remove());
+      }
+    }
   }
 });
 

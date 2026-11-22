@@ -49,6 +49,24 @@ if (header) {
   update();
 }
 
+/* ---------- desktop header row: degrade instead of overlapping (WCAG 1.4.12 Text Spacing) ---------- */
+// With wider text (a user text-spacing stylesheet, a larger default font) the row would overflow into the toggles.
+// data-fit="compact" folds the toggle labels back into 44 px icon buttons and tightens the item padding;
+// data-fit="tight" also drops the visible wordmark (the logo tile and the link's name "RNC Landscaping home" stay).
+const siteNav = document.getElementById('site-nav');
+if (header && capsule && siteNav) {
+  const LEVELS = ['compact', 'tight'];
+  const overflows = () => siteNav.scrollWidth > siteNav.clientWidth + 1 || capsule.scrollWidth > capsule.clientWidth + 1;
+  const fit = () => {
+    header.removeAttribute('data-fit');
+    if (!DESKTOP.matches) return;
+    for (const level of LEVELS) { if (!overflows()) break; header.dataset.fit = level; }
+  };
+  const ro = new ResizeObserver(fit);
+  for (const el of [capsule, ...siteNav.querySelectorAll('.site-nav__list, .site-nav__actions')]) ro.observe(el);
+  document.fonts?.ready.then(fit);
+}
+
 /* ---------- Services / Service areas disclosures (buttons, never href="#") ---------- */
 /** @typedef {{ btn: HTMLButtonElement, panel: HTMLElement, item: HTMLElement, set: (open: boolean) => void }} Disclosure */
 /** @type {Disclosure[]} */
@@ -70,9 +88,12 @@ for (const d of disclosures) {
   d.item.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && d.btn.getAttribute('aria-expanded') === 'true') { e.stopPropagation(); d.set(false); d.btn.focus(); }
   });
+  // Close when focus moves to a known element outside the item. A click on the panel's own text or padding blurs the
+  // button with no relatedTarget (and macOS Safari does not focus links on mousedown): that must not close the panel
+  // under the pointer. Clicks outside are handled by the document listener below.
   d.item.addEventListener('focusout', (e) => {
     const to = /** @type {Node|null} */ (e.relatedTarget);
-    if (DESKTOP.matches && (!to || !d.item.contains(to))) d.set(false);
+    if (DESKTOP.matches && to && !d.item.contains(to)) d.set(false);
   });
 }
 document.addEventListener('click', (e) => {
@@ -84,12 +105,10 @@ document.addEventListener('click', (e) => {
 const bar = /** @type {HTMLElement|null} */ (document.querySelector('[data-action-bar]'));
 /** Reasons the bar is hidden right now: 'form', 'hero', 'keyboard', 'sheet'. */
 const barHold = new Set();
-const syncBar = () => {
-  if (!bar) return;
-  const hidden = barHold.size > 0;
-  bar.classList.toggle('is-hidden', hidden);
-  bar.inert = hidden;
-};
+/* Only the class flips: 30-chrome.css slides the bar out and then sets visibility: hidden, which takes it out of the
+   tab order and the accessibility tree. No inert / aria-hidden toggle, so a scroll-driven hide is not mistaken for an
+   auto-advancing widget (motion-audit #no-auto-advance). The sheet still makes the bar inert with the rest of the page. */
+const syncBar = () => { bar?.classList.toggle('is-hidden', barHold.size > 0); };
 /** @param {string} reason @param {boolean} on */
 const holdBar = (reason, on) => { if (on) barHold.add(reason); else barHold.delete(reason); syncBar(); };
 if (bar) {
@@ -117,16 +136,15 @@ if (bar) {
 const toggle = /** @type {HTMLButtonElement|null} */ (document.querySelector('[data-nav-toggle]'));
 const nav = document.getElementById('site-nav');
 if (toggle && nav && header) {
-  const label = /** @type {HTMLElement|null} */ (toggle.querySelector('.nav-toggle__label'));
   const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
   /** Everything outside the header is inert while the sheet is open (the sprite and scripts are harmless either way). */
   const background = () => /** @type {HTMLElement[]} */ ([...document.body.children]).filter((el) => el !== header && !/^(SCRIPT|TEMPLATE)$/.test(el.tagName));
   /** @param {boolean} open @param {{ returnFocus?: boolean }} [o] */
   const set = (open, o = {}) => {
     if (open === isOpen()) return;
+    // The name stays "Menu" (COMPONENTS.md §Chrome; visible label = name, WCAG 2.5.3); aria-expanded carries the state
+    // and the bars turn into a cross.
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
-    if (label) label.textContent = open ? 'Close' : 'Menu';
     nav.classList.toggle('is-open', open);
     header.classList.toggle('is-open', open);
     root.classList.toggle('nav-open', open);
@@ -140,7 +158,6 @@ if (toggle && nav && header) {
       if (o.returnFocus) toggle.focus();
     }
   };
-  toggle.setAttribute('aria-label', 'Menu');
   toggle.addEventListener('click', () => set(!isOpen(), { returnFocus: true }));
   // A tap on the dimmed page behind the sheet closes it.
   header.addEventListener('click', (e) => { if (e.target === header && isOpen()) set(false, { returnFocus: true }); });

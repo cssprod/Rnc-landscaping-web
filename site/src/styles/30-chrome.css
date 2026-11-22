@@ -6,6 +6,10 @@
    page and never over living art (html[data-scrolled]:not([data-header-over-living])). Every primary target is
    >= 44 x 44 px, the sticky bar's buttons are 48 px, and nothing else is under 24 px. */
 @layer chrome {
+  /* ---------- sprite icons (components/sprite.mjs) ---------- */
+  /* The line-icon style is set here once and inherits into each <use>, instead of on every <symbol> in every page. */
+  svg.i { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
   /* ---------- heights, scroll padding (2.4.11 Focus Not Obscured) ---------- */
   :root {
     --chrome-top: max(10px, env(safe-area-inset-top, 0px));
@@ -113,11 +117,12 @@
   .pref-toggle__dot { position: absolute; top: 7px; right: 7px; width: 9px; height: 9px; border-radius: 50%; box-shadow: inset 0 0 0 1.75px currentColor; }
   .pref-toggle[aria-pressed="true"] .pref-toggle__dot { background: var(--color-brand); box-shadow: 0 0 0 1px var(--color-brand), 0 0 8px 1px var(--glow-moss); }
   .pref-toggle__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* Visible labels from 80em, unless main.js found the row too tight for them (data-fit, WCAG 1.4.12). */
   @media (min-width: 80em) {
-    .pref-toggle { display: inline-flex; gap: 7px; width: auto; padding: 0 12px 0 11px; box-shadow: inset 0 0 0 1px var(--color-line); }
-    .pref-toggle__dot { position: static; order: -1; }
-    .pref-toggle__icon { width: 18px; height: 18px; }
-    .pref-toggle__label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: var(--font-size-small); font-weight: var(--font-weight-medium); }
+    .site-header:not([data-fit]) .pref-toggle { display: inline-flex; gap: 7px; width: auto; padding: 0 12px 0 11px; box-shadow: inset 0 0 0 1px var(--color-line); }
+    .site-header:not([data-fit]) .pref-toggle__dot { position: static; order: -1; }
+    .site-header:not([data-fit]) .pref-toggle__icon { width: 18px; height: 18px; }
+    .site-header:not([data-fit]) .pref-toggle__label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: var(--font-size-small); font-weight: var(--font-weight-medium); }
   }
 
   /* ---------- Menu button (< 64em, with JS) ---------- */
@@ -156,6 +161,14 @@
     .brand { gap: 8px; }
     .site-nav__item > a, .site-nav__disclosure { padding: 0 9px; }
     .site-nav__quote { padding: 0 14px; }
+  }
+  /* Row too tight (main.js data-fit; WCAG 1.4.12): tighter items, icon-only toggles, then the tile without the wordmark. */
+  @media (min-width: 64em) {
+    .site-header[data-fit] .site-nav__item > a, .site-header[data-fit] .site-nav__disclosure { padding: 0 5px; }
+    .site-header[data-fit] .site-nav__quote { padding: 0 10px; }
+    .site-header[data-fit] .site-nav, .site-header[data-fit] .site-nav__actions { gap: 2px; }
+    .site-header[data-fit="tight"] .brand { min-width: 44px; justify-content: center; }
+    .site-header[data-fit="tight"] .brand__word { display: none; }
   }
 
   /* ---------- < 64em: the sheet ---------- */
@@ -212,15 +225,20 @@
     position: fixed; z-index: var(--z-sticky);
     inset: auto max(10px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
     display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; padding: 8px;
-    border-radius: 24px; background: var(--material-thick);
+    /* Opaque, like the desktop menus: no blur here, and text scrolling under a translucent bar ghosted through it. */
+    border-radius: 24px; background: var(--color-bg-elevated);
     box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), 0 -10px 40px -20px rgba(0, 0, 0, 0.6);
-    transition: translate var(--dur-t0) var(--ease-out), opacity var(--dur-t0) var(--ease-out);
+    transition: translate var(--dur-t0) var(--ease-out), opacity var(--dur-t0) var(--ease-out), visibility 0s;
   }
-  /* Hidden by main.js (it also makes the bar inert, so nothing in it can take focus). */
-  .action-bar.is-hidden { translate: 0 calc(100% + 24px + env(safe-area-inset-bottom, 0px)); opacity: 0; pointer-events: none; }
+  /* Hidden by main.js (class only): slide out, then visibility: hidden takes the bar out of the tab order and the
+     accessibility tree once the slide has finished (no inert toggle; see main.js). */
+  .action-bar.is-hidden {
+    translate: 0 calc(100% + 24px + env(safe-area-inset-bottom, 0px)); opacity: 0; pointer-events: none; visibility: hidden;
+    transition: translate var(--dur-t0) var(--ease-out), opacity var(--dur-t0) var(--ease-out), visibility 0s linear var(--dur-t0);
+  }
   .action-bar__btn { --h: 48px; min-height: 48px; min-width: 0; padding: 0 12px; font-size: 1rem; }
-  .action-bar__call { background: transparent; color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-line-strong); }
-  .action-bar__call:hover { background: color-mix(in srgb, var(--color-ink) 7%, transparent); }
+  .action-bar__call { background: var(--color-bg-elevated); color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-line-strong); }
+  .action-bar__call:hover { background: color-mix(in srgb, var(--color-ink) 7%, var(--color-bg-elevated)); }
   @media (min-width: 64em) { .action-bar { display: none; } }
 
   /* ---------- breadcrumbs ---------- */
@@ -231,6 +249,12 @@
   .crumbs a:hover { color: var(--color-ink); text-decoration: underline; }
   .crumbs a[aria-current] { color: var(--color-ink); }
   .crumbs__sep { color: var(--color-ink-3); opacity: 0.7; }
+  /* Over the photo / art hero (dark scrim in both themes): white crumbs. These live in the chrome layer because the
+     ink rules above would otherwise beat the legacy-layer overrides whatever their specificity. */
+  /* A dark chip behind them holds 4.5:1 against the lightest pixel of any art at any width (no blur: glass budget). */
+  .hero .crumbs ol { width: fit-content; max-width: 100%; padding: 0 10px; border-radius: var(--radius-pill); background: rgba(5, 12, 8, 0.42); }
+  .hero .crumbs a { color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
+  .hero .crumbs__sep { color: rgba(255, 255, 255, 0.7); opacity: 1; }
   .crumbs-row { padding-top: calc(var(--layout-header-h) + var(--space-4)); }
 
   /* ---------- footer (a deep band in both themes: .on-deep) ---------- */
