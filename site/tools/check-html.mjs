@@ -8,13 +8,44 @@
  *   footer-tel-mailto  the footer carries tel:, sms: and mailto: links once [PHONE]/[EMAIL] are known, the
  *                      placeholder text (chip) until then, and never a token inside an href (A13 #26, CONTRACT §3);
  *                      the token check covers every page and every href/action/formaction/src attribute.
+ *   data-track-names   every data-track="…" value in a page and every track('…') name in a built script is an event of
+ *                      site/event-schema.yaml, and none is a deprecated v2 name (an intent starting "Deprecated:",
+ *                      quoted or not; CONTRACT §13).
  * Exits 0 when there is no dist. Failures are { rule, path, message }.
  */
-import { existsSync } from 'node:fs';
-import { DIST, files, read, report } from './lib.mjs';
+import { existsSync, readFileSync } from 'node:fs';
+import { DIST, SITE, files, read, report } from './lib.mjs';
+
+/**
+ * Event names in an event-schema.yaml: { name → deprecated }. A line-based reader for the file's fixed shape
+ * (`events:`, two-space event keys, four-space `intent:`), tolerant of quoted intents.
+ * @param {string} yaml
+ */
+export function eventNames(yaml) {
+  /** @type {Map<string, boolean>} */ const out = new Map();
+  let inEvents = false, cur = '';
+  for (const line of yaml.split('\n')) {
+    if (/^events:\s*$/.test(line)) { inEvents = true; continue; }
+    if (/^\S/.test(line)) { inEvents = false; continue; }
+    if (!inEvents) continue;
+    const ev = line.match(/^ {2}([A-Za-z_][\w]*):\s*(?:#.*)?$/);
+    if (ev) { cur = ev[1]; out.set(cur, false); continue; }
+    const intent = line.match(/^ {4}intent:\s*(.*)$/);
+    if (intent && cur && /^["']?\s*Deprecated\s*:/i.test(intent[1])) out.set(cur, true);
+  }
+  return out;
+}
+const SCHEMA_FILE = `${SITE}/event-schema.yaml`;
+const events = existsSync(SCHEMA_FILE) ? eventNames(readFileSync(SCHEMA_FILE, 'utf8')) : null;
+/** @param {string} where @param {string} name @param {string} how */
+const checkEvent = (where, name, how) => {
+  if (!events) return;
+  if (!events.has(name)) fail('data-track-names', where, `${how} "${name}" is not an event in site/event-schema.yaml (CONTRACT §13)`);
+  else if (events.get(name)) fail('data-track-names', where, `${how} "${name}" is a deprecated v2 event name; use the CONTRACT §13 name`);
+};
 
 export const RULES = ['lang', 'title', 'description', 'viewport', 'canonical', 'one-h1', 'img-alt', 'img-size', 'unique-ids',
-  'labelled-inputs', 'aria-refs', 'heading-order', 'no-href-hash', 'footer-tel-mailto'];
+  'labelled-inputs', 'aria-refs', 'heading-order', 'no-href-hash', 'footer-tel-mailto', 'data-track-names'];
 
 /** @typedef {{ rule: string, path: string, message: string, toString(): string }} Failure */
 /** @type {Failure[]} */
@@ -79,6 +110,13 @@ for (const f of existsSync(DIST) ? files() : []) {
   }
   // CONTRACT §3, every page: no URL attribute (href, action, formaction, src) is built on a bracket token.
   for (const m of h.matchAll(/\s(href|action|formaction|src)="([^"]*)"/g)) if (/\[[A-Z][A-Z ]*\]|%5B[A-Z][A-Z %20]*%5D/i.test(m[2])) e('footer-tel-mailto', `token inside an ${m[1]}: ${m[2].slice(0, 80)} (render the text and the chip instead)`);
+}
+/* ---- data-track-names (CONTRACT §13) ---- */
+if (existsSync(DIST)) {
+  for (const f of files()) for (const m of read(f).matchAll(/\sdata-track="([^"]*)"/g)) checkEvent(f, m[1], 'data-track');
+  // A hashed module (assets/build/lib-track.<hash>.js) is reported as its source, so the baseline key is stable.
+  const source = (/** @type {string} */ f) => { const m = f.match(/^assets\/build\/(lib-)?([\w-]+?)\.[0-9a-f]{6,}\.js$/); return m ? `site/src/scripts/${m[1] ? 'lib/' : ''}${m[2]}.js` : f; };
+  for (const f of files('.js')) for (const m of read(f).matchAll(/\btrack\(\s*(['"`])([\w-]+)\1/g)) checkEvent(source(f), m[2], 'track()');
 }
 const ok = report('check-html', /** @type {any} */ (failures));
 // exitCode, not process.exit(): a long report written to a pipe is flushed before the process ends.
