@@ -161,6 +161,7 @@ test('livingSpecimens(): only the home-hero specimen loops; every grid row is st
   }
   assert.ok(loops(out) <= 8, `whole section ${loops(out)} loops`);
   assert.equal((out.match(/data-living[^>]*data-still/g) || []).length, 5, 'area ×3, service and band frames carry data-still');
+  assert.equal(loops(s(livingSpecimens({ projects, live: false }))), 0, 'live: false stills the hero specimen too');
 });
 
 test('aurora: "still" paints the aurora without its loop; the other loops stay #aurora-still', () => {

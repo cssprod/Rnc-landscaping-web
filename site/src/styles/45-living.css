@@ -111,6 +111,11 @@
 /* Legacy heroes (picture() inside .hero__media) still set white copy on the left. At dawn the sky is pale, so the copy
    side is shaded until W3 hero(p) sets the dawn ink on hero copy (requests/living.md). The chip stays above it. */
 :root[data-theme="light"] .hero__media .scene--hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(10, 28, 20, .5) 0%, rgba(10, 28, 20, .44) 40%, rgba(10, 28, 20, .16) 64%, transparent 80%); }
+/* Narrow heroes: the copy spans the full width, so a left-hand shade covers everything. Shade from below instead,
+   in a dusk indigo, and leave the sky above the headline (header band) its dawn colour. */
+@media (max-width: 39.99em) {
+  :root[data-theme="light"] .hero__media .scene--hero::after { background: linear-gradient(180deg, rgba(22, 28, 50, 0) 0%, rgba(22, 28, 50, .14) 14%, rgba(22, 28, 50, .5) 26%, rgba(22, 28, 50, .54) 100%); }
+}
 .scene--hero .media__chip--art { top: calc(var(--layout-header-h, 64px) + 8px); bottom: auto; right: max(var(--layout-gutter, 16px), env(safe-area-inset-right)); }
 
 /* Aurora: two pre-blurred CSS washes (ellipses + masked rays). Moved by transform only (T2) and translate (T4). */

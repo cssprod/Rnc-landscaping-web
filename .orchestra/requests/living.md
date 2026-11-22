@@ -20,6 +20,10 @@ assumptions that a required living change breaks; living cannot edit those files
    `${livingSpecimens({ projects: Object.values(env.data.projects) })}` in the page (it renders an `<h2 id="living-h">`
    section: the home hero, one sea, lake and field area scene, a service nocturne, a still band, four project art wells
    and the four service vignettes, each framed and captioned). Styles live in 45-living.css (`.lv-spec*`).
+   Living fix 2: only the home-hero specimen loops (≤ 7); the area, service and band frames render still, so no
+   viewport of the styleguide holds more than 8 loops (motion-audit #policy-tiers; unit `#specimen-budget`). If
+   motion-audit reports the dock (`nav.dock.glass-bar`) over the hero specimen at a 50 % scroll sample, pass
+   `livingSpecimens({ projects, live: false })`, which stills the hero specimen too.
 4. **Hero scene slot**: `hero(p)` with `scene` should place `livingScene(p.scene)` (default variant `hero`) inside
    `.hero__scene`; the scene is `position:absolute; inset:0` and needs a positioned parent. `ctaBand({ living: true })`
    can use `livingScene('cta', { variant: 'band' })` (≤ 3 loops) or its own blobs; `quote-calm` uses
@@ -63,11 +67,14 @@ assumptions that a required living change breaks; living cannot edit those files
 10. **sharp for the pipeline test**: `unit/living-images.test#pipeline` converts a fixture photo with sharp when it can
     find it (`RNC_SHARP_DIR`, else `/tmp/rnc-devtools/node_modules/sharp`). Please have `tools/dev-setup.mjs --devtools`
     also install `sharp` into `/tmp/rnc-devtools`, so the conversion half runs in every gate instead of being skipped.
+    Living fix 2: with sharp@0.33.5 from a scratch install (`RNC_SHARP_DIR=$SCRATCH/sharp`, as media/photos/README.md
+    documents) the file runs 6/6 with nothing skipped; the default gate still skips the conversion half until this lands.
 11. **check-honesty#stock-in-projects** can assert on rendered `<img src>` / `<source srcset>` under `projects/**`: the
     offline and online builds now carry none (og:image is item 9).
 12. **Measured W2 numbers** (offline build, this branch): inline SVG per page max 42.1 KB (home: sprite 16.9 + icons
     6.4 + map 3.6 + hero scene 10.1 + 4 project cards 5.8), `/projects/` 40.2 KB, area pages ≤ 34.7 KB; hero ≤ 7
-    infinite animations, area heroes ≤ 5, art wells 0. motion-audit can count `[data-t2]` boxes per viewport.
+    infinite animations, area heroes ≤ 5, art wells 0 (fix 2: scenes inside legacy heroes are still, 0 loops; the
+    budgets apply to scenes placed outside glass). motion-audit can count `[data-t2]` boxes per viewport.
 
 ## For content / qa honesty (W2–W3)
 
@@ -76,6 +83,11 @@ assumptions that a required living change breaks; living cannot edit those files
     `art: { scene: 'svc-<slug>' }`, so the service pages show the labelled service scene (check-honesty#no-stock-people
     is green on a trial merge with w2/qa). `svc-irrigation-hero` (sprinklers, no person) keeps its credited stock (and
     the illustration file offline); `area-central-saanich` also drops its stock, so all 13 area heroes show their scene. qa: nothing to change in check-honesty.
+    Living fix 2: `home-commercial` (the commercial teaser on `/`, a stock worker standing for RNC's capacity) now has
+    `stock: null` and `art: { scene: 'svc-grounds-maintenance' }`; unit `living-images#pipeline` asserts no stock on it
+    and the three service heroes. **qa (optional)**: check-honesty#no-stock-people could also flag slots whose `purpose`
+    mentions capacity, crew or "our" work, not only heroes. `res-4` (a person trimming a hedge, article header) is left
+    as an editorial placeholder: it illustrates a how-to, not RNC's crew; content may retire it in W3.
 
 ## For W3 families
 
@@ -83,27 +95,25 @@ assumptions that a required living change breaks; living cannot edit those files
     (`proj-<service>-<n>`, `svc-*-before/after/detail-*`) already render the same art through `picture()`. Show the
     before/after comparison only when RNC's own photos exist (`hasPhoto()`).
 15. **t-home / t-areas / t-services**: `picture('home-hero' | 'area-<slug>' | 'svc-<slug>-hero', { eager: true })`
-    renders the layered scene inside the legacy hero today, under the legacy scrim, with the aurora painted still
-    (item 17). With `ui.hero({ scene })` the scene sits in the new hero
-    without a scrim; area cards on the hub get the static area art well (`livingScene('area-<slug>', { variant: 'card' })`).
+    renders the layered scene inside the legacy hero today, under the legacy scrim, **still** (0 loops, `data-still`;
+    item 17). With `ui.hero({ scene })` the scene sits in the new hero without a scrim or glass over it and runs its
+    loops (`livingScene(id)`, default); area cards on the hub get the static area art well (`livingScene('area-<slug>', { variant: 'card' })`).
 16. **t-areas / t-editorial**: `contourPlate(TILES, { rings, labels, current })` in `lib/art.mjs` draws the 13-tile
     contour plate (contour lines only; `[data-draw]` group for the plate-draw T1).
 
 ## Glass over living heroes (motion-audit #policy-tiers; DESIGN-DIRECTION "never blur over animation")
 
-17. **ds-comp (W2) / ds-chrome (W2), blocks a green motion-audit on the merge**: on a trial merge with w2/qa,
-    motion-audit reports `backdrop-filter element a.btn.btn--glass sits over a running infinite animation` on `/`,
-    `/areas/oak-bay/` (and on `/services/irrigation/` whenever its hero shows the scene), and `nav.dock.glass-bar …` on
-    `/` (390 and 1440 px, motion on). The loops under the buttons are the land-box layers (stars, glints, mist, fireflies), which span the whole
-    hero width, so living cannot move them out from under the copy. Please drop the blur where the glass sits on a
-    living scene and use the thick material instead, for example:
-    `.hero:has([data-living]) .btn--glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--material-thick); }`
-    in the ds-comp button styles, and the same for `.dock` while it overlaps a `[data-living]` hero (ds-chrome can
-    toggle a class from the existing header-over-living IO, `data-header-over-living`). Living fix 1 already reduced the
-    cost: the aurora box is sized to the sky and drifts by translate only (no scale), and heroes placed through
-    `picture({ eager: true })` paint the aurora still (`livingScene(id, { aurora: 'still' })`). Home at 1440 px in
-    headless Chromium went from 31 fps to 50 fps (base 58). When W3 `hero(p)` places scenes itself without glass on
-    top, it uses the default (`aurora: 'loop'`).
+17. **Resolved by living in fix 2 (no W2 action needed from ds-comp or ds-chrome).** The legacy hero buttons
+    (`a.btn.btn--glass`) and the dock (`nav.dock.glass-bar`) blur over the hero, and the loop boxes (stars, glints,
+    mist, fireflies) span the whole land band, so they cannot be kept out from under the glass. Scenes placed through
+    `picture({ eager: true })` (the legacy heroes) now render still: `LEGACY_HERO = { still: true }` in lib/images.mjs.
+    A trial merge with w2/qa--fix1 (online build) reports 0 `sits over a running infinite animation` lines in
+    motion-audit. The loop runtime (data-alive, off-screen and hidden-tab pausing, runtime toggle) is still proven in
+    e2e `living.spec` #loops/#runtime on a live scene placed outside any glass, and on `/styleguide/` (item 3).
+    **W3 hero(p) owners**: when `hero(p)` places `livingScene(p.scene)` itself, keep glass off the scene (no
+    backdrop-filter buttons over it; the dock uses the thick material while it overlaps a `[data-living]` hero, e.g. from
+    `data-header-over-living`), and then the loops come back by default. Tell living when the legacy heroes are gone,
+    so `LEGACY_HERO` can be removed.
 
 ## Hero copy at dawn (text-over-media #worst-pixel, light theme)
 
@@ -113,6 +123,11 @@ assumptions that a required living change breaks; living cannot edit those files
     at every width on a trial merge with w2/qa. `hero(p)` in W3 should instead set the dawn ink colour on hero copy in
     the light theme (DESIGN-DIRECTION §2.2), and then drop the `.hero__media` shading; tell living if the hero no
     longer uses `.hero__media`, because the shading rule keys on it.
+    Living fix 2: below 40em the shade runs bottom-up in a dusk indigo (the copy spans the whole width there), so the
+    sky above the headline keeps its dawn colour under the header; text-over-media stays green in the light theme at
+    320 and 390 px on `/`, oak-bay, sooke, grounds-maintenance and irrigation. Most of the remaining grey at the top of
+    a narrow dawn hero is the legacy `.hero__scrim` (`rgba(5, 12, 8, .5)` at the top), not the living shade: W3
+    `hero(p)` should drop that scrim in the light theme together with the shade.
 
 ## Dead aurora markup (slice 04 is deleted)
 
