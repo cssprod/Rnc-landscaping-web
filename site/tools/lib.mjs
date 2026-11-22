@@ -193,6 +193,30 @@ export async function serveDist(fallback = 0) {
 }
 
 /** Playwright Chromium ($CHROME overrides). Imported lazily so the check-* tools never need Playwright. */
+/**
+ * Primary targets (CONTRACT §8, C4), run in the page through page.evaluate (self-contained: no closure over this
+ * module): the theme and motion toggles ([data-pref]) and the Menu button ([data-nav-toggle]) at least 44 × 44, the
+ * sticky bar's actions ([data-action-bar] a, button) at least 44 wide and 48 tall. Returns one line per undersized
+ * visible target. Used by a11y.mjs#target-size; here so a unit test can run it on a fixture.
+ * @returns {string[]}
+ */
+export const primaryTargets = () => {
+  const out = [];
+  const visible = (/** @type {Element} */ el) => { const s = getComputedStyle(el); const r = el.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0; };
+  const name = (/** @type {Element} */ el) => `${el.tagName.toLowerCase()}${el.getAttribute('data-pref') ? `[data-pref=${el.getAttribute('data-pref')}]` : ''}${el.className && typeof el.className === 'string' ? `.${el.className.trim().split(/\s+/).join('.')}` : ''} "${(el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 30)}"`;
+  const check = (/** @type {string} */ sel, /** @type {number} */ minW, /** @type {number} */ minH) => {
+    for (const el of document.querySelectorAll(sel)) {
+      if (!visible(el)) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width + 0.5 < minW || r.height + 0.5 < minH) out.push(`${name(el)} is ${Math.round(r.width)}×${Math.round(r.height)} (needs ${minW}×${minH})`);
+    }
+  };
+  check('[data-pref]', 44, 44);
+  check('[data-nav-toggle]', 44, 44);
+  check('[data-action-bar] a, [data-action-bar] button', 44, 48);
+  return out;
+};
+
 export async function launchChromium() {
   const { chromium } = await import('playwright');
   return chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});

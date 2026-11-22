@@ -12,7 +12,7 @@ import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { literalRules, testTitles } from '../../tools/trace.mjs';
-import { applyBaseline, contrastOf, fileOfUrl, luminance, median, urlOf } from '../../tools/lib.mjs';
+import { applyBaseline, contrastOf, fileOfUrl, launchChromium, luminance, median, primaryTargets, urlOf } from '../../tools/lib.mjs';
 
 const SITE = fileURLToPath(new URL('../..', import.meta.url));
 const REPO = join(SITE, '..');
@@ -123,6 +123,42 @@ test('check-ci requires every gate, hard, at 5 widths, on C1 URLs #required-gate
   const lhci = run('check-ci', [file(`${good}\n      - name: lhci\n        run: npx @lhci/cli autorun --assert.assertions.categories:performance=warn\n`)]);
   assert.match(lhci.out, /turns the Lighthouse performance budget into a warn/);
   assert.equal(run('check-ci', ['--file=/nonexistent/ci.yml']).code, 0, 'no ci.yml: nothing to check');
+  // Neutralised gates: each mutation alone must fail with the reason.
+  /** @type {[string, (s: string) => string, RegExp][]} */
+  const mutations = [
+    ['|| true', (s) => s.replace('--motion=off,on', '--motion=off,on || true'), /a11y matrix \(axe\) gate .* `\|\| true` swallows/],
+    ['|| :', (s) => s.replace('--motion=off,on', '--motion=off,on || :'), /`\|\| :` swallows/],
+    ['|| echo', (s) => s.replace('npx --no-install tsc -p jsconfig.json', 'npx --no-install tsc -p jsconfig.json || echo failed'), /typecheck gate .* `\|\| echo failed`/],
+    ['; exit 0', (s) => s.replace('node tools/csp.mjs --check', 'node tools/csp.mjs --check; exit 0'), /CSP hash check gate .* `exit 0`/],
+    ['set +e', (s) => s.replace('run: node --test', 'run: set +e; node --test'), /unit tests gate .* `set \+e`/],
+    ['pipe', (s) => s.replace('run: node --test "tests/unit/**/*.test.mjs"', 'run: node --test "tests/unit/**/*.test.mjs" | tee unit.log'), /piped without `set -o pipefail`/],
+    ['if: false', (s) => s.replace('      - name: Lighthouse budgets', '      - if: false\n        name: Lighthouse budgets'), /Lighthouse gate .* the step has `if: false`/],
+    ['job if', (s) => s.replace('    runs-on: ubuntu-latest', "    if: github.event_name == 'never'\n    runs-on: ubuntu-latest"), /its job has `if: github\.event_name == 'never'`/],
+    ['shell without -e', (s) => s.replace('      - name: CSP hashes\n', '      - name: CSP hashes\n        shell: bash {0}\n'), /`shell: bash \{0\}` drops -e/],
+    ['continue-on-error expression', (s) => s.replace('run: node tools/csp.mjs --check', 'run: node tools/csp.mjs --check\n        continue-on-error: ${{ true }}'), /CSP hash check gate runs only with continue-on-error/],
+    ['echo prefix', (s) => s.replace('run: node node_modules/playwright/cli.js test', 'run: echo node node_modules/playwright/cli.js test'), /no step runs the Playwright gate/],
+    ['commented out', (s) => s.replace('run: node node_modules/playwright/cli.js test --trace off', 'run: |\n          # node node_modules/playwright/cli.js test --trace off\n          true'), /no step runs the Playwright gate/],
+    ['quoted', (s) => s.replace('run: node node_modules/playwright/cli.js test --trace off', `run: bash -c 'echo "node node_modules/playwright/cli.js test"'`), /no step runs the Playwright gate/],
+    ['--grep', (s) => s.replace('cli.js test --trace off', 'cli.js test --trace off --grep @smoke'), /--grep runs only part of the suite/],
+    ['--test-name-pattern', (s) => s.replace('run: node --test "tests/unit', 'run: node --test --test-name-pattern=trace "tests/unit'), /--test-name-pattern runs only part/],
+    ['--runs=1', (s) => s.replace('--runs=3', '--runs=1'), /--runs=1 is not a median of 3/],
+    ['--allow-slow', (s) => s.replace('--runs=3', '--runs=3 --allow-slow'), /--allow-slow judges scores/],
+    ['--pages=/', (s) => s.replace('--motion=off,on', '--motion=off,on --pages=/'), /--pages=\/ drops template pages/],
+    ['--themes=dark', (s) => s.replace('--themes=dark,light', '--themes=dark'), /--themes=dark does not cover dark and light/],
+  ];
+  for (const [what, mutate, re] of mutations) {
+    const m = mutate(good);
+    assert.notEqual(m, good, `mutation "${what}" applies to ci.yml`);
+    const r = run('check-ci', [file(m)]);
+    assert.equal(r.code, 1, `${what} must fail check-ci: ${r.out}`);
+    assert.match(r.out, re, what);
+  }
+  for (const [what, mutate] of /** @type {[string, (s: string) => string][]} */ ([
+    ['if: always()', (s) => s.replace('      - name: CSP hashes\n', '      - name: CSP hashes\n        if: ${{ always() }}\n')],
+    ['|| exit 1', (s) => s.replace('node tools/csp.mjs --check', 'node tools/csp.mjs --check || exit 1')],
+    ['pipefail', (s) => s.replace('run: node --test "tests/unit/**/*.test.mjs"', 'run: set -o pipefail; node --test "tests/unit/**/*.test.mjs" | tee unit.log')],
+    ['--pages=all', (s) => s.replace('--motion=off,on', '--motion=off,on --pages=all')],
+  ])) assert.equal(run('check-ci', [file(mutate(good))]).code, 0, `${what} still gates`);
 });
 
 /* ------------------------------------------------------------------ check-html#data-track-names */
@@ -175,6 +211,22 @@ test('check-honesty flags superlatives, years in business and invented numbers #
   assert.match(out, /\[unverifiable-claims\] about\/index\.html: since 1998/);
   assert.match(out, /\[unverifiable-claims\] reviews\/index\.html: counter\/ticker markup/);
   assert.doesNotMatch(out, /services\/index\.html/, 'ordinary uses of "best" pass');
+  const more = run('check-honesty', [`--root=${honestyRoot()}`], { SITE_DIST: tree('qa-dist-', {
+    'areas/oak-bay/index.html': page('Oak Bay', '<p>Serving Oak Bay for 25 years with pride.</p>'),
+    'index.html': page('Home', '<p>Trusted by over 300 homeowners.</p>'),
+    'areas/saanich/index.html': page('Saanich', '<p>The finest lawn care on the Saanich Peninsula, voted number one.</p>'),
+    'services/a/index.html': page('A', '<p>The go-to crew for hedges.</p>'),
+    'about/index.html': page('About', '<p>Hundreds of happy families.</p>'),
+    'services/b/index.html': page('B', '<p>Bark mulch lasts for 2 years. Prune hedges twice a year; turf takes 3 years to settle.</p>'),
+  }) }).out;
+  assert.match(more, /\[unverifiable-claims\] areas\/oak-bay\/index\.html: Serving Oak Bay for 25 years/);
+  assert.match(more, /\[unverifiable-claims\] index\.html: (?:over 300 homeowners|Trusted by)/);
+  assert.match(more, /\[unverifiable-claims\] areas\/saanich\/index\.html: finest/);
+  assert.match(more, /\[unverifiable-claims\] areas\/saanich\/index\.html: voted/);
+  assert.match(more, /\[unverifiable-claims\] areas\/saanich\/index\.html: number one/);
+  assert.match(more, /\[unverifiable-claims\] services\/a\/index\.html: The go-to/);
+  assert.match(more, /\[unverifiable-claims\] about\/index\.html: Hundreds of happy families/);
+  assert.doesNotMatch(more, /services\/b\/index\.html/, 'plain durations are not years in business');
 });
 
 test('check-honesty enforces Canadian spelling and catches typos #spelling', () => {
@@ -196,7 +248,17 @@ test('check-honesty keeps stock people from standing for the owner or crew #no-s
     'services/a/index.html': page('A', '<section class="hero"><figure data-slot="hero-a"><img src="https://images.unsplash.com/q" width="1" height="1" alt=""></figure></section>'),
   }) }).out;
   assert.match(out, /\[no-stock-people\] media\/images\.json: slot "about-owner" has a stock photo/);
-  assert.match(out, /\[no-stock-people\] services\/a\/index\.html: slot "hero-a" is a stock photo of a person/);
+  assert.match(out, /\[no-stock-people-hero\] services\/a\/index\.html: slot "hero-a" is a stock photo of a person \("A landscaper mowing"\) in the page hero/);
+});
+
+test('check-honesty: a baselined hero slot never hides a stock person on a company page #no-stock-people #no-stock-people-hero', () => {
+  const root = honestyRoot({ 'media/images.json': JSON.stringify([{ id: 'hero-a', alt: 'A landscaper mowing', purpose: 'hero', stock: { provider: 'Unsplash', imageUrl: 'https://images.unsplash.com/q' } }, { id: 'side-a', alt: 'A gardener weeding', purpose: 'section', stock: { provider: 'Unsplash', imageUrl: 'https://images.unsplash.com/r' } }]) });
+  const bl = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'no-stock-people-hero', path: 'about/index.html' }] }) });
+  const hero = '<section class="hero"><figure data-slot="hero-a"><img src="https://images.unsplash.com/q" width="1" height="1" alt=""></figure></section>';
+  assert.equal(run('check-honesty', [`--root=${root}`], { SITE_DIST: tree('qa-dist-', { 'services/a/index.html': page('A', hero) }), BASELINE_DIR: bl }).code, 1, 'the hero case alone fails where it is not baselined');
+  const out = run('check-honesty', [`--root=${root}`], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', `${hero}<figure data-slot="side-a"><img src="https://images.unsplash.com/r" width="1" height="1" alt=""></figure>`) }), BASELINE_DIR: bl });
+  assert.equal(out.code, 1);
+  assert.match(out.out, /\[no-stock-people\] about\/index\.html: slot "(?:hero-a|side-a)" is a stock photo of a person .* on a company page/);
 });
 
 test('check-honesty wants concrete commercial commitments without invented figures #commercial-proof', () => {
@@ -217,11 +279,22 @@ test('check-honesty bans prices and wants the reply-time promise #trust-without-
     'contact/index.html': page('Contact', `<p>${QUOTE_OK}</p>`),
     'about/index.html': page('About', '<section class="cta-band"><h2>Talk to us</h2><p>Get a free quote.</p></section>', '<script type="application/ld+json">{"@type":"LocalBusiness","priceRange":"$$"}</script>'),
   }) }).out;
-  assert.match(out, /\[trust-without-prices\] services\/index\.html: price/);
+  assert.match(out, /\[no-prices\] services\/index\.html: price/);
   assert.match(out, /\[trust-without-prices\] free-quote\/index\.html: no reply-time promise/);
-  assert.match(out, /\[trust-without-prices\] about\/index\.html: JSON-LD carries a price/);
+  assert.match(out, /\[no-prices\] about\/index\.html: JSON-LD carries a price/);
   assert.match(out, /\[trust-without-prices\] about\/index\.html: the CTA band has no reply-time promise/);
   assert.doesNotMatch(out, /contact\/index\.html/);
+});
+
+test('check-honesty: a baselined reply-time gap never hides a new price on the same page #no-prices #trust-without-prices', () => {
+  const root = `--root=${honestyRoot()}`;
+  const band = '<section class="cta-band"><h2>Talk to us</h2><p>Get a free quote.</p></section>';
+  const bl = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'trust-without-prices', path: 'services/irrigation/index.html' }] }) });
+  const before = run('check-honesty', [root], { SITE_DIST: tree('qa-dist-', { 'services/irrigation/index.html': page('Irrigation', `<p>Spring start-ups.</p>${band}`) }), BASELINE_DIR: bl });
+  assert.equal(before.code, 0, `the reply-time gap is baselined: ${before.out}`);
+  const after = run('check-honesty', [root], { SITE_DIST: tree('qa-dist-', { 'services/irrigation/index.html': page('Irrigation', `<p>Spring start-ups from $89 per visit.</p>${band}`) }), BASELINE_DIR: bl });
+  assert.equal(after.code, 1, 'the price is a fresh failure');
+  assert.match(after.out, /\[no-prices\] services\/irrigation\/index\.html: price/);
 });
 
 test('check-honesty: no rating markup, labelled samples, credentials and guarantee from tokens #reviews-credentials-guarantee', () => {
@@ -241,7 +314,7 @@ test('check-honesty: no rating markup, labelled samples, credentials and guarant
 });
 
 /* ------------------------------------------------------------------ check-motion-policy.mjs */
-test('check-motion-policy lints banned effects, raw durations and prefers-reduced-motion #banned-effects #raw-durations #reduced-motion-placement', () => {
+test('check-motion-policy lints banned effects, raw durations and prefers-reduced-motion (comments excluded) #banned-effects #raw-durations #reduced-motion-placement', () => {
   const site = tree('qa-site-', {
     'site/src/styles/42-ui-cards.css': `@layer components {
   .card { transition: transform 200ms ease; }
@@ -253,7 +326,10 @@ test('check-motion-policy lints banned effects, raw durations and prefers-reduce
   .rail { animation-timeline: view(); }
   .carousel__track { display: flex; }
   @media (prefers-reduced-motion: reduce) { .card { transition: none; } }
-}`,
+}
+/* Motion comes from the tokens:
+   nothing here reads prefers-reduced-motion,
+   and nothing animates on its own. */`,
     'site/src/styles/95-motion.css': '@layer motion { @media (prefers-reduced-motion: reduce) { :root { --x: 0 } } [data-entered] .sc-land { transition: scale 1.4s; } }',
     'site/src/styles/50-legacy-07-ds-chrome.css': '@layer legacy { .x { transition: opacity .3s } @media (prefers-reduced-motion: reduce) { .x { transition: none } } }',
     'site/src/scripts/main.js': "const m = matchMedia('(prefers-reduced-motion: reduce)');",
@@ -269,6 +345,7 @@ test('check-motion-policy lints banned effects, raw durations and prefers-reduce
   assert.match(out, /animation-timeline: view\(\) is banned/);
   assert.match(out, /selector "\.carousel__track"/);
   assert.match(out, /\[reduced-motion-placement\] site\/src\/styles\/42-ui-cards\.css: line 10/);
+  assert.doesNotMatch(out, /42-ui-cards\.css: line 1[1-4]: prefers-reduced-motion/, 'a multi-line comment that names the query is not a use of it');
   assert.doesNotMatch(out, /\] site\/src\/styles\/(?:95-motion|50-legacy-07)/, '95-motion.css and legacy slices may use prefers-reduced-motion and raw times');
   assert.match(out, /\[reduced-motion-placement\] site\/src\/scripts\/main\.js: line 1: reads matchMedia/);
   assert.doesNotMatch(out, /\] site\/src\/scripts\/lib\/prefs\.js/);
@@ -286,12 +363,67 @@ test('budgets: third parties, image widths, picture pipeline and the v2 table #t
     'a.svg': '<svg/>', 'b.svg': '<svg/>', 'c.jpg': 'x',
   }) }).out;
   assert.match(out, /\[third-party-origins\] index\.html: loads from cdn\.example\.com/);
-  assert.match(out, /\[v2\] index\.html: inline SVG/);
+  assert.match(out, /\[v2-inline-svg\] index\.html: inline SVG/);
   assert.match(out, /\[image-widths\] about\/index\.html: image candidate https:\/\/images\.unsplash\.com\/p\?w=2400 is 2400 px/);
   assert.match(out, /\[picture-pipeline\] about\/index\.html: <img> without width and height/);
   assert.match(out, /\[picture-pipeline\] about\/index\.html: <img> below the hero without loading="lazy"/);
   assert.match(out, /\[picture-pipeline\] contact\/index\.html: local photo \/c\.jpg is not a <picture> with AVIF then WebP/);
   assert.doesNotMatch(out, /about\/index\.html: loads from images\.unsplash\.com/, 'an online build may use the CDN photos');
+});
+
+test('budgets: one rule id per v2 row, so a baselined sprite never hides an HTML-size regression #v2 #v2-sprite #v2-html-gz #v2-html-raw', () => {
+  const sprite = `<svg hidden><symbol id="i">${'<path d="M0 0L10 10"/>'.repeat(450)}</symbol></svg>`;
+  const bl = tree('qa-bl-', { 'budgets.json': JSON.stringify({ tool: 'budgets', writtenAt: 'test', entries: [{ rule: 'v2-sprite', path: 'about/index.html' }] }) });
+  const small = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', sprite) }), BASELINE_DIR: bl });
+  assert.equal(small.code, 0, `the sprite failure is baselined: ${small.out}`);
+  // 200 KB of text that does not compress away: over the 30 KB gzip and 150 KB raw budgets.
+  let x = 1; const filler = Array.from({ length: 26000 }, () => { x = (x * 48271) % 2147483647; return x.toString(36); }).join(' ');
+  const big = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', `${sprite}<p>${filler}</p>`) }), BASELINE_DIR: bl });
+  assert.equal(big.code, 1, 'the HTML regression is fresh');
+  assert.match(big.out, /\[v2-html-gz\] about\/index\.html: HTML \(gzip\)/);
+  assert.match(big.out, /\[v2-html-raw\] about\/index\.html: HTML \(raw\)/);
+});
+
+test('budgets: an offline build that leaks one CDN image fails, and hints are their own rule #third-party-origins #third-party-hints', () => {
+  const root = tree('qa-root-', { 'media/images.json': JSON.stringify([{ id: 'hero-a', stock: { provider: 'Unsplash', imageUrl: 'https://images.unsplash.com/photo-1' } }]) });
+  const art = '<figure class="media media--art" data-slot="hero-a"><img src="/assets/art/hero-a.svg" width="4" height="3" alt="" fetchpriority="high" loading="eager" decoding="async"></figure>';
+  const leak = '<img src="https://images.unsplash.com/photo-2?w=800" width="8" height="6" loading="lazy" decoding="async" alt="">';
+  const hint = '<link rel="preconnect" href="https://images.unsplash.com">';
+  const dist = tree('qa-dist-', { 'index.html': page('Home', art, hint), 'process/index.html': page('Process', leak, hint), 'assets/art/hero-a.svg': '<svg/>' });
+  const out = run('budgets', [`--root=${root}`], { SITE_DIST: dist });
+  assert.equal(out.code, 1);
+  assert.match(out.out, /\(offline\b/, 'a stock slot rendered as its illustration marks the build offline, whatever else the pages load');
+  assert.match(out.out, /\[third-party-origins\] process\/index\.html: loads from images\.unsplash\.com \(an offline build loads no third party\)/);
+  assert.match(out.out, /\[third-party-hints\] index\.html: preconnect\/dns-prefetch to images\.unsplash\.com/);
+  assert.doesNotMatch(out.out, /\[third-party-origins\] index\.html/, 'a preconnect is a hint, not a load');
+  // With the hints baselined, the leak is still fresh.
+  const bl = tree('qa-bl-', { 'budgets.json': JSON.stringify({ tool: 'budgets', writtenAt: 'test', entries: [{ rule: 'third-party-hints', path: 'index.html' }, { rule: 'third-party-hints', path: 'process/index.html' }] }) });
+  assert.equal(run('budgets', [`--root=${root}`], { SITE_DIST: dist, BASELINE_DIR: bl }).code, 1);
+  // The flag (check-all passes its argv through) is authoritative even with no illustration on any page.
+  const cdnOnly = tree('qa-dist-', { 'process/index.html': page('Process', leak) });
+  assert.match(run('budgets', [`--root=${root}`], { SITE_DIST: cdnOnly }).out, /\(online\b/);
+  assert.match(run('budgets', [`--root=${root}`, '--offline-images'], { SITE_DIST: cdnOnly }).out, /\[third-party-origins\] process\/index\.html: loads from images\.unsplash\.com/);
+  assert.match(run('budgets', [`--root=${root}`], { SITE_DIST: cdnOnly, SITE_IMAGES: 'offline' }).out, /\[third-party-origins\] process\/index\.html/);
+});
+
+/* ------------------------------------------------------------------ a11y.mjs#target-size */
+test('a11y primary targets: undersized [data-pref], [data-nav-toggle] and [data-action-bar] targets are reported #target-size', async (t) => {
+  let browser;
+  try { browser = await launchChromium(); } catch (e) { t.skip(`no Chromium (${String(e).split('\n')[0]})`); return; }
+  try {
+    const page = await browser.newPage({ viewport: { width: 320, height: 800 } });
+    await page.setContent(`<style>button,a{display:inline-block;box-sizing:border-box;padding:0;border:0}</style>
+      <button data-pref="theme" style="width:30px;height:30px">T</button>
+      <button data-pref="motion" style="width:44px;height:44px">M</button>
+      <button data-nav-toggle style="width:95px;height:40px">Menu</button>
+      <nav data-action-bar><a href="#c" style="width:30px;height:30px">Call</a><button style="width:60px;height:48px">Quote</button></nav>
+      <button data-pref="hidden" style="display:none;width:10px;height:10px">H</button>`);
+    const out = await page.evaluate(primaryTargets);
+    assert.equal(out.length, 3, out.join('\n'));
+    assert.match(out.join('\n'), /button\[data-pref=theme\] "T" is 30×30 \(needs 44×44\)/);
+    assert.match(out.join('\n'), /"Menu" is 95×40 \(needs 44×44\)/);
+    assert.match(out.join('\n'), /a "Call" is 30×30 \(needs 44×48\)/);
+  } finally { await browser.close(); }
 });
 
 /* ------------------------------------------------------------------ schemas/quote.schema.json */

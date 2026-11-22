@@ -20,7 +20,7 @@
  * axe-core comes from `node tools/dev-setup.mjs --devtools` (or $AXE_CORE_PATH, or site/node_modules/axe-core in CI).
  */
 import { readFileSync } from 'node:fs';
-import { argList, argOpt, devtool, fileOfUrl, launchChromium, report, selectPages, serveDist, stateContext, writeJson } from './lib.mjs';
+import { argList, argOpt, devtool, fileOfUrl, launchChromium, primaryTargets, report, selectPages, serveDist, stateContext, writeJson } from './lib.mjs';
 
 export const RULES = ['axe-matrix', 'target-size'];
 
@@ -36,23 +36,6 @@ const AXE = readFileSync(axePath, 'utf8');
 const pages = selectPages();
 if (!pages.length) { console.log('a11y: no built pages (SITE_DIST); nothing to check'); process.exit(0); }
 
-/** Primary targets (CONTRACT §8, C4): measured in the page. */
-const primaryTargets = () => {
-  const out = [];
-  const visible = (/** @type {Element} */ el) => { const s = getComputedStyle(el); const r = el.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0; };
-  const name = (/** @type {Element} */ el) => `${el.tagName.toLowerCase()}${el.getAttribute('data-pref') ? `[data-pref=${el.getAttribute('data-pref')}]` : ''}${el.className && typeof el.className === 'string' ? `.${el.className.trim().split(/\s+/).join('.')}` : ''} "${(el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 30)}"`;
-  const check = (/** @type {string} */ sel, /** @type {number} */ minW, /** @type {number} */ minH) => {
-    for (const el of document.querySelectorAll(sel)) {
-      if (!visible(el)) continue;
-      const r = el.getBoundingClientRect();
-      if (r.width + 0.5 < minW || r.height + 0.5 < minH) out.push(`${name(el)} is ${Math.round(r.width)}×${Math.round(r.height)} (needs ${minW}×${minH})`);
-    }
-  };
-  check('[data-pref]', 44, 44);
-  check('[data-nav-toggle]', 44, 44);
-  check('[data-action-bar] a, [data-action-bar] button', 44, 48);
-  return out;
-};
 
 const site = await serveDist(0);
 const browser = await launchChromium();

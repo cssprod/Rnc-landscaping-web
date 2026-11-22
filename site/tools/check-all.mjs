@@ -6,6 +6,8 @@
  * need no Playwright, devtools or .orchestra git refs, and pass (export default true) when it does not apply
  * (CONTRACT §14). Browser tools are never named check-*.
  *   node tools/check-all.mjs [--no-build] [--offline-images] [--out=DIR] [tool flags such as --url-map, --no-baseline]
+ * --offline-images also tells the tools (which run in-process and read this argv) that the dist is an offline build, with
+ * or without --no-build: budgets#third-party-origins then allows no CDN at all, whatever the pages contain.
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync } from 'node:fs';

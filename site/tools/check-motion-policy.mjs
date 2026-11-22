@@ -39,13 +39,16 @@ const failures = [];
 const fail = (/** @type {string} */ rule, /** @type {string} */ path, /** @type {string} */ message) => failures.push({ rule, path, message });
 
 /* ------------------------------------------------------------------ a small CSS walker */
+/** CSS with every comment blanked to spaces, newlines kept (line numbers stay true). @param {string} css */
+export const blankComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+
 /**
  * Style rules and keyframes of a stylesheet, with nesting (at-rules and native nesting) resolved into a prelude stack.
  * @param {string} css
  * @returns {{ rules: { selector: string, at: string[], decls: { prop: string, value: string, line: number }[], line: number }[], keyframes: { name: string, body: string, line: number }[] }}
  */
 export function parseCss(css) {
-  const src = css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+  const src = blankComments(css);
   const lineAt = (/** @type {number} */ i) => src.slice(0, i).split('\n').length;
   /** @type {ReturnType<typeof parseCss>['rules']} */ const rules = [];
   /** @type {ReturnType<typeof parseCss>['keyframes']} */ const keyframes = [];
@@ -109,7 +112,8 @@ for (const name of cssFiles) {
   /* reduced-motion-placement */
   const prmAllowed = motionFile || (legacy && !/^50-legacy-32-/.test(name));
   if (!prmAllowed) {
-    css.split('\n').forEach((l, i) => { if (/prefers-reduced-motion/.test(l.replace(/\/\*.*?\*\//g, ''))) fail('reduced-motion-placement', path, `line ${i + 1}: prefers-reduced-motion belongs only in brand/tokens.css and 95-motion.css (use the --dur-* tokens and [data-t2] hooks)${/^50-legacy-32-/.test(name) ? '; this slice is the legacy kill switch ds-core deletes in W2' : ''}`); });
+    // Over the comment-blanked source (same line numbers), so a multi-line /* … */ that names the query never counts.
+    blankComments(css).split('\n').forEach((l, i) => { if (/prefers-reduced-motion/.test(l)) fail('reduced-motion-placement', path, `line ${i + 1}: prefers-reduced-motion belongs only in brand/tokens.css and 95-motion.css (use the --dur-* tokens and [data-t2] hooks)${/^50-legacy-32-/.test(name) ? '; this slice is the legacy kill switch ds-core deletes in W2' : ''}`); });
   }
 
   /* banned-effects: keyframes */
@@ -172,7 +176,7 @@ if (existsSync(DIST)) {
       [/<(audio|video|iframe)\b[^>]*\sautoplay\b/i, 'autoplaying media'], [/<(animate|animateTransform|animateMotion|set)\b/, 'SMIL animation'],
       [/<lottie-player\b|<dotlottie-player\b|\.lottie\b/i, 'Lottie'], [/<model-viewer\b/i, '3D/WebGL viewer'],
     ])) if (re.test(body)) fail('banned-effects', path, `${what} is banned (CONTRACT §2 Motion)`);
-    for (const m of h.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)) if (/prefers-reduced-motion/.test(m[1])) fail('reduced-motion-placement', path, 'an inline <style> uses prefers-reduced-motion; it belongs only in tokens.css and 95-motion.css');
+    for (const m of h.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/g)) if (/prefers-reduced-motion/.test(blankComments(m[1]))) fail('reduced-motion-placement', path, 'an inline <style> uses prefers-reduced-motion; it belongs only in tokens.css and 95-motion.css');
   };
   for (const f of files('.html')) checkMarkup(f, read(f));
   for (const f of files('.svg')) if (!f.startsWith('assets/fonts/')) checkMarkup(f, read(f));

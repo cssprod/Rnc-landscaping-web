@@ -13,16 +13,20 @@
  *   spelling                       Canadian English (colour, centre, neighbour, grey, catalogue, defence, mould, travelled
  *                                  …), a list of common typos, doubled words and stray punctuation (" ." "..").
  *   no-stock-people                a stock photo never stands for the owner or crew: about-owner and about-crew carry no
- *                                  stock, and no page shows a stock slot whose subject is a person (landscaper, crew,
- *                                  worker, owner, team…). Checked on the slots a page uses, so offline builds count too.
+ *                                  stock, and no company page (about, process, contact, reviews) shows a stock slot whose
+ *                                  subject is a person (landscaper, crew, worker, owner, team…), nor any page one described
+ *                                  as RNC's crew, team, owner or staff. Checked on the slots a page uses, so offline builds
+ *                                  count too.
+ *   no-stock-people-hero           the same, for a stock person in the hero that introduces any other page.
  *   commercial-proof               content/pages/commercial.json carries a commitments section of at least 3 concrete
  *                                  items (no adjective-only titles such as "Quality" or "Reliable"), no number outside a
  *                                  [TOKEN] except the 13 municipalities, and no past-client boasts ("trusted by", "clients
  *                                  include", "hundreds of").
  *   stock-in-projects              no stock photo under /projects/: no external image URL and no slot with stock on any
  *                                  /projects/ page (CONTRACT §2, §7; living art or "Photo to come" only).
- *   trust-without-prices           no prices anywhere ($ amounts, "per hour" rates, "starting at", JSON-LD price,
- *                                  priceRange or offers), and the trust that replaces them is shown: /free-quote/ promises a
+ *   no-prices                      no prices anywhere ($ amounts, "per hour" rates, "starting at", JSON-LD price,
+ *                                  priceRange or offers).
+ *   trust-without-prices           the trust that replaces prices is shown: /free-quote/ promises a
  *                                  reply ("reply within …"), says the quote is free or without obligation and lists what
  *                                  happens next; /contact/ and every CTA band promise the reply time.
  *   reviews-credentials-guarantee  no Review, AggregateRating or rating markup; every quote on a page is a testimonial
@@ -37,8 +41,12 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { DIST, REPO, files, read, report } from './lib.mjs';
 
-export const RULES = ['unverifiable-claims', 'spelling', 'no-stock-people', 'commercial-proof', 'stock-in-projects',
-  'trust-without-prices', 'reviews-credentials-guarantee'];
+// A hard CONTRACT §2 constraint never shares a rule id with a structural gap a baseline may hold: 'no-prices' is split
+// from the reply-time signals of 'trust-without-prices', and a stock person in the page hero ('no-stock-people-hero') from
+// one on a company page or described as RNC's people ('no-stock-people'), so a baselined gap cannot mask a new violation
+// on the same page (baselines key on { rule, path }, CONTRACT §17).
+export const RULES = ['unverifiable-claims', 'spelling', 'no-stock-people', 'no-stock-people-hero', 'commercial-proof',
+  'stock-in-projects', 'trust-without-prices', 'no-prices', 'reviews-credentials-guarantee'];
 
 const argv = process.argv.slice(2);
 const ROOT = argv.find((a) => a.startsWith('--root='))?.slice(7) || REPO;
@@ -70,17 +78,25 @@ const SUPERLATIVE = [
   /#\s?1\b/, /\baward[- ]winning\b/i, /\btop[- ]rated\b/i, /\bhighest[- ]rated\b/i, /\bunbeatable\b/i, /\bunmatched\b/i, /\bunrivall?ed\b/i,
   /\bsecond to none\b/i, /\bworld[- ]class\b/i, /\bmost trusted\b/i, /\b(?:victoria|greater victoria)[’']s\s+(?:best|favou?rite|leading|top)\b/i,
   /\bbest[- ]in[- ](?:class|town|victoria)\b/i, /\bguaranteed\s+(?:best|lowest)\b/i, /\bcheapest\b/i, /\blowest\s+prices?\b/i,
+  /\bfinest\b/i, /\bvoted\b/i, /\bnumber[- ]one\b/i, /\bno\.\s?1\b/i, /\bthe\s+go[- ]to\b/i,
 ];
 const YEARS = [
   /\[FOUNDED\]/, /\bsince\s+(?:19|20)\d{2}\b/i, /\b(?:founded|established|est\.)\s+(?:in\s+)?(?:19|20)\d{2}\b/i,
   /\b\d+\+?\s+years?\s+(?:of\s+)?(?:experience|in\s+(?:the\s+)?business|serving|of\s+service|in\s+the\s+industry)\b/i,
   /\b(?:decades?|generations?)\s+of\s+(?:experience|service)\b/i, /\bfamily[- ]owned\s+(?:and\s+operated\s+)?since\b/i,
+  /\b(?:serv(?:e|es|ed|ing)|in\s+business|operat(?:ed|ing)|work(?:ed|ing)|landscap(?:ed|ing)|caring|trusted|experience)\b[^.!?]{0,40}?\bfor\s+(?:over\s+|more\s+than\s+|nearly\s+|almost\s+)?\d+\+?\s+years\b/i,
+  /\b\d+\+?\s+years?\b[^.!?]{0,30}?\b(?:serving|in\s+business|of\s+experience|experience|of\s+service)\b/i,
 ];
+const WHO = 'clients|customers|homeowners|households|families|businesses|projects|properties|homes|jobs|sites|reviews|lawns|gardens|trees';
 const NUMBERS = [
-  /\b(?:over|more than|nearly|almost)\s+[\d,]+\+?\s+(?:happy\s+|satisfied\s+)?(?:clients|customers|projects|properties|homes|jobs|sites|reviews|lawns|gardens|trees)\b/i,
-  /\b[\d,]+\+\s+(?:happy\s+|satisfied\s+)?(?:clients|customers|projects|properties|homes|jobs|sites|reviews|lawns|gardens|trees|years)\b/i,
-  /\b[\d,]+\s+(?:happy|satisfied)\s+(?:clients|customers)\b/i, /\b\d{1,3}(?:\.\d+)?\s?%\s+(?:satisfaction|of\s+(?:our\s+)?(?:clients|customers)|customer|client|on[- ]time|repeat)\b/i,
+  new RegExp(`\\b(?:over|more than|nearly|almost)\\s+[\\d,]+\\+?\\s+(?:happy\\s+|satisfied\\s+)?(?:${WHO})\\b`, 'i'),
+  new RegExp(`\\b[\\d,]+\\+\\s+(?:happy\\s+|satisfied\\s+)?(?:${WHO}|years)\\b`, 'i'),
+  /\b[\d,]+\s+(?:happy|satisfied)\s+(?:clients|customers|homeowners|households|families|businesses)\b/i, /\b\d{1,3}(?:\.\d+)?\s?%\s+(?:satisfaction|of\s+(?:our\s+)?(?:clients|customers)|customer|client|on[- ]time|repeat)\b/i,
   /\b[1-5](?:\.\d)?\s*(?:\/\s*5\s*)?(?:stars?|★)/i, /★{3,}/,
+  // Past-client boasts, on every page (commercial-proof applies the same to content/pages/commercial.json).
+  /\btrusted\s+by\b/i, /\bclients\s+include\b/i, /\bwe(?:’|')ve\s+served\b/i,
+  new RegExp(`\\b(?:hundreds|thousands|dozens)\\s+of\\s+(?:happy\\s+|satisfied\\s+|local\\s+)?(?:${WHO}|property\\s+managers|stratas?)\\b`, 'i'),
+  new RegExp(`\\bcountless\\s+(?:happy\\s+|satisfied\\s+)?(?:${WHO})\\b`, 'i'),
 ];
 /** US spellings → Canadian. Word-boundary, case-insensitive; proper names in ALLOW are skipped. */
 const US = /** @type {[RegExp, string][]} */ ([
@@ -169,7 +185,8 @@ for (const f of pages) {
   for (const id of new Set(used)) {
     const s = slots.get(id);
     const subject = `${s?.alt || ''} ${s?.purpose || ''}`;
-    if (hasStock(s) && PEOPLE.test(subject) && (company || heroSlots.has(id) || /\b(?:crew|team|owner|staff|our)\b/i.test(subject))) fail('no-stock-people', f, `slot "${id}" is a stock photo of a person ("${String(s.alt || s.purpose).slice(0, 70)}") ${company ? 'on a company page' : heroSlots.has(id) ? 'in the page hero' : 'described as RNC\'s people'}: no stock person may stand for the owner or crew`);
+    const ours = company || /\b(?:crew|team|owner|staff|our)\b/i.test(subject);
+    if (hasStock(s) && PEOPLE.test(subject) && (ours || heroSlots.has(id))) fail(ours ? 'no-stock-people' : 'no-stock-people-hero', f, `slot "${id}" is a stock photo of a person ("${String(s.alt || s.purpose).slice(0, 70)}") ${company ? 'on a company page' : ours ? 'described as RNC\'s people' : 'in the page hero'}: no stock person may stand for the owner or crew`);
     if (isProject && hasStock(s)) fail('stock-in-projects', f, `slot "${id}" has a stock photo (${s.stock.provider || 'stock'}); /projects/ uses per-project living art until RNC supplies photos`);
   }
   if (isProject) {
@@ -177,11 +194,11 @@ for (const f of pages) {
     for (const m of body.matchAll(/url\(\s*['"]?((?:https?:)?\/\/[^'")]+)/gi)) fail('stock-in-projects', f, `external background image ${m[1].slice(0, 80)} under /projects/`);
   }
 
-  /* trust-without-prices */
+  /* no-prices, trust-without-prices */
   const price = /(?:CA)?\$\s?\d|\b\d[\d,.]*\s?(?:dollars|CAD)\b|\b(?:starting|starts|prices?|rates?)\s+(?:at|from)\s+\$?\d|\bper\s+(?:hour|visit|month|week|square\s+(?:foot|feet|metre|meter))\b[^.]{0,20}\d|\d[^.]{0,20}\bper\s+(?:hour|visit|month|week)\b|\/\s?(?:hr|hour)\b/i.exec(text);
-  if (price) fail('trust-without-prices', f, `price: ${around(text, price.index, price[0].length)} (free quotes only, no prices anywhere)`);
+  if (price) fail('no-prices', f, `price: ${around(text, price.index, price[0].length)} (free quotes only, no prices anywhere)`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
-    if (/"(?:priceRange|price|priceSpecification|offers|lowPrice|highPrice)"\s*:/.test(m[1])) fail('trust-without-prices', f, 'JSON-LD carries a price, priceRange or offers');
+    if (/"(?:priceRange|price|priceSpecification|offers|lowPrice|highPrice)"\s*:/.test(m[1])) fail('no-prices', f, 'JSON-LD carries a price, priceRange or offers');
     if (/"@type"\s*:\s*"(?:Review|AggregateRating|Rating)"|"(?:review|aggregateRating|reviewRating|ratingValue)"\s*:/.test(m[1])) fail('reviews-credentials-guarantee', f, 'JSON-LD carries Review / AggregateRating / rating markup (CONTRACT §2: never)');
   }
   const reply = /\breply\s+(?:with)?in\b|\bwe\s+(?:will\s+)?(?:get\s+back|respond)\s+(?:to\s+you\s+)?within\b/i;

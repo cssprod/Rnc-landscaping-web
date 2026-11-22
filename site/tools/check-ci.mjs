@@ -10,7 +10,13 @@
  *                   CSP check, Playwright, the a11y matrix at 320/390/768/1024/1440, Lighthouse); none of them, and no
  *                   job that holds them, is continue-on-error (only the launch-gate step, the one that builds with
  *                   SITE_MODE=launch, may be); and every page path a step names is a live C1 URL, never a retired one
- *                   (/quote/, /portfolio/…).
+ *                   (/quote/, /portfolio/…). A gate must also really run and really fail: its command is in command
+ *                   position (not after echo, in a comment or inside quotes); the step and its job carry no `if:` other
+ *                   than success()/always()/!cancelled(); the step does not swallow the exit status (`|| true`, `|| :`,
+ *                   `|| exit 0`, `|| echo`, `exit 0`, `set +e`, a pipe without pipefail) and no `shell:` drops -e; the
+ *                   gate keeps its full strength: unit tests and Playwright without a test filter, Lighthouse at
+ *                   --runs >= 3 without --allow-slow, the a11y matrix on every template page (no --pages, or
+ *                   --pages=all), both themes and both motion states.
  *   node tools/check-ci.mjs [--file=PATH]
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -36,7 +42,7 @@ export const A11Y_WIDTHS = [320, 390, 768, 1024, 1440];
  * The jobs and steps of a GitHub Actions workflow: enough YAML for this repo's ci.yml (block mappings, "- " step items,
  * inline flow maps on one line, `|` / `>` block scalars).
  * @param {string} yaml
- * @returns {{ id: string, continueOnError: boolean, steps: { name: string, run: string, continueOnError: boolean, line: number }[] }[]}
+ * @returns {{ id: string, continueOnError: boolean, if: string, steps: { name: string, run: string, continueOnError: boolean, if: string, shell: string, line: number }[] }[]}
  */
 export function parseWorkflow(yaml) {
   const lines = yaml.split('\n');
@@ -57,24 +63,29 @@ export function parseWorkflow(yaml) {
     if (n === 0) { jobsIndent = -1; continue; }
     if (jobIndent < 0 || n <= jobIndent) {
       const m = t.match(/^([\w-]+):\s*$/);
-      if (m) { job = { id: m[1], continueOnError: false, steps: [] }; jobs.push(job); jobIndent = n; stepsIndent = -1; step = null; continue; }
+      if (m) { job = { id: m[1], continueOnError: false, if: '', steps: [] }; jobs.push(job); jobIndent = n; stepsIndent = -1; step = null; continue; }
     }
     if (!job) continue;
     if (stepsIndent < 0 || n <= stepsIndent) {
       if (/^steps:\s*$/.test(t)) { stepsIndent = n; step = null; continue; }
       const coe = t.match(/^continue-on-error:\s*(.+)$/);
-      if (coe && n === jobIndent + 2) job.continueOnError = /^true$/i.test(scalar(coe[1]));
+      if (coe && n === jobIndent + 2) job.continueOnError = !/^false$/i.test(scalar(coe[1]));
+      const jif = t.match(/^if:\s*(.+)$/);
+      if (jif && n === jobIndent + 2) job.if = scalar(jif[1]) || 'true';
       if (n <= stepsIndent) stepsIndent = -1;
       if (stepsIndent < 0) continue;
     }
     let body = t;
-    if (t.startsWith('- ')) { step = { name: '', run: '', continueOnError: false, line: i + 1 }; job.steps.push(step); stepIndent = n + 2; body = t.slice(2).trim(); }
+    if (t.startsWith('- ')) { step = { name: '', run: '', continueOnError: false, if: '', shell: '', line: i + 1 }; job.steps.push(step); stepIndent = n + 2; body = t.slice(2).trim(); }
     if (!step) continue;
     const kv = body.match(/^([\w-]+):\s*(.*)$/);
     if (!kv) continue;
     const [, k, v] = kv;
     if (k === 'name') step.name = scalar(v);
-    else if (k === 'continue-on-error') step.continueOnError = /^true$/i.test(scalar(v));
+    // Anything but a literal false counts: an expression such as ${{ true }} or ${{ github.event_name == 'push' }} can be on.
+    else if (k === 'continue-on-error') step.continueOnError = !/^false$/i.test(scalar(v));
+    else if (k === 'if') step.if = scalar(v) || 'true';
+    else if (k === 'shell') step.shell = scalar(v);
     else if (k === 'run') {
       if (/^[|>][+-]?\s*$/.test(v.trim())) {
         const block = [];
@@ -95,6 +106,79 @@ export function pathsIn(run) {
   return [...out].map((p) => p.split(/[?#]/)[0]).filter((p) => p && !/\$/.test(p));
 }
 
+/** `if:` conditions that never skip a step that would otherwise run. */
+const HARMLESS_IF = /^(?:\$\{\{\s*)?(?:success\(\)|always\(\)|!\s*cancelled\(\))(?:\s*\}\})?$/;
+
+/**
+ * A run script with quoted strings and $(…) substitutions blanked, and comments dropped: what the shell executes as
+ * commands. An `echo "node tools/a11y.mjs"` keeps no gate text; `X="$(a || b)" node …` keeps no `||`.
+ * @param {string} run
+ */
+export function shellCode(run) {
+  let s = run.replace(/\$\((?:[^()]|\([^()]*\))*\)/g, 'SUB').replace(/'[^'\n]*'/g, 'Q').replace(/"(?:[^"\\\n]|\\.)*"/g, 'Q');
+  s = s.split('\n').map((l) => l.replace(/(^|\s)#.*$/, '$1')).join('\n');
+  return s;
+}
+
+/**
+ * The simple commands of a run script (split on newlines, ;, &&, ||, |), each with leading env assignments and a
+ * leading `npx [--flags]` removed, and the operator that follows it.
+ * @param {string} run
+ * @returns {{ cmd: string, next: string }[]}
+ */
+export function simpleCommands(run) {
+  const code = shellCode(run);
+  /** @type {{ cmd: string, next: string }[]} */ const out = [];
+  const re = /(\|\||&&|;|\n|\|)/g;
+  let last = 0;
+  for (let m; (m = re.exec(code));) { out.push({ cmd: code.slice(last, m.index), next: m[1] }); last = re.lastIndex; }
+  out.push({ cmd: code.slice(last), next: '' });
+  return out.map(({ cmd, next }) => ({
+    cmd: cmd.trim().replace(/^(?:then|do|else|\{|\()\s+/, '').replace(/^(?:[A-Za-z_]\w*=\S*\s+)+/, '').replace(/^npx(?:\s+--?[\w-]+)*\s+/, '').trim(),
+    next,
+  })).filter((c) => c.cmd);
+}
+
+/** Does a simple command run the gate (the gate regex matches and the command word is node, tsc or npx)? @param {string} cmd @param {RegExp} re */
+const runsGate = (cmd, re) => re.test(cmd) && /^(?:\S*\/)?(?:node|tsc|npx|playwright)\b/.test(cmd);
+
+/**
+ * Why a step that runs a gate does not really gate (empty when it does).
+ * @param {{ run: string, if: string, shell: string }} step @param {{ if: string }} job @param {string} gate @param {RegExp} re
+ */
+export function neutralised(step, job, gate, re) {
+  /** @type {string[]} */ const why = [];
+  if (step.if && !HARMLESS_IF.test(step.if)) why.push(`the step has \`if: ${step.if}\``);
+  if (job.if && !HARMLESS_IF.test(job.if)) why.push(`its job has \`if: ${job.if}\``);
+  if (step.shell && !/(?:^|\s)-\w*e/.test(step.shell) && !/^(?:pwsh|powershell|cmd|python)\b/.test(step.shell)) why.push(`\`shell: ${step.shell}\` drops -e`);
+  const code = shellCode(step.run);
+  const cmds = simpleCommands(step.run);
+  for (const m of code.matchAll(/\|\|\s*([^\n;&|]*)/g)) if (!/^exit\s+[1-9]\d*\s*$/.test(m[1].trim())) why.push(`\`|| ${m[1].trim()}\` swallows the exit status`);
+  if (/\bexit\s+0\b|\bexit\s*(?:$|[;\n])/m.test(code)) why.push('`exit 0` ends the step green');
+  if (/\bset\s+\+\w*e\b|\bset\s+\+o\s+errexit\b/.test(code)) why.push('`set +e` ignores failures');
+  const i = cmds.findIndex((c) => runsGate(c.cmd, re));
+  if (i >= 0 && cmds[i].next === '|' && !/\bset\s+-\w*o\s+pipefail\b|\bset\s+-o\s+pipefail\b/.test(code)) why.push('its output is piped without `set -o pipefail`, so the pipe\'s last command decides');
+  const gateCmds = cmds.filter((c) => runsGate(c.cmd, re)).map((c) => c.cmd);
+  const opt = (/** @type {string} */ name) => gateCmds.map((c) => c.match(new RegExp(`(?:^|\\s)--${name}(?:=(\\S*)|\\s|$)`))).find(Boolean);
+  if (gate === 'unit tests' || gate === 'Playwright') {
+    const filter = gateCmds.map((c) => c.match(/(?:^|\s)(--test-name-pattern|--test-skip-pattern|--test-only|--grep|--grep-invert|-g|--last-failed|--only-changed|--pass-with-no-tests|--list|--shard)\b/)).find(Boolean);
+    if (filter) why.push(`${filter[1]} runs only part of the suite`);
+  }
+  if (gate === 'Lighthouse' && gateCmds.some((c) => /\btools\/lighthouse\.mjs\b/.test(c))) {
+    const runs = opt('runs');
+    if (runs && !(Number(runs[1]) >= 3)) why.push(`--runs=${runs[1] ?? ''} is not a median of 3`);
+    if (opt('allow-slow')) why.push('--allow-slow judges scores on a machine too slow to trust');
+  }
+  if (gate === 'a11y matrix (axe)') {
+    const pages = opt('pages');
+    if (pages && pages[1] !== 'all') why.push(`--pages=${pages[1] ?? ''} drops template pages (use --pages=all or no --pages)`);
+    const themes = opt('themes'), motion = opt('motion');
+    if (themes && !['dark', 'light'].every((x) => String(themes[1]).split(',').includes(x))) why.push(`--themes=${themes[1]} does not cover dark and light`);
+    if (motion && !['off', 'on'].every((x) => String(motion[1]).split(',').includes(x))) why.push(`--motion=${motion[1]} does not cover off and on`);
+  }
+  return why;
+}
+
 const file = process.argv.find((a) => a.startsWith('--file='))?.slice(7) || join(REPO, '.github', 'workflows', 'ci.yml');
 /** @type {import('./lib.mjs').Failure[]} */
 const failures = [];
@@ -107,11 +191,15 @@ else {
   const steps = jobs.flatMap((j) => j.steps.map((s) => ({ ...s, job: j })));
   const launchStep = (/** @type {{ run: string }} */ s) => /\bSITE_MODE=launch\b/.test(s.run);
   for (const [gate, re] of GATES) {
-    const hits = steps.filter((s) => re.test(s.run) && !launchStep(s));
-    if (!hits.length) { fail(`no step runs the ${gate} gate (expected a run matching ${re})`); continue; }
+    // A gate counts only where the shell would run it as a command (not echoed, commented out or quoted).
+    const hits = steps.filter((s) => simpleCommands(s.run).some((c) => runsGate(c.cmd, re)) && !launchStep(s));
+    if (!hits.length) { fail(`no step runs the ${gate} gate (expected a command matching ${re})`); continue; }
     const hard = hits.filter((s) => !s.continueOnError && !s.job.continueOnError);
-    if (!hard.length) fail(`the ${gate} gate runs only with continue-on-error (line ${hits[0].line}${hits[0].job.continueOnError ? `, job ${hits[0].job.id}` : ''}): a regression must fail CI`);
+    if (!hard.length) { fail(`the ${gate} gate runs only with continue-on-error (line ${hits[0].line}${hits[0].job.continueOnError ? `, job ${hits[0].job.id}` : ''}): a regression must fail CI`); continue; }
+    const real = hard.filter((s) => !neutralised(s, s.job, gate, re).length);
+    if (!real.length) fail(`the ${gate} gate (line ${hard[0].line}) cannot fail CI: ${neutralised(hard[0], hard[0].job, gate, re).join('; ')}`);
   }
+  for (const m of readFileSync(file, 'utf8').matchAll(/^\s*shell:\s*(.+)$/gm)) { const v = m[1].trim().replace(/^(['"])(.*)\1$/, '$2'); if (!/(?:^|\s)-\w*e/.test(v) && !/^(?:pwsh|powershell|cmd|python)\b/.test(v)) fail(`\`shell: ${v}\` runs steps without -e: a failing command mid-script no longer fails the step`); }
   for (const s of steps) if ((s.continueOnError || s.job.continueOnError) && !launchStep(s)) fail(`step "${s.name || s.run.split('\n')[0].slice(0, 50)}" (line ${s.line}) is continue-on-error; only the launch gate (SITE_MODE=launch) may be`);
   for (const s of steps.filter((x) => /@lhci\/cli|\blhci\b/.test(x.run))) for (const m of s.run.matchAll(/categories:([\w-]+)=(warn|off)\b/g)) fail(`step "${s.name}" (line ${s.line}) turns the Lighthouse ${m[1]} budget into a ${m[2]}: budgets must fail CI`);
   const a11y = steps.filter((s) => /\btools\/a11y\.mjs\b/.test(s.run));

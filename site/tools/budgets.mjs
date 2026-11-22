@@ -5,7 +5,11 @@
  * Lighthouse scores and CWV are lighthouse.mjs; animation counts and backdrop-filter are motion-audit.mjs.
  *
  * Rules:
- *   v2                   the per-page table (fail / warn):
+ *   v2                   the per-page table (fail / warn), one rule id per row so that a baselined row never hides a new
+ *                        failure of another row on the same page (baselines key on { rule, path }, CONTRACT §17):
+ *                        v2-css, v2-js, v2-html-gz, v2-html-raw, v2-inline-svg, v2-hero-scene, v2-sprite, v2-art,
+ *                        v2-fonts, v2-font-files, v2-weight, v2-hero-raster. "v2" is the umbrella id the
+ *                        traceability items name:
  *                          CSS (gzip) > 36 KB / > 28 KB;  JS (gzip, every module script, its modulepreloads and the
  *                          static import graph) > 22 KB / > 14 KB;  HTML > 30 KB gzip or 150 KB raw / > 22 KB or 90 KB;
  *                          inline SVG > 45 KB raw;  hero scene ([data-living] in the page hero) > 16 KB raw;  used
@@ -19,17 +23,26 @@
  *                        width and height; at most one fetchpriority="high" image, which is never lazy; every other
  *                        image is loading="lazy" decoding="async" (CONTRACT §7, C4.5).
  *   third-party-origins  pages load nothing from another origin except images.unsplash.com in an online showcase
- *                        build (a build is offline when no page shows a CDN image; --offline forces it) and plausible.io
- *                        in a launch build. Covers src, srcset, stylesheet/preload/preconnect/modulepreload/icon links,
- *                        inline url() and the CSS files' url() (A13 #28; "Third-party origins (offline build) > 0").
+ *                        build and plausible.io in a launch build. Covers src, srcset, stylesheet/preload/modulepreload/
+ *                        prefetch/icon/manifest links, inline url() and the CSS files' url() (A13 #28; "Third-party
+ *                        origins (offline build) > 0").
+ *   third-party-hints    the same allow-list for connection hints (preconnect, dns-prefetch), which fetch nothing, kept
+ *                        apart so that a baselined hint never hides a real third-party load on the same page.
+ * Offline or online is never inferred from the thing being checked (a leaked CDN image must not turn an offline build
+ * "online"). The build is offline when --offline or --offline-images is in argv (check-all runs the tools in-process,
+ * so its flags count), SITE_IMAGES=offline is set, or any slot that has a stock photo in media/images.json is rendered
+ * as its local illustration (/assets/art/<slot>.svg), which only --offline-images does. --online forces online.
+ * --root=DIR reads media/images.json from another checkout.
  * Reports through tools/lib.mjs report() (baselines, CONTRACT §17). Exits 0 when there is no build.
  */
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
-import { DIST, files, read, report } from './lib.mjs';
+import { DIST, REPO, files, read, report } from './lib.mjs';
 
-export const RULES = ['v2', 'image-widths', 'picture-pipeline', 'third-party-origins'];
+export const RULES = ['v2', 'v2-css', 'v2-js', 'v2-html-gz', 'v2-html-raw', 'v2-inline-svg', 'v2-hero-scene', 'v2-sprite',
+  'v2-art', 'v2-fonts', 'v2-font-files', 'v2-weight', 'v2-hero-raster', 'image-widths', 'picture-pipeline',
+  'third-party-origins', 'third-party-hints'];
 
 const KB = 1024;
 export const BUDGET = {
@@ -44,9 +57,9 @@ const failures = [];
 const warnings = [];
 const fail = (/** @type {string} */ rule, /** @type {string} */ path, /** @type {string} */ message) => failures.push({ rule, path, message });
 const kb = (/** @type {number} */ n) => `${(n / KB).toFixed(1)} KB`;
-/** Fail above the first limit, warn above the second. @param {string} f @param {string} what @param {number} n @param {number[]} lim */
-const table = (f, what, n, [failAt, warnAt]) => {
-  if (n > failAt) fail('v2', f, `${what} ${kb(n)} (budget ${kb(failAt)})`);
+/** Fail above the first limit, warn above the second. @param {string} rule @param {string} f @param {string} what @param {number} n @param {number[]} lim */
+const table = (rule, f, what, n, [failAt, warnAt]) => {
+  if (n > failAt) fail(rule, f, `${what} ${kb(n)} (budget ${kb(failAt)})`);
   else if (warnAt && n > warnAt) warnings.push(`${f}: ${what} ${kb(n)} (warn above ${kb(warnAt)})`);
 };
 
@@ -111,7 +124,18 @@ export function imageWidth(p) {
 
 const pages = existsSync(DIST) ? files() : [];
 const allHtml = pages.map((f) => [f, read(f)]);
-const offline = process.argv.includes('--offline') || !allHtml.some(([, h]) => /<(?:img|source)\b[^>]*\s(?:src|srcset)="(?:https?:)?\/\/images\.unsplash\.com/i.test(h));
+const ROOT = process.argv.find((a) => a.startsWith('--root='))?.slice(7) || REPO;
+/** Slot ids that have a stock photo in media/images.json. @type {Set<string>} */
+const stockSlots = (() => {
+  try {
+    const list = JSON.parse(readFileSync(join(ROOT, 'media', 'images.json'), 'utf8'));
+    return new Set((Array.isArray(list) ? list : []).filter((/** @type {any} */ x) => x?.stock?.imageUrl).map((/** @type {any} */ x) => String(x.id)));
+  } catch { return new Set(); }
+})();
+/** A stock slot rendered as its local illustration: only an --offline-images build does that. @param {string} h */
+const rendersStockAsArt = (h) => [...h.matchAll(/<figure\b[^>]*\sdata-slot="([^"]+)"[^>]*>\s*<img\b[^>]*\ssrc="\/assets\/art\/([^"/]+)\.svg"/g)].some((m) => m[1] === m[2] && stockSlots.has(m[1]));
+export const offline = !process.argv.includes('--online') && (process.argv.includes('--offline') || process.argv.includes('--offline-images')
+  || process.env.SITE_IMAGES === 'offline' || allHtml.some(([, h]) => rendersStockAsArt(h)));
 const launch = !!allHtml.find(([f]) => f === 'index.html') && !/<meta name="robots" content="[^"]*noindex/.test(allHtml.find(([f]) => f === 'index.html')?.[1] || '');
 const ALLOWED = new Set([...(offline ? [] : ['images.unsplash.com']), ...(launch ? ['plausible.io'] : [])]);
 /** @type {Map<string, string[]>} */
@@ -137,16 +161,16 @@ for (const [f, h] of allHtml) {
   const js = jsGraph(entries).reduce((n, p) => n + size(p).gz, 0);
   const hg = gzipSync(h).length;
   maxCss = Math.max(maxCss, css); maxJs = Math.max(maxJs, js); maxHtml = Math.max(maxHtml, hg);
-  table(f, 'CSS (gzip)', css, BUDGET.cssGz);
-  table(f, 'JS incl. import graph (gzip)', js, BUDGET.jsGz);
-  table(f, 'HTML (gzip)', hg, BUDGET.htmlGz);
-  table(f, 'HTML (raw)', h.length, BUDGET.htmlRaw);
+  table('v2-css', f, 'CSS (gzip)', css, BUDGET.cssGz);
+  table('v2-js', f, 'JS incl. import graph (gzip)', js, BUDGET.jsGz);
+  table('v2-html-gz', f, 'HTML (gzip)', hg, BUDGET.htmlGz);
+  table('v2-html-raw', f, 'HTML (raw)', h.length, BUDGET.htmlRaw);
   /* ---- SVG ---- */
   const svgs = [...body.matchAll(/<svg\b[\s\S]*?<\/svg>/g)].map((m) => m[0]);
   const inlineSvg = svgs.reduce((n, s) => n + Buffer.byteLength(s), 0);
-  if (inlineSvg > BUDGET.inlineSvg) fail('v2', f, `inline SVG ${kb(inlineSvg)} raw (budget ${kb(BUDGET.inlineSvg)})`);
+  if (inlineSvg > BUDGET.inlineSvg) fail('v2-inline-svg', f, `inline SVG ${kb(inlineSvg)} raw (budget ${kb(BUDGET.inlineSvg)})`);
   const sprite = svgs.filter((s) => /<symbol\b/.test(s)).reduce((n, s) => n + Buffer.byteLength(s), 0);
-  if (sprite > BUDGET.sprite) fail('v2', f, `used sprite ${kb(sprite)} raw (budget ${kb(BUDGET.sprite)})`);
+  if (sprite > BUDGET.sprite) fail('v2-sprite', f, `used sprite ${kb(sprite)} raw (budget ${kb(BUDGET.sprite)})`);
   const hero = body.match(/<(section|header)\b[^>]*class="[^"]*\b(?:hero|page-head)\b[\s\S]*?<\/\1>/)?.[0] || '';
   const scene = hero.match(/<(\w+)\b[^>]*\sdata-living\b[^>]*>/);
   if (scene) {
@@ -156,13 +180,13 @@ for (const [f, h] of allHtml) {
     re.lastIndex = start;
     for (let m; (m = re.exec(hero));) { depth += m[1] ? -1 : /\/>$/.test(m[0]) ? 0 : 1; if (depth <= 0) { end = re.lastIndex; break; } }
     const n = Buffer.byteLength(hero.slice(start, end > start ? end : hero.length));
-    if (n > BUDGET.heroScene) fail('v2', f, `hero scene ${kb(n)} raw (budget ${kb(BUDGET.heroScene)})`);
+    if (n > BUDGET.heroScene) fail('v2-hero-scene', f, `hero scene ${kb(n)} raw (budget ${kb(BUDGET.heroScene)})`);
   }
   /* ---- fonts ---- */
   const fonts = [...new Set(cssHrefs.flatMap((u) => { const p = local(u); return p ? fontsOf(p).map((x) => local(x.startsWith('/') ? x : `/${join(p, '..', x)}`)) : []; }).filter(Boolean))];
   const fontBytes = fonts.reduce((n, p) => n + size(p).raw, 0);
-  if (fontBytes > BUDGET.fonts) fail('v2', f, `fonts ${kb(fontBytes)} (budget ${kb(BUDGET.fonts)})`);
-  if (fonts.length > BUDGET.fontFiles) fail('v2', f, `${fonts.length} font files (budget ${BUDGET.fontFiles})`);
+  if (fontBytes > BUDGET.fonts) fail('v2-fonts', f, `fonts ${kb(fontBytes)} (budget ${kb(BUDGET.fonts)})`);
+  if (fonts.length > BUDGET.fontFiles) fail('v2-font-files', f, `${fonts.length} font files (budget ${BUDGET.fontFiles})`);
   /* ---- images ---- */
   const imgs = [...body.matchAll(/<img\b[^>]*>/g)].map((m) => ({ tag: m[0], index: /** @type {number} */ (m.index) }));
   const attr = (/** @type {string} */ tag, /** @type {string} */ a) => tag.match(new RegExp(`\\s${a}="([^"]*)"`))?.[1];
@@ -171,7 +195,7 @@ for (const [f, h] of allHtml) {
   const weight = hg + css + js + fontBytes + [...imgFiles].reduce((n, p) => n + size(p).gz, 0);
   maxWeight = Math.max(maxWeight, weight);
   const limit = f === 'index.html' ? BUDGET.pageHome : BUDGET.pageInner;
-  if (weight > limit) fail('v2', f, `page weight ${kb(weight)} (HTML, CSS, JS, fonts and local images; budget ${kb(limit)})`);
+  if (weight > limit) fail('v2-weight', f, `page weight ${kb(weight)} (HTML, CSS, JS, fonts and local images; budget ${kb(limit)})`);
 
   /* ---- image-widths ---- */
   const cands = [...body.matchAll(/<(?:img|source)\b[^>]*>/g)].flatMap((m) => [attr(m[0], 'src'), ...(attr(m[0], 'srcset') || '').split(',').map((c) => c.trim())].filter(Boolean));
@@ -205,28 +229,36 @@ for (const [f, h] of allHtml) {
       if (isHigh && avif >= 0) {
         const set = pic.match(/<source\b[^>]*type="image\/avif"[^>]*srcset="([^"]+)"|<source\b[^>]*srcset="([^"]+)"[^>]*type="image\/avif"/);
         const biggest = Math.max(0, ...String(set?.[1] || set?.[2] || '').split(',').map((c) => size(local(c.trim().split(/\s+/)[0])).raw));
-        if (biggest > BUDGET.heroRaster) fail('v2', f, `hero raster ${kb(biggest)} AVIF (budget ${kb(BUDGET.heroRaster)})`);
+        if (biggest > BUDGET.heroRaster) fail('v2-hero-raster', f, `hero raster ${kb(biggest)} AVIF (budget ${kb(BUDGET.heroRaster)})`);
       }
     }
   }
   if (high > 1) fail('picture-pipeline', f, `${high} images with fetchpriority="high" (only the hero)`);
 
   /* ---- third-party-origins ---- */
-  const refs = [
+  const links = [...h.matchAll(/<link\b[^>]*>/g)].map((m) => m[0]);
+  const loads = [
     ...[...body.matchAll(/<(?:img|source|script|iframe|video|audio|embed)\b[^>]*>/g)].flatMap((m) => [attr(m[0], 'src'), ...(attr(m[0], 'srcset') || '').split(',').map((c) => c.trim().split(/\s+/)[0])]),
-    ...[...h.matchAll(/<link\b[^>]*>/g)].filter((m) => /\srel="(?:stylesheet|preload|preconnect|dns-prefetch|modulepreload|prefetch|icon|apple-touch-icon|manifest)"/.test(m[0])).map((m) => attr(m[0], 'href')),
+    ...links.filter((l) => /\srel="(?:stylesheet|preload|modulepreload|prefetch|icon|apple-touch-icon|manifest)"/.test(l)).map((l) => attr(l, 'href')),
     ...[...body.matchAll(/url\(\s*['"]?([^'")]+)/g)].map((m) => m[1]),
     ...cssHrefs.flatMap((u) => { const p = local(u); return p ? cssUrls(p) : [u]; }),
-  ].filter(Boolean);
-  const origins = new Set();
-  for (const r of refs) { const m = /** @type {string} */ (r).match(/^(?:https?:)?\/\/([^/?#:]+)/i); if (m && !/^(?:localhost|127\.0\.0\.1)$/.test(m[1])) origins.add(m[1].toLowerCase()); }
-  for (const o of origins) if (!ALLOWED.has(o)) fail('third-party-origins', f, `loads from ${o} (${offline ? 'an offline build loads no third party' : `allowed: ${[...ALLOWED].join(', ') || 'none'}`})`);
+  ];
+  const hints = links.filter((l) => /\srel="(?:preconnect|dns-prefetch)"/.test(l)).map((l) => attr(l, 'href'));
+  /** Third-party origins of a list of URLs. @param {(string|undefined)[]} refs */
+  const originsOf = (refs) => {
+    const out = new Set();
+    for (const r of refs) { const m = String(r || '').match(/^(?:https?:)?\/\/([^/?#:]+)/i); if (m && !/^(?:localhost|127\.0\.0\.1)$/.test(m[1])) out.add(m[1].toLowerCase()); }
+    return out;
+  };
+  const why = offline ? 'an offline build loads no third party' : `allowed: ${[...ALLOWED].join(', ') || 'none'}`;
+  for (const o of originsOf(loads)) if (!ALLOWED.has(o)) fail('third-party-origins', f, `loads from ${o} (${why})`);
+  for (const o of originsOf(hints)) if (!ALLOWED.has(o)) fail('third-party-hints', f, `preconnect/dns-prefetch to ${o} (${why})`);
 }
 
 /* ---- art files ---- */
 for (const p of existsSync(DIST) ? files('.svg').filter((x) => x.startsWith('assets/art/')) : []) {
   const n = statSync(join(DIST, p)).size;
-  if (n > BUDGET.artFile) fail('v2', p, `art file ${kb(n)} raw (budget ${kb(BUDGET.artFile)})`);
+  if (n > BUDGET.artFile) fail('v2-art', p, `art file ${kb(n)} raw (budget ${kb(BUDGET.artFile)})`);
 }
 
 if (pages.length) console.log(`  budgets v2: ${pages.length} pages (${offline ? 'offline' : 'online'}${launch ? ', launch' : ''} build); largest CSS ${kb(maxCss)}, JS ${kb(maxJs)}, HTML ${kb(maxHtml)} gzip; heaviest page ${kb(maxWeight)}`);

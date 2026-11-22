@@ -29,7 +29,7 @@ jobs:
       - name: Unit tests
         run: node --test "tests/unit/**/*.test.mjs"
       - name: Build (showcase, offline images) and static checks, link checker included
-        run: node build.mjs --offline-images --out=../ci-dist && node tools/check-all.mjs --no-build --strict-redirects
+        run: node build.mjs --offline-images --out=../ci-dist && node tools/check-all.mjs --no-build --offline-images --strict-redirects
       - name: CSP hashes
         run: node tools/csp.mjs --check
       - name: Playwright (real CSP via tools/serve.mjs)
