@@ -1,2 +1,56 @@
-/* 02-base.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-core.
-   Wrap every rule in exactly one layer:  @layer base { … }  */
+/* 02-base.css (ds-core, W2): page canvas, body text and the two-tone focus ring (DESIGN-DIRECTION §4, P0 #3).
+   Element defaults that legacy component rules still override (a, h1–h4, p, .section) live in
+   50-legacy-01x-ds-core.css until those rules leave @layer legacy (CONTRACT §12 fallback slice); W3b moves them here. */
+@layer base {
+  html { background: var(--color-bg); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-body);
+    line-height: var(--font-leading-body);
+    letter-spacing: var(--font-tracking-body);
+    font-optical-sizing: auto;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+  strong { font-weight: var(--font-weight-semibold); }
+  ::selection { background: color-mix(in srgb, var(--color-brand-2) 32%, transparent); }
+
+  /* Focus: a 2px ring at 2px offset over a 6px halo (the "sandwich"), so on every surface at least one tone is >= 3:1
+     and ring vs halo is >= 3:1 (brand/check-contrast.mjs focus-pairs). Never removed; components that clip keep it on the
+     focusable element itself. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: var(--focus-offset, 2px);
+    box-shadow: 0 0 0 6px var(--focus-halo), 0 0 24px 6px var(--focus-glow);
+  }
+  /* Dark surfaces in both themes: tokens.css re-declares the ring inside .on-deep; these legacy bands and photo surfaces
+     get the same deep ring until their owners add .on-deep. */
+  :where(.hero, .deep-band, .cta-band, .site-footer, .site-header.is-over-media, .tile__link, .feature-split__media) {
+    --focus-ring: var(--focus-ring-on-deep);
+    --focus-halo: var(--focus-halo-on-deep);
+  }
+  /* Programmatic focus targets (skip link destination, the quote summary) show no ring of their own. */
+  main:focus, .quote-ready:focus { outline: none; box-shadow: none; }
+  /* Rings drawn on a delegate keep the two tones: the input is visually hidden or the card carries the ring. */
+  .segmented__opt input:focus-visible + span,
+  .service-item:has(a:focus-visible) {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--focus-halo), 0 0 24px 6px var(--focus-glow);
+  }
+  .service-item h3 a:focus-visible, .map__tile:focus-visible { outline: none; box-shadow: none; }
+  .faq__item summary { --focus-offset: -4px; }
+
+  @media (forced-colors: active) {
+    :focus-visible,
+    .segmented__opt input:focus-visible + span,
+    .service-item:has(a:focus-visible) { outline: 2px solid Highlight; box-shadow: none; }
+    .map__tile:focus-visible { outline: 2px solid Highlight; }
+  }
+}

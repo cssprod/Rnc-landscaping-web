@@ -1,2 +1,8 @@
-/* 01-reset.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-core.
-   Wrap every rule in exactly one layer:  @layer reset { … }  */
+/* 01-reset.css (ds-core, W2): box model, text sizing, media defaults and [hidden].
+   [hidden] keeps its !important (an author display rule must never reveal hidden content). */
+@layer reset {
+  :root { interpolate-size: allow-keywords; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  *, *::before, *::after { box-sizing: border-box; }
+  img, svg, video { display: block; max-width: 100%; }
+  [hidden] { display: none !important; }
+}

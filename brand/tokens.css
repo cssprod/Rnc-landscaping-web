@@ -110,6 +110,7 @@
   --motion-duration-reveal: 600ms;
   --motion-duration-draw: 1600ms;
   --motion-duration-vt: 250ms;
+  --motion-duration-dolly: 1400ms;
   --motion-easing-standard: cubic-bezier(0.32, 0.72, 0, 1);
   --motion-easing-out: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-easing-spring: cubic-bezier(0.34, 1.32, 0.64, 1);
@@ -184,6 +185,7 @@
   --dur-t1: var(--motion-duration-reveal);
   --dur-theme: var(--motion-duration-slow);
   --dur-draw: var(--motion-duration-draw);
+  --dur-dolly: var(--motion-duration-dolly);
   --dur-vt: var(--motion-duration-vt);
   --alive-play: running;
 }
@@ -312,11 +314,13 @@
     --motion-duration-reveal: 0ms;
     --motion-duration-draw: 0ms;
     --motion-duration-vt: 0ms;
+    --motion-duration-dolly: 0ms;
     --dur-t0: 0ms;
     --dur-t0-fast: 0ms;
     --dur-t1: 0ms;
     --dur-theme: 0ms;
     --dur-draw: 0ms;
+    --dur-dolly: 0ms;
     --dur-vt: 0ms;
   }
 }
@@ -327,11 +331,13 @@
   --motion-duration-reveal: 0ms;
   --motion-duration-draw: 0ms;
   --motion-duration-vt: 0ms;
+  --motion-duration-dolly: 0ms;
   --dur-t0: 0ms;
   --dur-t0-fast: 0ms;
   --dur-t1: 0ms;
   --dur-theme: 0ms;
   --dur-draw: 0ms;
+  --dur-dolly: 0ms;
   --dur-vt: 0ms;
 }
 @media print {

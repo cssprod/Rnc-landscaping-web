@@ -129,12 +129,13 @@ const TIERS = {
   '--dur-t1': 'var(--motion-duration-reveal)',
   '--dur-theme': 'var(--motion-duration-slow)',
   '--dur-draw': 'var(--motion-duration-draw)',
+  '--dur-dolly': 'var(--motion-duration-dolly)',
   '--dur-vt': 'var(--motion-duration-vt)',
   '--alive-play': 'running',
 };
 
 /** Everything that becomes 0ms when motion is not effective: the tier variables and the durations behind them. */
-const ZERO = ['--motion-duration-fast', '--motion-duration-base', '--motion-duration-slow', '--motion-duration-reveal', '--motion-duration-draw', '--motion-duration-vt', '--dur-t0', '--dur-t0-fast', '--dur-t1', '--dur-theme', '--dur-draw', '--dur-vt'];
+const ZERO = ['--motion-duration-fast', '--motion-duration-base', '--motion-duration-slow', '--motion-duration-reveal', '--motion-duration-draw', '--motion-duration-vt', '--motion-duration-dolly', '--dur-t0', '--dur-t0-fast', '--dur-t1', '--dur-theme', '--dur-draw', '--dur-dolly', '--dur-vt'];
 
 /** @param {any} json @returns {string} */
 export function generate(json) {
