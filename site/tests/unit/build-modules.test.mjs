@@ -71,10 +71,11 @@ test('modulepreload links are added for dependencies, once, before the module sc
   assert.equal(addModulePreloads('<script type="module" src="/m.js"></script>', { main: { src: '/m.js', deps: ['/t.js'] } }), '<link rel="modulepreload" href="/t.js">\n<script type="module" src="/m.js"></script>');
 });
 
-test('the real scripts directory builds; main statically imports quote and projects (W1) #module-graph', () => {
+test('the real scripts directory builds; feature modules load per route, not from main (W2) #module-graph', () => {
   const { modules } = buildModules(join(SITE, 'src/scripts'));
   for (const n of ['main', 'quote', 'projects', 'living', 'areas', 'lib-track', 'lib-prefs']) assert.ok(modules[n], `missing ${n}`);
-  assert.ok(modules.main.deps.includes(modules.quote.src) && modules.main.deps.includes(modules.projects.src) && modules.main.deps.includes(modules['lib-track'].src));
+  assert.ok(modules.main.deps.includes(modules['lib-track'].src) && modules.main.deps.includes(modules['lib-prefs'].src));
+  for (const n of ['quote', 'projects', 'areas', 'living']) assert.ok(!modules.main.deps.includes(modules[n].src), `main must not import ${n}`);
 });
 
 test('sprite tree-shaking keeps only referenced symbols and their paint servers #sprite-shake', () => {
