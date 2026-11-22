@@ -1,2 +1,78 @@
-/* 43-ui-projects.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/projects.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 43-ui-projects.css (ds-comp, W2): card grids and project cards, before/after, the spec strip and the plant palette
+   (ui/projects.mjs). Cards are inline-size containers (reflow at 320 px); grids use intrinsic auto-fill tracks so they
+   also work where a page renders .card-grid without the container wrapper. No budgets, no invented numbers. */
+@layer components {
+  /* ================= card grids ================= */
+  .card-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18.5rem), 1fr)); gap: var(--space-7) var(--space-5); }
+  .card-grid--4 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); }
+  @container (min-width: 64em) { .card-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .card { container-type: inline-size; min-width: 0; }
+  .card[hidden] { display: none; }
+  .card__link { display: flex; flex-direction: column; gap: var(--space-4); height: 100%; color: inherit; text-decoration: none; }
+  .card__media { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--radius-m); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
+  .card__media .media { aspect-ratio: 4 / 3; }
+  .area-card .card__media .media { aspect-ratio: 16 / 9; }
+  .card__media img { transition: transform var(--dur-t0) var(--ease-out); }
+  .card__link:hover .card__media img { transform: scale(1.03); }
+  .card__media .sample-label { position: absolute; top: 12px; left: 12px; z-index: 2; background: #FFF3D1; color: #6B4800; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+  .card__body { min-width: 0; }
+  .card__meta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .card__meta .i { color: var(--color-brand-2); }
+  .card__title { margin: 0 0 6px; font-size: var(--font-size-headline); line-height: 1.28; letter-spacing: -0.016em; transition: color var(--dur-t0-fast) var(--ease); }
+  .card__link:hover .card__title { color: var(--color-brand); }
+  .card__text { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); line-height: 1.5; }
+  /* A roomy card lays its media beside the text. */
+  @container (min-width: 36em) {
+    .card__link { flex-direction: row; align-items: center; gap: var(--space-5); }
+    .card__media { flex: 0 0 48%; }
+  }
+
+  /* ================= before / after ================= */
+  .ba { container-type: inline-size; margin: 0; }
+  .ba__stage { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  @container (min-width: 30em) { .ba__stage { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .ba__img { position: relative; }
+  .ba__img .media { border-radius: var(--radius-l); }
+  .ba__img .media__chip, .ba__img .media__credit { display: none; }
+  .ba__tag { position: absolute; z-index: 3; left: 14px; top: 14px; display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: var(--radius-pill); color: #fff; font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); background: var(--material-media-strong); box-shadow: var(--glass-shadow-media); }
+  .ba__img--after .ba__tag { left: auto; right: 14px; }
+  .ba__handle, .ba__control { display: none; }
+  .ba figcaption { margin-top: 10px; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+  .ba.is-enhanced:not(.is-side) .ba__stage { display: block; overflow: hidden; border-radius: var(--radius-xl); box-shadow: var(--shadow-2); }
+  .ba.is-enhanced:not(.is-side) .ba__img .media { border-radius: 0; }
+  .ba.is-enhanced:not(.is-side) .ba__img--after { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos, 50%)); }
+  .ba.is-enhanced:not(.is-side) .ba__handle { display: block; position: absolute; z-index: 4; top: 0; bottom: 0; left: var(--pos, 50%); width: 2px; margin-left: -1px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.2); pointer-events: none; }
+  .ba__knob { position: absolute; top: 50%; left: 50%; display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; color: #fff; background: var(--material-media-strong); box-shadow: var(--glass-shadow-media); }
+  .ba__l { transform: scaleX(-1); }
+  .ba.is-enhanced .ba__control { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 16px; }
+  .ba.is-side .ba__control input { display: none; }
+  .ba__control label { font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); white-space: nowrap; }
+  .ba__control input { flex: 1 1 12rem; min-height: 44px; accent-color: var(--color-brand); }
+  /* The toggle is shown only once a script wires it (it ships hidden) and never without JS. */
+  html:not(.js) .ba__toggle { display: none; }
+
+  /* ================= spec strip ================= */
+  .spec-strip { container-type: inline-size; position: relative; display: grid; grid-template-columns: repeat(auto-fill, minmax(max(8.25rem, calc(25% - 1px)), 1fr)); gap: 1px; margin: 0; padding-top: 10px; font-variant-numeric: tabular-nums; }
+  /* Optional ruler-tick hairline across the top (decoration only, no numbers). */
+  .spec-strip::before { content: ""; position: absolute; inset: 0 0 auto; height: 6px; pointer-events: none; background: linear-gradient(90deg, var(--survey-rule) 1px, transparent 1px) 0 0 / 24px 6px, linear-gradient(var(--survey-rule), var(--survey-rule)) 0 0 / 100% 1px no-repeat; }
+  .spec-strip__item { position: relative; min-width: 0; padding: 12px 14px 12px 16px; }
+  /* Filament separator: 1px brand → transparent. */
+  .spec-strip__item::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 1px; background: linear-gradient(180deg, var(--color-brand), transparent); opacity: 0.6; }
+  .spec-strip dt { margin: 0 0 4px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .spec-strip dd { margin: 0; color: var(--color-ink); font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+  .spec-strip dd a { color: var(--color-brand); }
+  .spec-strip--compact .spec-strip__item { padding-block: 8px; }
+  .spec-strip--compact dd { font-size: var(--font-size-subheadline); }
+
+  /* ================= plant palette ================= */
+  .plant-palette { container-type: inline-size; padding: clamp(1.25rem, 3vw, 1.75rem); border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); }
+  .plant-palette__title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-4); font-size: var(--font-size-title-3); }
+  .plant-palette__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  @container (min-width: 36em) { .plant-palette__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .plant { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px var(--space-3); align-items: start; }
+  .plant__icon { grid-row: span 2; margin-top: 3px; color: var(--color-brand); }
+  .plant__names { min-width: 0; }
+  .plant__common { font-weight: var(--font-weight-semibold); }
+  .plant__botanical { color: var(--color-ink-2); font-family: var(--font-family-serif); font-style: italic; }
+  .plant__note { grid-column: 2; color: var(--color-ink-3); font-size: var(--font-size-subheadline); }
+}

@@ -41,8 +41,8 @@ export function sourceChip(url, label) {
  * @param {string|null|undefined} iso
  */
 export function reviewedOn(iso) {
-  if (iso && isIsoDate(iso)) return html`<p class="reviewed">${icon('calendar', { size: 14 })}Last reviewed <time datetime="${iso}">${formatDate(iso)}</time></p>`;
-  return html`<p class="reviewed reviewed--pending">${icon('calendar', { size: 14 })}Review date to confirm</p>`;
+  if (iso && isIsoDate(iso)) return html`<p class="reviewed">${icon('calendar', { size: 14 })}<span>Last reviewed <time datetime="${iso}">${formatDate(iso)}</time></span></p>`;
+  return html`<p class="reviewed reviewed--pending">${icon('calendar', { size: 14 })}<span>Review date to confirm</span></p>`;
 }
 
 /**

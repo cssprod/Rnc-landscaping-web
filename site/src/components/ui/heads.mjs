@@ -46,7 +46,7 @@ export function hero(p) {
     <h1 id="page-title" class="hero__title">${p.h1}</h1>
     ${p.lede ? html`<p class="hero__lede">${md(p.lede)}</p>` : ''}
     ${p.proof ? html`<p class="hero__proof">${typeof p.proof === 'string' ? md(p.proof) : p.proof}</p>` : ''}
-    ${p.ctas !== false ? html`<div class="hero__ctas">${quoteBtn({ tone: p.scene ? 'primary' : 'light', size: 'lg' })}${secondaryBtn('hero', { tone: 'glass', size: 'lg' })}</div>` : ''}
+    ${p.ctas !== false ? html`<div class="hero__ctas">${quoteBtn({ tone: p.scene ? 'primary' : 'light', size: 'lg' })}${secondaryBtn('hero', { tone: p.scene && layout === 'split' ? 'secondary' : 'glass', size: 'lg' })}</div>` : ''}
     ${p.extra || ''}
     </div>
     ${layout === 'split' ? art : ''}

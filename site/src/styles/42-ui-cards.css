@@ -1,2 +1,109 @@
-/* 42-ui-cards.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/cards.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 42-ui-cards.css (ds-comp, W2): bento bands (stage, grid, lit-solid cards, edge glow, lift) and the service tiles
+   (ui/cards.mjs). Effects: lit-solid, stage, edge-glow (T0 + the T3 spotlight living.js drives), lift (T0).
+   Grids sit in inline-size containers (.bento-stage, .tiles-wrap) and reflow at 40em / 64em; each card is a container
+   too, so its insides reflow at 320 px. Never tilt, never backdrop-filter on cards (DESIGN-DIRECTION §7, J2 V2). */
+@layer components {
+  /* ================= bento band and stage ================= */
+  .bento-band { position: relative; isolation: isolate; overflow: hidden; }
+  .bento-stage { position: relative; }
+  /* Static "spatial floor" behind the grid gaps: pre-blurred glows + a radial-masked 48px hairline grid. Decorative,
+     never animated, removed under reduced transparency / more contrast / forced colours (--stage-opacity: 0). */
+  .bento-stage::before { content: ""; position: absolute; inset: -8% -6%; z-index: -1; pointer-events: none; opacity: var(--stage-opacity); background:
+    radial-gradient(40% 46% at 20% 30%, var(--glow-moss), transparent 70%),
+    radial-gradient(36% 42% at 82% 70%, var(--glow-sea), transparent 70%),
+    linear-gradient(var(--survey-rule) 1px, transparent 1px) 0 0 / 48px 48px,
+    linear-gradient(90deg, var(--survey-rule) 1px, transparent 1px) 0 0 / 48px 48px;
+    -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent); mask-image: radial-gradient(closest-side, #000 30%, transparent); }
+
+  .bento { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+
+  /* ================= cards ================= */
+  .bento__card {
+    container-type: inline-size;
+    position: relative; isolation: isolate; overflow: hidden;
+    display: flex; flex-direction: column; min-width: 0; min-height: 12.5rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-radius: var(--radius-l);
+    background: var(--surface-card); color: var(--color-ink);
+    box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-2);
+    transition: transform var(--dur-t0) var(--ease-out), box-shadow var(--dur-t0) var(--ease-out);
+  }
+  .bento__card--solid { background: var(--surface-card); }
+  /* "glass" tone is a lit-solid card with the sheen (no blur on content cards). */
+  .bento__card--glass { background: var(--glass-sheen), var(--surface-card-hi); }
+  .bento__card--deep { background: linear-gradient(165deg, var(--color-deep-2), var(--color-deep) 70%); color: var(--color-ink); }
+  /* Edge glow: a 1px moss → sea → honey rim on hover / focus-within (T0). Never violet: the focus ring stays unique. */
+  .bento__card::after { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; padding: 1px; pointer-events: none; background: var(--surface-edge);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0; transition: opacity var(--dur-t0) var(--ease-out); }
+  .bento__card:is(:hover, :focus-within)::after { opacity: 1; }
+  /* Lift: 3px on hover for link cards (T0; instant under reduce / off). */
+  .bento__card--link:hover { transform: translateY(-3px); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-3); }
+  .bento__card h3, .bento__title { margin: 0 0 var(--space-2); font-size: var(--font-size-title-3); font-weight: var(--font-weight-bold); letter-spacing: -0.02em; line-height: 1.15; }
+  .bento__card p { margin: 0; color: var(--color-ink-2); }
+  .bento__body { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--space-2); margin-top: auto; }
+  .bento__body > * { margin-block: 0; }
+  .bento__text { font-size: var(--font-size-subheadline); line-height: 1.5; max-width: 40ch; }
+  /* The whole card is one link: the title link's ::after covers the card; its text is the accessible name. */
+  .bento__link { color: inherit; text-decoration: none; }
+  .bento__link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+  .bento__link:hover { text-decoration: none; }
+  /* Focus ring on the card shape while its link has focus (the link itself is inline text). */
+  .bento__link:focus-visible { outline: none; box-shadow: none; }
+  .bento__card:has(.bento__link:focus-visible) { outline: 2px solid var(--focus-ring); outline-offset: 2px; box-shadow: 0 0 0 6px var(--focus-halo), 0 0 24px 6px var(--focus-glow); }
+  .bento__go { position: absolute; top: 14px; right: 14px; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--material-media-strong); color: #fff; box-shadow: var(--glass-shadow-media); transition: transform var(--dur-t0) var(--ease-spring); }
+  .bento__card--link:hover .bento__go { transform: scale(1.08); }
+  .bento__icon { margin: 0 0 var(--space-5); }
+  /* Art well: a living vignette (never empty: the scene sky paints until living art is in). */
+  .bento__art { position: relative; overflow: hidden; margin: calc(-1 * clamp(1.25rem, 3vw, 2rem)) calc(-1 * clamp(1.25rem, 3vw, 2rem)) var(--space-5); min-height: 9rem; flex: 1 1 auto;
+    background: radial-gradient(40% 50% at 78% 24%, color-mix(in srgb, var(--scene-orb) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--scene-sky-top), var(--scene-sky-mid) 60%, var(--scene-sky-low)); }
+  .bento__art > .scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* ================= grid layouts (container queries on .bento-stage) ================= */
+  @container (min-width: 40em) {
+    .bento--2x2, .bento--3, .bento--feature, .bento--4, .bento--6 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bento--feature > .bento__card--feature, .bento--feature > .bento__card--wide, .bento--feature > .bento__card--full { grid-column: 1 / -1; }
+  }
+  @container (min-width: 64em) {
+    .bento--3, .bento--6 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .bento--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bento--feature { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(200px, auto); }
+    .bento--feature > .bento__card--feature { grid-column: span 2; grid-row: span 2; }
+    .bento--feature > .bento__card--tall { grid-row: span 2; }
+    .bento--feature > .bento__card--wide { grid-column: span 3; }
+    .bento--feature > .bento__card--full { grid-column: 1 / -1; }
+    .bento__card--feature .bento__title { font-size: var(--font-size-title-2); }
+    /* featureBento with 3 items: the first card is the tall lead. */
+    .bento--3:has(> :nth-child(3):last-child) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+    .bento--3:has(> :nth-child(3):last-child) > :first-child { grid-row: span 2; min-height: 21rem; }
+  }
+  /* The lead card of a featureBento keeps its contour wash (static). */
+  .bento--3 > .bento__card:first-child { background-image: radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--color-brand-2) 16%, transparent), transparent 60%), var(--surface-card); }
+  .bento--3 > .bento__card:first-child .icon-tile { width: 60px; height: 60px; margin-bottom: auto; border-radius: 18px; }
+  .bento--3 > .bento__card:first-child .icon-tile ~ h3 { margin-top: var(--space-7); }
+
+  /* ================= service tiles ================= */
+  .tiles-wrap { container-name: tiles; }
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  @container (min-width: 30em) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .tile { container-type: inline-size; min-width: 0; }
+  .tile__link { position: relative; isolation: isolate; display: block; overflow: hidden; border-radius: var(--radius-l); color: #fff; text-decoration: none; box-shadow: var(--shadow-2); transition: transform var(--dur-t0) var(--ease-out), box-shadow var(--dur-t0) var(--ease-out); }
+  .tile__link:hover { transform: translateY(-3px); box-shadow: var(--shadow-3); }
+  /* One column: a landscape tile keeps the band short; from two columns the tiles stand portrait. */
+  .tile .media { aspect-ratio: 4 / 3; }
+  @container tiles (min-width: 30em) { .tile .media { aspect-ratio: 4 / 5; } }
+  .tile__link::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(5, 12, 8, 0.66), rgba(5, 12, 8, 0) 62%); pointer-events: none; }
+  /* Thick fill over the photo, no blur (J2 V2). */
+  .tile__glass { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2; display: grid; gap: 4px; padding: 14px 16px 16px; border-radius: calc(var(--radius-l) - 10px); background: var(--material-media-strong); box-shadow: var(--glass-shadow-media); }
+  .tile__icon { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 6px; border-radius: 11px; background: rgba(255, 255, 255, 0.18); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+  .tile__title { font-size: 1.1875rem; font-weight: var(--font-weight-semibold); line-height: 1.2; letter-spacing: -0.018em; }
+  .tile__text { font-size: var(--font-size-footnote); line-height: 1.4; color: rgba(255, 255, 255, 0.86); }
+  .tile__go { position: absolute; top: 12px; right: 12px; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--material-media-strong); box-shadow: var(--glass-shadow-media); transition: transform var(--dur-t0) var(--ease-spring); }
+  .tile__link:hover .tile__go { transform: scale(1.1); }
+
+  @media (forced-colors: active) {
+    .bento__card, .tile__link { border: 1px solid CanvasText; }
+    .bento-stage::before, .bento__card::after { display: none; }
+  }
+}

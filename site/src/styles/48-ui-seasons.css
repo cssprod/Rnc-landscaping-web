@@ -1,2 +1,44 @@
-/* 48-ui-seasons.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/seasons.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 48-ui-seasons.css (ds-comp, W2): seasonal planner cards, the step timeline and the per-visit table (ui/seasons.mjs).
+   Container queries: seasons 1 → 2 → 4 columns; the timeline is vertical below 64em and horizontal from 64em (unless
+   .timeline--vertical); the table stays a real table at 320 px (text wraps, no horizontal page scroll). */
+@layer components {
+  /* ================= seasons ================= */
+  .seasons { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+  @container (min-width: 30em) { .seasons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .seasons { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .season { --tint: #7CC596; min-width: 0; padding: 24px; border-radius: var(--radius-l); background: linear-gradient(180deg, color-mix(in srgb, var(--tint) 16%, transparent), transparent 58%), var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
+  .season--summer { --tint: #E9C25F; } .season--fall, .season--autumn { --tint: #DC8E53; } .season--winter { --tint: #86ACD6; }
+  .season h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 var(--space-3); font-size: 1.125rem; }
+  .season h3 .i { color: color-mix(in srgb, var(--tint) 70%, var(--color-ink)); }
+  .season ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+  .season li { position: relative; padding-left: 16px; }
+  .season li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 6px; border-radius: 50%; background: color-mix(in srgb, var(--tint) 75%, var(--color-ink)); }
+
+  /* ================= timeline ================= */
+  .timeline { --node: 2.5rem; list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); }
+  .timeline__step { position: relative; display: grid; grid-template-columns: var(--node) minmax(0, 1fr); gap: var(--space-4); min-width: 0; }
+  /* The spine: a filament joining the nodes (static; process-path draws it in W3 through data-draw). */
+  .timeline__step:not(:last-child)::before { content: ""; position: absolute; left: calc(var(--node) / 2 - 0.5px); top: var(--node); bottom: calc(-1 * var(--space-5)); width: 1px; background: linear-gradient(180deg, var(--color-brand), color-mix(in srgb, var(--color-brand) 15%, transparent)); }
+  .timeline__node { position: relative; z-index: 1; display: grid; place-items: center; width: var(--node); height: var(--node); border-radius: 50%; background: var(--color-bg-elevated); color: var(--color-brand); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand) 45%, transparent), 0 0 18px -4px var(--glow-moss); }
+  .timeline__num { font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); font-variant-numeric: tabular-nums; }
+  .timeline__body { min-width: 0; padding-top: 6px; }
+  .timeline__title { margin: 0 0 var(--space-2); font-size: var(--font-size-title-3); }
+  .timeline__text { margin: 0; color: var(--color-ink-2); }
+  .timeline__deliverable { margin: var(--space-3) 0 0; padding: 10px 14px; border-radius: var(--radius-s); background: var(--color-bg-tint); color: var(--color-ink); font-size: var(--font-size-subheadline); }
+  .timeline__deliverable-label { font-weight: var(--font-weight-semibold); }
+  @container (min-width: 64em) {
+    .timeline--auto { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--space-5); }
+    .timeline--auto .timeline__step { grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--node) auto; }
+    .timeline--auto .timeline__step:not(:last-child)::before { left: var(--node); right: calc(-1 * var(--space-5)); top: calc(var(--node) / 2 - 0.5px); bottom: auto; width: auto; height: 1px; background: linear-gradient(90deg, var(--color-brand), color-mix(in srgb, var(--color-brand) 15%, transparent)); }
+  }
+
+  /* ================= per-visit table ================= */
+  .visit-table { width: 100%; border-collapse: separate; border-spacing: 0; overflow: hidden; border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); font-size: var(--font-size-subheadline); }
+  .visit-table caption { caption-side: top; padding: 0 0 var(--space-3); text-align: left; font-weight: var(--font-weight-semibold); font-size: var(--font-size-headline); color: var(--color-ink); }
+  .visit-table th, .visit-table td { padding: 12px 16px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+  .visit-table thead th { color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); border-bottom: 1px solid var(--color-line); }
+  .visit-table tbody th { width: 34%; font-weight: var(--font-weight-semibold); color: var(--color-ink); }
+  .visit-table td { color: var(--color-ink-2); }
+  .visit-table tbody tr + tr :is(th, td) { border-top: 1px solid var(--color-line); }
+  @container (max-width: 24em) { .visit-table th, .visit-table td { padding: 10px 12px; } .visit-table tbody th { width: 40%; } }
+}
