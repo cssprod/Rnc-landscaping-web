@@ -108,7 +108,7 @@ async function run(/** @type {{ theme: 'dark'|'light', width: number }} */ c) {
           }
           measured++;
           results.push({ page: p, state, text: t.text, tag: t.tag, worst: Number(min.toFixed(2)) });
-          if (min < MIN) failures.push({ rule: 'worst-pixel', path: fileOfUrl(p), message: `<${t.tag}> "${t.text}" ${min.toFixed(2)}:1 against its worst pixel (needs ${MIN}) [${state}]` });
+          if (min < MIN) failures.push({ rule: 'worst-pixel', path: fileOfUrl(p), message: `<${t.tag}> "${t.text}" ${(Math.floor(min * 100) / 100).toFixed(2)}:1 against its worst pixel (needs ${MIN}) [${state}]` });
         }
       } catch (e) {
         failures.push({ rule: 'worst-pixel', path: fileOfUrl(p), message: `could not measure: ${e instanceof Error ? e.message.split('\n')[0] : e} [${state}]` });
