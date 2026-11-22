@@ -100,9 +100,13 @@ test('legacy slices: one per legacy-css-map segment, in source order, inside @la
   assert.ok(readFileSync(join(SITE, 'src/styles/00-layers.css'), 'utf8').includes(map.layerDecl));
   const legacy = names.filter((n) => n.startsWith('50-legacy-'));
   const planned = map.segments.map((/** @type {any} */ s) => s.file.split('/').pop());
+  // Owners delete their slices by each segment's mustDeleteIn wave, so compare only against the segments whose file
+  // still exists (W3b proves none remain).
+  const present = planned.filter((/** @type {string} */ f) => names.includes(f));
   // A fallback 50-legacy-NNx-ds-core.css may sit between slices; everything else is exactly the map, in order.
-  assert.deepEqual(legacy.filter((n) => !/^50-legacy-\d\dx-ds-core\.css$/.test(n)), planned);
+  assert.deepEqual(legacy.filter((n) => !/^50-legacy-\d\dx-ds-core\.css$/.test(n)), present);
   for (const seg of map.segments) {
+    if (!existsSync(join(REPO, seg.file))) continue;
     const text = readFileSync(join(REPO, seg.file), 'utf8');
     assert.match(text, /@layer legacy \{\n[\s\S]*\n\}\n$/, `${seg.file} wraps its rules in @layer legacy`);
     for (const r of seg.importantRules || []) {
