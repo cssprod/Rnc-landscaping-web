@@ -25,7 +25,10 @@ function page(path, env = testEnv()) {
 }
 const footer = (/** @type {string} */ h) => h.match(/<footer class="site-footer"[\s\S]*?<\/footer>/)?.[0] || '';
 const header = (/** @type {string} */ h) => h.match(/<header class="site-header"[\s\S]*?<\/header>/)?.[0] || '';
-const business = (/** @type {string} */ h) => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1])).find((o) => /Business$/.test(o['@type']));
+// C6: one JSON-LD script per page holding {"@context","@graph":[…]}; search the @graph nodes (requests/seo.md #1).
+const ldNodes = (/** @type {string} */ h) => [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .flatMap((m) => { const o = JSON.parse(m[1]); return o['@graph'] || [o]; });
+const business = (/** @type {string} */ h) => ldNodes(h).find((o) => /Business$/.test(o['@type']));
 
 test('site.config reads content/site.json: tokens, services and municipalities #consumers', () => {
   assert.equal(siteJsonPath, fileURLToPath(new URL('../../../content/site.json', import.meta.url)));
@@ -101,7 +104,7 @@ test('municipalities and service labels come from site.json in the nav, footer a
     assert.ok(footer(h).includes('Grounds-from-site-json'));
     assert.ok(business(h).areaServed.some((/** @type {any} */ a) => a.name === 'Victoria-from-site-json, BC'));
     const svc = page('/services/irrigation/');
-    const ld = [...svc.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1])).find((o) => o['@type'] === 'Service');
+    const ld = ldNodes(svc).find((o) => o['@type'] === 'Service');
     assert.ok(ld.areaServed.some((/** @type {any} */ a) => a.name === 'Victoria-from-site-json, BC'));
   } finally { siteJson.municipalities[0].name = m0; siteJson.services[0].navLabel = s0; }
 });
