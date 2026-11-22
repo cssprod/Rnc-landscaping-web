@@ -14,7 +14,7 @@
   }
   .btn .i { flex: none; }
   .btn:active { transform: scale(0.965); }
-  .btn--sm { --h: 40px; padding: 0 16px; font-size: var(--font-size-subheadline); }
+  .btn--sm { --h: 44px; padding: 0 16px; font-size: var(--font-size-subheadline); }
   .btn--lg { --h: 56px; padding: 0 28px; font-size: 1.0625rem; }
   /* Moss capsule (dark) / fir capsule (dawn); inside .on-deep the dark brand values apply in both themes. */
   .btn--primary {

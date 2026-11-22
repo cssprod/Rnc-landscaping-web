@@ -135,3 +135,4 @@ api('ui/callouts.mjs', 'sourceChip', ['url', 'label']);
 api('ui/callouts.mjs', 'reviewedOn', ['iso']);
 api('ui/callouts.mjs', 'guarantee', [], ['id', 'heading', 'body', 'level']);
 api('ui/callouts.mjs', 'reassuranceStrip', ['items']);
+api('ui/cards.mjs', 'bentoCard', ['item'], ['reveal']);

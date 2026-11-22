@@ -5,7 +5,7 @@
  *
  * Living band (effects cta-band, conic-ring, grain): three pre-blurred blobs moved by transform and one rotated conic
  * ring on the primary button are T2 loops (`data-t2`: they run only under html[data-alive], pause off-screen through
- * `data-living` on the art layer, and never run without JS or with motion off). The copy sits on a fixed scrim.
+ * `data-living` on the band, and never run without JS or with motion off). The copy sits on a fixed scrim.
  */
 import { html, raw } from '../../lib/html.mjs';
 import { siteJson } from '../../../site.config.mjs';
@@ -31,8 +31,8 @@ export function ctaBand(p = {}) {
   const primary = p.living
     ? html`<span class="conic"><span class="conic__ring" data-t2 aria-hidden="true"></span>${quoteBtn({ tone: 'primary', size: 'lg' })}</span>`
     : quoteBtn({ tone: 'primary', size: 'lg' });
-  return html`<section class="cta-band on-deep${p.living ? ' cta-band--living' : ''}" aria-labelledby="${id}">
-  <div class="cta-band__bg" aria-hidden="true"${p.living ? raw(' data-living') : ''}>
+  return html`<section class="cta-band on-deep${p.living ? ' cta-band--living' : ''}" aria-labelledby="${id}"${p.living ? raw(' data-living') : ''}>
+  <div class="cta-band__bg" aria-hidden="true">
     ${p.living ? html`<div class="cta-band__blobs"><span class="cta-band__blob cta-band__blob--1" data-t2></span><span class="cta-band__blob cta-band__blob--2" data-t2></span><span class="cta-band__blob cta-band__blob--3" data-t2></span></div>` : ''}
     ${CONTOURS}
     <span class="cta-band__grain"></span>

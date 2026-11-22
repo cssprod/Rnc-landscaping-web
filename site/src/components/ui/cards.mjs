@@ -67,7 +67,8 @@ export function serviceTiles(data, o = {}) {
 /**
  * One bento card: an art well (living vignette) or an icon, the title in `h{headingLevel}`, one sentence, and a "go"
  * chip. With `href` the whole card is one link: the title link's ::after covers the card and its text is the name.
- * @param {BentoItem} item @param {{ headingLevel?: number }} [o]
+ * `reveal` adds the `data-reveal` hook on the card (prefer it on the band: living.js arms section wrappers).
+ * @param {BentoItem} item @param {{ headingLevel?: number, reveal?: boolean }} [o]
  */
 export function bentoCard(item, o = {}) {
   const H = `h${hLevel(o.headingLevel, 3)}`;
@@ -78,7 +79,7 @@ export function bentoCard(item, o = {}) {
     ? html`<div class="bento__art" aria-hidden="true">${art}${artS && !artS.includes('media__chip--art') ? illustrationChip() : ''}</div>`
     : item.icon ? html`<span class="bento__icon icon-tile">${icon(item.icon, { size: 22 })}</span>` : '';
   const cls = `bento__card bento__card--${tone}${item.span ? ` bento__card--${item.span}` : ''}${item.href ? ' bento__card--link' : ''}${tone === 'deep' ? ' on-deep' : ''}`;
-  return html`<li class="${cls}" data-spotlight>
+  return html`<li class="${cls}" data-spotlight${o.reveal ? raw(' data-reveal') : ''}>
   ${well}
   <div class="bento__body">
     ${raw(`<${H} class="bento__title">`)}${item.href ? html`<a class="bento__link" href="${item.href}">${item.title}</a>` : item.title}${raw(`</${H}>`)}

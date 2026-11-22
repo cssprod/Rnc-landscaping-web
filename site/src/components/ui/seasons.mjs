@@ -28,7 +28,7 @@ export function timeline(steps = [], o = /** @type {any} */ ({})) {
   if (!steps.length) return '';
   const level = hLevel(o.level, 2);
   const H = `h${hLevel(o.headingLevel, o.heading ? level + 1 : 3)}`;
-  const list = html`<div class="timeline-wrap l-cq"><ol class="timeline timeline--${o.orientation === 'vertical' ? 'vertical' : 'auto'}"${!o.heading && o.id ? raw(` id="${o.id}"`) : ''}>${steps.map((s, n) => html`<li class="timeline__step">
+  const list = html`<div class="timeline-wrap l-cq"${!o.heading && o.reveal ? raw(' data-reveal') : ''}><ol class="timeline timeline--${o.orientation === 'vertical' ? 'vertical' : 'auto'}"${!o.heading && o.id ? raw(` id="${o.id}"`) : ''}>${steps.map((s, n) => html`<li class="timeline__step">
     <span class="timeline__node" aria-hidden="true"><span class="timeline__num t-num">${String(n + 1).padStart(2, '0')}</span></span>
     <div class="timeline__body">
       ${raw(`<${H} class="timeline__title">`)}${s.title}${raw(`</${H}>`)}
