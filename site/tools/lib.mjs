@@ -14,6 +14,9 @@
  *   --write-baseline    integrator only: write the current failures as the baseline (with --baseline-at=<wave>/<merge>)
  *   --prune-baseline    integrator only: drop stale entries, never add
  *   --all               print every failure (default: the first 50)
+ * Hard rules: a tool passes report(tool, failures, { hard: [...] }) for the rule ids that enforce a CONTRACT §2 hard rule
+ * (a "Blocker", §16). They are never baselined: --write-baseline and --prune-baseline leave them out and fail while one
+ * fails (fix it first), and an entry for one in a baseline file is ignored, so a breach always fails the gate.
  * Tools whose failures depend on the build flavour (budgets: image-widths online, third-party-origins offline) are
  * baselined over both builds:
  *   write:  run offline with --write-baseline, then online with --write-baseline --baseline-merge (union of both).
@@ -72,16 +75,20 @@ export function toFailure(f) {
 const key = (/** @type {{ rule: string, path: string }} */ e) => `${e.rule}\u0000${e.path}`;
 
 /**
- * Split failures against a baseline (pure; used by report() and the unit tests).
- * @param {Failure[]} failures @param {Baseline|null} baseline
+ * Split failures against a baseline (pure; used by report() and the unit tests). Entries for a hard rule id are
+ * ignored (returned as `ignored`): a hard-rule failure is always fresh.
+ * @param {Failure[]} failures @param {Baseline|null} baseline @param {Iterable<string>} [hard] rule ids never baselined
  */
-export function applyBaseline(failures, baseline) {
-  const listed = new Set((baseline?.entries || []).map(key));
+export function applyBaseline(failures, baseline, hard = []) {
+  const never = new Set(hard);
+  const entries = (baseline?.entries || []).filter((e) => !never.has(e.rule));
+  const listed = new Set(entries.map(key));
   const failing = new Set(failures.map(key));
   return {
     fresh: failures.filter((f) => !listed.has(key(f))),
     baselined: failures.filter((f) => listed.has(key(f))),
-    stale: (baseline?.entries || []).filter((e) => !failing.has(key(e))),
+    stale: entries.filter((e) => !failing.has(key(e))),
+    ignored: (baseline?.entries || []).filter((e) => never.has(e.rule)),
   };
 }
 
@@ -89,11 +96,23 @@ export function applyBaseline(failures, baseline) {
  * Print a tool's result and return whether it passed.
  * @param {string} tool tool id, e.g. "budgets" (also the baseline file name)
  * @param {(Failure|string)[]} list
+ * @param {{ hard?: string[] }} [o] hard: rule ids that are never baselined (see the header)
  * @returns {boolean}
  */
-export function report(tool, list) {
-  const failures = list.map(toFailure);
+export function report(tool, list, o = {}) {
+  const hard = new Set(o.hard || []);
+  const all = list.map(toFailure);
+  const line = (/** @type {Failure} */ f) => `  - ${f.rule !== 'unspecified' ? `[${f.rule}] ` : ''}${f.path ? `${f.path}: ` : ''}${f.message}`;
+  const cap = flag('all') ? Infinity : 50;
   if (flag('write-baseline') || flag('prune-baseline')) {
+    // A hard-rule failure is never written: the baseline gets the other failures and the run fails, naming the breach.
+    const breaches = all.filter((x) => hard.has(x.rule));
+    const failures = all.filter((x) => !hard.has(x.rule));
+    const refuse = () => {
+      if (!breaches.length) return true;
+      console.error(`✗ ${tool}: ${breaches.length} hard-rule failure(s) not baselined (CONTRACT §2, §16 Blocker: fix them, then write the baseline again)\n${breaches.slice(0, cap).map(line).join('\n')}`);
+      return false;
+    };
     const f = baselinePath(tool);
     const old = loadBaseline(tool);
     const ledger = process.env.BASELINE_LEDGER;
@@ -105,22 +124,22 @@ export function report(tool, list) {
       mkdirSync(dirname(lf), { recursive: true });
       writeFileSync(lf, `${JSON.stringify(seen)}\n`);
       console.log(`• ${tool}: ${seen.keys.length} still-failing baseline entr${seen.keys.length === 1 ? 'y' : 'ies'} recorded in ${lf}`);
-      return true;
+      return refuse();
     }
-    const entries = flag('write-baseline')
+    const entries = (flag('write-baseline')
       ? [...failures.map((x) => ({ rule: x.rule, path: x.path })), ...(flag('baseline-merge') ? old?.entries || [] : [])]
-      : applyBaseline(failures, old).baselined.map((x) => ({ rule: x.rule, path: x.path }));
+      : applyBaseline(failures, old, hard).baselined.map((x) => ({ rule: x.rule, path: x.path }))).filter((e) => !hard.has(e.rule));
     const uniq = [...new Map(entries.map((e) => [key(e), e])).values()].sort((a, b) => key(a).localeCompare(key(b)));
     mkdirSync(dirname(f), { recursive: true });
     writeFileSync(f, `${JSON.stringify({ tool, writtenAt: opt('baseline-at') || old?.writtenAt || 'manual', entries: uniq }, null, 2)}\n`);
     console.log(`• ${tool}: baseline ${flag('write-baseline') ? 'written' : 'pruned'} (${uniq.length} entr${uniq.length === 1 ? 'y' : 'ies'}) → ${f}`);
-    return true;
+    return refuse();
   }
+  const failures = all;
   const baseline = flag('no-baseline') ? null : loadBaseline(tool);
-  const { fresh, baselined, stale } = applyBaseline(failures, baseline);
-  const line = (/** @type {Failure} */ f) => `  - ${f.rule !== 'unspecified' ? `[${f.rule}] ` : ''}${f.path ? `${f.path}: ` : ''}${f.message}`;
+  const { fresh, baselined, stale, ignored } = applyBaseline(failures, baseline, hard);
   const extra = baselined.length ? ` (${baselined.length} baselined)` : '';
-  const cap = flag('all') ? Infinity : 50;
+  if (ignored.length) console.warn(`  ${tool}: ${ignored.length} baseline entr${ignored.length === 1 ? 'y is' : 'ies are'} for a hard rule and ignored (hard rules are never baselined): ${ignored.slice(0, 5).map((e) => `${e.rule} ${e.path}`).join(', ')}${ignored.length > 5 ? ', …' : ''}`);
   if (fresh.length) console.error(`✗ ${tool}: ${fresh.length} problem(s)${extra}\n${fresh.slice(0, cap).map(line).join('\n')}${fresh.length > cap ? `\n  … and ${fresh.length - cap} more (--all prints every one)` : ''}`);
   else console.log(`✓ ${tool}${extra}`);
   if (stale.length) console.warn(`  ${tool}: ${stale.length} stale baseline entr${stale.length === 1 ? 'y' : 'ies'} (no longer failing; the integrator prunes them): ${stale.slice(0, 5).map((e) => `${e.rule} ${e.path}`).join(', ')}${stale.length > 5 ? ', …' : ''}`);
@@ -192,7 +211,6 @@ export async function serveDist(fallback = 0) {
   return { origin: `http://localhost:${port}`, port, close: () => server.close() };
 }
 
-/** Playwright Chromium ($CHROME overrides). Imported lazily so the check-* tools never need Playwright. */
 /**
  * Primary targets (CONTRACT §8, C4), run in the page through page.evaluate (self-contained: no closure over this
  * module): the theme and motion toggles ([data-pref]) and the Menu button ([data-nav-toggle]) at least 44 × 44, the
@@ -217,6 +235,87 @@ export const primaryTargets = () => {
   return out;
 };
 
+/**
+ * Text contrast where the background is a known colour, run in the page through page.evaluate (self-contained, like
+ * primaryTargets; used by measure.mjs#audit-report). For each visible element with its own text, the background is the
+ * first ancestor colour with alpha >= 0.99, with every translucent ancestor colour between them composited over it
+ * (a tint or a glass panel on a solid section). The text is skipped (counted in `skipped`, left to text-over-media's
+ * pixel method) when something else may paint under it: an ancestor background image, an ancestor ::before/::after
+ * that paints most of its box, or an img, picture, svg, canvas, video or iframe (or a painted element that is not an
+ * ancestor) over part of the text box. Media are found geometrically, so `pointer-events: none` art counts too, and
+ * other painted layers in the hit-test stack at the text's centre.
+ * @returns {{ textElements: number, minRatio: number|null, minAt: string, under45: number, skipped: number }}
+ */
+export const textContrast = () => {
+  const lin = (/** @type {number} */ v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  const L = (/** @type {number[]} */ c) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
+  const rgba = (/** @type {string} */ s) => { const n = (s.match(/[\d.]+/g) || []).map(Number); return [n[0] || 0, n[1] || 0, n[2] || 0, n[3] === undefined ? 1 : n[3]]; };
+  const over = (/** @type {number[]} */ top, /** @type {number[]} */ under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3]));
+  const paints = (/** @type {CSSStyleDeclaration} */ s) => s.backgroundImage !== 'none' || rgba(s.backgroundColor)[3] > 0;
+  /** A ::before/::after that paints at least half of its element's box (an overlay, not an accent line). */
+  const pseudoCovers = (/** @type {Element} */ e) => {
+    const r = e.getBoundingClientRect();
+    return ['::before', '::after'].some((p) => {
+      const s = getComputedStyle(e, p);
+      if (s.content === 'none' || s.content === 'normal' || s.display === 'none' || !paints(s)) return false;
+      const w = parseFloat(s.width), h = parseFloat(s.height);
+      return !(w >= 0 && h >= 0) || w * h >= 0.5 * r.width * r.height;
+    });
+  };
+  const MEDIA = 'img, picture, svg, canvas, video, iframe, object, embed';
+  const shown = (/** @type {Element} */ e) => { const s = getComputedStyle(e); const r = e.getBoundingClientRect(); return s.display !== 'none' && s.visibility !== 'hidden' && Number(s.opacity) > 0 && r.width > 0 && r.height > 0; };
+  const media = [...document.querySelectorAll(MEDIA)].filter(shown);
+  const overlap = (/** @type {DOMRect} */ a, /** @type {DOMRect} */ b) => Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+  const range = document.createRange();
+  let minRatio = Infinity, low = 0, textEls = 0, skipped = 0, minAt = '';
+  for (const el of document.querySelectorAll('body *')) {
+    if (el.closest('svg, [aria-hidden="true"]')) continue;
+    const texts = [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent?.trim());
+    if (!texts.length) continue;
+    const s = getComputedStyle(el);
+    if (s.visibility === 'hidden' || s.display === 'none') continue;
+    // The box of the element's own text (not its children), so an icon beside the text is not "under" it.
+    const boxes = texts.map((n) => { range.selectNodeContents(n); return range.getBoundingClientRect(); }).filter((r) => r.width && r.height);
+    if (!boxes.length) continue;
+    const left = Math.min(...boxes.map((r) => r.left)), top = Math.min(...boxes.map((r) => r.top));
+    const tr = new DOMRect(left, top, Math.max(...boxes.map((r) => r.right)) - left, Math.max(...boxes.map((r) => r.bottom)) - top);
+    /** @type {number[]|null} */ let bg = null;
+    /** @type {Element|null} */ let opaque = null;
+    /** @type {number[][]} */ const layers = [];
+    let unknown = false;
+    for (let e = /** @type {Element|null} */ (el); e; e = e.parentElement) {
+      const es = getComputedStyle(e);
+      if (es.backgroundImage !== 'none' || (e !== el && pseudoCovers(e))) { unknown = true; break; }
+      const c = rgba(es.backgroundColor);
+      if (c[3] >= 0.99) { bg = c; opaque = e; break; }
+      if (c[3] > 0) layers.push(c);
+    }
+    const ancestors = new Set();
+    for (let e = /** @type {Element|null} */ (el); e && e !== opaque; e = e.parentElement) ancestors.add(e);
+    const foreign = (/** @type {Element} */ e) => !ancestors.has(e) && e !== opaque && !el.contains(e) && !e.contains(el);
+    if (!unknown && bg) unknown = media.some((m) => foreign(m) && overlap(m.getBoundingClientRect(), tr) > 0.1 * tr.width * tr.height);
+    if (!unknown && bg) {
+      const cx = tr.left + tr.width / 2, cy = tr.top + tr.height / 2;
+      if (cx >= 0 && cy >= 0 && cx < innerWidth && cy < innerHeight) {
+        for (const e of document.elementsFromPoint(cx, cy)) {
+          if (e === opaque) break;
+          if (foreign(e) && (e.matches(MEDIA) || paints(getComputedStyle(e)) || pseudoCovers(e))) { unknown = true; break; }
+        }
+      }
+    }
+    if (!bg || unknown) { skipped++; continue; }
+    for (const c of layers.reverse()) bg = [...over(c, bg), 1];
+    const fg = rgba(s.color);
+    const mix = over(fg, bg);
+    const ratio = (Math.max(L(mix), L(bg)) + 0.05) / (Math.min(L(mix), L(bg)) + 0.05);
+    textEls++;
+    if (ratio < 4.5) low++;
+    if (ratio < minRatio) { minRatio = ratio; minAt = `${el.tagName.toLowerCase()}${typeof el.className === 'string' && el.className.trim() ? `.${el.className.trim().split(/\s+/)[0]}` : ''}`; }
+  }
+  return { textElements: textEls, minRatio: Number.isFinite(minRatio) ? Number(minRatio.toFixed(2)) : null, minAt, under45: low, skipped };
+};
+
+/** Playwright Chromium ($CHROME overrides). Imported lazily so the check-* tools never need Playwright. */
 export async function launchChromium() {
   const { chromium } = await import('playwright');
   return chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});

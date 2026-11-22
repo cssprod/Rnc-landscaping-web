@@ -106,13 +106,19 @@ export function overflowOf(page) {
     const culprits = [];
     for (const el of document.body.querySelectorAll('*')) {
       const r = el.getBoundingClientRect();
-      if (!r.width || r.right <= vw + 1) continue;
+      // A box inside the viewport whose content spills out of it (a long unbreakable word) counts by its content's edge.
+      const spill = el.scrollWidth > el.clientWidth + 1 && !/(hidden|auto|scroll|clip)/.test(getComputedStyle(el).overflowX) ? r.left + el.scrollWidth : 0;
+      const right = Math.max(r.right, spill);
+      if (!r.width || right <= vw + 1) continue;
       let clipped = false;
       for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
         if (/(hidden|auto|scroll|clip)/.test(getComputedStyle(p).overflowX) && p.getBoundingClientRect().right <= vw + 1) { clipped = true; break; }
       }
-      if (!clipped) culprits.push(`${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ''}${el.classList.length ? `.${[...el.classList].join('.')}` : ''} (right edge ${Math.round(r.right)} px)`);
+      if (!clipped) culprits.push({ el, text: `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ''}${el.classList.length ? `.${[...el.classList].join('.')}` : ''} (${right > r.right + 1 ? `content overflows its box to ${Math.round(right)} px` : `right edge ${Math.round(r.right)} px`})` });
     }
-    return { scrollWidth: Math.max(root.scrollWidth, document.body.scrollWidth), viewport: vw, culprits: culprits.slice(0, 3) };
+    // The innermost offenders first: an ancestor whose content spills only because of them is listed after them.
+    const inner = culprits.filter((c) => !culprits.some((o) => o !== c && c.el.contains(o.el)));
+    const order = [...inner, ...culprits.filter((c) => !inner.includes(c))];
+    return { scrollWidth: Math.max(root.scrollWidth, document.body.scrollWidth), viewport: vw, culprits: order.slice(0, 3).map((c) => c.text) };
   });
 }

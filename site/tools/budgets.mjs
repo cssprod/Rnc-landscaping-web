@@ -7,16 +7,21 @@
  * Rules:
  *   v2                   the per-page table (fail / warn), one rule id per row so that a baselined row never hides a new
  *                        failure of another row on the same page (baselines key on { rule, path }, CONTRACT §17):
- *                        v2-css, v2-js, v2-html-gz, v2-html-raw, v2-inline-svg, v2-hero-scene, v2-sprite, v2-art,
- *                        v2-fonts, v2-font-files, v2-weight, v2-hero-raster. "v2" is the umbrella id the
- *                        traceability items name:
+ *                        v2-css, v2-js, v2-html-gz, v2-html-raw, v2-inline-svg, v2-hero-scene, v2-sprite,
+ *                        v2-sprite-logo, v2-art, v2-fonts, v2-font-files, v2-weight, v2-hero-raster. "v2" is the
+ *                        umbrella id the traceability items name:
  *                          CSS (gzip) > 36 KB / > 28 KB;  JS (gzip, every module script, its modulepreloads and the
  *                          static import graph) > 22 KB / > 14 KB;  HTML > 30 KB gzip or 150 KB raw / > 22 KB or 90 KB;
  *                          inline SVG > 45 KB raw;  hero scene ([data-living] in the page hero) > 16 KB raw;  used
- *                          sprite (the inline <symbol> sheet) > 8 KB raw;  art file (assets/art/*.svg) > 14 KB raw;
+ *                          sprite (the inline <symbol> sheet) > 8 KB raw for the icons, with the logo's symbols and
+ *                          paint servers (ids logo-*) budgeted on their own, > 6 KB raw (v2-sprite-logo: the logo is
+ *                          in every page's sprite, ds-chrome request §11);  art file (assets/art/*.svg) > 14 KB raw;
  *                          fonts > 110 KB or > 2 files (the @font-face files of the page's CSS);  page weight (HTML +
  *                          CSS + JS gzip, fonts, every local image the page references) home > 500 KB, inner > 350 KB;
  *                          hero raster (the fetchpriority=high photo, largest AVIF candidate) > 120 KB.
+ *                        /styleguide/ is showcase-only (never built for launch; it renders every primitive and scene
+ *                        at once), so it is exempt from v2-inline-svg, v2-sprite, v2-sprite-logo and the HTML-size
+ *                        warnings; its sizes are still printed (ds-comp request §10).
  *   image-widths         no image candidate wider than 1600 px: srcset "w" descriptors, CDN ?w= parameters and the
  *                        pixel width of local raster files (PNG, JPEG, WebP, AVIF headers) (A13 #27).
  *   picture-pipeline     a local raster photo is a <picture> with AVIF then WebP sources and a srcset; every <img> has
@@ -41,20 +46,40 @@ import { gzipSync } from 'node:zlib';
 import { DIST, REPO, files, read, report } from './lib.mjs';
 
 export const RULES = ['v2', 'v2-css', 'v2-js', 'v2-html-gz', 'v2-html-raw', 'v2-inline-svg', 'v2-hero-scene', 'v2-sprite',
-  'v2-art', 'v2-fonts', 'v2-font-files', 'v2-weight', 'v2-hero-raster', 'image-widths', 'picture-pipeline',
+  'v2-sprite-logo', 'v2-art', 'v2-fonts', 'v2-font-files', 'v2-weight', 'v2-hero-raster', 'image-widths', 'picture-pipeline',
   'third-party-origins', 'third-party-hints'];
 
 const KB = 1024;
 export const BUDGET = {
   cssGz: [36 * KB, 28 * KB], jsGz: [22 * KB, 14 * KB], htmlGz: [30 * KB, 22 * KB], htmlRaw: [150 * KB, 90 * KB],
-  inlineSvg: 45 * KB, heroScene: 16 * KB, sprite: 8 * KB, artFile: 14 * KB, fonts: 110 * KB, fontFiles: 2,
+  inlineSvg: 45 * KB, heroScene: 16 * KB, sprite: 8 * KB, spriteLogo: 6 * KB, artFile: 14 * KB, fonts: 110 * KB, fontFiles: 2,
   pageHome: 500 * KB, pageInner: 350 * KB, heroRaster: 120 * KB, maxImageWidth: 1600,
 };
+/** Showcase-only pages (never in a launch build): exempt from the inline-SVG, sprite and HTML-size warning rows. */
+const SHOWCASE_ONLY = new Set(['styleguide/index.html']);
+
+/**
+ * Bytes of the logo inside a sprite sheet: its <symbol id="logo-…"> and the <defs> children with a logo-* id
+ * (gradients, clip paths, the shared squircle path). The rest of the sheet is the icons.
+ * @param {string} sheet one inline <svg> that holds <symbol>s
+ */
+export function logoBytes(sheet) {
+  let n = 0;
+  for (const m of sheet.matchAll(/<symbol\b[^>]*\sid="logo-[^"]*"[\s\S]*?<\/symbol>/g)) n += Buffer.byteLength(m[0]);
+  for (const d of sheet.matchAll(/<defs\b[^>]*>([\s\S]*?)<\/defs>/g)) {
+    for (const m of d[1].matchAll(/<(\w+)\b[^>]*\sid="logo-[^"]*"[^>]*?(?:\/>|>[\s\S]*?<\/\1>)/g)) n += Buffer.byteLength(m[0]);
+  }
+  return n;
+}
+/** Entities in an attribute value, decoded for messages ("?w=2000&amp;q=72" → "?w=2000&q=72"). @param {string} s */
+const unescape = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 
 /** @type {import('./lib.mjs').Failure[]} */
 const failures = [];
 /** @type {string[]} */
 const warnings = [];
+/** @type {string[]} */
+const notes = [];
 const fail = (/** @type {string} */ rule, /** @type {string} */ path, /** @type {string} */ message) => failures.push({ rule, path, message });
 const kb = (/** @type {number} */ n) => `${(n / KB).toFixed(1)} KB`;
 /** Fail above the first limit, warn above the second. @param {string} rule @param {string} f @param {string} what @param {number} n @param {number[]} lim */
@@ -163,14 +188,22 @@ for (const [f, h] of allHtml) {
   maxCss = Math.max(maxCss, css); maxJs = Math.max(maxJs, js); maxHtml = Math.max(maxHtml, hg);
   table('v2-css', f, 'CSS (gzip)', css, BUDGET.cssGz);
   table('v2-js', f, 'JS incl. import graph (gzip)', js, BUDGET.jsGz);
-  table('v2-html-gz', f, 'HTML (gzip)', hg, BUDGET.htmlGz);
-  table('v2-html-raw', f, 'HTML (raw)', h.length, BUDGET.htmlRaw);
+  const showcase = SHOWCASE_ONLY.has(f);
+  // Showcase-only pages keep the fail rows, not the warnings (the page shows everything at once by design).
+  table('v2-html-gz', f, 'HTML (gzip)', hg, showcase ? [BUDGET.htmlGz[0], 0] : BUDGET.htmlGz);
+  table('v2-html-raw', f, 'HTML (raw)', h.length, showcase ? [BUDGET.htmlRaw[0], 0] : BUDGET.htmlRaw);
   /* ---- SVG ---- */
   const svgs = [...body.matchAll(/<svg\b[\s\S]*?<\/svg>/g)].map((m) => m[0]);
   const inlineSvg = svgs.reduce((n, s) => n + Buffer.byteLength(s), 0);
-  if (inlineSvg > BUDGET.inlineSvg) fail('v2-inline-svg', f, `inline SVG ${kb(inlineSvg)} raw (budget ${kb(BUDGET.inlineSvg)})`);
-  const sprite = svgs.filter((s) => /<symbol\b/.test(s)).reduce((n, s) => n + Buffer.byteLength(s), 0);
-  if (sprite > BUDGET.sprite) fail('v2-sprite', f, `used sprite ${kb(sprite)} raw (budget ${kb(BUDGET.sprite)})`);
+  const sheets = svgs.filter((s) => /<symbol\b/.test(s));
+  const sprite = sheets.reduce((n, s) => n + Buffer.byteLength(s), 0);
+  const logo = sheets.reduce((n, s) => n + logoBytes(s), 0);
+  if (showcase) notes.push(`${f}: showcase-only, not budgeted: inline SVG ${kb(inlineSvg)}, sprite icons ${kb(sprite - logo)} + logo ${kb(logo)}, HTML ${kb(hg)} gzip / ${kb(h.length)} raw`);
+  else {
+    if (inlineSvg > BUDGET.inlineSvg) fail('v2-inline-svg', f, `inline SVG ${kb(inlineSvg)} raw (budget ${kb(BUDGET.inlineSvg)})`);
+    if (sprite - logo > BUDGET.sprite) fail('v2-sprite', f, `used sprite icons ${kb(sprite - logo)} raw (budget ${kb(BUDGET.sprite)}; the logo-* symbols and defs, ${kb(logo)}, are v2-sprite-logo)`);
+    if (logo > BUDGET.spriteLogo) fail('v2-sprite-logo', f, `sprite logo (logo-* symbols and defs) ${kb(logo)} raw (budget ${kb(BUDGET.spriteLogo)})`);
+  }
   const hero = body.match(/<(section|header)\b[^>]*class="[^"]*\b(?:hero|page-head)\b[\s\S]*?<\/\1>/)?.[0] || '';
   const scene = hero.match(/<(\w+)\b[^>]*\sdata-living\b[^>]*>/);
   if (scene) {
@@ -206,7 +239,7 @@ for (const [f, h] of allHtml) {
     const p = local(u);
     const wFile = p && /\.(png|jpe?g|webp|avif|gif)$/i.test(p) ? imageWidth(p) : 0;
     const w = Math.max(wDesc, wParam, wFile);
-    if (w > BUDGET.maxImageWidth) fail('image-widths', f, `image candidate ${u.slice(0, 80)} is ${w} px wide (max ${BUDGET.maxImageWidth})`);
+    if (w > BUDGET.maxImageWidth) fail('image-widths', f, `image candidate ${unescape(u).slice(0, 80)} is ${w} px wide (max ${BUDGET.maxImageWidth})`);
   }
 
   /* ---- picture-pipeline ---- */
@@ -262,6 +295,7 @@ for (const p of existsSync(DIST) ? files('.svg').filter((x) => x.startsWith('ass
 }
 
 if (pages.length) console.log(`  budgets v2: ${pages.length} pages (${offline ? 'offline' : 'online'}${launch ? ', launch' : ''} build); largest CSS ${kb(maxCss)}, JS ${kb(maxJs)}, HTML ${kb(maxHtml)} gzip; heaviest page ${kb(maxWeight)}`);
+for (const n of notes) console.log(`  note: ${n}`);
 for (const w of warnings.slice(0, 8)) console.warn(`  warn: ${w}`);
 if (warnings.length > 8) console.warn(`  warn: … and ${warnings.length - 8} more`);
 const ok = report('budgets', failures);

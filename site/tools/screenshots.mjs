@@ -19,7 +19,7 @@
 import { chromium } from 'playwright';
 import { createSiteServer } from './serve.mjs';
 import { DIST, report } from './lib.mjs';
-import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
 /** pixel-identical: with --compare, every screenshot of SITE_DIST matches BASE_DIST to the pixel (a repeatable diff). */
@@ -28,6 +28,12 @@ export const RULES = ['pixel-identical'];
 const failures = [];
 
 const argv = process.argv.slice(2);
+if (argv.includes('--help') || argv.includes('-h')) {
+  // The usage is this file's header comment; print it and take no screenshots.
+  const src = readFileSync(new URL(import.meta.url), 'utf8');
+  console.log((src.match(/\/\*\*\n([\s\S]*?)\*\//)?.[1] || '').split('\n').map((l) => l.replace(/^ \* ?/, '')).join('\n').trimEnd());
+  process.exit(0);
+}
 const opt = (/** @type {string} */ k) => argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 const full = argv.includes('--full');
 const matrix = argv.includes('--matrix');

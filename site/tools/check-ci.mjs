@@ -7,16 +7,19 @@
  *
  * Rule:
  *   required-gates  ci.yml has a step for each gate (typecheck, unit tests, build, check-all with its link checker, the
- *                   CSP check, Playwright, the a11y matrix at 320/390/768/1024/1440, Lighthouse); none of them, and no
+ *                   CSP check, Playwright, the a11y matrix at 320/390/768/1024/1440, the motion and text-over-media
+ *                   audits, Lighthouse); none of them, and no
  *                   job that holds them, is continue-on-error (only the launch-gate step, the one that builds with
  *                   SITE_MODE=launch, may be); and every page path a step names is a live C1 URL, never a retired one
  *                   (/quote/, /portfolio/…). A gate must also really run and really fail: its command is in command
  *                   position (not after echo, in a comment or inside quotes); the step and its job carry no `if:` other
  *                   than success()/always()/!cancelled(); the step does not swallow the exit status (`|| true`, `|| :`,
- *                   `|| exit 0`, `|| echo`, `exit 0`, `set +e`, a pipe without pipefail) and no `shell:` drops -e; the
- *                   gate keeps its full strength: unit tests and Playwright without a test filter, Lighthouse at
- *                   --runs >= 3 without --allow-slow, the a11y matrix on every template page (no --pages, or
- *                   --pages=all), both themes and both motion states.
+ *                   `|| exit 0`, `|| echo`, `exit 0`, `set +e`, a pipe without pipefail, a trailing `&`) and no `shell:`
+ *                   drops -e; the gate keeps its full strength: unit tests over "tests/unit/**\/*.test.mjs" and
+ *                   Playwright with no test filter (no --grep/--shard…, no spec-file arguments), Lighthouse at
+ *                   --runs >= 3 without --allow-slow, the a11y matrix, the audits and Lighthouse on every template
+ *                   page (no --pages, or --pages=all), a11y in both themes and both motion states, text-over-media at
+ *                   --min >= 4.5.
  *   node tools/check-ci.mjs [--file=PATH]
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -34,8 +37,14 @@ export const GATES = /** @type {const} */ ([
   ['CSP hash check', /\btools\/csp\.mjs\s+--check\b/],
   ['Playwright', /\bplaywright(?:\/cli\.js)?\s+test\b/],
   ['a11y matrix (axe)', /\btools\/a11y\.mjs\b/],
+  ['motion audit', /\btools\/motion-audit\.mjs\b/],
+  ['text-over-media audit', /\btools\/text-over-media\.mjs\b/],
   ['Lighthouse', /\btools\/lighthouse\.mjs\b|@lhci\/cli|\blhci\s+autorun\b/],
 ]);
+/** Browser gates that run on every template page unless --pages narrows them. */
+const PAGE_GATES = new Set(['a11y matrix (axe)', 'motion audit', 'text-over-media audit', 'Lighthouse']);
+/** Playwright options that take a separate value (`--trace off`), so the value is not a test filter. */
+const PW_VALUE = /^(?:--(?:trace|project|config|reporter|workers|retries|timeout|output|repeat-each|max-failures|global-timeout|tsconfig|update-snapshots)|-[cjx])$/;
 export const A11Y_WIDTHS = [320, 390, 768, 1024, 1440];
 
 /**
@@ -129,12 +138,12 @@ export function shellCode(run) {
 export function simpleCommands(run) {
   const code = shellCode(run);
   /** @type {{ cmd: string, next: string }[]} */ const out = [];
-  const re = /(\|\||&&|;|\n|\|)/g;
+  const re = /(\|\||&&|;|\n|\||(?<![>&])&(?![&>]))/g;
   let last = 0;
   for (let m; (m = re.exec(code));) { out.push({ cmd: code.slice(last, m.index), next: m[1] }); last = re.lastIndex; }
   out.push({ cmd: code.slice(last), next: '' });
   return out.map(({ cmd, next }) => ({
-    cmd: cmd.trim().replace(/^(?:then|do|else|\{|\()\s+/, '').replace(/^(?:[A-Za-z_]\w*=\S*\s+)+/, '').replace(/^npx(?:\s+--?[\w-]+)*\s+/, '').trim(),
+    cmd: cmd.trim().replace(/^(?:(?:then|do|else|\{)\s+|\(\s*)+/, '').replace(/\s*\)$/, '').replace(/^(?:[A-Za-z_]\w*=\S*\s+)+/, '').replace(/^npx(?:\s+--?[\w-]+)*\s+/, '').trim(),
     next,
   })).filter((c) => c.cmd);
 }
@@ -158,11 +167,35 @@ export function neutralised(step, job, gate, re) {
   if (/\bset\s+\+\w*e\b|\bset\s+\+o\s+errexit\b/.test(code)) why.push('`set +e` ignores failures');
   const i = cmds.findIndex((c) => runsGate(c.cmd, re));
   if (i >= 0 && cmds[i].next === '|' && !/\bset\s+-\w*o\s+pipefail\b|\bset\s+-o\s+pipefail\b/.test(code)) why.push('its output is piped without `set -o pipefail`, so the pipe\'s last command decides');
+  if (cmds.some((c) => runsGate(c.cmd, re) && c.next === '&')) why.push('it runs in the background (`&`), so its exit status is lost');
   const gateCmds = cmds.filter((c) => runsGate(c.cmd, re)).map((c) => c.cmd);
   const opt = (/** @type {string} */ name) => gateCmds.map((c) => c.match(new RegExp(`(?:^|\\s)--${name}(?:=(\\S*)|\\s|$)`))).find(Boolean);
   if (gate === 'unit tests' || gate === 'Playwright') {
     const filter = gateCmds.map((c) => c.match(/(?:^|\s)(--test-name-pattern|--test-skip-pattern|--test-only|--grep|--grep-invert|-g|--last-failed|--only-changed|--pass-with-no-tests|--list|--shard)\b/)).find(Boolean);
     if (filter) why.push(`${filter[1]} runs only part of the suite`);
+  }
+  // Positional arguments, read from the raw command (shellCode blanks quoted globs): a file or filter narrows the suite.
+  /** Arguments after the gate's command words, unquoted. @param {RegExp} head */
+  const args = (head) => [...step.run.matchAll(new RegExp(`${head.source}([^\\n;&|]*)`, 'g'))].map((m) => (m[1].match(/"[^"]*"|'[^']*'|\S+/g) || []).map((x) => x.replace(/^(['"])(.*)\1$/, '$2')));
+  if (gate === 'unit tests') {
+    for (const a of args(/\bnode\s+--test\b/)) {
+      const files = a.filter((x, k) => !x.startsWith('-') && !/^--test-(?:reporter|reporter-destination|concurrency|timeout)$/.test(a[k - 1] || ''));
+      if (files.length && !files.some((x) => x === 'tests/unit/**/*.test.mjs' || x === 'tests/**/*.test.mjs')) why.push(`\`node --test ${files.join(' ')}\` runs only those files (use "tests/unit/**/*.test.mjs")`);
+    }
+  }
+  if (gate === 'Playwright') {
+    for (const a of args(/\bplaywright(?:\/cli\.js)?\s+test\b/)) {
+      const filters = a.filter((x, k) => !x.startsWith('-') && !(k > 0 && PW_VALUE.test(a[k - 1])));
+      if (filters.length) why.push(`the test filter \`${filters.join(' ')}\` runs only part of the suite`);
+    }
+  }
+  if (PAGE_GATES.has(gate) && !(gate === 'Lighthouse' && !gateCmds.some((c) => /\btools\/lighthouse\.mjs\b/.test(c)))) {
+    const pages = opt('pages');
+    if (pages && pages[1] !== 'all') why.push(`--pages=${pages[1] ?? ''} drops template pages (use --pages=all or no --pages)`);
+  }
+  if (gate === 'text-over-media audit') {
+    const min = opt('min');
+    if (min && !(Number(min[1]) >= 4.5)) why.push(`--min=${min[1] ?? ''} is below the 4.5:1 text contrast`);
   }
   if (gate === 'Lighthouse' && gateCmds.some((c) => /\btools\/lighthouse\.mjs\b/.test(c))) {
     const runs = opt('runs');
@@ -170,8 +203,6 @@ export function neutralised(step, job, gate, re) {
     if (opt('allow-slow')) why.push('--allow-slow judges scores on a machine too slow to trust');
   }
   if (gate === 'a11y matrix (axe)') {
-    const pages = opt('pages');
-    if (pages && pages[1] !== 'all') why.push(`--pages=${pages[1] ?? ''} drops template pages (use --pages=all or no --pages)`);
     const themes = opt('themes'), motion = opt('motion');
     if (themes && !['dark', 'light'].every((x) => String(themes[1]).split(',').includes(x))) why.push(`--themes=${themes[1]} does not cover dark and light`);
     if (motion && !['off', 'on'].every((x) => String(motion[1]).split(',').includes(x))) why.push(`--motion=${motion[1]} does not cover off and on`);

@@ -19,9 +19,10 @@
  *                                  count too.
  *   no-stock-people-hero           the same, for a stock person in the hero that introduces any other page.
  *   commercial-proof               content/pages/commercial.json carries a commitments section of at least 3 concrete
- *                                  items (no adjective-only titles such as "Quality" or "Reliable"), no number outside a
- *                                  [TOKEN] except the 13 municipalities, and no past-client boasts ("trusted by", "clients
- *                                  include", "hundreds of").
+ *                                  items (no adjective-only titles such as "Quality" or "Reliable").
+ *   commercial-figures             content/pages/commercial.json has no number outside a [TOKEN] except the 13
+ *                                  municipalities, and no past-client boasts ("trusted by", "clients include",
+ *                                  "hundreds of").
  *   stock-in-projects              no stock photo under /projects/: no external image URL and no slot with stock on any
  *                                  /projects/ page (CONTRACT §2, §7; living art or "Photo to come" only).
  *   no-prices                      no prices anywhere ($ amounts, "per hour" rates, "starting at", JSON-LD price,
@@ -29,12 +30,22 @@
  *   trust-without-prices           the trust that replaces prices is shown: /free-quote/ promises a
  *                                  reply ("reply within …"), says the quote is free or without obligation and lists what
  *                                  happens next; /contact/ and every CTA band promise the reply time.
- *   reviews-credentials-guarantee  no Review, AggregateRating or rating markup; every quote on a page is a testimonial
- *                                  from content/testimonials and a sample one carries a visible "Sample" label in its
- *                                  card; /reviews/ points to the Google reviews; credentials rows show each credential's
- *                                  token or value; no credential claim ("fully insured", "licensed and bonded") while
- *                                  that credential is unresolved; a workmanship guarantee is shown with [WARRANTY] (or its
- *                                  value) and never as "money-back", "lifetime" or "100 % satisfaction".
+ *   no-review-markup               no Review, AggregateRating or rating markup: JSON-LD, microdata (itemtype/itemprop) or
+ *                                  RDFa (typeof/property).
+ *   sample-label                   every review quote is a testimonial from content/testimonials, and a sample one carries
+ *                                  a visible "Sample" label in its card. A review quote is a <blockquote> that matches a
+ *                                  testimonial or sits in a review card (its own class, or that of the nearest enclosing
+ *                                  li/figure/article, has a testimonial/review/quote token: li.quote, figure.review,
+ *                                  figure.case__quote). Other quotations are not reviews: a cited local-rule excerpt
+ *                                  (blockquote.sourced__excerpt or blockquote[cite], CONTRACT §2 "Local rules") is
+ *                                  never judged as one, whatever heading or "Review date" text is near it.
+ *   credential-claims              no credential claim ("fully insured", "licensed and bonded") while that credential is
+ *                                  unresolved, and no guarantee claim ("money-back", "lifetime", "100 % satisfaction")
+ *                                  that [WARRANTY] does not state.
+ *   reviews-credentials-guarantee  /reviews/ points to the Google reviews; credentials rows show each credential's token
+ *                                  or value; a workmanship guarantee is shown with [WARRANTY] (or its value).
+ * Hard rules (CONTRACT §2) never share an id with a structural gap, and the ones that hold on the W1 base (HARD below)
+ * are never baselined: report() leaves them out of --write-baseline and ignores any baseline entry for them.
  * Failures name the built page (dist-relative) or the content file.
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -42,11 +53,20 @@ import { join } from 'node:path';
 import { DIST, REPO, files, read, report } from './lib.mjs';
 
 // A hard CONTRACT §2 constraint never shares a rule id with a structural gap a baseline may hold: 'no-prices' is split
-// from the reply-time signals of 'trust-without-prices', and a stock person in the page hero ('no-stock-people-hero') from
-// one on a company page or described as RNC's people ('no-stock-people'), so a baselined gap cannot mask a new violation
-// on the same page (baselines key on { rule, path }, CONTRACT §17).
+// from the reply-time signals of 'trust-without-prices'; 'no-review-markup', 'sample-label' and 'credential-claims' from
+// the Google link, credentials rows and [WARRANTY] wording of 'reviews-credentials-guarantee'; 'commercial-figures' from
+// the commitments structure of 'commercial-proof'; and a stock person in the page hero ('no-stock-people-hero') from one
+// on a company page or described as RNC's people ('no-stock-people'). So a baselined gap cannot mask a new violation on
+// the same page (baselines key on { rule, path }, CONTRACT §17).
 export const RULES = ['unverifiable-claims', 'spelling', 'no-stock-people', 'no-stock-people-hero', 'commercial-proof',
-  'stock-in-projects', 'trust-without-prices', 'no-prices', 'reviews-credentials-guarantee'];
+  'commercial-figures', 'stock-in-projects', 'trust-without-prices', 'no-prices', 'no-review-markup', 'sample-label',
+  'credential-claims', 'reviews-credentials-guarantee'];
+/**
+ * Hard rules that are never baselined (report() { hard }): a breach is a Blocker (CONTRACT §16) and fails every gate.
+ * stock-in-projects and no-stock-people(-hero) are hard too, but still fail on the W1 legacy pages that W3 rebuilds, so
+ * they keep their own ids and stay baselineable until those pages land (requests/qa.md asks to add them here then).
+ */
+export const HARD = ['unverifiable-claims', 'no-prices', 'no-review-markup', 'sample-label', 'credential-claims', 'commercial-figures'];
 
 const argv = process.argv.slice(2);
 const ROOT = argv.find((a) => a.startsWith('--root='))?.slice(7) || REPO;
@@ -71,6 +91,25 @@ export function visibleText(h) {
 const norm = (/** @type {string} */ s) => decode(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 /** A short quotation of the match for the message. @param {string} t @param {number} i @param {number} n */
 const around = (t, i, n) => `"…${t.slice(Math.max(0, i - 40), i + n + 40).trim()}…"`;
+/** A class list with a testimonial/review/quote token (quote, review, testimonials, case__quote, review__quote, t-quote). @param {string} cls */
+export const reviewClass = (cls) => cls.split(/\s+/).some((c) => /(?:^|[_-])(?:testimonial|review|quote)s?(?:$|[_-])/i.test(c));
+/**
+ * The nearest li, figure or article still open at position i of h (the card around a quote that starts at i and is n
+ * characters long): its class and its markup up to its close.
+ * @param {string} h @param {number} i @param {number} n
+ */
+export function cardAround(h, i, n) {
+  /** @type {{ tag: string, at: number, open: string }[]} */ const stack = [];
+  for (const m of h.slice(0, i).matchAll(/<(\/?)(li|figure|article)\b[^>]*>/gi)) {
+    const tag = m[2].toLowerCase();
+    if (!m[1]) stack.push({ tag, at: /** @type {number} */ (m.index), open: m[0] });
+    else { const k = stack.map((s) => s.tag).lastIndexOf(tag); if (k >= 0) stack.splice(k); }
+  }
+  const top = stack[stack.length - 1];
+  if (!top) return { cls: '', html: '' };
+  const close = h.indexOf(`</${top.tag}>`, i + n);
+  return { cls: top.open.match(/\sclass="([^"]*)"/)?.[1] || '', html: h.slice(top.at, close > 0 ? close : h.length) };
+}
 
 /* ------------------------------------------------------------------ patterns */
 const SUPERLATIVE = [
@@ -149,9 +188,9 @@ if (commercial) {
   for (const [at, v] of strings) {
     const plain = v.replace(/\[[A-Z][A-Z ]*\]/g, ' ').replace(/\]\([^)]*\)/g, ']').replace(/\b13\s+(?:Greater Victoria\s+)?municipalit(?:y|ies)\b/gi, ' ').replace(/\/[\w/.-]+/g, ' ');
     const m = plain.match(/\d[\d,.]*\s*(?:%|\+|\w+)?/);
-    if (m) fail('commercial-proof', path, `${at}: the number "${m[0].trim()}" is not a [TOKEN]; commercial proof carries no invented figures`);
+    if (m) fail('commercial-figures', path, `${at}: the number "${m[0].trim()}" is not a [TOKEN]; commercial proof carries no invented figures`);
     const boast = v.match(/\btrusted by\b|\bclients include\b|\bhundreds of\b|\bthousands of\b|\bdozens of\b|\bcountless\b|\bwe(?:’|')ve served\b|\bour (?:many|numerous) clients\b/i);
-    if (boast) fail('commercial-proof', path, `${at}: "${boast[0]}" claims past results; use commitments about how the work is run`);
+    if (boast) fail('commercial-figures', path, `${at}: "${boast[0]}" claims past results; use commitments about how the work is run`);
   }
 }
 
@@ -199,8 +238,10 @@ for (const f of pages) {
   if (price) fail('no-prices', f, `price: ${around(text, price.index, price[0].length)} (free quotes only, no prices anywhere)`);
   for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     if (/"(?:priceRange|price|priceSpecification|offers|lowPrice|highPrice)"\s*:/.test(m[1])) fail('no-prices', f, 'JSON-LD carries a price, priceRange or offers');
-    if (/"@type"\s*:\s*"(?:Review|AggregateRating|Rating)"|"(?:review|aggregateRating|reviewRating|ratingValue)"\s*:/.test(m[1])) fail('reviews-credentials-guarantee', f, 'JSON-LD carries Review / AggregateRating / rating markup (CONTRACT §2: never)');
+    if (/"@type"\s*:\s*(?:\[[^\]]*)?"(?:Review|AggregateRating|Rating|EmployerAggregateRating)"|"(?:review|reviews|aggregateRating|reviewRating|ratingValue)"\s*:/.test(m[1])) fail('no-review-markup', f, 'JSON-LD carries Review / AggregateRating / rating markup (CONTRACT §2: never)');
   }
+  const micro = body.match(/<[^>]+\s(?:itemtype="[^"]*schema\.org\/(?:Review|AggregateRating|Rating)\b[^"]*"|itemprop="(?:review|aggregateRating|reviewRating|ratingValue)"|typeof="[^"]*\b(?:Review|AggregateRating)\b[^"]*"|property="(?:schema:)?(?:aggregateRating|reviewRating|ratingValue)")[^>]*>/i);
+  if (micro) fail('no-review-markup', f, `microdata/RDFa review or rating markup: ${micro[0].slice(0, 90)} (CONTRACT §2: never)`);
   const reply = /\breply\s+(?:with)?in\b|\bwe\s+(?:will\s+)?(?:get\s+back|respond)\s+(?:to\s+you\s+)?within\b/i;
   if (f === 'free-quote/index.html') {
     if (!reply.test(text)) fail('trust-without-prices', f, 'no reply-time promise ("We reply within [REPLY TIME]")');
@@ -210,21 +251,22 @@ for (const f of pages) {
   if (f === 'contact/index.html' && !reply.test(text)) fail('trust-without-prices', f, 'no reply-time promise ("We reply within [REPLY TIME]")');
   for (const m of body.matchAll(/<section\b[^>]*class="[^"]*\bcta-band\b[\s\S]*?<\/section>/g)) if (!reply.test(visibleText(m[0]))) { fail('trust-without-prices', f, 'the CTA band has no reply-time promise ("We reply within [REPLY TIME]")'); break; }
 
-  /* reviews-credentials-guarantee */
-  for (const m of body.matchAll(/<blockquote\b[\s\S]*?<\/blockquote>/gi)) {
+  /* sample-label: review quotes */
+  for (const m of body.matchAll(/<blockquote\b([^>]*)>[\s\S]*?<\/blockquote>/gi)) {
     const q = norm(visibleText(m[0]));
     if (!q) continue;
     const t = testimonials.find((/** @type {any} */ x) => { const n = norm(String(x.quote || '')); return n && (n.includes(q.slice(0, 60)) || q.includes(n.slice(0, 60))); });
-    const isSample = !t || t.sample !== false;
-    if (!t && /quote|review|testimonial/i.test(body.slice(Math.max(0, /** @type {number} */ (m.index) - 400), m.index))) fail('reviews-credentials-guarantee', f, `a review quote that is not in content/testimonials: "${q.slice(0, 60)}"`);
-    if (!isSample) continue;
-    const before = body.slice(0, m.index);
-    const open = Math.max(before.lastIndexOf('<li'), before.lastIndexOf('<figure'), before.lastIndexOf('<article'));
-    const tag = open >= 0 ? (body.slice(open + 1).match(/^(li|figure|article)/)?.[1] || 'li') : null;
-    const end = tag ? body.indexOf(`</${tag}>`, /** @type {number} */ (m.index)) : -1;
-    const card = open >= 0 && end > 0 ? body.slice(open, end) : m[0];
-    if (!/class="[^"]*\bsample-label\b|>\s*Sample\s*</.test(card)) fail('reviews-credentials-guarantee', f, `sample review "${q.slice(0, 60)}" has no visible "Sample" label in its card`);
+    const own = m[1].match(/\sclass="([^"]*)"/)?.[1] || '';
+    const card = cardAround(body, /** @type {number} */ (m.index), m[0].length);
+    // Only a quote presented as a review is judged: a cited excerpt (sourced(): a local rule's verbatim text with its
+    // source URL, blockquote.sourced__excerpt or a blockquote[cite] outside a review card) is a quotation, not a review.
+    // A cite attribute does not exempt a quote inside a review card.
+    if (!t && (/(?:^|\s)sourced__excerpt(?:\s|$)/.test(own) || !(reviewClass(own) || reviewClass(card.cls)))) continue;
+    if (!t) fail('sample-label', f, `a review quote that is not in content/testimonials: "${q.slice(0, 60)}"`);
+    if (t && t.sample === false) continue;
+    if (!/class="[^"]*\bsample-label\b|>\s*Sample\b/.test(card.html || m[0])) fail('sample-label', f, `sample review "${q.slice(0, 60)}" has no visible "Sample" label in its card`);
   }
+  /* reviews-credentials-guarantee */
   if (f === 'reviews/index.html' && !/reviews?\s+on\s+google|google\s+(?:business\s+)?(?:profile|reviews)/i.test(text)) fail('reviews-credentials-guarantee', f, 'no "Read all reviews on Google" link or text (with the [GOOGLE PROFILE] chip until it is known)');
   for (const m of body.matchAll(/<(\w+)\b[^>]*class="[^"]*\bcred(?:entials?|s)?(?:[-_][\w-]*)?\b[^"]*"[\s\S]*?<\/\1>/g)) {
     const t = visibleText(m[0]);
@@ -235,14 +277,14 @@ for (const f of pages) {
       if (!t.includes(tok ? `[${tok}]` : String(c.value)) && !(value && t.includes(String(value)))) fail('reviews-credentials-guarantee', f, `credentials row shows "${c.label}" without its value or [${tok || c.label}] chip`);
     }
   }
-  for (const [re, tok] of CRED_CLAIM) { const m = re.exec(text); if (m && !resolved(tok)) fail('reviews-credentials-guarantee', f, `credential claim "${m[0]}" while [${tok}] is unresolved: ${around(text, m.index, m[0].length)}`); }
+  for (const [re, tok] of CRED_CLAIM) { const m = re.exec(text); if (m && !resolved(tok)) fail('credential-claims', f, `credential claim "${m[0]}" while [${tok}] is unresolved: ${around(text, m.index, m[0].length)}`); }
   const warranty = resolved('WARRANTY') ? String(tokens.WARRANTY) : null;
   if (/\bworkmanship\s+(?:guarantee|warranty)\b/i.test(text) && !text.includes('[WARRANTY]') && !(warranty && text.includes(warranty))) fail('reviews-credentials-guarantee', f, 'a workmanship guarantee is mentioned without [WARRANTY] (or its value)');
   const bad = /\bmoney[- ]back\b|\b100\s?%\s+(?:satisfaction|guaranteed)\b|\bsatisfaction\s+guaranteed\b|\blifetime\s+(?:guarantee|warranty)\b/i.exec(text);
-  if (bad && !(warranty && warranty.toLowerCase().includes(bad[0].toLowerCase()))) fail('reviews-credentials-guarantee', f, `guarantee claim "${bad[0]}" that [WARRANTY] does not state: ${around(text, bad.index, bad[0].length)}`);
+  if (bad && !(warranty && warranty.toLowerCase().includes(bad[0].toLowerCase()))) fail('credential-claims', f, `guarantee claim "${bad[0]}" that [WARRANTY] does not state: ${around(text, bad.index, bad[0].length)}`);
 }
 
 console.log(`  check-honesty: ${pages.length} page(s), ${testimonials.length} testimonial(s), ${slots.size} image slot(s)`);
-const ok = report('check-honesty', failures);
+const ok = report('check-honesty', failures, { hard: HARD });
 if (import.meta.url === `file://${process.argv[1]}`) process.exitCode = ok ? 0 : 1;
 export default ok;

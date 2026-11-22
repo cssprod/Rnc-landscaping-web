@@ -12,7 +12,7 @@ import { dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { literalRules, testTitles } from '../../tools/trace.mjs';
-import { applyBaseline, contrastOf, fileOfUrl, launchChromium, luminance, median, primaryTargets, urlOf } from '../../tools/lib.mjs';
+import { applyBaseline, contrastOf, fileOfUrl, launchChromium, luminance, median, primaryTargets, textContrast, urlOf } from '../../tools/lib.mjs';
 
 const SITE = fileURLToPath(new URL('../..', import.meta.url));
 const REPO = join(SITE, '..');
@@ -37,8 +37,8 @@ test('report() baselines: listed failures pass, new ones fail, gone ones are sta
   assert.deepEqual(r.fresh.map((f) => f.rule), ['b']);
   assert.deepEqual(r.baselined.map((f) => f.rule), ['a']);
   assert.deepEqual(r.stale.map((f) => f.rule), ['c']);
-  const dir = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'unverifiable-claims', path: 'index.html' }] }) });
-  const dist = tree('qa-dist-', { 'index.html': page('Home', '<p>An award-winning crew.</p>') });
+  const dir = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'spelling', path: 'index.html' }] }) });
+  const dist = tree('qa-dist-', { 'index.html': page('Home', '<p>We match the color of the beds.</p>') });
   const root = `--root=${honestyRoot()}`;
   assert.equal(run('check-honesty', [root], { SITE_DIST: dist, BASELINE_DIR: dir }).code, 0, 'a baselined failure passes');
   assert.equal(run('check-honesty', [root, '--no-baseline'], { SITE_DIST: dist, BASELINE_DIR: dir }).code, 1, '--no-baseline fails it');
@@ -47,19 +47,40 @@ test('report() baselines: listed failures pass, new ones fail, gone ones are sta
 test('two-build baselines: --baseline-merge unions writes, BASELINE_LEDGER + --apply-ledger prunes over both builds #baseline-ratchet', () => {
   const dir = mkdtempSync(join(tmpdir(), 'qa-bl2-'));
   const ledger = join(dir, 'ledger');
-  const a = tree('qa-dist-', { 'index.html': page('Home', '<p>An award-winning crew.</p>') });
-  const b = tree('qa-dist-', { 'about/index.html': page('About', '<p>Since 1998.</p>') });
+  const a = tree('qa-dist-', { 'index.html': page('Home', '<p>We match the color of the beds.</p>') });
+  const b = tree('qa-dist-', { 'about/index.html': page('About', '<p>A gray stone wall.</p>') });
   const root = `--root=${honestyRoot()}`;
   run('check-honesty', [root, '--write-baseline'], { SITE_DIST: a, BASELINE_DIR: dir });
   run('check-honesty', [root, '--write-baseline', '--baseline-merge'], { SITE_DIST: b, BASELINE_DIR: dir });
   const entries = () => JSON.parse(readFileSync(join(dir, 'check-honesty.json'), 'utf8')).entries.map((/** @type {any} */ e) => `${e.rule} ${e.path}`).sort();
-  assert.deepEqual(entries(), ['unverifiable-claims about/index.html', 'unverifiable-claims index.html']);
+  assert.deepEqual(entries(), ['spelling about/index.html', 'spelling index.html']);
   // Build a is fixed, build b still fails: only b's entry survives the ledger prune.
-  run('check-honesty', [root, '--prune-baseline'], { SITE_DIST: tree('qa-dist-', { 'index.html': page('Home', '<p>A careful crew.</p>') }), BASELINE_DIR: dir, BASELINE_LEDGER: ledger });
+  run('check-honesty', [root, '--prune-baseline'], { SITE_DIST: tree('qa-dist-', { 'index.html': page('Home', '<p>We match the colour of the beds.</p>') }), BASELINE_DIR: dir, BASELINE_LEDGER: ledger });
   run('check-honesty', [root, '--prune-baseline'], { SITE_DIST: b, BASELINE_DIR: dir, BASELINE_LEDGER: ledger });
   assert.equal(entries().length, 2, 'ledger runs do not rewrite the baseline');
   assert.equal(run('lib', [`--apply-ledger=${ledger}`]).code, 0);
-  assert.deepEqual(entries(), ['unverifiable-claims about/index.html']);
+  assert.deepEqual(entries(), ['spelling about/index.html']);
+});
+
+test('hard rules are never baselined: no entry is written, a listed entry is ignored #baseline-ratchet #no-prices #no-review-markup', () => {
+  const pure = applyBaseline([{ rule: 'no-prices', path: 'x.html', message: '' }], { tool: 't', writtenAt: 'w2', entries: [{ rule: 'no-prices', path: 'x.html' }] }, ['no-prices']);
+  assert.deepEqual([pure.fresh.length, pure.baselined.length, pure.ignored.length], [1, 0, 1]);
+  const dir = mkdtempSync(join(tmpdir(), 'qa-bl3-'));
+  const root = `--root=${honestyRoot()}`;
+  const dist = tree('qa-dist-', {
+    'about/index.html': page('About', '<p>We match the color of the beds. Lawn care from $49 per visit.</p>', '<script type="application/ld+json">{"@type":"LocalBusiness","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9"}}</script>'),
+  });
+  const write = run('check-honesty', [root, '--write-baseline'], { SITE_DIST: dist, BASELINE_DIR: dir });
+  assert.equal(write.code, 1, `--write-baseline refuses while a hard rule fails: ${write.out}`);
+  assert.match(write.out, /hard-rule failure\(s\) not baselined[\s\S]*\[no-prices\] about\/index\.html[\s\S]*\[no-review-markup\] about\/index\.html/);
+  const entries = JSON.parse(readFileSync(join(dir, 'check-honesty.json'), 'utf8')).entries.map((/** @type {any} */ e) => `${e.rule} ${e.path}`);
+  assert.deepEqual(entries, ['spelling about/index.html'], 'only the structural failure is written');
+  // A hand-made entry for a hard rule does not hold it either.
+  writeFileSync(join(dir, 'check-honesty.json'), JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'spelling', path: 'about/index.html' }, { rule: 'no-prices', path: 'about/index.html' }, { rule: 'no-review-markup', path: 'about/index.html' }] }));
+  const gate = run('check-honesty', [root], { SITE_DIST: dist, BASELINE_DIR: dir });
+  assert.equal(gate.code, 1);
+  assert.match(gate.out, /2 baseline entries are for a hard rule and ignored/);
+  assert.match(gate.out, /✗ check-honesty: 2 problem\(s\) \(1 baselined\)/);
 });
 
 test('lib helpers: URL ↔ dist file, median, WCAG contrast', () => {
@@ -145,6 +166,13 @@ test('check-ci requires every gate, hard, at 5 widths, on C1 URLs #required-gate
     ['--allow-slow', (s) => s.replace('--runs=3', '--runs=3 --allow-slow'), /--allow-slow judges scores/],
     ['--pages=/', (s) => s.replace('--motion=off,on', '--motion=off,on --pages=/'), /--pages=\/ drops template pages/],
     ['--themes=dark', (s) => s.replace('--themes=dark,light', '--themes=dark'), /--themes=dark does not cover dark and light/],
+    ['background &', (s) => s.replace('--motion=off,on', '--motion=off,on &'), /a11y matrix \(axe\) gate .* runs in the background/],
+    ['unit file', (s) => s.replace('node --test "tests/unit/**/*.test.mjs"', 'node --test tests/unit/ui-api.test.mjs'), /unit tests gate .* `node --test tests\/unit\/ui-api\.test\.mjs` runs only those files/],
+    ['spec file', (s) => s.replace('cli.js test --trace off', 'cli.js test tests/e2e/redirects.spec.mjs --trace off'), /Playwright gate .* the test filter `tests\/e2e\/redirects\.spec\.mjs`/],
+    ['lighthouse --pages', (s) => s.replace('lighthouse.mjs --runs=3', 'lighthouse.mjs --runs=3 --pages=/'), /Lighthouse gate .* --pages=\/ drops template pages/],
+    ['audits || true', (s) => s.replace('run: node tools/motion-audit.mjs && node tools/text-over-media.mjs', 'run: (node tools/motion-audit.mjs && node tools/text-over-media.mjs) || true'), /motion audit gate .* `\|\| true` swallows/],
+    ['audits echoed', (s) => s.replace('run: node tools/motion-audit.mjs && node tools/text-over-media.mjs', 'run: echo skip'), /no step runs the motion audit gate[\s\S]*no step runs the text-over-media audit gate/],
+    ['--min=3', (s) => s.replace('node tools/text-over-media.mjs', 'node tools/text-over-media.mjs --min=3'), /--min=3 is below the 4\.5:1/],
   ];
   for (const [what, mutate, re] of mutations) {
     const m = mutate(good);
@@ -158,6 +186,8 @@ test('check-ci requires every gate, hard, at 5 widths, on C1 URLs #required-gate
     ['|| exit 1', (s) => s.replace('node tools/csp.mjs --check', 'node tools/csp.mjs --check || exit 1')],
     ['pipefail', (s) => s.replace('run: node --test "tests/unit/**/*.test.mjs"', 'run: set -o pipefail; node --test "tests/unit/**/*.test.mjs" | tee unit.log')],
     ['--pages=all', (s) => s.replace('--motion=off,on', '--motion=off,on --pages=all')],
+    ['2>&1', (s) => s.replace('node tools/csp.mjs --check', 'node tools/csp.mjs --check 2>&1')],
+    ['reporter value', (s) => s.replace('node --test "tests/unit', 'node --test --test-reporter spec "tests/unit')],
   ])) assert.equal(run('check-ci', [file(mutate(good))]).code, 0, `${what} still gates`);
 });
 
@@ -261,15 +291,26 @@ test('check-honesty: a baselined hero slot never hides a stock person on a compa
   assert.match(out.out, /\[no-stock-people\] about\/index\.html: slot "(?:hero-a|side-a)" is a stock photo of a person .* on a company page/);
 });
 
-test('check-honesty wants concrete commercial commitments without invented figures #commercial-proof', () => {
+test('check-honesty wants concrete commercial commitments without invented figures #commercial-proof #commercial-figures', () => {
   const root = honestyRoot({ 'content/pages/commercial.json': JSON.stringify({ sections: [{ id: 'commitments', heading: 'What you can expect', items: [{ title: 'Quality', body: 'Trusted by hundreds of property managers.' }, { title: '24/7 response', body: 'Within 2 hours.' }] }] }) });
   const out = run('check-honesty', [`--root=${root}`], { SITE_DIST: tree('qa-dist-', { 'index.html': page('Home', '<p>Hi</p>') }) }).out;
   assert.match(out, /\[commercial-proof\] content\/pages\/commercial\.json: the commitments section "What you can expect" has 2 item/);
-  assert.match(out, /item "Quality" .* is an adjective/);
-  assert.match(out, /the number "24/);
-  assert.match(out, /"Trusted by" claims past results|"hundreds of" claims past results/i);
+  assert.match(out, /\[commercial-proof\] content\/pages\/commercial\.json: item "Quality" .* is an adjective/);
+  assert.match(out, /\[commercial-figures\] content\/pages\/commercial\.json: .*the number "24/);
+  assert.match(out, /\[commercial-figures\] content\/pages\/commercial\.json: .*(?:"Trusted by"|"hundreds of") claims past results/i);
   const ok = run('check-honesty', [`--root=${honestyRoot()}`], { SITE_DIST: tree('qa-dist-', { 'index.html': page('Home', '<p>Hi</p>') }) }).out;
-  assert.doesNotMatch(ok, /commercial-proof/);
+  assert.doesNotMatch(ok, /commercial-(?:proof|figures)/);
+});
+
+test('check-honesty: a baselined commitments gap never hides an invented figure #commercial-proof #commercial-figures', () => {
+  const file = (/** @type {string} */ body) => honestyRoot({ 'content/pages/commercial.json': JSON.stringify({ sections: [{ id: 'commitments', heading: 'What you can expect', items: [{ title: 'A written scope', body }, { title: 'One contact', body: 'One person.' }] }] }) });
+  const bl = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'commercial-proof', path: 'content/pages/commercial.json' }] }) });
+  const dist = tree('qa-dist-', { 'index.html': page('Home', '<p>Hi</p>') });
+  const before = run('check-honesty', [`--root=${file('Tasks per visit.')}`], { SITE_DIST: dist, BASELINE_DIR: bl });
+  assert.equal(before.code, 0, `the two-item section is baselined: ${before.out}`);
+  const after = run('check-honesty', [`--root=${file('Trusted by 40 stratas.')}`], { SITE_DIST: dist, BASELINE_DIR: bl });
+  assert.equal(after.code, 1, 'the invented figure is a fresh failure');
+  assert.match(after.out, /\[commercial-figures\] content\/pages\/commercial\.json: .*the number "40/);
 });
 
 test('check-honesty bans prices and wants the reply-time promise #trust-without-prices', () => {
@@ -303,14 +344,48 @@ test('check-honesty: no rating markup, labelled samples, credentials and guarant
     'about/index.html': page('About', '<p>We are fully insured. Our workmanship guarantee covers you. Satisfaction guaranteed.</p><dl class="credentials"><dt>Liability insurance</dt><dd>Yes</dd></dl>'),
     'faq/index.html': page('FAQ', '<ul><li class="quote"><blockquote><p>They kept the beds tidy all season.</p></blockquote><span class="sample-label">Sample</span></li></ul><p>Workmanship guarantee: <mark class="ph">[WARRANTY]</mark>.</p>'),
   }) }).out;
-  assert.match(out, /\[reviews-credentials-guarantee\] reviews\/index\.html: JSON-LD carries Review \/ AggregateRating/);
-  assert.match(out, /\[reviews-credentials-guarantee\] reviews\/index\.html: sample review .* has no visible "Sample" label/);
+  assert.match(out, /\[no-review-markup\] reviews\/index\.html: JSON-LD carries Review \/ AggregateRating/);
+  assert.match(out, /\[sample-label\] reviews\/index\.html: sample review .* has no visible "Sample" label/);
   assert.match(out, /\[reviews-credentials-guarantee\] reviews\/index\.html: no "Read all reviews on Google"/);
   assert.match(out, /\[reviews-credentials-guarantee\] about\/index\.html: credentials row shows "Liability insurance" without/);
-  assert.match(out, /\[reviews-credentials-guarantee\] about\/index\.html: credential claim "[^"]*fully insured"/);
+  assert.match(out, /\[credential-claims\] about\/index\.html: credential claim "[^"]*fully insured"/);
   assert.match(out, /\[reviews-credentials-guarantee\] about\/index\.html: a workmanship guarantee is mentioned without \[WARRANTY\]/);
-  assert.match(out, /\[reviews-credentials-guarantee\] about\/index\.html: guarantee claim "Satisfaction guaranteed"/);
+  assert.match(out, /\[credential-claims\] about\/index\.html: guarantee claim "Satisfaction guaranteed"/);
   assert.doesNotMatch(out, /faq\/index\.html/);
+  const micro = run('check-honesty', [`--root=${honestyRoot()}`], { SITE_DIST: tree('qa-dist-', { 'services/index.html': page('Services', '<div itemscope itemtype="https://schema.org/AggregateRating"><span itemprop="ratingValue">5</span></div>') }) }).out;
+  assert.match(micro, /\[no-review-markup\] services\/index\.html: microdata\/RDFa review or rating markup/);
+});
+
+test('check-honesty: a sourced local-rule excerpt is a quotation, not a review; an unlisted quote in a review card is #sample-label', () => {
+  const excerpt = (/** @type {string} */ tag) => `<h2>Tree bylaw</h2><p class="sourced__label">Protected trees</p>${tag}<div class="sourced__meta"><a class="source-chip" href="https://www.oakbay.ca/trees">oakbay.ca</a><p class="reviewed reviewed--pending">Review date to confirm</p></div>`;
+  const ok = run('check-honesty', [`--root=${honestyRoot()}`], { SITE_DIST: tree('qa-dist-', {
+    'areas/oak-bay/index.html': page('Oak Bay', `<h2>Reviews and local rules</h2><ul><li class="rule">${excerpt('<blockquote class="sourced__excerpt" cite="https://www.oakbay.ca/trees"><p>No protected tree shall be cut down without a permit.</p></blockquote>')}</li></ul>`),
+    'areas/saanich/index.html': page('Saanich', `<h2>What clients say</h2><article class="card">${excerpt('<blockquote cite="https://www.saanich.ca/trees"><p>A permit is required to remove a protected tree.</p></blockquote>')}</article>`),
+    'reviews/index.html': page('Reviews', '<p>Reviews on Google</p><figure class="review"><blockquote class="review__quote t-quote"><p>They kept the beds tidy all season.</p></blockquote><figcaption>Strata council member <span class="sample-label">Sample review</span></figcaption></figure>'),
+  }) });
+  assert.equal(ok.code, 0, ok.out);
+  const bad = run('check-honesty', [`--root=${honestyRoot()}`], { SITE_DIST: tree('qa-dist-', {
+    'reviews/index.html': page('Reviews', '<p>Reviews on Google</p><ul class="quotes"><li class="glass-card quote"><blockquote><p>Best crew we ever hired, five stars.</p></blockquote><p class="quote__by">Jane Doe, Oak Bay</p></li></ul>'),
+    'areas/sooke/index.html': page('Sooke', '<figure class="case__quote"><blockquote cite="https://example.com/r"><p>They saved our hedge.</p></blockquote><figcaption>Owner, Sooke</figcaption></figure>'),
+  }) });
+  assert.equal(bad.code, 1);
+  assert.match(bad.out, /\[sample-label\] reviews\/index\.html: a review quote that is not in content\/testimonials: "best crew we ever hired/);
+  assert.match(bad.out, /\[sample-label\] reviews\/index\.html: sample review "best crew .* has no visible "Sample" label/);
+  assert.match(bad.out, /\[sample-label\] areas\/sooke\/index\.html: a review quote that is not in content\/testimonials: "they saved our hedge/, 'a cite attribute does not exempt a quote in a review card');
+});
+
+test('check-honesty: a baselined Google-link gap never hides rating markup or an unlabelled sample #reviews-credentials-guarantee #no-review-markup #sample-label', () => {
+  const root = `--root=${honestyRoot()}`;
+  const bl = tree('qa-bl-', { 'check-honesty.json': JSON.stringify({ tool: 'check-honesty', writtenAt: 'test', entries: [{ rule: 'reviews-credentials-guarantee', path: 'reviews/index.html' }] }) });
+  const card = (/** @type {string} */ label) => `<ul><li class="quote"><blockquote><p>They kept the beds tidy all season.</p></blockquote>${label}</li></ul>`;
+  const before = run('check-honesty', [root], { SITE_DIST: tree('qa-dist-', { 'reviews/index.html': page('Reviews', card('<span class="sample-label">Sample review</span>')) }), BASELINE_DIR: bl });
+  assert.equal(before.code, 0, `the missing Google link is baselined: ${before.out}`);
+  const rating = run('check-honesty', [root], { SITE_DIST: tree('qa-dist-', { 'reviews/index.html': page('Reviews', card('<span class="sample-label">Sample review</span>'), '<script type="application/ld+json">{"@type":"LocalBusiness","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"12"}}</script>') }), BASELINE_DIR: bl });
+  assert.equal(rating.code, 1, 'the rating markup is a fresh failure');
+  assert.match(rating.out, /\[no-review-markup\] reviews\/index\.html: JSON-LD carries Review \/ AggregateRating/);
+  const label = run('check-honesty', [root], { SITE_DIST: tree('qa-dist-', { 'reviews/index.html': page('Reviews', card('')) }), BASELINE_DIR: bl });
+  assert.equal(label.code, 1, 'the unlabelled sample is a fresh failure');
+  assert.match(label.out, /\[sample-label\] reviews\/index\.html: sample review/);
 });
 
 /* ------------------------------------------------------------------ check-motion-policy.mjs */
@@ -384,6 +459,25 @@ test('budgets: one rule id per v2 row, so a baselined sprite never hides an HTML
   assert.match(big.out, /\[v2-html-raw\] about\/index\.html: HTML \(raw\)/);
 });
 
+test('budgets: the sprite logo has its own budget, /styleguide/ is showcase-only, messages decode entities #v2-sprite #v2-sprite-logo #v2-inline-svg #image-widths', () => {
+  const path = (/** @type {number} */ n) => `<path d="${'M0 0L10 10'.repeat(n)}"/>`;
+  // ~5.3 KB of logo (symbols + paint servers) and ~4 KB of icons: 9.3 KB in all, each part inside its own budget.
+  const sheet = (/** @type {number} */ logo, /** @type {number} */ icons) => `<svg class="sprite" width="0" height="0" aria-hidden="true"><defs><linearGradient id="logo-g"><stop offset="0"/></linearGradient><path id="logo-p" d="${'M1 1'.repeat(logo / 8)}"/></defs><symbol id="logo-tile" viewBox="0 0 64 64">${path(logo / 20)}</symbol><symbol id="i-leaf" viewBox="0 0 24 24">${path(icons / 10)}</symbol></svg>`;
+  const ok = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', sheet(5400, 4000)) }) });
+  assert.equal(ok.code, 0, `logo 5.3 KB + icons 4 KB passes: ${ok.out}`);
+  const big = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', sheet(7000, 9000)) }) });
+  assert.match(big.out, /\[v2-sprite\] about\/index\.html: used sprite icons \d+\.\d KB raw \(budget 8\.0 KB; the logo-\* symbols and defs, \d+\.\d KB, are v2-sprite-logo\)/);
+  assert.match(big.out, /\[v2-sprite-logo\] about\/index\.html: sprite logo/);
+  // /styleguide/ shows every primitive at once: no inline-SVG, sprite or HTML-warning rows there, sizes still printed.
+  const svg = `<svg>${'<path d="M0 0L10 10"/>'.repeat(2500)}</svg>`;
+  const sg = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'styleguide/index.html': page('Styleguide', `${sheet(7000, 9000)}${svg}`), 'services/index.html': page('Services', svg) }) });
+  assert.doesNotMatch(sg.out, /\] styleguide\/index\.html|warn: styleguide/, sg.out);
+  assert.match(sg.out, /note: styleguide\/index\.html: showcase-only, not budgeted: inline SVG/);
+  assert.match(sg.out, /\[v2-inline-svg\] services\/index\.html: inline SVG/, 'other pages keep the budget');
+  const amp = run('budgets', [], { SITE_DIST: tree('qa-dist-', { 'about/index.html': page('About', '<img src="https://images.unsplash.com/p?w=2000&amp;q=72" width="2" height="1" loading="lazy" decoding="async" alt="">') }) });
+  assert.match(amp.out, /image candidate https:\/\/images\.unsplash\.com\/p\?w=2000&q=72 is 2000 px/);
+});
+
 test('budgets: an offline build that leaks one CDN image fails, and hints are their own rule #third-party-origins #third-party-hints', () => {
   const root = tree('qa-root-', { 'media/images.json': JSON.stringify([{ id: 'hero-a', stock: { provider: 'Unsplash', imageUrl: 'https://images.unsplash.com/photo-1' } }]) });
   const art = '<figure class="media media--art" data-slot="hero-a"><img src="/assets/art/hero-a.svg" width="4" height="3" alt="" fetchpriority="high" loading="eager" decoding="async"></figure>';
@@ -423,6 +517,30 @@ test('a11y primary targets: undersized [data-pref], [data-nav-toggle] and [data-
     assert.match(out.join('\n'), /button\[data-pref=theme\] "T" is 30×30 \(needs 44×44\)/);
     assert.match(out.join('\n'), /"Menu" is 95×40 \(needs 44×44\)/);
     assert.match(out.join('\n'), /a "Call" is 30×30 \(needs 44×48\)/);
+  } finally { await browser.close(); }
+});
+
+/* ------------------------------------------------------------------ measure.mjs#audit-report contrast */
+test('measure text contrast: glass over art, text over images and painted siblings are skipped; solid and tinted text is measured #audit-report', async (t) => {
+  let browser;
+  try { browser = await launchChromium(); } catch (e) { t.skip(`no Chromium (${String(e).split('\n')[0]})`); return; }
+  try {
+    const page = await browser.newPage({ viewport: { width: 390, height: 800 } });
+    const art = `data:image/svg+xml,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><rect width='10' height='10' fill='#1d4a33'/></svg>")}`;
+    await page.setContent(`<style>body{margin:0;background:rgb(244,246,242);color:#1a1a1a;font:16px sans-serif} .abs{position:absolute;inset:0;width:100%;height:100%}</style>
+      <p class="solid">Solid text on the page</p>
+      <div><mark class="chip" style="background:rgba(0,0,0,.1);color:#111">[PHONE]</mark></div>
+      <p class="faint" style="color:#bbb">Faint text</p>
+      <a class="tile" href="#" style="position:relative;display:block;width:300px;height:160px"><img class="abs" src="${art}" alt="" style="pointer-events:none"><span class="tile__glass" style="position:absolute;left:0;right:0;bottom:0;padding:12px;background:rgba(9,17,12,.34)"><span class="tile__text" style="color:rgba(255,255,255,.82)">Lawn care</span></span></a>
+      <div style="position:relative;height:60px"><img class="abs" src="${art}" alt="" style="pointer-events:none"><p class="over-art" style="position:relative;margin:0;color:#fff">Over the art</p></div>
+      <div style="background-image:linear-gradient(#000,#333)"><p class="grad" style="color:#fff">On a gradient</p></div>
+      <div style="position:relative;height:40px"><div class="abs" style="background:#000"></div><p class="sibling" style="position:relative;margin:0;color:#fff">On a painted sibling</p></div>`);
+    const c = await page.evaluate(textContrast);
+    assert.equal(c.textElements, 3, JSON.stringify(c));
+    assert.equal(c.skipped, 4, JSON.stringify(c));
+    assert.equal(c.under45, 1);
+    assert.equal(c.minAt, 'p.faint');
+    assert.ok(c.minRatio !== null && c.minRatio > 1.5 && c.minRatio < 2.2, `the faint text (~1.9:1) is the minimum, not the glass text: ${c.minRatio}`);
   } finally { await browser.close(); }
 });
 

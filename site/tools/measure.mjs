@@ -9,11 +9,14 @@
  * For each page × width × theme (motion on, served like Netlify with the real CSP) the report records:
  *   performance  transferred bytes by type and in total, request count, third-party requests, DOM size, lab FCP, LCP
  *                (and its element), CLS, long-task total;
- *   contrast     the lowest text/background ratio among visible text on solid backgrounds, and how many text elements
- *                are under 4.5:1 (axe and text-over-media judge; this is the number to quote);
+ *   contrast     the lowest text/background ratio among visible text whose background is known colour (solid, or
+ *                translucent tints composited over a solid ancestor), and how many text elements are under 4.5:1;
+ *                text over an image, a gradient, an svg or other art is counted as skipped and left to
+ *                text-over-media's pixel method (lib.mjs textContrast; axe and text-over-media judge);
  *   focus        the first 20 Tab stops: how many show no visible focus indicator, and how many are covered by a sticky
  *                element (WCAG 2.4.7, 2.4.11);
- *   targets      interactive elements under 24×24 and primary controls under 44×44 (2.5.8; C4).
+ *   targets      interactive elements under 24×24 (2.5.8) and the primary targets a11y#target-size checks
+ *                (lib.mjs primaryTargets, C4: toggles and Menu 44×44, the sticky bar 44×48) that are undersized.
  * Rule:
  *   audit-report  every page in every state was measured and has every metric; the report was written. (Values are
  *                 data, not pass/fail: budgets, a11y, lighthouse and text-over-media hold the limits.)
@@ -21,7 +24,7 @@
  */
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { argList, argOpt, fileOfUrl, launchChromium, report, selectPages, serveDist, stateContext, writeJson } from './lib.mjs';
+import { argList, argOpt, fileOfUrl, launchChromium, primaryTargets, report, selectPages, serveDist, stateContext, textContrast, writeJson } from './lib.mjs';
 
 export const RULES = ['audit-report'];
 
@@ -65,38 +68,20 @@ async function run(/** @type {{ theme: 'dark'|'light', width: number }} */ c) {
         for (const r of res) { const t = kind(r.name); bytes[t] = (bytes[t] || 0) + (r.transferSize || r.encodedBodySize || 0); }
         const third = res.filter((r) => new URL(r.name).origin !== location.origin).map((r) => new URL(r.name).host);
         const fcp = performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? null;
-        /* contrast on solid backgrounds */
-        const lin = (/** @type {number} */ v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
-        const L = (/** @type {number[]} */ c) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
-        const rgba = (/** @type {string} */ s) => { const n = (s.match(/[\d.]+/g) || []).map(Number); return [n[0] || 0, n[1] || 0, n[2] || 0, n[3] === undefined ? 1 : n[3]]; };
-        let minRatio = Infinity, low = 0, textEls = 0, minAt = '';
-        for (const el of document.querySelectorAll('body *')) {
-          if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent?.trim())) continue;
-          const s = getComputedStyle(el);
-          if (s.visibility === 'hidden' || s.display === 'none' || el.closest('[aria-hidden="true"]')) continue;
-          const r = el.getBoundingClientRect(); if (!r.width || !r.height) continue;
-          let bg = null;
-          for (let e = /** @type {Element|null} */ (el); e; e = e.parentElement) { const es = getComputedStyle(e); if (es.backgroundImage !== 'none') { bg = null; break; } const c = rgba(es.backgroundColor); if (c[3] >= 0.99) { bg = c; break; } }
-          if (!bg) continue; // text over images, gradients or translucent layers: text-over-media measures those
-          const fg = rgba(s.color);
-          const mix = [fg[0] * fg[3] + bg[0] * (1 - fg[3]), fg[1] * fg[3] + bg[1] * (1 - fg[3]), fg[2] * fg[3] + bg[2] * (1 - fg[3])];
-          const ratio = (Math.max(L(mix), L(bg)) + 0.05) / (Math.min(L(mix), L(bg)) + 0.05);
-          textEls++;
-          if (ratio < 4.5) low++;
-          if (ratio < minRatio) { minRatio = ratio; minAt = `${el.tagName.toLowerCase()}${typeof el.className === 'string' && el.className ? `.${el.className.split(/\s+/)[0]}` : ''}`; }
-        }
         /* targets */
         const visible = (/** @type {Element} */ el) => { const s = getComputedStyle(el); const r = el.getBoundingClientRect(); return s.visibility !== 'hidden' && s.display !== 'none' && r.width > 0 && r.height > 0; };
         const inter = [...document.querySelectorAll('a[href], button, input:not([type=hidden]), select, textarea, summary, [role=button], [tabindex]:not([tabindex="-1"])')].filter(visible);
         const inline = (/** @type {Element} */ el) => el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.closest('p, li > p, dd, td');
         const small = inter.filter((el) => { const r = el.getBoundingClientRect(); return !inline(el) && (r.width < 24 || r.height < 24); });
-        const primary = [...document.querySelectorAll('[data-pref], [data-nav-toggle], [data-action-bar] a, [data-action-bar] button, .btn--primary, .btn--lg')].filter(visible).filter((el) => { const r = el.getBoundingClientRect(); return r.width < 44 || r.height < 44; });
         return {
           performance: { bytes, totalBytes: Object.values(bytes).reduce((a, b) => a + b, 0), requests: res.length + 1, thirdParty: [...new Set(third)], domNodes: document.getElementsByTagName('*').length, fcp, lcp: w.__lcp?.t ?? null, lcpElement: w.__lcp?.el ?? null, cls: Number(w.__cls.toFixed(4)), longTaskMs: Math.round(w.__long) },
-          contrast: { textElements: textEls, minRatio: Number.isFinite(minRatio) ? Number(minRatio.toFixed(2)) : null, minAt, under45: low },
-          targets: { interactive: inter.length, under24: small.length, under24Examples: small.slice(0, 5).map((el) => `${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 24)}"`), primaryUnder44: primary.length },
+          targets: { interactive: inter.length, under24: small.length, under24Examples: small.slice(0, 5).map((el) => `${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 24)}"`), primaryUnder44: 0, primaryExamples: /** @type {string[]} */ ([]) },
         };
       });
+      // The same page functions a11y#target-size and the unit tests run, so the numbers agree with the gates.
+      const contrast = await page.evaluate(textContrast);
+      const primary = await page.evaluate(primaryTargets);
+      Object.assign(m.targets, { primaryUnder44: primary.length, primaryExamples: primary.slice(0, 3) });
       /* focus: the first 20 Tab stops */
       await page.evaluate(() => { scrollTo(0, 0); /** @type {HTMLElement|null} */ (document.activeElement)?.blur?.(); });
       let noIndicator = 0, obscured = 0, stops = 0;
@@ -119,7 +104,7 @@ async function run(/** @type {{ theme: 'dark'|'light', width: number }} */ c) {
         if (!f.ring) { noIndicator++; if (examples.length < 3) examples.push(f.name); }
         if (f.covered) obscured++;
       }
-      const row = { page: p, theme: c.theme, width: c.width, ...m, focus: { stops, noIndicator, obscured, noIndicatorExamples: examples } };
+      const row = { page: p, theme: c.theme, width: c.width, ...m, contrast, focus: { stops, noIndicator, obscured, noIndicatorExamples: examples } };
       rows.push(row);
       const missing = METRICS.filter((k) => !row[k]);
       if (missing.length) failures.push({ rule: 'audit-report', path: fileOfUrl(p), message: `missing ${missing.join(', ')} [${state}]` });
@@ -140,6 +125,7 @@ const summary = {
   pages: pages.length, states: themes.length * widths.length,
   heaviestPageBytes: worst((r) => r.performance.totalBytes), maxLcpMs: Math.round(worst((r) => r.performance.lcp)), maxCls: worst((r) => r.performance.cls),
   minTextContrast: Math.min(...rows.map((r) => r.contrast.minRatio ?? Infinity)), textUnder45: rows.reduce((n, r) => n + r.contrast.under45, 0),
+  textSkippedOverMedia: rows.reduce((n, r) => n + r.contrast.skipped, 0),
   focusWithoutIndicator: rows.reduce((n, r) => n + r.focus.noIndicator, 0), focusObscured: rows.reduce((n, r) => n + r.focus.obscured, 0),
   targetsUnder24: rows.reduce((n, r) => n + r.targets.under24, 0), primaryUnder44: rows.reduce((n, r) => n + r.targets.primaryUnder44, 0),
   thirdPartyHosts: [...new Set(rows.flatMap((r) => r.performance.thirdParty))],
