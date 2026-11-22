@@ -108,6 +108,9 @@
 .scene { position: absolute; inset: 0; overflow: hidden; contain: paint; pointer-events: none; background: linear-gradient(180deg, var(--sc-sky-top) 0%, var(--sc-sky-mid) 52%, var(--sc-sky-low) 100%); }
 .sc-defs { position: absolute; width: 0; height: 0; }
 .scene .media__chip--art { z-index: 3; left: auto; right: 12px; bottom: 12px; font-size: .6875rem; letter-spacing: .04em; color: var(--color-ink-2, #B2C8BB); background: var(--material-thick, rgba(8, 20, 15, .86)); box-shadow: 0 0 0 1px var(--color-line, rgba(200, 240, 215, .12)); }
+/* Legacy heroes (picture() inside .hero__media) still set white copy on the left. At dawn the sky is pale, so the copy
+   side is shaded until W3 hero(p) sets the dawn ink on hero copy (requests/living.md). The chip stays above it. */
+:root[data-theme="light"] .hero__media .scene--hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(10, 28, 20, .5) 0%, rgba(10, 28, 20, .44) 40%, rgba(10, 28, 20, .16) 64%, transparent 80%); }
 .scene--hero .media__chip--art { top: calc(var(--layout-header-h, 64px) + 8px); bottom: auto; right: max(var(--layout-gutter, 16px), env(safe-area-inset-right)); }
 
 /* Aurora: two pre-blurred CSS washes (ellipses + masked rays). Moved by transform only (T2) and translate (T4). */
