@@ -1,8 +1,8 @@
 {
   "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label. googleLink has only a label; templates take the URL from site.json googleProfile (the optional [GOOGLE PROFILE] token): showcase renders the label as plain text plus the chip, launch omits it while the token is unset (CONTRACT section 3). No Review or AggregateRating schema.",
   "seo": {
-    "title": "Reviews and Client Feedback | RNC Landscaping",
-    "description": "Client reviews for RNC Landscaping in Greater Victoria. Reviews marked Sample are examples until real reviews are shared with permission."
+    "title": "Reviews | RNC Landscaping",
+    "description": "Sample reviews show the kind of feedback RNC Landscaping works toward in Greater Victoria. Real client reviews will be added, shared with permission."
   },
   "h1": "Reviews",
   "lede": "Reviews marked Sample are examples, not feedback from real clients. We will replace them with real reviews, shared with permission.",

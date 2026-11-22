@@ -22,7 +22,7 @@
       "body": [
         "When you request a quote, the form writes an email for you to send from your own email app. It contains what you enter: the services you need, your municipality, details about the property or job, your timing, your name and how you would like us to reply, plus your phone number if you ask us to call or text. Because you send it, it also carries your email address and anything you add or attach before sending.",
         "If your email app does not open, the form offers Gmail and Outlook.com links. They open your request in that service, and that service's own privacy terms apply.",
-        "This website does not send or store what you type into the quote form, and we do not ask for payment information on this website."
+        "This website does not send what you type in the quote form to us or store it on a server. Your browser keeps a temporary draft on your device (see below). We do not ask for payment information on this website."
       ]
     },
     {
@@ -59,7 +59,7 @@
       "id": "analytics",
       "heading": "Analytics and cookies",
       "body": [
-        "We use Plausible Analytics, a cookieless analytics service, to count visits in aggregate. It also counts a few actions, such as opening the quote email or pressing a Call button, without recording anything you typed. It does not use tracking cookies or collect personal information that identifies you. This site does not set tracking cookies."
+        "We use Plausible Analytics, a cookieless analytics service, to count visits in aggregate. It also counts a few actions, such as opening the quote email (with the service and municipality chosen) or pressing a Call button, but never your name, contact details or what you write. It does not use tracking cookies or collect personal information that identifies you. This site does not set tracking cookies."
       ]
     },
     {
