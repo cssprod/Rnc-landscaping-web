@@ -13,6 +13,7 @@
  *   --no-baseline       ignore baselines (W4 evidence, W5 release gate)
  *   --write-baseline    integrator only: write the current failures as the baseline (with --baseline-at=<wave>/<merge>)
  *   --prune-baseline    integrator only: drop stale entries, never add
+ *   --all               print every failure (default: the first 50)
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -102,7 +103,8 @@ export function report(tool, list) {
   const { fresh, baselined, stale } = applyBaseline(failures, baseline);
   const line = (/** @type {Failure} */ f) => `  - ${f.rule !== 'unspecified' ? `[${f.rule}] ` : ''}${f.path ? `${f.path}: ` : ''}${f.message}`;
   const extra = baselined.length ? ` (${baselined.length} baselined)` : '';
-  if (fresh.length) console.error(`✗ ${tool}: ${fresh.length} problem(s)${extra}\n${fresh.slice(0, 50).map(line).join('\n')}${fresh.length > 50 ? `\n  … and ${fresh.length - 50} more` : ''}`);
+  const cap = flag('all') ? Infinity : 50;
+  if (fresh.length) console.error(`✗ ${tool}: ${fresh.length} problem(s)${extra}\n${fresh.slice(0, cap).map(line).join('\n')}${fresh.length > cap ? `\n  … and ${fresh.length - cap} more (--all prints every one)` : ''}`);
   else console.log(`✓ ${tool}${extra}`);
   if (stale.length) console.warn(`  ${tool}: ${stale.length} stale baseline entr${stale.length === 1 ? 'y' : 'ies'} (no longer failing; the integrator prunes them): ${stale.slice(0, 5).map((e) => `${e.rule} ${e.path}`).join(', ')}${stale.length > 5 ? ', …' : ''}`);
   return fresh.length === 0;
