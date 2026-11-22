@@ -56,7 +56,7 @@ export function quoteForm(data, page, o = {}) {
   return html`<form class="qb" id="${pre}-form" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" accept-charset="utf-8" data-stepper data-quote-form
   data-email="${email || tok('EMAIL')}" data-subject="${page?.subject || 'Free quote request — {services} — {area}'}" data-max-url="1800"
   data-summary-labels="${JSON.stringify(page?.summary || {})}" data-label-copied="${b.copied || 'Copied'}" data-label-address-copied="${b.addressCopied || 'Address copied'}"
-  data-copy-failed="${m.copyFailed || ''}" data-truncated-note="${m.truncatedNote || '[…] Shortened: paste the full request you copied.'}">
+  data-copy-failed="${m.copyFailed || ''}" data-truncated-note="${m.truncatedNote || '[…] Shortened to fit an email link. Paste the full request you copied.'}">
   <div class="qb__summary" id="${pre}-errors" data-error-summary tabindex="-1" role="alert" aria-labelledby="${pre}-errors-h" hidden>
     <h2 class="qb__summary-h" id="${pre}-errors-h">${m.errorSummary || 'Check these answers'}</h2>
     <ul></ul>

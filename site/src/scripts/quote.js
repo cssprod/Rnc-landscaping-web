@@ -70,7 +70,7 @@ export function capLength(text, max, o = {}) {
   const enc = o.encode || encodeMail;
   const s = String(text ?? '');
   if (enc(s).length <= max) return { text: s, truncated: false };
-  const tail = `\n\n${o.note || '[…] Shortened: paste the full request you copied.'}`;
+  const tail = `\n\n${o.note || '[…] Shortened to fit an email link. Paste the full request you copied.'}`;
   const chars = Array.from(s);
   // Longest prefix (in whole code points) that fits with the tail.
   let lo = 0, hi = chars.length;
