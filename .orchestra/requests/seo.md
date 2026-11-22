@@ -23,6 +23,21 @@ const ld = ldNodes(svc).find((o) => o['@type'] === 'Service');
 
 Unrelated to the patch: `ADDRESS: '1 Test Road, Victoria'` still becomes `streetAddress`. The value "Serving Greater Victoria" (CONTRACT §3, hidden address) keeps only region and country.
 
+## 1b. qa (W2, merges after seo): `site/tools/check-content.mjs` must read the one-graph JSON-LD
+
+The same lookup breaks `check-content#gbp-alignment` and `#nap-consistency` on `w2/seo`: 57 "no business JSON-LD" failures, one per page. This is not a content problem, and it should not be baselined. Patch, verified on a temporary copy over the `w2/seo` offline build (✓ check-content):
+
+```js
+// line 382: search the @graph nodes
+const businessOf = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .flatMap((m) => { try { const o = JSON.parse(m[1]); return o?.['@graph'] || [o]; } catch { return []; } })
+  .find((o) => o && /Business$/.test(String(o['@type'])));
+// line 432: "Serving Greater Victoria" (CONTRACT §3, hidden address) is not a street address, so schema leaves it out
+if ((tokens.ADDRESS && !/^serving\b/i.test(tokens.ADDRESS) ? tokens.ADDRESS : undefined) !== b.address?.streetAddress) fail(…);
+```
+
+If qa's branch has already merged without this patch, the integrator should apply it at the W2 barrier.
+
 ## 2. Integrator: check-seo baseline at the seo merge (CONTRACT §17)
 
 Run `node tools/check-seo.mjs --write-baseline --baseline-at=w2/seo` on the integration tip. On `w2/seo` (offline showcase build), only W3-due rules fail. Every seo-owned rule passes: og-tags, double-encoding, slug-lint, canonical, canonical-unique, title-meta, technical and jsonld-graph. So do the W2 rules that other streams implement: single-nav-dom, alt-filename, h1-count, h1-present-on-hubs and breadcrumbs.
