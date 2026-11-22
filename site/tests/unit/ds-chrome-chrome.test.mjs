@@ -9,7 +9,9 @@ import { readFileSync } from 'node:fs';
 import { tokens } from '../../site.config.mjs';
 import { telLink, smsLink, mailLink } from '../../src/lib/tokens.mjs';
 import * as layoutModule from '../../src/components/layout.mjs';
-import { sprite, icon, ICON_NAMES } from '../../src/components/sprite.mjs';
+import { sprite, icon, ICON_NAMES, minPath } from '../../src/components/sprite.mjs';
+import { WORD_RNC, WORD_LANDSCAPING } from '../../src/components/brand-paths.mjs';
+import { shakeSprite } from '../../src/lib/build/sprite-shake.mjs';
 import { INLINE_SCRIPTS } from '../../src/lib/head-scripts.mjs';
 import { testEnv } from '../helpers/env.mjs';
 
@@ -143,4 +145,43 @@ test('sprite: every icon DESIGN-DIRECTION.md and COMPONENTS.md name, each drawab
   assert.match(only, /id="i-moon"/);
   assert.doesNotMatch(only, /id="i-phone"/);
   assert.match(only, /id="logo-tile"/, 'the logo symbols are always present');
+});
+
+/** Absolute end points (and Q control points) of an M/L/H/V/Q/Z path, absolute or relative, zero-length lines dropped. @param {string} d */
+function points(d) {
+  const toks = d.match(/[MLHVQZmlhvqz]|-?(?:\d+\.?\d*|\.\d+)/g) || [];
+  /** @type {string[]} */ const out = [];
+  let i = 0, x = 0, y = 0, sx = 0, sy = 0, cmd = '';
+  const n = () => Number(toks[i++]);
+  const r = (/** @type {number} */ v) => (Math.round(v * 10) / 10).toFixed(1);
+  while (i < toks.length) {
+    if (/[a-z]/i.test(toks[i])) cmd = toks[i++];
+    const rel = cmd === cmd.toLowerCase(), C = cmd.toUpperCase();
+    if (C === 'Z') { out.push('Z'); x = sx; y = sy; continue; }
+    if (C === 'M') { x = (rel ? x : 0) + n(); y = (rel ? y : 0) + n(); sx = x; sy = y; out.push(`M${r(x)},${r(y)}`); cmd = rel ? 'l' : 'L'; continue; }
+    let nx = x, ny = y;
+    if (C === 'H') nx = (rel ? x : 0) + n();
+    else if (C === 'V') ny = (rel ? y : 0) + n();
+    else if (C === 'L') { nx = (rel ? x : 0) + n(); ny = (rel ? y : 0) + n(); }
+    else if (C === 'Q') { const cx = (rel ? x : 0) + n(), cy = (rel ? y : 0) + n(); nx = (rel ? x : 0) + n(); ny = (rel ? y : 0) + n(); out.push(`Q${r(cx)},${r(cy)}`); }
+    else throw new Error(`unexpected ${cmd}`);
+    if (C !== 'Q' && r(nx) === r(x) && r(ny) === r(y)) continue;
+    out.push(`${C === 'Q' ? 'q' : 'L'}${r(nx)},${r(ny)}`);
+    x = nx; y = ny;
+  }
+  return out;
+}
+
+test('sprite: minPath keeps the wordmark geometry exactly and the used sprite stays small #sprite', () => {
+  for (const d of [WORD_RNC, WORD_LANDSCAPING, WORD_RNC + WORD_LANDSCAPING]) {
+    const m = minPath(d);
+    assert.deepEqual(points(m), points(d));
+    assert.ok(m.length < d.length * 0.6, `${d.length} -> ${m.length}`);
+  }
+  // Icon symbols carry no presentation attributes (svg.i in 30-chrome.css sets the line style once).
+  assert.doesNotMatch(String(sprite()), /<symbol id="i-(?!quote)[^"]+"[^>]*stroke=/);
+  // A page using the logo and a dozen chrome icons: the shaken sprite (what budgets #v2-sprite measures) is under 8 KB.
+  const page = `${sprite()}${['phone', 'chat', 'mail', 'clock', 'pin', 'chevron', 'chevron-right', 'arrow', 'building', 'compass', 'moon', 'fireflies'].map((n) => icon(n)).join('')}<svg><use href="#logo-tile"/><use href="#logo-word"/></svg>`;
+  const shaken = shakeSprite(page).html.match(/<svg class="sprite"[\s\S]*?<\/svg>/)?.[0] || '';
+  assert.ok(Buffer.byteLength(shaken) < 8 * 1024, `shaken sprite ${Buffer.byteLength(shaken)} bytes`);
 });

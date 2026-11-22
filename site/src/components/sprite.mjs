@@ -18,7 +18,39 @@ function squircle(n = 5, steps = 64) {
   }
   return `M${pts.join('L')}Z`;
 }
-const TILE = squircle();
+/**
+ * Rewrite an absolute M / L / Q / Z path (the generated wordmark outlines, the squircle) as relative commands with
+ * implicit repeats, H / V for axis-aligned lines and no zero-length segments. The geometry is unchanged: the inputs
+ * are on a 0.1 grid, so every relative step is exact at one decimal. Halves the wordmark's bytes in every page's sprite.
+ * @param {string} d
+ */
+export function minPath(d) {
+  const toks = d.match(/[MLQZ]|-?\d*\.?\d+/g) || [];
+  const fmt = (/** @type {number} */ n) => String(Math.round(n * 10) / 10 || 0).replace(/^(-?)0\./, '$1.');
+  let i = 0, x = 0, y = 0, sx = 0, sy = 0, out = '', last = '';
+  const num = () => parseFloat(toks[i++]);
+  const emit = (/** @type {string} */ c, /** @type {number[]} */ nums) => {
+    const body = nums.map(fmt).join(' ').replace(/ -/g, '-');
+    out += c === last ? (body[0] === '-' ? '' : ' ') + body : c + body;
+    last = c === 'm' ? 'l' : c; // numbers after an m continue as l
+  };
+  while (i < toks.length) {
+    const c = toks[i++];
+    if (c === 'Z') { out += 'z'; last = 'z'; x = sx; y = sy; }
+    else if (c === 'M') { const nx = num(), ny = num(); emit('m', [nx - x, ny - y]); x = sx = nx; y = sy = ny; }
+    else if (c === 'L') {
+      const nx = num(), ny = num(), dx = nx - x, dy = ny - y;
+      if (Math.abs(dx) < 1e-9 && Math.abs(dy) < 1e-9) continue;
+      if (Math.abs(dy) < 1e-9) emit('h', [dx]); else if (Math.abs(dx) < 1e-9) emit('v', [dy]); else emit('l', [dx, dy]);
+      x = nx; y = ny;
+    } else if (c === 'Q') { const a = num(), b = num(), nx = num(), ny = num(); emit('q', [a - x, b - y, nx - x, ny - y]); x = nx; y = ny; }
+    else throw new Error(`minPath: unsupported command ${c}`);
+  }
+  return out.replace(/(\.\d+) (?=\.)/g, '$1');
+}
+const TILE = minPath(squircle());
+/** Both wordmark outlines as one path (one fill). */
+const WORD = minPath(WORD_RNC + WORD_LANDSCAPING);
 
 /** @type {Record<string, string>} stroke icons (24 × 24) */
 const STROKE = {
@@ -91,10 +123,12 @@ export const ICON_NAMES = [...Object.keys(STROKE), 'quote'];
  */
 export function sprite(used) {
   const want = (/** @type {string} */ k) => !used || used.includes(k);
-  const icons = Object.entries(STROKE).filter(([k]) => want(k)).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`).join('');
-  const quote = !want('quote') ? '' : '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M7 17.5c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1S9.1 17.5 7 17.5zm10 0c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1s-1.4 3.2-3.5 3.2z"/></symbol>';
-  const tile = `<symbol id="logo-tile" viewBox="0 0 64 64"><g clip-path="url(#logo-c)"><path d="${TILE}" fill="url(#logo-g)"/><rect width="64" height="64" fill="url(#logo-s)"/><path d="${GROUND}" fill="url(#logo-h)"/><path d="${FIR}" fill="#fff"/></g><path d="${TILE}" fill="none" stroke="#fff" stroke-opacity=".22"/></symbol>`;
-  const word = `<symbol id="logo-word" viewBox="${WORD_VIEWBOX}"><path d="${WORD_RNC}" fill="currentColor"/><path d="${WORD_LANDSCAPING}" fill="currentColor"/></symbol>`;
-  const defs = `<defs><linearGradient id="logo-g" x1="12" y1="0" x2="52" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A7D55"/><stop offset=".55" stop-color="#1D4A33"/><stop offset="1" stop-color="#0B1F15"/></linearGradient><radialGradient id="logo-s" cx="18" cy="6" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="logo-h" x1="32" y1="43" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7CC596"/><stop offset=".45" stop-color="#3F8A5A"/><stop offset="1" stop-color="#2A6A43"/></linearGradient><clipPath id="logo-c"><path d="${TILE}"/></clipPath></defs>`;
+  // The stroke style (fill none, currentColor, 1.75, round caps and joins) is set once on svg.i in 30-chrome.css and
+  // inherits into every <use>; repeating it on all 44 symbols cost ~3 KB per page.
+  const icons = Object.entries(STROKE).filter(([k]) => want(k)).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24">${v}</symbol>`).join('');
+  const quote = !want('quote') ? '' : '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M7 17.5c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1S9.1 17.5 7 17.5zm10 0c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1s-1.4 3.2-3.5 3.2z"/></symbol>';
+  const tile = `<symbol id="logo-tile" viewBox="0 0 64 64"><g clip-path="url(#logo-c)"><use href="#logo-p" fill="url(#logo-g)"/><rect width="64" height="64" fill="url(#logo-s)"/><path d="${GROUND}" fill="url(#logo-h)"/><path d="${FIR}" fill="#fff"/></g><use href="#logo-p" fill="none" stroke="#fff" stroke-opacity=".22"/></symbol>`;
+  const word = `<symbol id="logo-word" viewBox="${WORD_VIEWBOX}"><path d="${WORD}" fill="currentColor"/></symbol>`;
+  const defs = `<defs><linearGradient id="logo-g" x1="12" y1="0" x2="52" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A7D55"/><stop offset=".55" stop-color="#1D4A33"/><stop offset="1" stop-color="#0B1F15"/></linearGradient><radialGradient id="logo-s" cx="18" cy="6" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="logo-h" x1="32" y1="43" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7CC596"/><stop offset=".45" stop-color="#3F8A5A"/><stop offset="1" stop-color="#2A6A43"/></linearGradient><path id="logo-p" d="${TILE}"/><clipPath id="logo-c"><use href="#logo-p"/></clipPath></defs>`;
   return raw(`<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">${defs}${tile}${word}${icons}${quote}</svg>`);
 }
