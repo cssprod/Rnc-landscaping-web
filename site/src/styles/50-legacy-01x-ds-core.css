@@ -1,0 +1,18 @@
+/* 50-legacy-01x-ds-core.css (ds-core): fallback slice (CONTRACT §12, legacy-css-map.json fallbackSlice).
+   These element defaults came from 50-legacy-01-ds-core.css (deleted in W2). Moved into @layer base they would beat the
+   legacy component rules that restyle links, headings, paragraphs and sections (.btn, .chip, .hero__title, footer h2,
+   .mega__aside p, .deep-band …: a computed-style diff of all 56 pages at 390 and 1440 px found 4,000+ changed elements),
+   so they keep their original place in the cascade: "01x" sorts right after the deleted 01 slice and before 02.
+   Values come from tokens, so the C3 type scale and the dark-first palette apply here too.
+   Delete each rule when no legacy slice restyles its selector any more (selector owners in W2/W3; css-consolidator in
+   W3b moves what is left into 02-base / 03-type / 05-layout). */
+@layer legacy {
+h1, h2, h3, h4 { margin: 0 0 var(--space-4); color: var(--color-ink); font-weight: var(--font-weight-semibold); line-height: var(--font-leading-title); letter-spacing: var(--font-tracking-title); text-wrap: balance; }
+h1 { font-size: var(--font-size-large-title); font-weight: var(--font-weight-display); line-height: var(--font-leading-display); letter-spacing: var(--font-tracking-display); }
+h2 { font-size: var(--font-size-title-1); }
+h3 { font-size: var(--font-size-title-3); line-height: var(--font-leading-snug); letter-spacing: var(--font-tracking-headline); }
+p { margin: 0 0 var(--space-4); text-wrap: pretty; }
+a { color: var(--color-brand); text-decoration-line: underline; text-decoration-thickness: 0.07em; text-underline-offset: 0.22em; text-decoration-color: color-mix(in srgb, currentColor 38%, transparent); transition: text-decoration-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+a:hover { text-decoration-color: currentColor; }
+.section { position: relative; padding-block: calc(var(--space-section) * 0.5); }
+}

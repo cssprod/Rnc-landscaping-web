@@ -1,2 +1,24 @@
-/* 03-type.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-core.
-   Wrap every rule in exactly one layer:  @layer base { … }  */
+/* 03-type.css (ds-core, W2): type roles on the C3 fluid scale (tokens font.size.*, 360 → 1440 px; body >= 17 px).
+   Inter Variable 400/600/700 for everything; Newsreader italic only for client quotations and the one accent phrase per
+   page (DESIGN-DIRECTION §5). The h1–h4 and p element defaults sit in 50-legacy-01x-ds-core.css for now (see 02-base). */
+@layer base {
+  /* Type roles for new components: one class per C3 step, never a raw size. */
+  .t-display { font-size: var(--font-size-display); font-weight: var(--font-weight-display); line-height: var(--font-leading-display); letter-spacing: var(--font-tracking-display); text-wrap: balance; max-width: 13.6em; }
+  .t-title { font-size: var(--font-size-large-title); font-weight: var(--font-weight-bold); line-height: var(--font-leading-title); letter-spacing: var(--font-tracking-title); text-wrap: balance; }
+  .t-lede { font-size: var(--font-size-lede); line-height: 1.5; color: var(--color-ink-2); max-width: 34em; text-wrap: pretty; }
+  .t-small { font-size: var(--font-size-small); }
+  .t-label { font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); letter-spacing: 0.02em; }
+  /* Tabular figures for spec strips and section numbers. */
+  .t-num { font-variant-numeric: tabular-nums; }
+
+  /* The accent phrase: one per page, in the H1 or display line (mirrored by the CTA band line). Never a gradient fill,
+     never more than one per heading, never in body copy. */
+  em.accent { font: italic 500 1.06em/1 var(--font-family-serif); color: var(--color-brand); text-shadow: 0 0 28px var(--glow-moss); }
+  .on-deep em.accent { color: var(--color-accent-on-deep); }
+  /* Client quotations. */
+  .t-quote { font-family: var(--font-family-serif); font-style: italic; font-weight: 400; }
+
+  @media (forced-colors: active) {
+    em.accent { color: CanvasText; text-shadow: none; }
+  }
+}

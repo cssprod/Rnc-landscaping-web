@@ -19,7 +19,7 @@ import { typographer } from './src/lib/html.mjs';
 import { routes } from './src/pages/routes.mjs';
 import { INLINE_SCRIPTS } from './src/lib/head-scripts.mjs';
 import { site } from './site.config.mjs';
-import { generate as tokensCss, readTokens } from '../brand/build-tokens.mjs';
+import { generate as tokensCss, readTokens, themeColors } from '../brand/build-tokens.mjs';
 import { prepareDist, DistGuardError } from './src/lib/build/dist-guard.mjs';
 import { bundleCss } from './src/lib/build/css.mjs';
 import { buildModules, addModulePreloads } from './src/lib/build/modules.mjs';
@@ -62,7 +62,10 @@ const data = loadAll();
 initImages(data.images, { offline });
 
 /* ---- CSS: tokens (compiled from brand/tokens.json, unlayered) + site/src/styles/*.css in name order, one hashed file ---- */
-const tokens = tokensCss(readTokens());
+const tokenJson = readTokens();
+const tokens = tokensCss(tokenJson);
+/** Browser chrome colours from tokens (meta.*): { dark, light } for <meta name="theme-color">, background for the manifest. */
+const theme = themeColors(tokenJson);
 const tokensFile = sharedFile('brand', 'tokens.css');
 if (tokensFile && readFileSync(tokensFile, 'utf8') !== tokens) warnings.push('brand/tokens.css is stale: run node brand/build-tokens.mjs (the build uses tokens.json directly)');
 const h = (/** @type {string} */ s) => createHash('sha256').update(s).digest('hex').slice(0, 10);
@@ -107,7 +110,7 @@ const origin = launch ? `https://${tok('DOMAIN')}` : '';
 const hasCapability = !!site.capabilityStatement && existsSync(join(DIST, site.capabilityStatement));
 if (!hasCapability) (launch ? issues : warnings).push(`capability statement PDF missing: add static${site.capabilityStatement}`);
 const analyticsDomain = launch && has('PLAUSIBLE DOMAIN') ? tok('PLAUSIBLE DOMAIN') : null;
-const env = { launch, context, origin, data, assets, hasCapability, analyticsDomain };
+const env = { launch, context, origin, data, assets, hasCapability, analyticsDomain, themeColors: theme };
 
 /* ---- pages ---- */
 /**
@@ -163,7 +166,7 @@ writeFileSync(join(DIST, 'robots.txt'), launch
   : `# Showcase build (${context}): not for indexing\nUser-agent: *\nDisallow: /\n`);
 writeFileSync(join(DIST, 'site.webmanifest'), JSON.stringify({
   name: site.name, short_name: site.shortName, start_url: '/', display: 'browser', lang: 'en-CA',
-  background_color: '#F4F6F2', theme_color: '#1D4A33',
+  background_color: theme.background, theme_color: theme.dark,
   icons: [
     { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
     { src: '/assets/brand/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
