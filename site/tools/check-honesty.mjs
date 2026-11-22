@@ -51,10 +51,14 @@ const json = (/** @type {string} */ f) => { try { return JSON.parse(readFileSync
 const ENT = /** @type {Record<string, string>} */ ({ amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', rsquo: '’', lsquo: '‘', rdquo: '”', ldquo: '“', mdash: '—', ndash: '–', hellip: '…', middot: '·' });
 const decode = (/** @type {string} */ s) => s.replace(/&(#x[\da-f]+|#\d+|\w+);/gi, (m, e) => (e[0] === '#' ? String.fromCodePoint(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : Number(e.slice(1))) : ENT[e.toLowerCase()] ?? m));
 const INLINE = 'a|abbr|b|bdi|bdo|cite|code|data|dfn|em|i|kbd|mark|q|s|samp|small|span|strong|sub|sup|time|u|var|wbr';
-/** Visible text of an HTML fragment: no scripts, styles, SVG or templates; inline tags join words, block tags break them. @param {string} h */
+/**
+ * Visible text of an HTML fragment: no scripts, styles, SVG or templates. Block tags break words; an inline tag's start
+ * may (a space), its end never does, so "<mark>[WARRANTY]</mark>." stays "[WARRANTY]." and two spans stay two words.
+ * @param {string} h
+ */
 export function visibleText(h) {
   return decode(h.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style|svg|template)\b[\s\S]*?<\/\1>/gi, ' ')
-    .replace(new RegExp(`</?(?:${INLINE})\\b[^>]*>`, 'gi'), '').replace(/<[^>]+>/g, ' ')).replace(/[ \t\r\n ]+/g, ' ').trim();
+    .replace(new RegExp(`</(?:${INLINE})>`, 'gi'), '').replace(new RegExp(`<(?:${INLINE})\\b[^>]*>`, 'gi'), ' ').replace(/<[^>]+>/g, ' ')).replace(/[ \t\r\n ]+/g, ' ').trim();
 }
 const norm = (/** @type {string} */ s) => decode(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 /** A short quotation of the match for the message. @param {string} t @param {number} i @param {number} n */
@@ -90,7 +94,8 @@ const US = /** @type {[RegExp, string][]} */ ([
   [/\banalog\b/i, 'analogue'], [/\bdialog\b/i, 'dialogue'], [/\bcheck(s)?\b(?=\s+(?:payable|or\s+cash|by\s+mail))/i, 'cheque'], [/\bmanoeuver|\bmaneuver(s|ed|ing)?\b/i, 'manoeuvre'],
 ]);
 const TYPOS = /\b(recieve\w*|seperat\w*|occured|occuring|accomodat\w*|definately|untill|wich|teh|alot|existance|maintainance|maintenence|maintanence|irigation|irrigaton|landscapping|landscapeing|awlays|alwasy|comanies|custoom|carpenty|reccomend\w*|recomend\w*|guarentee\w*|garantee\w*|neccessar\w*|occassion\w*|wierd|thier|truely|arborest\w*|perenial\w*|hedgeing|pruneing|mulchs|shurbs?|shrubery|untill|enviroment\w*|goverment\w*|commited|committment|publically|seperately|refered|liason|independant)\b/i;
-const DOUBLED = /\b(the|a|an|and|or|of|to|in|on|for|with|is|are|be|we|you|our|your|it|this|at|by|as|from)\s+\1\b/i;
+// Same case only: "for For" is a heading running into the next sentence, not a typo.
+const DOUBLED = /\b(the|a|an|and|or|of|to|in|on|for|with|is|are|be|we|you|our|your|it|this|at|by|as|from)\s+\1\b/;
 const VAGUE = /^(?:quality|high quality|reliable|reliability|professional(?:ism)?|excellence|trusted|trust|experienced|experience|dedicated|passionate|world[- ]class|premium|best[- ]in[- ]class|peace of mind|integrity|value|great service|customer service|satisfaction)$/i;
 const PEOPLE = /\b(landscapers?|gardeners?|arborists?|crews?|teams?|workers?|worker|staff|employees?|owners?|foreman|labou?rers?|person|people|man|men|woman|women|someone|technicians?|operators?|installers?|contractors?)\b/i;
 const CRED_CLAIM = /** @type {[RegExp, string][]} */ ([

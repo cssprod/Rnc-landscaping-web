@@ -14,6 +14,12 @@
  *   --write-baseline    integrator only: write the current failures as the baseline (with --baseline-at=<wave>/<merge>)
  *   --prune-baseline    integrator only: drop stale entries, never add
  *   --all               print every failure (default: the first 50)
+ * Tools whose failures depend on the build flavour (budgets: image-widths online, third-party-origins offline) are
+ * baselined over both builds:
+ *   write:  run offline with --write-baseline, then online with --write-baseline --baseline-merge (union of both).
+ *   prune:  run each build with --prune-baseline and BASELINE_LEDGER=<dir> (nothing is rewritten; each run records the
+ *           listed entries that still fail), then `node tools/lib.mjs --apply-ledger=<dir>` keeps every entry that
+ *           still failed in at least one run and drops the rest.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
@@ -90,8 +96,19 @@ export function report(tool, list) {
   if (flag('write-baseline') || flag('prune-baseline')) {
     const f = baselinePath(tool);
     const old = loadBaseline(tool);
+    const ledger = process.env.BASELINE_LEDGER;
+    if (flag('prune-baseline') && ledger) {
+      // Record, do not rewrite: --apply-ledger prunes once every build has been seen.
+      const lf = join(resolve(ledger), `${tool.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')}.json`);
+      const seen = existsSync(lf) ? JSON.parse(readFileSync(lf, 'utf8')) : { tool, file: f, keys: [] };
+      seen.keys = [...new Set([...seen.keys, ...applyBaseline(failures, old).baselined.map(key)])];
+      mkdirSync(dirname(lf), { recursive: true });
+      writeFileSync(lf, `${JSON.stringify(seen)}\n`);
+      console.log(`• ${tool}: ${seen.keys.length} still-failing baseline entr${seen.keys.length === 1 ? 'y' : 'ies'} recorded in ${lf}`);
+      return true;
+    }
     const entries = flag('write-baseline')
-      ? failures.map((x) => ({ rule: x.rule, path: x.path }))
+      ? [...failures.map((x) => ({ rule: x.rule, path: x.path })), ...(flag('baseline-merge') ? old?.entries || [] : [])]
       : applyBaseline(failures, old).baselined.map((x) => ({ rule: x.rule, path: x.path }));
     const uniq = [...new Map(entries.map((e) => [key(e), e])).values()].sort((a, b) => key(a).localeCompare(key(b)));
     mkdirSync(dirname(f), { recursive: true });
@@ -218,3 +235,21 @@ export const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return 
 
 /** Write a JSON report (creating its folder). @param {string} file @param {unknown} data */
 export function writeJson(file, data) { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`); }
+
+/**
+ * `node tools/lib.mjs --apply-ledger=<dir>`: prune each baseline recorded in the ledger to the entries that still failed
+ * in at least one --prune-baseline run (see the header).
+ */
+if (import.meta.url === `file://${process.argv[1]}` && opt('apply-ledger')) {
+  const dir = resolve(/** @type {string} */ (opt('apply-ledger')));
+  for (const lf of existsSync(dir) ? readdirSync(dir).filter((x) => x.endsWith('.json')) : []) {
+    const { tool, file, keys } = JSON.parse(readFileSync(join(dir, lf), 'utf8'));
+    if (!existsSync(file)) continue;
+    const b = JSON.parse(readFileSync(file, 'utf8'));
+    const keep = new Set(keys);
+    const before = b.entries.length;
+    b.entries = b.entries.filter((/** @type {{ rule: string, path: string }} */ e) => keep.has(key(e)));
+    writeFileSync(file, `${JSON.stringify(b, null, 2)}\n`);
+    console.log(`• ${tool}: baseline pruned ${before} → ${b.entries.length} entr${b.entries.length === 1 ? 'y' : 'ies'} (${file})`);
+  }
+}

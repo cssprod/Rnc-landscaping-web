@@ -44,6 +44,24 @@ test('report() baselines: listed failures pass, new ones fail, gone ones are sta
   assert.equal(run('check-honesty', [root, '--no-baseline'], { SITE_DIST: dist, BASELINE_DIR: dir }).code, 1, '--no-baseline fails it');
 });
 
+test('two-build baselines: --baseline-merge unions writes, BASELINE_LEDGER + --apply-ledger prunes over both builds #baseline-ratchet', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'qa-bl2-'));
+  const ledger = join(dir, 'ledger');
+  const a = tree('qa-dist-', { 'index.html': page('Home', '<p>An award-winning crew.</p>') });
+  const b = tree('qa-dist-', { 'about/index.html': page('About', '<p>Since 1998.</p>') });
+  const root = `--root=${honestyRoot()}`;
+  run('check-honesty', [root, '--write-baseline'], { SITE_DIST: a, BASELINE_DIR: dir });
+  run('check-honesty', [root, '--write-baseline', '--baseline-merge'], { SITE_DIST: b, BASELINE_DIR: dir });
+  const entries = () => JSON.parse(readFileSync(join(dir, 'check-honesty.json'), 'utf8')).entries.map((/** @type {any} */ e) => `${e.rule} ${e.path}`).sort();
+  assert.deepEqual(entries(), ['unverifiable-claims about/index.html', 'unverifiable-claims index.html']);
+  // Build a is fixed, build b still fails: only b's entry survives the ledger prune.
+  run('check-honesty', [root, '--prune-baseline'], { SITE_DIST: tree('qa-dist-', { 'index.html': page('Home', '<p>A careful crew.</p>') }), BASELINE_DIR: dir, BASELINE_LEDGER: ledger });
+  run('check-honesty', [root, '--prune-baseline'], { SITE_DIST: b, BASELINE_DIR: dir, BASELINE_LEDGER: ledger });
+  assert.equal(entries().length, 2, 'ledger runs do not rewrite the baseline');
+  assert.equal(run('lib', [`--apply-ledger=${ledger}`]).code, 0);
+  assert.deepEqual(entries(), ['unverifiable-claims about/index.html']);
+});
+
 test('lib helpers: URL ↔ dist file, median, WCAG contrast', () => {
   assert.equal(fileOfUrl('/areas/oak-bay/'), 'areas/oak-bay/index.html');
   assert.equal(fileOfUrl('/'), 'index.html');
