@@ -32,10 +32,16 @@
   .hero__media .media { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto !important; background: var(--color-deep); }
   .hero__media .media__credit, .hero__media .media__chip { top: calc(var(--layout-header-h) + 8px); bottom: auto; right: max(var(--layout-gutter), env(safe-area-inset-right)); left: auto; }
   .hero__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background:
-    linear-gradient(180deg, rgba(5, 12, 8, 0.52) 0%, rgba(5, 12, 8, 0) 24%),
+    linear-gradient(180deg, rgba(5, 12, 8, 0.6) 0%, rgba(5, 12, 8, 0.42) 16%, rgba(5, 12, 8, 0) 34%),
     linear-gradient(0deg, rgba(5, 12, 8, 0.9) 0%, rgba(5, 12, 8, 0.66) 50%, rgba(5, 12, 8, 0.36) 82%, rgba(5, 12, 8, 0.14) 100%),
     radial-gradient(80% 70% at 0% 85%, rgba(5, 12, 8, 0.45), transparent 70%); }
-  .hero--photo .crumbs a { color: rgba(255, 255, 255, 0.8); }
+  /* Narrow heroes stack the copy over more of the art: a denser scrim keeps every line >= 4.5:1 at its worst pixel. */
+  @container (max-width: 39.99em) {
+    .hero__scrim { background:
+      linear-gradient(180deg, rgba(5, 12, 8, 0.62) 0%, rgba(5, 12, 8, 0.46) 18%, rgba(5, 12, 8, 0) 36%),
+      linear-gradient(0deg, rgba(5, 12, 8, 0.92) 0%, rgba(5, 12, 8, 0.76) 50%, rgba(5, 12, 8, 0.5) 82%, rgba(5, 12, 8, 0.3) 100%); }
+  }
+  .hero--photo .crumbs a { color: #fff; }
   .hero--photo .crumbs a[aria-current], .hero--photo .crumbs a:hover { color: #fff; }
   .hero--photo .crumbs__sep { color: rgba(255, 255, 255, 0.65); }
 

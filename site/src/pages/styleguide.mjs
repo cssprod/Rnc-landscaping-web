@@ -51,7 +51,9 @@ function body(d) {
     ...svcSlugs.map((slug, n) => ({
       title: d.services?.[slug]?.navLabel || siteJson.services[n].navLabel || slug,
       body: unlink(svcItems[n]?.body || ''),
-      href: `/services/${slug}/`, scene: `svc-${slug}`,
+      // Art wells on the feature and tall cards only; the others show the icon well (both variants once, and the page
+      // stays nearer the v2 inline-SVG budget: every scene is inline SVG).
+      href: `/services/${slug}/`, ...(n < 2 ? { scene: `svc-${slug}` } : { icon: ui.serviceIcon(slug) }),
       span: /** @type {any} */ (n === 0 ? 'feature' : n === 1 ? 'tall' : undefined),
     })),
     { title: 'Not sure which?', body: 'Tell us about the property in a free quote request and we will work out what it needs.', href: '/free-quote/', icon: 'chat' },
@@ -112,7 +114,7 @@ ${ui.serviceTiles(d, { id: 'sg-tiles-h', heading: 'Service tiles', lede: 'servic
 
 <section class="section sg-section" aria-labelledby="sg-projects-h"><div class="wrap">
   ${ui.sectionHead({ id: 'sg-projects-h', title: 'Projects', index: '04', eyebrow: 'projectGrid() · plantPalette() · beforeAfter()', lede: 'Sample projects carry the Sample project chip next to what they label. No budgets, ever.' })}
-  ${ui.projectGrid(d, projects.slice(0, 3), { headingLevel: 3 })}
+  ${ui.projectGrid(d, projects.slice(0, 2), { headingLevel: 3 })}
   <div class="sg-grid sg-grid--top">
     <div class="sg-specimen sg-specimen--flush">${ui.plantPalette(proj.plantPalette || [], { sample: !!proj.sample, headingLevel: 3, id: 'sg-plants-h' })}</div>
     <div class="sg-specimen sg-specimen--flush">${label('beforeAfter()')}${proj.images?.before && proj.images?.after ? ui.beforeAfter(proj.images.before, proj.images.after, 'Sample: before and after placeholders', { id: 'sg-ba' }) : ''}</div>

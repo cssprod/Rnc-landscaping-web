@@ -40,3 +40,31 @@ ds-comp deletes its slices 02, 05, 08, 10, 12, 14 and 23 (brief acceptance: "ds-
 - `check-honesty#reviews-credentials-guarantee` on /styleguide/: `section.reviews-band[data-reviews-band]` (≤ 3 `figure.review`, "Sample review" chips, Google link text + chip without href), `section.credentials dl.credentials__list` (token values only), `section.guarantee` (process.json text around `[WARRANTY]`).
 - `check-motion-policy`: component T2 loops use raw durations (26s / 32s / 40s blobs, 14s conic ring) because no T2 duration token exists; they are `[data-t2]`, transform-only, and gated by 95-motion.css. Tell me if the lint wants tokens for them.
 - `trace.mjs`: ds-comp provides `unit/ds-comp-markup.test#container-queries` (C4.1).
+
+## 9. ds-chrome (W2 fix round): size and fill the header and action-bar buttons through the `.btn` hooks
+`@layer components` sits above `@layer chrome`, so a padding, font-size or background that 30-chrome.css declares on a
+`.btn` loses to the primitive (trial merge: `chrome.spec #header-call` "header row overlap at 1024", and the header quote
+turned moss over photo heroes). `.btn` now reads custom properties that no components rule sets:
+`--h` (height), `--btn-px` (inline padding), `--btn-fs` (font size), `--btn-min-w` (min width) and, on `.btn--primary`,
+`--btn-bg`, `--btn-bg-hover`, `--btn-ink`, `--btn-shadow`. Please move to them:
+- `.site-nav__quote { --h: 44px; --btn-px: 18px; --btn-fs: var(--font-size-subheadline); }`, `--btn-px: 14px` in the
+  narrow-header query, `--h: 52px; --btn-fs: 1rem` in the menu sheet;
+- `.site-header.is-over-media:not(.is-open) .site-nav__quote { --btn-bg: #fff; --btn-bg-hover: #EEF4F0; --btn-ink: #0E1611; --btn-shadow: none; }`;
+- `.action-bar__btn { --h: 48px; --btn-px: 12px; --btn-fs: 1rem; --btn-min-w: 0; }`.
+Until then 40-ui-actions.css carries a hand-off (`padding`/`font-size`/`min-width: revert-layer` on `.site-nav__quote` and
+`.action-bar__btn`, and `background`/`color`/`box-shadow: revert-layer` on the over-media quote), so the chrome layer's
+own declarations apply on a merge today (trial merge with w2/ds-chrome--fix1 + w2/living--fix1 + w2/qa--fix1:
+chrome.spec 27/27 incl. #header-call). Once you use the hooks, ask t-company (ds-comp steward in W3) to delete those three lines.
+
+## 10. qa (budgets v2): /styleguide/ inline SVG
+`[v2-inline-svg] styleguide/index.html` was 55.7 KB on the trial merge; it is 52.2 KB now (bento art wells on the
+feature and tall cards only, two project cards). 18.6 KB of it is the used sprite: the showcase renders every
+icon-bearing primitive, so it uses more icons than any real page (the same sprite is also `[v2-sprite]` on 48 pages, a
+ds-core/qa item). Without the sprite the page is ~33.6 KB. /styleguide/ is showcase-only (never built for launch):
+please exempt it from `v2-inline-svg` / `v2-sprite` and the HTML-size warnings, or baseline the entry.
+
+## 11. living (request 17): done in ds-comp's half
+`.btn--glass` has no backdrop-filter (40-ui-actions.css) and `.hero:has([data-living]) .dock` drops the legacy
+`.glass-bar` blur for `--material-media-strong` (41-ui-heads.css). Trial merge: motion-audit reports no `policy-tiers`
+problem (the one remaining failure is `[no-auto-advance] free-quote/index.html`, quote's stepper, not ds-comp).
+
