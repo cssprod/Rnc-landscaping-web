@@ -2,7 +2,12 @@
 // @ts-check
 /**
  * Screenshots of key pages (a browser tool, so never named check-*).
- *   node tools/screenshots.mjs [--pages=/a/,/b/] [--w=390,1440] [--themes=dark,light] [--full] [--out-dir=DIR]
+ *   node tools/screenshots.mjs [--pages=/a/,/b/] [--w=390,1440] [--themes=dark,light] [--motion=off,on] [--full] [--out-dir=DIR]
+ *   node tools/screenshots.mjs --matrix [--pages=…]
+ *       the review matrix (REDESIGN-PLAN §Verification): 320/390/768/1024/1440 × dark/light × motion off/on.
+ *       Motion "on" stores rnc-motion=on and waits 1.5 s after load (a living frame); "off" stores off. Without
+ *       --motion the OS reduced-motion setting is emulated and nothing is stored (the pre-W2 behaviour).
+ * Writes <page>-<width>-<theme>[-motion-<on|off>][-full].png.
  *   node tools/screenshots.mjs --compare=BASE_DIST [same options]
  *       screenshots SITE_DIST and BASE_DIST with identical settings and compares them pixel by pixel; exits 1 on any
  *       difference (the pre/post refactor gate: 0 px at 390 and 1440, dark and light). A differing pair is re-shot
@@ -13,15 +18,23 @@
  */
 import { chromium } from 'playwright';
 import { createSiteServer } from './serve.mjs';
-import { DIST } from './lib.mjs';
+import { DIST, report } from './lib.mjs';
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
+
+/** pixel-identical: with --compare, every screenshot of SITE_DIST matches BASE_DIST to the pixel (a repeatable diff). */
+export const RULES = ['pixel-identical'];
+/** @type {import('./lib.mjs').Failure[]} */
+const failures = [];
 
 const argv = process.argv.slice(2);
 const opt = (/** @type {string} */ k) => argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 const full = argv.includes('--full');
-const widths = (opt('w') || '390,1440').split(',').map(Number);
+const matrix = argv.includes('--matrix');
+const widths = (opt('w') || opt('widths') || (matrix ? '320,390,768,1024,1440' : '390,1440')).split(',').map(Number);
 const themes = (opt('themes') || (argv.includes('--dark') ? 'dark' : 'dark,light')).split(',').filter(Boolean);
+/** @type {('auto'|'on'|'off')[]} */
+const motions = /** @type {any} */ ((opt('motion') || (matrix ? 'off,on' : 'auto')).split(',').filter(Boolean));
 const OUT = resolve(opt('out-dir') || new URL('../screenshots/', import.meta.url).pathname);
 const baseDist = opt('compare') ? resolve(/** @type {string} */ (opt('compare'))) : null;
 // Default pages use the C1 URLs; pass --pages=… for builds that still serve the old ones.
@@ -40,11 +53,11 @@ const basePort = baseServer ? await listen(baseServer, 0) : 0;
 
 const browser = await chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});
 
-/** @param {number} port @param {string} p @param {number} w @param {string} theme */
-async function shoot(port, p, w, theme) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: w < 600 ? 844 : 900 }, deviceScaleFactor: 1, colorScheme: /** @type {'dark'|'light'} */ (theme), reducedMotion: 'reduce' });
+/** @param {number} port @param {string} p @param {number} w @param {string} theme @param {'auto'|'on'|'off'} [motion] */
+async function shoot(port, p, w, theme, motion = 'auto') {
+  const ctx = await browser.newContext({ viewport: { width: w, height: w < 600 ? 844 : 900 }, deviceScaleFactor: 1, colorScheme: /** @type {'dark'|'light'} */ (theme), reducedMotion: motion === 'on' ? 'no-preference' : 'reduce' });
   // A stored choice as well as the OS preference, so both the seed (light-first) and dark-first CSS pick the theme.
-  await ctx.addInitScript((t) => { try { localStorage.setItem('rnc-theme', t); } catch {} }, theme);
+  await ctx.addInitScript(([t, m]) => { try { localStorage.setItem('rnc-theme', t); if (m === 'on' || m === 'off') localStorage.setItem('rnc-motion', m); } catch {} }, [theme, motion]);
   const page = await ctx.newPage();
   await page.route(/^https?:\/\/(?!localhost)/, (r) => r.abort());
   await page.goto(`http://localhost:${port}${p}`, { waitUntil: 'load' }).catch(() => {});
@@ -54,8 +67,8 @@ async function shoot(port, p, w, theme) {
     await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } scrollTo(0, 0); });
     await page.waitForTimeout(500);
   }
-  await page.waitForTimeout(300);
-  const png = await page.screenshot({ fullPage: full, animations: 'disabled', caret: 'hide' });
+  await page.waitForTimeout(motion === 'on' ? 1500 : 300);
+  const png = await page.screenshot({ fullPage: full, animations: motion === 'on' ? 'allow' : 'disabled', caret: 'hide' });
   await ctx.close();
   return png;
 }
@@ -78,36 +91,37 @@ async function diffPixels(a, b) {
   return r;
 }
 
-const name = (/** @type {string} */ p, /** @type {number} */ w, /** @type {string} */ theme) => `${(p.replace(/[/?=&]/g, '_').replace(/^_+|_+$/g, '') || 'home')}-${w}-${theme}${full ? '-full' : ''}`;
+const name = (/** @type {string} */ p, /** @type {number} */ w, /** @type {string} */ theme, /** @type {string} */ m = 'auto') => `${(p.replace(/[/?=&]/g, '_').replace(/^_+|_+$/g, '') || 'home')}-${w}-${theme}${m === 'auto' ? '' : `-motion-${m}`}${full ? '-full' : ''}`;
 let diffs = 0, shots = 0;
-for (const w of widths) for (const theme of themes) for (const p of list) {
-  let png = await shoot(mainPort, p, w, theme);
+for (const w of widths) for (const theme of themes) for (const m of motions) for (const p of list) {
+  let png = await shoot(mainPort, p, w, theme, m);
   shots++;
-  if (!baseServer) { writeFileSync(join(OUT, `${name(p, w, theme)}.png`), png); continue; }
-  let base = await shoot(basePort, p, w, theme);
+  if (!baseServer) { writeFileSync(join(OUT, `${name(p, w, theme, m)}.png`), png); continue; }
+  let base = await shoot(basePort, p, w, theme, m);
   let r = await diffPixels(base, png);
   let note = '';
   if (r.px !== 0) {
     // A rendering-timing flake (lazy decode, font swap) does not repeat: re-shoot both once; only a repeatable diff counts.
     const first = r;
-    png = await shoot(mainPort, p, w, theme);
-    base = await shoot(basePort, p, w, theme);
+    png = await shoot(mainPort, p, w, theme, m);
+    base = await shoot(basePort, p, w, theme, m);
     r = await diffPixels(base, png);
     note = r.px === 0 ? ` (first attempt: ${first.px < 0 ? first.size : `${first.px} px`}; 0 px on retry)` : ' (repeated on retry)';
   }
   const same = r.px === 0;
   if (!same) {
     diffs++;
-    writeFileSync(join(OUT, `${name(p, w, theme)}.base.png`), base);
-    writeFileSync(join(OUT, `${name(p, w, theme)}.png`), png);
+    failures.push({ rule: 'pixel-identical', path: (p.replace(/^\//, '') || '') + (p.endsWith('/') ? 'index.html' : ''), message: `${w}px ${theme}${m === 'auto' ? '' : ` motion ${m}`}: ${r.px < 0 ? `size differs (${r.size})` : `${r.px} px differ`} (written to ${OUT})` });
+    writeFileSync(join(OUT, `${name(p, w, theme, m)}.base.png`), base);
+    writeFileSync(join(OUT, `${name(p, w, theme, m)}.png`), png);
   }
-  console.log(`${same ? '✓' : '✗'} ${p} ${w}px ${theme}: ${r.px < 0 ? `size differs (${r.size})` : `${r.px} px differ (${r.size})`}${note}`);
+  console.log(`${same ? '✓' : '✗'} ${p} ${w}px ${theme}${m === 'auto' ? '' : ` motion ${m}`}: ${r.px < 0 ? `size differs (${r.size})` : `${r.px} px differ (${r.size})`}${note}`);
 }
 await browser.close();
 mainServer.close();
 baseServer?.close();
 if (baseServer) {
-  console.log(diffs ? `✗ screenshots: ${diffs} of ${shots} screenshot(s) differ (written to ${OUT})` : `✓ screenshots: ${shots} screenshot(s), 0 px difference against ${baseDist}`);
-  process.exit(diffs ? 1 : 0);
+  console.log(`  screenshots: ${shots} screenshot(s) compared against ${baseDist}`);
+  process.exit(report('screenshots', failures) ? 0 : 1);
 }
-console.log(`Screenshots written to ${OUT}`);
+console.log(`${shots} screenshot(s) written to ${OUT}`);

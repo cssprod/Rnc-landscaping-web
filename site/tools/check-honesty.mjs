@@ -83,7 +83,7 @@ const US = /** @type {[RegExp, string][]} */ ([
   [/\bcolor(s|ed|ful|ing|ation)?\b/i, 'colour'], [/\bfavor(s|ed|ing|ite|ites|able)?\b/i, 'favour'], [/\bneighbor(s|hood|hoods|ing|ly)?\b/i, 'neighbour'],
   [/\bhonor(s|ed|ing|able)?\b/i, 'honour'], [/\blabor(s|ed|ing|er|ers)?\b/i, 'labour'], [/\bbehavior(s|al)?\b/i, 'behaviour'], [/\bharbor(s)?\b/i, 'harbour'],
   [/\bflavor(s|ed|ful)?\b/i, 'flavour'], [/\brumor(s)?\b/i, 'rumour'], [/\bvigor\b/i, 'vigour'], [/\bendeavor(s|ed)?\b/i, 'endeavour'], [/\bsavor(s|y)?\b/i, 'savour'],
-  [/\bcenter(s|ed|ing)?\b/i, 'centre'], [/\btheater(s)?\b/i, 'theatre'], [/\bfiber(s|glass)?\b/i, 'fibre'], [/\bliter(s)?\b/i, 'litre'], [/\bmeters?\b(?=\s*(?:long|wide|high|deep|tall|apart|away|of|from|square|squared|\)|,|\.|;))/i, 'metre (a length; "meter" is the device)'],
+  [/\bcenter(s|ed|ing)?\b/i, 'centre'], [/\btheater(s)?\b/i, 'theatre'], [/\bfiber(s|glass)?\b/i, 'fibre'], [/\bliter(s)?\b/i, 'litre'], [/\b\d[\d.,]*\s*meters?\b|\bmeters?\b(?=\s+(?:long|wide|high|deep|tall|apart|away|square|squared)\b)/i, 'metre (a length; "meter" is the device)'],
   [/\b(?:kilo|centi|milli)meters?\b/i, '-metre'], [/\bgray(s|er|ish)?\b/i, 'grey'], [/\bcatalog(s|ed)?\b/i, 'catalogue'], [/\bdefense\b/i, 'defence'], [/\boffense\b/i, 'offence'],
   [/\bmold(s|y|ed|ing)?\b/i, 'mould'], [/\b(travel|cancel|label|model|fuel|level|signal|channel|tunnel|total)(ed|ing)\b/i, 'double the l (travelled, labelled, …)'],
   [/\bjewelry\b/i, 'jewellery'], [/\bfulfill(ment|s)?\b/i, 'fulfil'], [/\benroll(ment|s)?\b/i, 'enrol'], [/\bskillful(ly)?\b/i, 'skilful'], [/\bplow(s|ed|ing)?\b/i, 'plough'],

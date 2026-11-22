@@ -23,10 +23,14 @@
  *                             inline <style> of a built page, and scripts never call matchMedia('(prefers-reduced-
  *                             motion…)') except scripts/lib/prefs.js (they ask motionOn() / onMotionChange()).
  * Exits 0 when there are no sources. Failures name the source file (repo-relative) or the built page.
+ *   --site=DIR   lint another site/ folder (a scratch copy); paths are reported relative to its parent.
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
-import { DIST, REPO, SITE, files, read, report } from './lib.mjs';
+import { join, relative, resolve } from 'node:path';
+import { DIST, REPO as REPO_ROOT, SITE as SITE_ROOT, argOpt, files, read, report } from './lib.mjs';
+
+const SITE = argOpt('site') ? resolve(/** @type {string} */ (argOpt('site'))) : SITE_ROOT;
+const REPO = argOpt('site') ? resolve(SITE, '..') : REPO_ROOT;
 
 export const RULES = ['banned-effects', 'raw-durations', 'reduced-motion-placement'];
 
