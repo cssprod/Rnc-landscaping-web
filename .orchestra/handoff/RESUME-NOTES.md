@@ -1,0 +1,1 @@
+- 2026-11-21 20:30Z: Netlify Deploy Preview for PR #3 is ready (deploy-preview-3--rnc-landscaping-web.netlify.app). Its Lighthouse scores: Performance 18, Accessibility 100, Best Practices 92, SEO 100. W2 (living art replacing the stock heroes, and the image pipeline) and W4 (f-perf) must diagnose and fix Performance; read the Netlify deploy log/Lighthouse report first.
