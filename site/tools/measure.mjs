@@ -60,7 +60,9 @@ async function run(/** @type {{ theme: 'dark'|'light', width: number }} */ c) {
         const res = /** @type {PerformanceResourceTiming[]} */ (performance.getEntriesByType('resource'));
         const nav = /** @type {PerformanceNavigationTiming} */ (performance.getEntriesByType('navigation')[0]);
         /** @type {Record<string, number>} */ const bytes = { document: nav?.transferSize || 0 };
-        for (const r of res) { const t = r.initiatorType === 'link' ? (/\.css(\?|$)/.test(r.name) ? 'css' : /\.woff2?(\?|$)/.test(r.name) ? 'font' : /\.js(\?|$)/.test(r.name) ? 'script' : 'other') : r.initiatorType; bytes[t] = (bytes[t] || 0) + (r.transferSize || r.encodedBodySize || 0); }
+        // By what the file is (initiatorType "css" means "requested by a stylesheet", e.g. a font).
+        const kind = (/** @type {string} */ u) => { const p = new URL(u).pathname; return /\.css$/.test(p) ? 'css' : /\.woff2?$/.test(p) ? 'font' : /\.m?js$/.test(p) ? 'script' : /\.(svg|png|jpe?g|webp|avif|gif|ico)$/.test(p) ? 'img' : 'other'; };
+        for (const r of res) { const t = kind(r.name); bytes[t] = (bytes[t] || 0) + (r.transferSize || r.encodedBodySize || 0); }
         const third = res.filter((r) => new URL(r.name).origin !== location.origin).map((r) => new URL(r.name).host);
         const fcp = performance.getEntriesByName('first-contentful-paint')[0]?.startTime ?? null;
         /* contrast on solid backgrounds */
@@ -135,7 +137,7 @@ site.close();
 rows.sort((a, b) => a.page.localeCompare(b.page) || a.width - b.width || a.theme.localeCompare(b.theme));
 const worst = (/** @type {(r: any) => number|null} */ f) => Math.max(...rows.map(f).filter((x) => x !== null && Number.isFinite(x)), 0);
 const summary = {
-  pages: pages.length, states: queue.length || themes.length * widths.length,
+  pages: pages.length, states: themes.length * widths.length,
   heaviestPageBytes: worst((r) => r.performance.totalBytes), maxLcpMs: Math.round(worst((r) => r.performance.lcp)), maxCls: worst((r) => r.performance.cls),
   minTextContrast: Math.min(...rows.map((r) => r.contrast.minRatio ?? Infinity)), textUnder45: rows.reduce((n, r) => n + r.contrast.under45, 0),
   focusWithoutIndicator: rows.reduce((n, r) => n + r.focus.noIndicator, 0), focusObscured: rows.reduce((n, r) => n + r.focus.obscured, 0),

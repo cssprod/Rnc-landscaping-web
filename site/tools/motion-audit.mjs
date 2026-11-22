@@ -64,7 +64,8 @@ const probe = () => {
   const blur = [...document.querySelectorAll('body *')].filter((el) => { const s = getComputedStyle(el); const v = s.backdropFilter || /** @type {any} */ (s).webkitBackdropFilter; return v && v !== 'none' && inView(el) && s.visibility !== 'hidden'; });
   const rects = running.map((a) => /** @type {Element} */ (/** @type {KeyframeEffect} */ (a.effect).target).getBoundingClientRect());
   const over = blur.filter((el) => { const r = el.getBoundingClientRect(); return rects.some((x) => x.left < r.right && x.right > r.left && x.top < r.bottom && x.bottom > r.top); });
-  return { infinite: infinite.length, inView: running.length, names: running.slice(0, 10).map((a) => `${/** @type {any} */ (a).animationName || 'anim'}@${label(/** @type {Element} */ (/** @type {KeyframeEffect} */ (a.effect).target))}`), problems, blur: blur.length, blurOver: over.map(label) };
+  const nameOf = (/** @type {Animation} */ a) => `${/** @type {any} */ (a).animationName || 'anim'}@${label(/** @type {Element} */ (/** @type {KeyframeEffect} */ (a.effect).target))}`;
+  return { infinite: infinite.length, allNames: infinite.filter((a) => /** @type {KeyframeEffect} */ (a.effect).target).slice(0, 10).map(nameOf), inView: running.length, names: running.slice(0, 10).map((a) => `${/** @type {any} */ (a).animationName || 'anim'}@${label(/** @type {Element} */ (/** @type {KeyframeEffect} */ (a.effect).target))}`), problems, blur: blur.length, blurOver: over.map(label) };
 };
 
 const site = await serveDist(0);
@@ -136,7 +137,7 @@ async function audit(/** @type {{ width: number, theme: 'dark'|'light', state: t
       const top = await page.evaluate(probe);
       log.push({ page: p, state, at: 0, ...top });
       const hasHero = await page.evaluate(() => !!document.querySelector('.hero [data-living], [data-living].hero, header [data-living], .hero, .page-head'));
-      if (c.state.id !== 'on') { if (top.infinite > 0) note('policy-tiers', p, `${top.infinite} infinite animation(s) run with motion ${c.state.id === 'reduce' ? 'reduced by the OS (no stored choice)' : 'off'} (budget 0): ${top.names.join(', ')}`, state); }
+      if (c.state.id !== 'on') { if (top.infinite > 0) note('policy-tiers', p, `${top.infinite} infinite animation(s) run with motion ${c.state.id === 'reduce' ? 'reduced by the OS (no stored choice)' : 'off'} (budget 0): ${top.allNames.join(', ')}`, state); }
       else if (top.inView > (hasHero ? 7 : 8)) note('policy-tiers', p, `${top.inView} infinite animations in the first viewport (budget ${hasHero ? '7 with a living hero' : 8}): ${top.names.join(', ')}`, state);
       for (const x of top.problems) note('policy-tiers', p, x, state);
       if (c.width < 600 && top.blur > 3) note('policy-tiers', p, `${top.blur} backdrop-filter elements in the first mobile viewport (budget 3)`, state);

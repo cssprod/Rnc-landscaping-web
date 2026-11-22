@@ -32,6 +32,9 @@ const ZONES = '.hero, .page-head, .cta-band, section:has([data-living]), header:
 const collect = (/** @type {string} */ zones) => {
   const out = [];
   const vh = innerHeight, vw = innerWidth;
+  // Text under a fixed or sticky layer (the header, the action bar) is not visible there; those pixels are the layer's.
+  const occluders = [...document.querySelectorAll('body *')].filter((el) => /fixed|sticky/.test(getComputedStyle(el).position) && !el.closest(zones)).map((el) => el.getBoundingClientRect()).filter((r) => r.width > 0 && r.height > 0);
+  const hidden = (/** @type {DOMRect} */ b) => occluders.some((o) => o.left < b.right && o.right > b.left && o.top < b.bottom && o.bottom > b.top);
   for (const zone of document.querySelectorAll(zones)) {
     const walker = document.createTreeWalker(zone, NodeFilter.SHOW_TEXT, { acceptNode: (n) => (n.textContent?.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
     for (let n = walker.nextNode(); n; n = walker.nextNode()) {
@@ -39,7 +42,7 @@ const collect = (/** @type {string} */ zones) => {
       const s = getComputedStyle(el);
       if (s.visibility === 'hidden' || s.display === 'none' || Number(s.opacity) === 0 || el.closest('[aria-hidden="true"], .vh, .sr-only, .visually-hidden')) continue;
       const r = document.createRange(); r.selectNodeContents(n);
-      const boxes = [...r.getClientRects()].filter((b) => b.width > 1 && b.height > 1 && b.bottom > 0 && b.top < vh && b.right > 0 && b.left < vw)
+      const boxes = [...r.getClientRects()].filter((b) => b.width > 1 && b.height > 1 && b.bottom > 0 && b.top < vh && b.right > 0 && b.left < vw && !hidden(b))
         .map((b) => ({ x: Math.max(0, Math.floor(b.left)), y: Math.max(0, Math.floor(b.top)), w: Math.ceil(Math.min(b.right, vw) - Math.max(0, b.left)), h: Math.ceil(Math.min(b.bottom, vh) - Math.max(0, b.top)) }));
       if (!boxes.length) continue;
       let opacity = 1;
