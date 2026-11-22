@@ -5,9 +5,9 @@
  * Content strings (names, descriptions, questions) are masked in the snapshots, so content edits do not break them;
  * the @types, @ids, references, site.json facts and the set of properties are compared exactly.
  */
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { tokens, siteJson } from '../../site.config.mjs';
@@ -211,6 +211,7 @@ test('head metadata: en_CA, website or article, self canonical, escaped once #gr
 
 test('per-page OG card with fallback: the page card, else the default card, else the brand icon #graph', () => {
   const dir = mkdtempSync(join(tmpdir(), 'seo-og-'));
+  after(() => rmSync(dir, { recursive: true, force: true }));
   assert.equal(ogKey('/'), 'home');
   assert.equal(ogKey('/services/irrigation/'), 'services-irrigation');
   assert.equal(ogKey('/404.html'), '404');
