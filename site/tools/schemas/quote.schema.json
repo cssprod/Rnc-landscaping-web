@@ -1,0 +1,95 @@
+{
+  "$id": "quote.schema.json",
+  "title": "content/pages/quote.json v3: the six-input quote builder (CONTRACT §6). The legacy four-step shape (steps[]) is accepted until the quote stream's v3 file lands in W2.",
+  "x-files": ["pages/quote.json"],
+  "anyOf": [
+    { "$ref": "#/definitions/v3" },
+    { "$ref": "#/definitions/legacy" }
+  ],
+  "definitions": {
+    "option": {
+      "type": "object",
+      "required": ["value", "label"],
+      "properties": { "value": { "$ref": "_defs.schema.json#/definitions/slug" }, "label": { "$ref": "_defs.schema.json#/definitions/text" } }
+    },
+    "field": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "label": { "$ref": "_defs.schema.json#/definitions/text" },
+        "help": { "type": "string" },
+        "error": { "type": "string" },
+        "placeholder": { "type": "string" }
+      }
+    },
+    "v3": {
+      "type": "object",
+      "required": ["seo", "h1", "lede", "reassurance", "fields", "subject", "buttons", "messages", "nextSteps", "privacy"],
+      "properties": {
+        "_notes": { "type": "string" },
+        "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+        "h1": { "$ref": "_defs.schema.json#/definitions/text" },
+        "lede": { "$ref": "_defs.schema.json#/definitions/text" },
+        "reassurance": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/text" } },
+        "fields": {
+          "type": "object",
+          "required": ["services", "area", "details", "timing", "name", "contact"],
+          "additionalProperties": false,
+          "properties": {
+            "services": { "allOf": [{ "$ref": "#/definitions/field" }, { "required": ["error"] }] },
+            "area": {
+              "allOf": [{ "$ref": "#/definitions/field" }, { "required": ["placeholder", "other", "error"], "properties": { "other": { "$ref": "_defs.schema.json#/definitions/text" } } }]
+            },
+            "details": {
+              "allOf": [{ "$ref": "#/definitions/field" }, {
+                "required": ["maxLength"],
+                "properties": { "examples": { "type": "array", "items": { "type": "string" } }, "maxLength": { "type": "integer" } }
+              }]
+            },
+            "timing": {
+              "allOf": [{ "$ref": "#/definitions/field" }, { "required": ["options"], "properties": { "options": { "type": "array", "minItems": 2, "items": { "$ref": "#/definitions/option" } } } }]
+            },
+            "name": { "allOf": [{ "$ref": "#/definitions/field" }, { "required": ["error"] }] },
+            "contact": {
+              "allOf": [{ "$ref": "#/definitions/field" }, {
+                "required": ["options", "phone"],
+                "properties": {
+                  "options": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "allOf": [{ "$ref": "#/definitions/option" }, { "properties": { "value": { "enum": ["email", "call", "text"] } } }] } },
+                  "phone": { "allOf": [{ "$ref": "#/definitions/field" }, { "required": ["error"] }] }
+                }
+              }]
+            }
+          }
+        },
+        "subject": { "type": "string", "pattern": "\\{services\\}.*\\{area\\}" },
+        "buttons": {
+          "type": "object",
+          "required": ["submit", "copy", "copied", "copyAddress", "restart", "gmail", "outlook", "call", "text"],
+          "additionalProperties": { "$ref": "_defs.schema.json#/definitions/text" }
+        },
+        "messages": {
+          "type": "object",
+          "required": ["errorSummary", "ready", "truncated", "noJs", "copyFailed"],
+          "properties": {
+            "ready": { "type": "object", "required": ["heading", "body"], "properties": { "heading": { "$ref": "_defs.schema.json#/definitions/text" }, "body": { "$ref": "_defs.schema.json#/definitions/text" } } }
+          }
+        },
+        "nextSteps": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["title", "body"], "properties": { "title": { "$ref": "_defs.schema.json#/definitions/text" }, "body": { "$ref": "_defs.schema.json#/definitions/text" } } } },
+        "privacy": { "$ref": "_defs.schema.json#/definitions/text" },
+        "images": { "type": "object", "additionalProperties": { "$ref": "_defs.schema.json#/definitions/slot" } }
+      }
+    },
+    "legacy": {
+      "type": "object",
+      "required": ["seo", "h1", "steps"],
+      "properties": {
+        "_notes": { "type": "string" },
+        "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+        "h1": { "$ref": "_defs.schema.json#/definitions/text" },
+        "lede": { "type": "string" },
+        "steps": { "type": "array", "x-deprecated": "the v2 four-step stepper; the quote stream replaces it with the v3 six-input fields in W2", "items": { "type": "object", "required": ["id", "fields"] } },
+        "aside": { "type": "object", "properties": { "image": { "$ref": "_defs.schema.json#/definitions/slot" } } }
+      }
+    }
+  }
+}
