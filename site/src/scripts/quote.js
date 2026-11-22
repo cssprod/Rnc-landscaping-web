@@ -137,11 +137,11 @@ export function prefillArea(params, known) {
 /**
  * Props of quote_mailto_opened (CONTRACT §13). Only fixed slugs: never a name, phone number, description or free text.
  * @param {{ services?: string[], area?: string }} pick chosen option values @param {{ services: string[], areas: string[] }} known
- * @returns {{ service: string, area: string }}
+ * @returns {import('../../event-schema').AnalyticsEvents['quote_mailto_opened']}
  */
 export function mailtoEventProps(pick, known) {
   const real = (pick.services || []).filter((s) => s !== NOT_SURE && known.services.includes(s));
-  const service = real.length === 0 ? NOT_SURE : real.length === 1 ? real[0] : 'multiple';
+  const service = /** @type {any} */ (real.length === 0 ? NOT_SURE : real.length === 1 ? real[0] : 'multiple');
   const area = known.areas.includes(pick.area || '') ? /** @type {string} */ (pick.area) : OTHER_AREA;
   return { service, area };
 }

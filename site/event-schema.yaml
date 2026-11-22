@@ -1,31 +1,15 @@
 version: "0.1"
 
-# Custom events sent to Plausible (cookieless) from src/scripts/main.js via track().
+# Custom events sent to Plausible (cookieless) through track() in src/scripts/lib/track.js (CONTRACT §13).
+# No event property ever carries personal data: only fixed slugs and placement names.
 # Types are generated into event-schema.d.ts by: node tools/gen-event-types.mjs
 events:
   quote_started:
-    intent: First interaction with the quote form. Top of the quote funnel.
+    intent: First edit in the quote builder (sent once per page view). Top of the quote funnel.
     properties: {}
 
-  quote_step_completed:
-    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use the quote_mailto_opened / quote_copied / quote_webmail_opened outcomes). A quote step passed validation (v2 4-step form)."
-    properties:
-      step:
-        type: number
-        required: true
-        description: Step number just completed (1 to 4).
-        examples: [1, 2, 3, 4]
-
-  quote_submitted:
-    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use quote_mailto_opened). Quote form passed validation and the visitor's email app was opened with the request."
-    properties:
-      service:
-        type: enum
-        values: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, not-sure]
-        required: true
-
   call_clicked:
-    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use call_click). A tel link was tapped."
+    intent: "Deprecated: v2 name, still sent by the chrome until ds-chrome renames it (CONTRACT §13; use call_click). Delete once nothing emits it. A tel link was tapped."
     properties:
       location:
         type: string
@@ -33,7 +17,7 @@ events:
         examples: [header, hero, cta_band, footer, contact_page, quote_aside]
 
   email_clicked:
-    intent: "Deprecated: removed by quote in W2 (CONTRACT §13; use email_click). A mailto link was clicked."
+    intent: "Deprecated: v2 name, still sent by the chrome until ds-chrome renames it (CONTRACT §13; use email_click). Delete once nothing emits it. A mailto link was clicked."
     properties:
       location:
         type: string
@@ -44,19 +28,19 @@ events:
     intent: Commercial or public buyer downloaded the capability statement PDF. B2B intent signal.
     properties: {}
 
-  # ---- CONTRACT v3 §13 names (added at the seed; the v2 names above are removed by quote in W2) ----
+  # ---- CONTRACT v3 §13 names ----
   quote_mailto_opened:
     intent: The quote builder opened the visitor's email app with the composed request. Primary conversion.
     properties:
       service:
-        type: string
+        type: enum
+        values: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, multiple, not-sure]
         required: true
         description: Service slug, or multiple, or not-sure.
-        examples: [grounds-maintenance, landscape-installation, irrigation, tree-vegetation, multiple, not-sure]
       area:
         type: string
         required: true
-        description: Area slug, or other.
+        description: Municipality slug (one of the 13 in content/site.json), or other.
         examples: [victoria, saanich, oak-bay, other]
 
   quote_copied:
