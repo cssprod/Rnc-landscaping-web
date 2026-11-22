@@ -195,8 +195,19 @@ test('mobile 390: the hero scene fills its land band and the page does not scrol
   await offline(page);
   await page.goto('/');
   await expect(page.locator('[data-scene="home"] .sc-mfore')).toBeVisible();
-  const land = await page.locator('[data-scene="home"] .sc-land').boundingBox();
-  expect(land?.width).toBe(960);
+  // The T1 dolly (95-motion.css) holds .sc-land at scale 1.04 until living.js marks the scene [data-entered], then
+  // transitions it to 1, so a box read mid-transition is wider than the band. Wait for the mark, then for every finite
+  // time-based animation or transition on the land box to finish (T4 parallax is scroll-linked, never finishes, and
+  // only translates). getAnimations() flushes style, so a transition the mark has just triggered is included.
+  const scene = page.locator('[data-scene="home"]');
+  const land = scene.locator('.sc-land');
+  await expect(scene).toHaveAttribute('data-entered', /^(go|still)$/);
+  await land.evaluate((el) => Promise.all(el.getAnimations()
+    .filter((a) => a.timeline instanceof DocumentTimeline && a.effect?.getComputedTiming().endTime !== Infinity)
+    .map((a) => a.finished.catch(() => null))));
+  // Layout width (unaffected by transforms) and the painted box both match the 960px mobile band.
+  expect(await land.evaluate((el) => /** @type {HTMLElement} */ (el).offsetWidth)).toBe(960);
+  expect((await land.boundingBox())?.width).toBe(960);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await ctx.close();
 });
