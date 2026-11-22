@@ -1,8 +1,9 @@
 // @ts-check
 /**
- * CSS bundle (CONTRACT §12): brand/tokens.css (compiled from tokens.json) unlayered first, then every
- * site/src/styles/*.css in file-name order. 00-layers.css declares the layer order; every other file wraps its rules
- * in exactly one layer, so adding a file never needs a registry edit.
+ * CSS bundle (CONTRACT §12): 00-layers.css first (it declares the cascade-layer order, so it must be the first thing that
+ * names a layer), then brand/tokens.css (compiled from tokens.json; its custom properties are unlayered, its .on-deep
+ * scope sits in @layer base), then every other site/src/styles/*.css in file-name order. Every file after 00-layers wraps
+ * its rules in exactly one layer, so adding a file never needs a registry edit.
  *
  *   bundleCss({ tokens, stylesDir, minify }) → { css, files: string[] }
  */
@@ -22,7 +23,8 @@ export function styleFiles(stylesDir) {
 export function bundleCss(o) {
   const files = styleFiles(o.stylesDir);
   if (files[0] !== '00-layers.css') throw new Error(`styles: 00-layers.css must exist and sort first (found ${files[0] || 'nothing'})`);
-  const parts = [`/* brand/tokens.css (unlayered) */\n${o.tokens}`, ...files.map((f) => `/* ${f} */\n${readFileSync(join(o.stylesDir, f), 'utf8')}`)];
+  const css = (/** @type {string} */ f) => `/* ${f} */\n${readFileSync(join(o.stylesDir, f), 'utf8')}`;
+  const parts = [css(files[0]), `/* brand/tokens.css */\n${o.tokens}`, ...files.slice(1).map(css)];
   const raw = parts.join('\n');
   return { css: o.minify === false ? raw : minifyCss(raw), files };
 }
