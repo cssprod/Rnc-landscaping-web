@@ -9,7 +9,7 @@ All copy lives in `content/` as JSON files. Edit a file on GitHub (pencil icon),
 - **Samples are labelled.** Sample projects, testimonials and plant palettes carry `"sample": true` and show a visible Sample label. A sample quote is never attributed to a real, identifiable person or business.
 - **Local rules need a source.** A watering rule, tree bylaw, well or burning rule is summarised only with a link to the official source. Never write that "no bylaw exists".
 - **Canadian English and plain language.** "Neighbour", "colour", "centre", "licence" (noun). Short sentences. Dates as `YYYY-MM-DD` in the files; the site shows them as "19 November 2026".
-- **Links.** Inline links use Markdown, `[text](/path/)`. Use the current addresses: `/free-quote/`, `/projects/`, `/projects/<slug>/`, `/process/`.
+- **Links.** Inline links use Markdown, `[text](/path/)`. Use the current addresses: `/free-quote/`, `/projects/`, `/projects/<slug>/`, `/process/`. To open the quote form with a service already chosen, add `?service=<slug>`, for example `/free-quote/?service=irrigation`.
 
 ## Replace the placeholders
 Highlighted chips such as `[PHONE]` are information only you can supply. The values live under `tokens` in `content/site.json` (on older builds, `site/site.config.mjs`); `null` means "not supplied yet". The showcase site shows what is left; a launch build refuses to publish until every required value is filled in.
@@ -45,7 +45,10 @@ Every project and testimonial with `"sample": true` shows a visible Sample label
 Photos are referenced by slot ID (for example `proj-irrigation-1`) in `media/images.json`. To use your own photo, add it to `site/static/` (for example `site/static/photos/oak-bay-garden.jpg`) and ask your developer to point the slot at it. Until a slot has your photo, it shows a placeholder: a labelled illustration, or a stock photo in online builds. A simpler photo workflow is planned, and this guide will be updated when it ships. Stock photos are never shown as your work, and never stand in for you or your crew.
 
 ## Quote requests
-The quote form opens the visitor's email app with their request written out, addressed to `[EMAIL]`. Requests arrive in that inbox like any other email; nothing is stored on the website.
+The quote form opens the visitor's email app with their request written out, addressed to `[EMAIL]`. Requests arrive in that inbox like any other email; nothing is stored on the website. The form has no file upload: visitors attach photos or specifications to the email before they send it, so copy elsewhere on the site says "attach photos to the email", never "upload". Write the reply promise the same way everywhere: "We reply within [REPLY TIME]".
+
+## Privacy and accessibility pages
+`privacy.json` and `accessibility.json` describe how the site really behaves: the six quote form fields, the Dark theme and Animations buttons, and the only things the browser keeps (`rnc-theme` and `rnc-motion` in local storage, the `rnc-quote-draft` draft in session storage). If any of that changes, update both pages, and set the privacy page's `updated` date to the day its text changed.
 
 ## Other files you supply
 - `static/downloads/rnc-capability-statement.pdf` for commercial buyers.

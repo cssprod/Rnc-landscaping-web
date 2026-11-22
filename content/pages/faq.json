@@ -40,7 +40,7 @@
     {
       "id": "specification",
       "q": "Can you quote to our specification or tender?",
-      "a": "Yes. Attach or describe it in the quote form and we'll quote to it. See [commercial](/commercial/).",
+      "a": "Yes. Describe it in the quote form, then attach it to the email that opens, or send it to [EMAIL]. We'll quote to it. See [commercial](/commercial/).",
       "category": "Quotes"
     },
     {
@@ -118,7 +118,7 @@
     {
       "id": "samples",
       "q": "Are the projects and reviews on this site real?",
-      "a": "Items marked Sample are examples of the work we do, not records of specific past jobs. We will replace them with real projects and reviews, shared with permission.",
+      "a": "Not yet. Items marked Sample are examples of the kind of work we do, not records of past jobs or words from clients. We will replace them with real projects and reviews, shared with permission.",
       "category": "About us"
     }
   ],

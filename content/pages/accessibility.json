@@ -1,5 +1,5 @@
 {
-  "_notes": "Accessibility statement.",
+  "_notes": "Accessibility statement (WCAG 2.2 AA target, followed by choice). The display settings section documents the header toggles (CONTRACT section 8: accessible names \"Dark theme\" and \"Animations\", dark by default, choices kept in localStorage) and the quote builder fallbacks (CONTRACT section 6, quote.json v3). Claims describe how the site is built and checked; owner to confirm the contact route before launch.",
   "seo": {
     "title": "Accessibility Statement | RNC Landscaping",
     "description": "RNC Landscaping aims to meet WCAG 2.2 Level AA on this website. Learn what we have done, known limits, and how to report an accessibility problem to us."
@@ -11,7 +11,28 @@
       "id": "target",
       "heading": "Our target",
       "body": [
-        "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA."
+        "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA. We follow them by choice, and we treat anything that falls short as a problem to fix."
+      ]
+    },
+    {
+      "id": "settings",
+      "heading": "Display settings",
+      "body": [
+        "Two buttons in the header change how the site looks. Your browser remembers each choice on this device, so the next page you open looks the same."
+      ],
+      "items": [
+        {
+          "title": "Dark theme",
+          "body": "The site opens in a dark theme. Press Dark theme to switch to the light theme, and press it again to switch back."
+        },
+        {
+          "title": "Animations",
+          "body": "Some illustrations drift slowly in the background. If your device is set to reduce motion, they start switched off. Press Animations to turn them on or off at any time; with animations off, nothing on the page moves by itself."
+        },
+        {
+          "title": "Without JavaScript",
+          "body": "Pages and the quote form still work. The two buttons are hidden, the site uses the dark theme and nothing moves."
+        }
       ]
     },
     {
@@ -21,23 +42,27 @@
       "items": [
         {
           "title": "Contrast",
-          "body": "We test text and controls against WCAG AA contrast ratios."
+          "body": "Text, controls and focus outlines are checked against WCAG AA contrast ratios in both the dark and the light theme."
         },
         {
           "title": "Keyboard",
-          "body": "All links, menus and form steps work with a keyboard, with a visible focus outline."
+          "body": "Links, menus, buttons and form fields work with a keyboard, with a visible focus outline."
         },
         {
           "title": "Forms",
-          "body": "Every field has a label, help text and clear error messages linked to the field."
+          "body": "Every quote form field has a label, and help text where it is needed. If something is missing, a list of errors appears at the top of the form and each message sits next to its field. What you typed is kept."
+        },
+        {
+          "title": "If your email app does not open",
+          "body": "The quote form shows your request on the page so you can copy it, and offers other ways to reach us."
         },
         {
           "title": "Images",
           "body": "Meaningful images have text alternatives."
         },
         {
-          "title": "Motion",
-          "body": "Animation is minimal and turned off when you choose reduced motion."
+          "title": "Zoom and small screens",
+          "body": "Pages are built to reflow on narrow screens and at 200% zoom, without scrolling sideways to read."
         }
       ]
     },
@@ -45,7 +70,8 @@
       "id": "limits",
       "heading": "Known limits",
       "body": [
-        "Some linked government pages and PDF documents are outside our control and may not meet the same standard."
+        "Some linked government pages and PDF documents are outside our control and may not meet the same standard.",
+        "Automated checks do not find every problem. If you meet one, please tell us."
       ]
     },
     {

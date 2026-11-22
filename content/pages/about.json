@@ -1,13 +1,14 @@
 {
-  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock. People: only the owner, through [OWNER NAME] and [OWNER BIO]; no team grid, and no invented names, roles, bios or crew photos. images.crew is the hero slot (the key name is legacy): it points at commercial-hero, which shows no people, because stock is never used for a person shown as the owner or crew (CONTRACT section 2).",
+  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock. People: only the owner, through [OWNER NAME] and [OWNER BIO]; no team grid, and no invented names, roles, bios or crew photos. images.hero is the hero slot: it points at commercial-hero, which shows no people, because stock is never used for a person shown as the owner or crew (CONTRACT section 2). images.crew is the deprecated legacy key with the same value; it is removed once t-company (W3) reads images.hero.",
   "seo": {
     "title": "About RNC Landscaping | Greater Victoria Landscapers",
-    "description": "Meet RNC Landscaping, a local landscaping contractor serving Greater Victoria homes, stratas and businesses. Learn how we work and keep crews safe on site."
+    "description": "Meet RNC Landscaping, a local contractor for Greater Victoria homes, stratas and businesses: how we work, safety on site and our workmanship guarantee."
   },
   "h1": "About RNC Landscaping",
   "lede": "A local contractor for grounds maintenance, landscape installation, irrigation and tree work across Greater Victoria.",
   "images": {
     "owner": "about-owner",
+    "hero": "commercial-hero",
     "crew": "commercial-hero"
   },
   "sections": [

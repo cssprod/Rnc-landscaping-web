@@ -86,7 +86,7 @@
   "process": [
     {
       "title": "Request a quote",
-      "body": "Send photos of the trees or area on the [quote form](/free-quote/)."
+      "body": "Describe the trees or area on the [quote form](/free-quote/?service=tree-vegetation), then attach photos to the email it opens."
     },
     {
       "title": "Site visit and bylaw check",
