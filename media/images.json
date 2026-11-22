@@ -378,11 +378,7 @@
       "photographerUrl": "https://unsplash.com/@alef_visuals",
       "license": "Unsplash License (https://unsplash.com/license)"
     },
-    "rncToSupply": true,
-    "art": {
-      "scene": "svc-irrigation",
-      "palette": "theme"
-    }
+    "rncToSupply": true
   },
   {
     "id": "svc-irrigation-detail-1",

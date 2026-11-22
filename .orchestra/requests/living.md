@@ -74,9 +74,8 @@ assumptions that a required living change breaks; living cannot edit those files
 13. Done in living fix 1: `svc-grounds-maintenance-hero`, `svc-landscape-installation-hero` and
     `svc-tree-vegetation-hero` (stock photos of a landscaper and an arborist) now have `stock: null` and
     `art: { scene: 'svc-<slug>' }`, so the service pages show the labelled service scene (check-honesty#no-stock-people
-    is green on a trial merge with w2/qa). `svc-irrigation-hero` (sprinklers, no person) keeps its credited stock online
-    and gains the same art for offline builds; `area-central-saanich` also drops its stock, so all 13 area heroes show
-    their scene. qa: nothing to change in check-honesty.
+    is green on a trial merge with w2/qa). `svc-irrigation-hero` (sprinklers, no person) keeps its credited stock (and
+    the illustration file offline); `area-central-saanich` also drops its stock, so all 13 area heroes show their scene. qa: nothing to change in check-honesty.
 
 ## For W3 families
 
@@ -94,8 +93,8 @@ assumptions that a required living change breaks; living cannot edit those files
 
 17. **ds-comp (W2) / ds-chrome (W2), blocks a green motion-audit on the merge**: on a trial merge with w2/qa,
     motion-audit reports `backdrop-filter element a.btn.btn--glass sits over a running infinite animation` on `/`,
-    `/areas/oak-bay/` (and `/services/irrigation/` offline), and `nav.dock.glass-bar …` on `/` (390 and 1440 px, motion
-    on). The loops under the buttons are the land-box layers (stars, glints, mist, fireflies), which span the whole
+    `/areas/oak-bay/` (and on `/services/irrigation/` whenever its hero shows the scene), and `nav.dock.glass-bar …` on
+    `/` (390 and 1440 px, motion on). The loops under the buttons are the land-box layers (stars, glints, mist, fireflies), which span the whole
     hero width, so living cannot move them out from under the copy. Please drop the blur where the glass sits on a
     living scene and use the thick material instead, for example:
     `.hero:has([data-living]) .btn--glass { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--material-thick); }`
