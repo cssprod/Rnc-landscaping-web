@@ -8,7 +8,7 @@
  *   - `export default <boolean>` for check-all, and process.exit only when run directly.
  *
  * Baselines (CONTRACT §17): .orchestra/baselines/<tool>.json = { tool, writtenAt, entries: [{ rule, path }] }, resolved
- * from the repository root, applied automatically when it exists. A listed failure is reported as baselined and does
+ * from the repository root (or from $BASELINE_DIR, for a reviewer's scratch ratchet), applied automatically when it exists. A listed failure is reported as baselined and does
  * not fail; any other failure fails; a listed entry that no longer fails is reported as stale.
  *   --no-baseline       ignore baselines (W4 evidence, W5 release gate)
  *   --write-baseline    integrator only: write the current failures as the baseline (with --baseline-at=<wave>/<merge>)
@@ -17,6 +17,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { tmpdir } from 'node:os';
 
 /** site/ */
 export const SITE = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
@@ -39,7 +40,7 @@ const flag = (/** @type {string} */ k) => process.argv.includes(`--${k}`);
 const opt = (/** @type {string} */ k) => process.argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
 
 /** File name of a tool's baseline. @param {string} tool */
-export const baselinePath = (tool) => join(REPO, '.orchestra', 'baselines', `${tool.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')}.json`);
+export const baselinePath = (tool) => join(process.env.BASELINE_DIR ? resolve(process.env.BASELINE_DIR) : join(REPO, '.orchestra', 'baselines'), `${tool.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-|-$/g, '')}.json`);
 
 /** @param {string} tool @returns {Baseline|null} */
 export function loadBaseline(tool) {
@@ -106,3 +107,112 @@ export function report(tool, list) {
   if (stale.length) console.warn(`  ${tool}: ${stale.length} stale baseline entr${stale.length === 1 ? 'y' : 'ies'} (no longer failing; the integrator prunes them): ${stale.slice(0, 5).map((e) => `${e.rule} ${e.path}`).join(', ')}${stale.length > 5 ? ', …' : ''}`);
   return fresh.length === 0;
 }
+
+/* ------------------------------------------------------------------ shared by the browser and repository tools */
+
+/** `--k=v` from argv. @param {string} k @param {string[]} [argv] */
+export const argOpt = (k, argv = process.argv) => argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
+/** `--k` present. @param {string} k @param {string[]} [argv] */
+export const argFlag = (k, argv = process.argv) => argv.includes(`--${k}`);
+/** `--k=a,b` as a list, else the default. @param {string} k @param {string[]} def */
+export const argList = (k, def) => (argOpt(k)?.split(',').map((x) => x.trim()).filter(Boolean)) || def;
+
+/** dist-relative page file → URL path ("areas/oak-bay/index.html" → "/areas/oak-bay/"). @param {string} f */
+export const urlOf = (f) => (f === 'index.html' ? '/' : f.endsWith('/index.html') ? `/${f.slice(0, -'index.html'.length)}` : `/${f}`);
+/** URL path → dist-relative page file ("/areas/oak-bay/" → "areas/oak-bay/index.html"). Baselines key on this. @param {string} u */
+export const fileOfUrl = (u) => { const p = u.split(/[?#]/)[0].replace(/^\/+/, ''); return !p ? 'index.html' : p.endsWith('/') ? `${p}index.html` : p; };
+
+/** Every built page URL, sorted (the index.html pages plus 404.html). */
+export function pageUrls() {
+  if (!existsSync(DIST)) return [];
+  return files().filter((f) => f.endsWith('index.html') || f === '404.html').map(urlOf).sort();
+}
+
+/**
+ * One page per template (CONTRACT §5 URL map), for the browser matrix tools. Pages missing from the build are skipped,
+ * so a tool run on an older build still works. --pages=all (every built page) or --pages=/a/,/b/ overrides it.
+ */
+export const TEMPLATE_PAGES = ['/', '/services/', '/services/irrigation/', '/commercial/', '/areas/', '/areas/oak-bay/', '/projects/',
+  '/projects/oak-bay-front-garden-renewal/', '/process/', '/about/', '/faq/', '/reviews/', '/contact/', '/resources/',
+  '/resources/irrigation-start-up-and-winterization/', '/privacy/', '/accessibility/', '/free-quote/', '/404.html', '/styleguide/'];
+
+/** The page list a browser tool runs on: --pages=all | --pages=/a/,/b/ | the built TEMPLATE_PAGES. */
+export function selectPages() {
+  const built = pageUrls();
+  const want = argOpt('pages');
+  if (want === 'all') return built;
+  if (want) return want.split(',').map((x) => x.trim()).filter(Boolean);
+  const resources = built.filter((u) => /^\/resources\/[^/]+\/$/.test(u));
+  return TEMPLATE_PAGES.map((u) => (u.startsWith('/resources/') && u !== '/resources/' && !built.includes(u) ? resources[0] : u))
+    .filter((u, i, a) => u && built.includes(u) && a.indexOf(u) === i);
+}
+
+/**
+ * A dev tool installed by `node tools/dev-setup.mjs --devtools` (lighthouse, axe-core), found in order: $<NAME>_PATH,
+ * --devtools=DIR, $SCRATCH/devtools, <tmp>/rnc-devtools, site/node_modules (CI installs there with npm --no-save).
+ * @param {string} pkg package name, e.g. "axe-core" @param {string} [file] a file inside it, e.g. "axe.min.js"
+ * @returns {string|null} absolute path of the package directory (or of file inside it)
+ */
+export function devtool(pkg, file = '') {
+  const env = process.env[`${pkg.replace(/[^a-z0-9]/gi, '_').toUpperCase()}_PATH`];
+  const dirs = [argOpt('devtools'), process.env.SCRATCH && join(process.env.SCRATCH, 'devtools'), join(tmpdir(), 'rnc-devtools')].filter(Boolean).map((d) => join(/** @type {string} */ (d), 'node_modules'));
+  const cands = [...(env ? [env] : []), ...dirs.map((d) => join(d, pkg)), join(SITE, 'node_modules', pkg)];
+  for (const c of cands) { const f = file ? join(c, file) : join(c, 'package.json'); if (existsSync(f)) return file ? f : c; }
+  return null;
+}
+
+/**
+ * Serve DIST like Netlify (tools/serve.mjs: _redirects, _headers, the netlify.toml CSP) on PORT (default `fallback`; 0 = any).
+ * @param {number} [fallback] @returns {Promise<{ origin: string, port: number, close: () => void }>}
+ */
+export async function serveDist(fallback = 0) {
+  const { createSiteServer } = await import('./serve.mjs');
+  const server = createSiteServer({ dist: DIST });
+  const want = Number(process.env.PORT || fallback);
+  const port = await new Promise((res, rej) => { server.once('error', rej); server.listen(want, () => res(/** @type {import('node:net').AddressInfo} */ (server.address()).port)); });
+  return { origin: `http://localhost:${port}`, port, close: () => server.close() };
+}
+
+/** Playwright Chromium ($CHROME overrides). Imported lazily so the check-* tools never need Playwright. */
+export async function launchChromium() {
+  const { chromium } = await import('playwright');
+  return chromium.launch(process.env.CHROME ? { executablePath: process.env.CHROME } : {});
+}
+
+/**
+ * A browser context in a given state: theme (stored "rnc-theme"; dark is also the no-choice default), motion
+ * ("on"/"off" stored, "auto" = no stored choice) and the OS reduced-motion setting. External requests are aborted, so
+ * offline builds measure only themselves.
+ * @param {import('playwright').Browser} browser
+ * @param {{ width: number, height?: number, theme?: 'dark'|'light'|'none', motion?: 'on'|'off'|'auto', reducedMotion?: 'reduce'|'no-preference', bypassCSP?: boolean, deviceScaleFactor?: number, blockExternal?: boolean }} o
+ */
+export async function stateContext(browser, o) {
+  const ctx = await browser.newContext({
+    viewport: { width: o.width, height: o.height || (o.width < 600 ? 844 : 900) }, deviceScaleFactor: o.deviceScaleFactor || 1,
+    reducedMotion: o.reducedMotion || (o.motion === 'off' ? 'reduce' : 'no-preference'), bypassCSP: !!o.bypassCSP,
+  });
+  const theme = o.theme || 'dark';
+  const motion = o.motion || 'auto';
+  await ctx.addInitScript(([t, m]) => {
+    try {
+      if (t === 'dark' || t === 'light') localStorage.setItem('rnc-theme', t); else localStorage.removeItem('rnc-theme');
+      if (m === 'on' || m === 'off') localStorage.setItem('rnc-motion', m); else localStorage.removeItem('rnc-motion');
+    } catch { /* storage blocked: the defaults apply */ }
+  }, [theme, motion]);
+  if (o.blockExternal !== false) await ctx.route(/^https?:\/\/(?!localhost|127\.0\.0\.1)/, (r) => r.abort());
+  return ctx;
+}
+
+/** WCAG relative luminance and contrast. @param {number[]} rgb 0–255 */
+export function luminance([r, g, b]) {
+  const lin = (/** @type {number} */ v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+/** @param {number} la @param {number} lb */
+export const contrastOf = (la, lb) => (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+
+/** Median of numbers (the lower middle for an even count, so it is always a measured value). @param {number[]} xs */
+export const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s[Math.floor((s.length - 1) / 2)]; };
+
+/** Write a JSON report (creating its folder). @param {string} file @param {unknown} data */
+export function writeJson(file, data) { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`); }
