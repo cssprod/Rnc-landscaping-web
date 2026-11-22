@@ -49,6 +49,8 @@ assumptions that a required living change breaks; living cannot edit those files
 
 8. `data-header-over-living`: scenes carry `[data-living]` (hero scenes also `.scene--hero`), which the header IO can
    observe. The theme toggle needs nothing else: scenes swap colours through `--sc-*` under `[data-theme=light]`.
+   The layout's `<link rel="preconnect" href="https://images.unsplash.com">` is now wasted on pages with no stock image
+   (every `/projects/` page, the home page offline): emit it only when the rendered body contains a stock URL.
 
 ## For seo (W2)
 

@@ -162,6 +162,7 @@
 .scene .s-forerim { stroke: var(--sc-forerim); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .scene .s-rim { stroke: var(--sc-rim); stroke-width: 1.4; }
 .scene .s-st1 { stroke: var(--sc-star); stroke-width: 1.6; }
+.scene--card .s-st2 { opacity: var(--stars-o); }
 .scene .s-st2 { stroke: var(--sc-star); stroke-width: 3; }
 .scene .f-moon { fill: var(--sc-moon); }
 .scene .f-full { opacity: var(--full-o); }
