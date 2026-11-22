@@ -45,3 +45,33 @@ Branch `w1/content`, base `064d569`. Each item names the owner who can make the 
 ## Deferred to content W2 (needs W2 features first)
 13. `accessibility.json`: document the "Dark theme" and "Animations" toggles and the dark default once ds-chrome ships them; the quote form is still a stepper on the W1 base, so "form steps" stays until the W2 builder lands.
 14. `privacy.json`: align "What we collect" with the six-input builder (no email field) and add "Settings saved on your device" (`rnc-theme`, `rnc-motion` in localStorage; the quote draft in sessionStorage) once those exist.
+
+---
+
+# Requests from the content stream (W2)
+
+Branch `w2/content`, base `a3a99dd` (wave-1-int). Nothing below was edited by content; each item names the owner.
+
+## quote (W2)
+19. **`?service=` prefill links.** The first process step on all four service pages now links to `/free-quote/?service=<slug>` (carry: content, requests #9). The W1 stepper already matches `?service=` against its checkbox values, which are the four service slugs. Please keep the v3 builder's service values equal to the `site.json` slugs so these links keep working; tell content if they change.
+20. **Copy that describes the builder.** `privacy.json` and `accessibility.json` now describe the six-input builder as CONTRACT section 6 specifies. If the builder ships differently, tell content so the pages stay true:
+    - the email carries services, municipality, details, timing, name, preferred reply and (for call or text) the phone number; no email field;
+    - Gmail and Outlook.com convenience links on the ready panel;
+    - an error summary at the top plus a message next to each field, and entered values are kept;
+    - the draft lives in `sessionStorage['rnc-quote-draft']` only;
+    - FAQ `specification` and the service process steps say photos and specifications are attached to the email the form opens (the form has no upload).
+21. Carried: please use "We reply within [REPLY TIME]" in `quote.json` `reassurance` (requests #10).
+
+## ds-chrome (W2)
+22. **Display settings copy.** `accessibility.json` section `settings` documents: buttons named exactly "Dark theme" and "Animations" in the header; dark by default; animations start off when the device asks for reduced motion; "with animations off, nothing on the page moves by itself" (so `data-motion=off` must stop T1 to T4); without JS both buttons are hidden, the theme is dark and nothing moves; choices remembered on the device (`rnc-theme`, `rnc-motion`, also named in `privacy.json`). Tell content if any of this differs.
+
+## ds-comp (W2) / t-home (W3)
+23. **Reviews band default heading.** `ui/trust.mjs` falls back to "What clients say" when no heading is passed. While every review is a sample, that reads as real client words; `home.json` `reviewsBand.heading` is now "Reviews" and `reviews.json` no longer says "What clients say". Please change the fallback (for example to "Reviews") or always pass the page's heading.
+24. **Home "Browse the portfolio" sentence.** `home.json` section `projects` keeps "[Browse the portfolio](/projects/)." unchanged because `home.mjs` `PORTFOLIO_LINK_RE` strips it. When t-home drops that regex, tell content and the sentence becomes plain copy without the stale "portfolio" label.
+
+## t-company (W3)
+25. **About hero key.** `about.json` now has `images.hero` (= `commercial-hero`, no people) next to the deprecated `images.crew` (same value). Please read `images.hero` and drop the `'about-crew'` fallback in `pages/company.mjs`; content then deletes `images.crew` (requests #16, carry).
+
+## docs (W5): LAUNCH-CHECKLIST
+26. Confirm against the W4 evidence pack before launch: `accessibility.json` says text, controls and focus outlines are checked for AA contrast in both themes, and that pages are built to reflow at narrow widths and 200% zoom. If W4 finds otherwise, content rewords; do not leave the claim.
+27. `privacy.json` `updated` is 2026-11-22 because "What we collect", "Settings saved on your device" and "Analytics and cookies" changed; the lawyer's review should date from this text.
