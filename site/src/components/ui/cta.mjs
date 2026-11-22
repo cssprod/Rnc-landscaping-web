@@ -21,7 +21,9 @@ const CONTOURS = raw(`<svg class="cta-band__contours" viewBox="0 0 600 400" pres
 
 /**
  * The CTA band. `living` adds the T2 blobs and the conic ring on the primary button (one per page by default);
- * `reply` adds the [REPLY TIME] promise and the trust line. `id` names the heading (default `cta-h`; two bands on one
+ * Every band carries the [REPLY TIME] promise (CONTRACT §3: the CTA band, /free-quote/ and /contact/; check-honesty
+ * trust-without-prices); `reply: true` adds the trust line under the actions, `reply: false` drops the promise (only for
+ * a page that already states it next to the band). `id` names the heading (default `cta-h`; two bands on one
  * page must pass distinct ids). `image` is kept for API compatibility (the band is drawn art, never a photo).
  * @param {{ heading?: any, body?: any, secondary?: any, image?: string, id?: string, living?: boolean, reply?: boolean }} [p]
  */
@@ -41,7 +43,7 @@ export function ctaBand(p = {}) {
     <div class="cta-band__panel">
       <h2 id="${id}">${p.heading || 'Tell us about your property'}</h2>
       <p class="cta-band__body">${p.body || 'Free quotes, no obligation. Share a few details and photos and we will follow up to arrange a site visit.'}</p>
-      ${p.reply ? html`<p class="cta-band__reply">We get back to you within ${siteJson.replyTime} to ask any questions and arrange your free quote.</p>` : ''}
+      ${p.reply !== false ? html`<p class="cta-band__reply">We get back to you within ${siteJson.replyTime} to ask any questions and arrange your free quote.</p>` : ''}
       <div class="cta-band__actions">${primary}${p.secondary || secondaryBtn('cta_band', { tone: 'glass', size: 'lg' })}</div>
       ${p.reply ? html`<p class="cta-band__trust">Reply within ${siteJson.replyTime} · No obligation · ${siteJson.municipalities.length} municipalities, Sidney to Sooke</p>` : ''}
     </div>
