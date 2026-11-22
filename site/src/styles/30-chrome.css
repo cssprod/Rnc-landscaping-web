@@ -1,2 +1,303 @@
-/* 30-chrome.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-chrome.
-   Wrap every rule in exactly one layer:  @layer chrome { … }  */
+/* 30-chrome.css (ds-chrome, W2): the glass header, the one navigation DOM (row at >= 64em, sheet below), the Services /
+   Service areas disclosures, the Dark theme / Animations toggles, the sticky Call / Free-quote bar, breadcrumbs and the
+   footer (CONTRACT §5, §8; DESIGN-DIRECTION §7, §13, §14). Replaces the legacy slices 07, 21 and 22.
+   Motion goes through the duration tokens (instant when motion is not effective) and the fade / pop keyframes in
+   95-motion.css; only transform and opacity move. Real blur sits only on the header capsule, only past the top of the
+   page and never over living art (html[data-scrolled]:not([data-header-over-living])). Every primary target is
+   >= 44 x 44 px, the sticky bar's buttons are 48 px, and nothing else is under 24 px. */
+@layer chrome {
+  /* ---------- sprite icons (components/sprite.mjs) ---------- */
+  /* The line-icon style is set here once and inherits into each <use>, instead of on every <symbol> in every page. */
+  svg.i { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- heights, scroll padding (2.4.11 Focus Not Obscured) ---------- */
+  :root {
+    --chrome-top: max(10px, env(safe-area-inset-top, 0px));
+    --chrome-capsule-h: 60px;
+    /* Space the fixed bar takes from the bottom edge: its 64 px body plus the 10 px float, plus the home indicator. */
+    --chrome-bar-space: calc(var(--layout-actionbar-h) + 10px + env(safe-area-inset-bottom, 0px));
+  }
+  @media (max-width: 63.99em) {
+    :root { --layout-header-h: var(--layout-header-h-sm); --chrome-top: max(8px, env(safe-area-inset-top, 0px)); --chrome-capsule-h: 52px; }
+  }
+  html {
+    scroll-padding-top: calc(var(--layout-header-h) + env(safe-area-inset-top, 0px) + 8px);
+    scroll-padding-bottom: calc(var(--chrome-bar-space) + 8px);
+  }
+  @media (min-width: 64em) { html { scroll-padding-bottom: 8px; } }
+
+  /* ---------- header capsule ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: var(--z-header);
+    height: var(--layout-header-h); margin-bottom: calc(-1 * var(--layout-header-h));
+    padding: var(--chrome-top) max(var(--layout-gutter), env(safe-area-inset-right)) 0 max(var(--layout-gutter), env(safe-area-inset-left));
+    pointer-events: none;
+  }
+  /* The glass lives on ::before, so the capsule is not a backdrop root and the sheet inside it stays solid. */
+  .nav-capsule {
+    --capsule-fill: var(--material-chrome);
+    pointer-events: auto; position: relative; isolation: isolate;
+    display: flex; align-items: center; gap: 2px;
+    max-width: var(--layout-content-max); height: var(--chrome-capsule-h); margin-inline: auto; padding: 0 8px 0 18px;
+    border-radius: var(--radius-pill); color: var(--color-ink);
+    transition: color var(--dur-t0) var(--ease);
+  }
+  .nav-capsule::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+    background: var(--capsule-fill);
+    box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), 0 18px 40px -20px rgba(0, 0, 0, 0.6);
+    transition: background-color var(--dur-t0) var(--ease);
+  }
+  html[data-scrolled]:not([data-header-over-living]) .nav-capsule::before {
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+  .site-header.is-scrolled .nav-capsule { --capsule-fill: var(--material-thick); }
+  .site-header.is-over-media:not(.is-open) .nav-capsule { --capsule-fill: var(--material-media); color: #fff; }
+  .site-header.is-over-media:not(.is-open) .nav-capsule::before { box-shadow: var(--glass-shadow-media); }
+  .site-header.is-open .nav-capsule { --capsule-fill: var(--color-bg-elevated); }
+
+  .brand { display: inline-flex; align-items: center; gap: 10px; flex: none; min-height: 44px; margin-right: auto; border-radius: 12px; color: inherit; text-decoration: none; }
+  .brand__tile { width: 32px; height: 32px; filter: drop-shadow(0 1px 2px rgba(10, 20, 14, 0.25)); }
+  .brand__word { width: auto; height: 15px; aspect-ratio: 236 / 31; }
+
+  /* ---------- the Main nav: one DOM ---------- */
+  .site-nav__list { margin: 0; padding: 0; list-style: none; }
+  .site-nav__item { display: flex; align-items: center; }
+  .site-nav__item > a,
+  .site-nav__disclosure {
+    display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin: 0; padding: 0 12px;
+    border: 0; border-radius: var(--radius-pill); background: transparent; color: inherit;
+    font: inherit; font-size: var(--font-size-subheadline); font-weight: var(--font-weight-medium); letter-spacing: -0.012em;
+    text-decoration: none; white-space: nowrap; cursor: pointer;
+    transition: background-color var(--dur-t0) var(--ease);
+  }
+  .site-nav__item > a:hover, .site-nav__disclosure:hover, .site-nav__disclosure[aria-expanded="true"] { background: color-mix(in srgb, currentColor 9%, transparent); }
+  .site-nav__item > a[aria-current] { background: color-mix(in srgb, currentColor 12%, transparent); }
+  .site-nav__disclosure .i { transition: transform var(--dur-t0) var(--ease); }
+  .site-nav__disclosure[aria-expanded="true"] .i { transform: rotate(180deg); }
+
+  .site-nav__actions { display: flex; align-items: center; gap: 6px; }
+  .site-nav__call { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; min-width: 44px; border-radius: var(--radius-pill); color: inherit; font-size: var(--font-size-subheadline); font-weight: var(--font-weight-medium); text-decoration: none; white-space: nowrap; }
+  a.site-nav__call { padding: 0 12px; background: color-mix(in srgb, currentColor 9%, transparent); }
+  a.site-nav__call:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+  .site-nav__quote { --h: 44px; min-height: 44px; padding: 0 18px; font-size: var(--font-size-subheadline); }
+  .site-header.is-over-media:not(.is-open) .site-nav__quote { background: #fff; color: #0E1611; box-shadow: none; }
+
+  /* Disclosure panels: an opaque elevated surface, never blurred (they drop over the live hero and its headline). */
+  .mega { display: none; color: var(--color-ink); }
+  .mega.is-open { display: grid; }
+  html:not(.js) .has-mega:hover .mega, html:not(.js) .has-mega:focus-within .mega { display: grid; }
+  .mega__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .mega__link { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; align-items: center; min-height: 44px; padding: 10px; border-radius: calc(var(--radius-xl) - 10px); color: var(--color-ink); text-decoration: none; transition: background-color var(--dur-t0) var(--ease); }
+  .mega__link:hover, .mega__link[aria-current] { background: color-mix(in srgb, var(--color-ink) 7%, transparent); }
+  .mega__icon { grid-row: span 2; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: var(--color-bg-tint); color: var(--color-brand-2); }
+  .mega__name { font-weight: var(--font-weight-semibold); letter-spacing: -0.012em; }
+  .mega__desc { font-size: var(--font-size-footnote); color: var(--color-ink-3); }
+  .mega__areas { display: grid; gap: 12px; align-content: start; padding: 8px; }
+  .mega__areas .chip { min-height: 44px; }
+  .mega__areas .link-more { min-height: 44px; }
+  .mega__aside { display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: calc(var(--radius-xl) - 10px); background: color-mix(in srgb, var(--color-brand-2) 9%, transparent); font-size: var(--font-size-subheadline); }
+  .mega__aside p { margin: 0 0 8px; color: var(--color-ink-2); }
+  .mega__aside a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--color-brand); font-weight: var(--font-weight-semibold); text-decoration: none; }
+
+  /* ---------- Dark theme / Animations toggles ---------- */
+  .site-tools { display: flex; align-items: center; gap: 2px; flex: none; }
+  html:not(.js) [data-pref], html:not(.js) .site-tools { display: none; }
+  .pref-toggle {
+    position: relative; display: inline-grid; place-items: center; flex: none; width: 44px; height: 44px; margin: 0; padding: 0;
+    border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--color-ink-2); font: inherit; cursor: pointer;
+    transition: color var(--dur-t0) var(--ease), background-color var(--dur-t0) var(--ease);
+  }
+  .pref-toggle:hover { color: var(--color-ink); background: color-mix(in srgb, currentColor 9%, transparent); }
+  .pref-toggle[aria-pressed="true"] { color: var(--color-ink); }
+  .site-header.is-over-media:not(.is-open) .pref-toggle { color: rgba(255, 255, 255, 0.86); }
+  .site-header.is-over-media:not(.is-open) .pref-toggle[aria-pressed="true"] { color: #fff; }
+  /* State cue that survives greyscale: a filled dot means on, a hollow ring means off. */
+  .pref-toggle__dot { position: absolute; top: 7px; right: 7px; width: 9px; height: 9px; border-radius: 50%; box-shadow: inset 0 0 0 1.75px currentColor; }
+  .pref-toggle[aria-pressed="true"] .pref-toggle__dot { background: var(--color-brand); box-shadow: 0 0 0 1px var(--color-brand), 0 0 8px 1px var(--glow-moss); }
+  .pref-toggle__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* Visible labels from 80em, unless main.js found the row too tight for them (data-fit, WCAG 1.4.12). */
+  @media (min-width: 80em) {
+    .site-header:not([data-fit]) .pref-toggle { display: inline-flex; gap: 7px; width: auto; padding: 0 12px 0 11px; box-shadow: inset 0 0 0 1px var(--color-line); }
+    .site-header:not([data-fit]) .pref-toggle__dot { position: static; order: -1; }
+    .site-header:not([data-fit]) .pref-toggle__icon { width: 18px; height: 18px; }
+    .site-header:not([data-fit]) .pref-toggle__label { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font-size: var(--font-size-small); font-weight: var(--font-weight-medium); }
+  }
+
+  /* ---------- Menu button (< 64em, with JS) ---------- */
+  .nav-toggle { display: none; }
+  .nav-toggle__bars { position: relative; display: block; width: 16px; height: 10px; }
+  .nav-toggle__bars::before, .nav-toggle__bars::after { content: ""; position: absolute; left: 0; width: 16px; height: 1.75px; border-radius: 2px; background: currentColor; transition: transform var(--dur-t0) var(--ease); }
+  .nav-toggle__bars::before { top: 1px; }
+  .nav-toggle__bars::after { top: 7px; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: translateY(3px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle__bars::after { transform: translateY(-3px) rotate(-45deg); }
+
+  /* ---------- >= 64em: the header row ---------- */
+  @media (min-width: 64em) {
+    .site-nav { display: flex; align-items: center; flex: 1; gap: 6px; min-width: 0; }
+    .site-nav__list { display: flex; align-items: center; gap: 2px; margin: 0 auto; }
+    .mega {
+      position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: var(--z-overlay);
+      grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 10px; width: min(760px, 100%); margin-inline: auto; padding: 10px;
+      border-radius: var(--radius-xl); background: var(--color-bg-elevated);
+      box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-3);
+    }
+    .mega.is-open { animation: pop var(--dur-t0) var(--ease-out); }
+    /* A hover bridge over the 10 px gap, so the no-JS hover menu does not close on the way down. */
+    .mega::before { content: ""; position: absolute; inset: -12px 0 auto; height: 12px; }
+    .site-nav__item > a, .site-nav__disclosure { padding: 0 10px; }
+    /* In the header row the Call is compact: a 44 px phone button (its name stays "Call …" in the hidden label), or,
+       until PHONE is known, the phone icon and the placeholder chip ("Call" stays in the text for screen readers). */
+    a.site-nav__call { width: 44px; padding: 0; }
+    a.site-nav__call .site-nav__call-label, span.site-nav__call .site-nav__call-word { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    span.site-nav__call { padding: 0 6px; }
+  }
+  @media (min-width: 64em) and (max-width: 79.99em) {
+    .nav-capsule { padding-left: 14px; }
+    .brand__tile { width: 28px; height: 28px; }
+    .brand__word { height: 13px; }
+    .brand { gap: 8px; }
+    .site-nav__item > a, .site-nav__disclosure { padding: 0 9px; }
+    .site-nav__quote { padding: 0 14px; }
+  }
+  /* Row too tight (main.js data-fit; WCAG 1.4.12): tighter items, icon-only toggles, then the tile without the wordmark. */
+  @media (min-width: 64em) {
+    .site-header[data-fit] .site-nav__item > a, .site-header[data-fit] .site-nav__disclosure { padding: 0 5px; }
+    .site-header[data-fit] .site-nav__quote { padding: 0 10px; }
+    .site-header[data-fit] .site-nav, .site-header[data-fit] .site-nav__actions { gap: 2px; }
+    .site-header[data-fit="tight"] .brand { min-width: 44px; justify-content: center; }
+    .site-header[data-fit="tight"] .brand__word { display: none; }
+  }
+
+  /* ---------- < 64em: the sheet ---------- */
+  @media (max-width: 63.99em) {
+    .nav-capsule { padding: 0 6px 0 14px; }
+    .js .nav-toggle {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: none; height: 44px; min-width: 44px; margin-left: 2px; padding: 0 16px 0 14px;
+      border: 0; border-radius: var(--radius-pill); background: color-mix(in srgb, currentColor 9%, transparent); color: inherit;
+      font: inherit; font-size: var(--font-size-subheadline); font-weight: var(--font-weight-semibold); cursor: pointer;
+    }
+    .js .site-nav {
+      position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: var(--z-overlay);
+      display: none; flex-direction: column; gap: var(--space-2);
+      max-height: calc(100dvh - var(--layout-header-h) - env(safe-area-inset-top, 0px) - 16px);
+      overflow-y: auto; overscroll-behavior: contain; padding: 10px;
+      border-radius: var(--radius-xl); color: var(--color-ink); background: var(--color-bg-elevated);
+      box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-3);
+    }
+    .js .site-nav.is-open { display: flex; animation: pop var(--dur-t0) var(--ease-out); }
+    .site-header.is-open::before { content: ""; position: fixed; inset: 0; z-index: -1; background: rgba(2, 8, 6, 0.55); pointer-events: auto; animation: fade var(--dur-t0) var(--ease-out); }
+    html.nav-open { overflow: hidden; }
+    .site-nav__list { display: flex; flex-direction: column; }
+    .site-nav__item { flex-wrap: wrap; }
+    .site-nav__item > a, .site-nav__disclosure { flex: 1; min-height: 52px; padding: 0 16px; border-radius: calc(var(--radius-xl) - 10px); font-size: 1.125rem; font-weight: var(--font-weight-semibold); }
+    .site-nav__disclosure { justify-content: space-between; }
+    /* Accordions: the same panels, in the flow. */
+    .mega { flex-basis: 100%; grid-template-columns: minmax(0, 1fr); padding: 0 0 6px; }
+    .mega__aside { display: none; }
+    .mega__link { padding: 6px 10px; }
+    .site-nav__actions { flex-direction: column; align-items: stretch; gap: 8px; padding: 10px 6px 6px; border-top: 1px solid var(--color-line); }
+    .site-nav__call { min-height: 52px; font-size: 1rem; font-weight: var(--font-weight-semibold); }
+    .site-nav__quote { --h: 52px; min-height: 52px; width: 100%; font-size: 1rem; }
+    /* Without JS: the nav is a plain list under the logo; the sticky bar carries Call and Free quote. */
+    html:not(.js) .site-header { position: relative; height: auto; margin-bottom: 0; }
+    html:not(.js) .nav-capsule { flex-wrap: wrap; height: auto; padding: 8px 12px; border-radius: var(--radius-xl); }
+    html:not(.js) .site-nav { flex-basis: 100%; }
+    html:not(.js) .site-nav__actions { display: none; }
+    html:not(.js) .mega { display: grid; }
+  }
+  @media (max-width: 29.99em) {
+    .nav-capsule { padding: 0 6px 0 12px; }
+    .brand { gap: 6px; }
+    .brand__tile { width: 24px; height: 24px; }
+    .brand__word { height: 11.5px; }
+  }
+  /* At 320 px: the 120 px logo lockup, both toggles and a 44 px Menu button fit with 2 px gaps (no overflow). */
+  @media (max-width: 23.74em) {
+    .js .nav-toggle { width: 44px; padding: 0; }
+    .nav-toggle__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
+
+  /* ---------- sticky Call / Free-quote bar (< 64em) ---------- */
+  .action-bar {
+    position: fixed; z-index: var(--z-sticky);
+    inset: auto max(10px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; padding: 8px;
+    /* Opaque, like the desktop menus: no blur here, and text scrolling under a translucent bar ghosted through it. */
+    border-radius: 24px; background: var(--color-bg-elevated);
+    box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), 0 -10px 40px -20px rgba(0, 0, 0, 0.6);
+    transition: translate var(--dur-t0) var(--ease-out), opacity var(--dur-t0) var(--ease-out), visibility 0s;
+  }
+  /* Hidden by main.js (class only): slide out, then visibility: hidden takes the bar out of the tab order and the
+     accessibility tree once the slide has finished (no inert toggle; see main.js). */
+  .action-bar.is-hidden {
+    translate: 0 calc(100% + 24px + env(safe-area-inset-bottom, 0px)); opacity: 0; pointer-events: none; visibility: hidden;
+    transition: translate var(--dur-t0) var(--ease-out), opacity var(--dur-t0) var(--ease-out), visibility 0s linear var(--dur-t0);
+  }
+  .action-bar__btn { --h: 48px; min-height: 48px; min-width: 0; padding: 0 12px; font-size: 1rem; }
+  .action-bar__call { background: var(--color-bg-elevated); color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-line-strong); }
+  .action-bar__call:hover { background: color-mix(in srgb, var(--color-ink) 7%, var(--color-bg-elevated)); }
+  @media (min-width: 64em) { .action-bar { display: none; } }
+
+  /* ---------- breadcrumbs ---------- */
+  .crumbs { margin-bottom: var(--space-5); font-size: var(--font-size-footnote); }
+  .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; margin: 0; padding: 0; }
+  .crumbs li { display: inline-flex; align-items: center; gap: 4px; }
+  .crumbs a { display: inline-flex; align-items: center; min-height: 24px; color: var(--color-ink-3); font-weight: var(--font-weight-medium); text-decoration: none; }
+  .crumbs a:hover { color: var(--color-ink); text-decoration: underline; }
+  .crumbs a[aria-current] { color: var(--color-ink); }
+  .crumbs__sep { color: var(--color-ink-3); opacity: 0.7; }
+  /* Over the photo / art hero (dark scrim in both themes): white crumbs. These live in the chrome layer because the
+     ink rules above would otherwise beat the legacy-layer overrides whatever their specificity. */
+  /* A dark chip behind them holds 4.5:1 against the lightest pixel of any art at any width (no blur: glass budget). */
+  .hero .crumbs ol { width: fit-content; max-width: 100%; padding: 0 10px; border-radius: var(--radius-pill); background: rgba(5, 12, 8, 0.42); }
+  .hero .crumbs a { color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
+  .hero .crumbs__sep { color: rgba(255, 255, 255, 0.7); opacity: 1; }
+  .crumbs-row { padding-top: calc(var(--layout-header-h) + var(--space-4)); }
+
+  /* ---------- footer (a deep band in both themes: .on-deep) ---------- */
+  .site-footer { position: relative; isolation: isolate; overflow: hidden; padding-top: clamp(3.5rem, 7vw, 6rem); padding-bottom: max(var(--space-6), env(safe-area-inset-bottom, 0px)); background: var(--color-deep); color: var(--color-on-deep-2); font-size: var(--font-size-subheadline); }
+  .site-footer__glow { position: absolute; inset: -40% 30% auto -20%; height: 120%; z-index: -1; background: radial-gradient(closest-side, var(--glow-moss), transparent); opacity: 0.4; pointer-events: none; }
+  .site-footer a:not(.btn) { color: var(--color-on-deep); text-decoration: none; }
+  .site-footer a:not(.btn):hover { text-decoration: underline; }
+  .site-footer h2 { margin: 0 0 var(--space-4); color: var(--color-on-deep); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); letter-spacing: 0.02em; }
+  .site-footer ul { list-style: none; display: grid; gap: 2px; margin: 0; padding: 0; }
+  .site-footer li a { display: inline-flex; align-items: center; min-height: 32px; }
+  .site-footer__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6) var(--space-5); }
+  .site-footer__brand, .site-footer__areas { grid-column: 1 / -1; }
+  .site-footer__brand p { max-width: 32ch; margin: var(--space-4) 0 var(--space-5); }
+  .site-footer .brand { margin-right: 0; color: var(--color-on-deep); }
+  .site-footer__areas ul { grid-template-columns: 1fr 1fr; column-gap: var(--space-4); }
+  .site-footer address { display: grid; gap: 10px; font-style: normal; }
+  .site-footer address p { display: flex; align-items: center; gap: 10px; margin: 0; min-height: 24px; }
+  .site-footer address a { display: inline-flex; align-items: center; min-height: 32px; }
+  .site-footer address .i { flex: none; color: var(--color-on-deep-2); }
+  .site-footer__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); margin-top: var(--space-8); padding-top: var(--space-5); border-top: 1px solid var(--color-line); font-size: var(--font-size-footnote); }
+  .site-footer__legal p { margin: 0; }
+  .site-footer__legal ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); }
+  .site-footer__notes { margin-top: var(--space-4); }
+  .site-footer__note { margin: 0 0 var(--space-2); color: var(--color-on-deep-2); font-size: var(--font-size-footnote); }
+  @media (max-width: 63.99em) {
+    /* The last footer row stays clear of the bar. */
+    .site-footer { padding-bottom: calc(var(--chrome-bar-space) + var(--space-5)); }
+  }
+  @media (min-width: 40em) {
+    .site-footer__top { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .site-footer__areas { grid-column: auto; }
+  }
+  @media (min-width: 70em) {
+    .site-footer__top { grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.8fr) minmax(0, 1.2fr); }
+    .site-footer__brand { grid-column: auto; }
+  }
+
+  /* ---------- solid fallbacks and forced colours ---------- */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav-capsule { --capsule-fill: var(--color-bg-elevated); }
+  }
+  @media (forced-colors: active) {
+    .nav-capsule::before, .action-bar, .mega, .js .site-nav { border: 1px solid CanvasText; }
+    .pref-toggle[aria-pressed="true"] .pref-toggle__dot { background: Highlight; }
+  }
+}
