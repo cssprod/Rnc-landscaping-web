@@ -379,7 +379,10 @@ function run() {
 
   /* ---------------------------------------------------------------- gbp-alignment */
   /** JSON-LD business node of a built page. @param {string} html */
-  const businessOf = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => { try { return JSON.parse(m[1]); } catch { return null; } }).find((o) => o && /Business$/.test(String(o['@type'])));
+  // C6: one JSON-LD script per page holding {"@context","@graph":[…]}; search the @graph nodes (requests/seo.md #1b).
+  const businessOf = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .flatMap((m) => { try { const o = JSON.parse(m[1]); return o?.['@graph'] || [o]; } catch { return []; } })
+    .find((o) => o && /Business$/.test(String(o['@type'])));
   const distPages = existsSync(DIST) ? readdirSync(DIST, { recursive: true }).map(String).filter((f) => f.endsWith('.html') && statSync(join(DIST, f)).isFile()) : [];
   if (on('gbp-alignment') && siteJson) {
     const svc = (siteJson.services || []).map((/** @type {any} */ s) => s.slug);
@@ -429,7 +432,8 @@ function run() {
       if (b.name !== siteJson.nap?.name) fail('nap-consistency', f, 'JSON-LD name differs from site.json');
       if ((tokens.PHONE || undefined) !== b.telephone) fail('nap-consistency', f, `JSON-LD telephone "${b.telephone}" differs from site.json PHONE`);
       if ((tokens.EMAIL || undefined) !== b.email) fail('nap-consistency', f, `JSON-LD email "${b.email}" differs from site.json EMAIL`);
-      if ((tokens.ADDRESS || undefined) !== b.address?.streetAddress) fail('nap-consistency', f, 'JSON-LD streetAddress differs from site.json ADDRESS');
+      // "Serving Greater Victoria" (CONTRACT §3, hidden address) is not a street address, so schema leaves it out.
+      if ((tokens.ADDRESS && !/^serving\b/i.test(tokens.ADDRESS) ? tokens.ADDRESS : undefined) !== b.address?.streetAddress) fail('nap-consistency', f, 'JSON-LD streetAddress differs from site.json ADDRESS');
       if ((tokens.FOUNDED || undefined) !== b.foundingDate) fail('nap-consistency', f, 'JSON-LD foundingDate differs from site.json FOUNDED');
     }
   }
