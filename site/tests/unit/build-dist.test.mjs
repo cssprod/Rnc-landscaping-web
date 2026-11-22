@@ -3,7 +3,7 @@
 // end to end: an injected unhashed inline <script> fails the build AND is blocked by the CSP that serve.mjs sends.
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync, rmSync } from 'node:fs';
+import { appendFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawn, spawnSync } from 'node:child_process';
@@ -171,24 +171,24 @@ test('an injected unhashed inline <script> fails the build and is blocked by the
 
 test('showcaseOnly routes are skipped in launch builds; sitemap:false, noindex and showcaseOnly stay out of the sitemap #route-shape', () => {
   const copy = repoCopy();
-  const routesFile = join(copy, 'site/src/pages/routes.mjs');
-  const src = readFileSync(routesFile, 'utf8');
-  const extra = `
-  R.push({ path: '/styleguide/', file: 'styleguide/index.html', showcaseOnly: true, render: () => layout(env, { path: '/styleguide/', title: 'Styleguide', description: 'x', body: html\`<h1>Styleguide</h1>\` }) });
-  R.push({ path: '/hidden/', file: 'hidden/index.html', noindex: true, render: () => layout(env, { path: '/hidden/', title: 'Hidden', description: 'x', body: html\`<h1>Hidden</h1>\` }) });
-  R.push({ path: '/_redirects', file: '_redirects', sitemap: false, render: () => '/a/ /b/ 301\\n' });
-  return R;`;
-  const patched = src.replace(/\n {2}return R;/, extra);
-  assert.notEqual(patched, src, 'routes.mjs still ends its route list with "return R;"');
-  writeFileSync(routesFile, patched);
+  // Patch a family file, not the frozen routes.mjs aggregator (requests/ia.md): rebind styleguide.mjs's exported
+  // routes(env) so it appends test routes. /styleguide/ itself is the showcaseOnly, sitemap:false route.
+  appendFileSync(join(copy, 'site/src/pages/styleguide.mjs'), `
+const baseRoutes = routes;
+// @ts-ignore reassigning the exported function binding (ESM live binding) is the point of this test
+routes = (env) => [...baseRoutes(env),
+  { path: '/hidden/', file: 'hidden/index.html', noindex: true, sources: [], scripts: [], render: () => layout(env, { path: '/hidden/', title: 'Hidden', description: 'x', body: html\`<h1>Hidden</h1>\` }) },
+  { path: '/_test-raw', file: '_test-raw', sitemap: false, sources: [], scripts: [], render: () => '/a/ /b/ 301\\n' },
+];
+`);
   const site = join(copy, 'site');
   const r = build(site, []);
   assert.equal(r.status, 0, r.stderr);
   const dist = join(site, 'dist');
   assert.ok(existsSync(join(dist, 'styleguide/index.html')) && existsSync(join(dist, 'hidden/index.html')));
-  assert.equal(readFileSync(join(dist, '_redirects'), 'utf8'), '/a/ /b/ 301\n', 'non-.html routes are written raw');
+  assert.equal(readFileSync(join(dist, '_test-raw'), 'utf8'), '/a/ /b/ 301\n', 'non-.html routes are written raw');
   const sm = readFileSync(join(dist, 'sitemap.xml'), 'utf8');
-  for (const p of ['/styleguide/', '/hidden/', '/_redirects', '/404.html']) assert.ok(!sm.includes(`]${p}<`) && !sm.includes(`${p}</loc>`), `${p} must not be in the sitemap`);
+  for (const p of ['/styleguide/', '/hidden/', '/_test-raw', '/404.html']) assert.ok(!sm.includes(`]${p}<`) && !sm.includes(`${p}</loc>`), `${p} must not be in the sitemap`);
   assert.match(sm, /<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
   // Launch: the build fails on tokens, but the showcase-only page is never written.
   const out2 = join(tmp('rnc-launch-'), 'd');
