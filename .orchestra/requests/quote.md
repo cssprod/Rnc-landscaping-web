@@ -27,3 +27,18 @@ Branch `w2/quote`, based on `wave-1-int` (a3a99dd). The six-input builder ships 
 
 ## t-projects (W3)
 12. `70-quote.css` temporarily carries the shared `.select` rules and `.js .filters [data-filters-submit] { display: none }`, which used to live in quote's legacy slice 19 and which the portfolio filter relies on. It carries only the properties that legacy slice 20 does not set, so the filter keeps its pill shape. Please move these rules into `63-projects.css` when you restyle the filter, and tell quote so they can be deleted from 70.
+
+## Added by the quote fixer (w2/quote--fix1)
+
+### CONTRACT owner (§6 / C5.2 no-JS path)
+13. **Chromium garbles the no-JS `text/plain` mailto body for anything but plain ASCII.** Measured on a real no-JS submit in Chromium (URL captured with CDP `Page.frameRequestedNavigation`; `e2e/quote.spec#no-js-and-fallbacks` now does this with ASCII answers and checks one `name=value` line per field under the `Free quote request` subject):
+    - non-ASCII is UTF-8 double-encoded: "Zoë" arrives as "ZoÃ«", "—" as "â€”", "’" as "â€™". `accept-charset="utf-8"`, no charset and `ISO-8859-1` all give the same result;
+    - a typed `&` becomes a line break and a typed `+` becomes a space;
+    - the URL is not capped: 1,200 "é" in the description gives a mailto of about 14,600 characters, which some email apps cut.
+    The other encodings are worse (urlencoded POST or GET put `+` and `%XX` into the visible body), so `method=post enctype=text/plain` stays as CONTRACT and REDESIGN-PLAN require; this is a browser limit, not a coding error. With JS on (the normal path), quote.js builds the URL itself: UTF-8, ≤ 1,800 characters, truncation note. Mitigation on this branch: `messages.noJs` now asks visitors to check accented letters and symbols such as & or + before they send. Please record the limit next to C5.2 / P1#5 ("works without JS" means readable ASCII answers, one per line).
+
+### ds-comp (W2) / W3-W4 owner of `pages/quote.mjs`
+14. COMPONENTS.md plans `reassuranceStrip(items)` (`ul.reassurance`). It is not on the W2 base, so `/free-quote/` renders its own `ul.quote-reassure[data-quote-reassurance]` from `quote.json` `reassurance[]`. Once ds-comp ships it, please swap to `ui.reassuranceStrip(p.reassurance)` (or tell quote), keeping the `data-quote-reassurance` hook that `e2e/quote.spec#page-order` reads, and delete the `.quote-reassure` rules from `70-quote.css`.
+
+### integrator / qa
+15. `content/pages/quote.json` gained an additive `nextStepsHeading` ("What happens next"); `pages/quote.mjs` falls back to that text when the key is absent (for example the `site/fixtures` copy). Please add it to the quote.json v3 schema (item 7). Request 1 (`#legacy-slices`) is unchanged and still the only unit failure on this branch.
