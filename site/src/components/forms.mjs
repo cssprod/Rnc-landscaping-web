@@ -7,12 +7,15 @@
  * writes a formatted email and shows the ready panel (copy, address, call/text, webmail).
  * All copy comes from content/pages/quote.json; services and municipalities come from content/site.json.
  */
-import { html, raw, md } from '../lib/html.mjs';
+import { html, raw, md, typographer } from '../lib/html.mjs';
 import { tok, has, telHref, smsHref, e164 } from '../lib/tokens.mjs';
 import { siteJson } from '../../site.config.mjs';
 import { icon, SERVICE_ICON } from './sprite.mjs';
 
 const NOT_SURE = 'not-sure';
+/** Copy that quote.js writes into the page from a data-* attribute gets the build's curly quotes too (the
+    typographer skips attributes). @param {any} s */
+const ty = (s) => (s ? typographer(String(s)) : '');
 const OTHER_AREA = 'other';
 
 /**
@@ -55,14 +58,14 @@ export function quoteForm(data, page, o = {}) {
 
   return html`<form class="qb" id="${pre}-form" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" accept-charset="utf-8" data-stepper data-quote-form
   data-email="${email || tok('EMAIL')}" data-subject="${page?.subject || 'Free quote request — {services} — {area}'}" data-max-url="1800"
-  data-summary-labels="${JSON.stringify(page?.summary || {})}" data-label-copied="${b.copied || 'Copied'}" data-label-address-copied="${b.addressCopied || 'Address copied'}"
-  data-copy-failed="${m.copyFailed || ''}" data-truncated-note="${m.truncatedNote || '[…] Shortened to fit an email link. Paste the full request you copied.'}">
+  data-summary-labels="${JSON.stringify(page?.summary || {})}" data-label-copied="${ty(b.copied || 'Copied')}" data-label-address-copied="${ty(b.addressCopied || 'Address copied')}"
+  data-copy-failed="${ty(m.copyFailed)}" data-truncated-note="${ty(m.truncatedNote || '[…] Shortened to fit an email link. Paste the full request you copied.')}">
   <div class="qb__summary" id="${pre}-errors" data-error-summary tabindex="-1" role="alert" aria-labelledby="${pre}-errors-h" hidden>
     <h2 class="qb__summary-h" id="${pre}-errors-h">${m.errorSummary || 'Check these answers'}</h2>
     <ul></ul>
   </div>
 
-  <fieldset class="field qb-field" id="${pre}-services" data-field="services" data-msg="${sv.error || ''}" aria-describedby="${pre}-services-help">
+  <fieldset class="field qb-field" id="${pre}-services" data-field="services" data-msg="${ty(sv.error)}" aria-describedby="${pre}-services-help">
     <legend class="field__label">${sv.label || 'What do you need?'}</legend>
     <p class="field__help" id="${pre}-services-help">${sv.help || ''}</p>
     <div class="qb-cards">${services.map((s) => html`<label class="qb-card"><input type="checkbox" name="services" value="${s.slug}" id="${pre}-services-${s.slug}"><span class="qb-card__icon" aria-hidden="true">${icon(/** @type {any} */ (SERVICE_ICON)[s.slug] || 'leaf', { size: 22 })}</span><span class="qb-card__label" data-label>${s.navLabel || s.name}</span></label>`)}
@@ -70,40 +73,40 @@ export function quoteForm(data, page, o = {}) {
     ${errorLine(`${pre}-services`, 'services', sv.error || '')}
   </fieldset>
 
-  <div class="field qb-field" data-field="area" data-msg="${ar.error || ''}">
+  <div class="field qb-field" data-field="area" data-msg="${ty(ar.error)}">
     <label class="field__label" for="${pre}-area">${ar.label || 'Municipality'}</label>
     <p class="field__help" id="${pre}-area-help">${ar.help || ''}</p>
     <div class="select"><select id="${pre}-area" name="area" required aria-describedby="${pre}-area-help"><option value="">${ar.placeholder || 'Choose…'}</option>${areas.map((a) => html`<option value="${a.slug}">${a.name}</option>`)}<option value="${OTHER_AREA}">${ar.other || 'Somewhere else in Greater Victoria'}</option></select>${icon('chevron', { size: 18 })}</div>
     ${errorLine(`${pre}-area`, 'area', ar.error || '')}
   </div>
 
-  <div class="field qb-field" data-field="details" data-msg="${dt.error || ''}">
+  <div class="field qb-field" data-field="details" data-msg="${ty(dt.error)}">
     <label class="field__label" for="${pre}-details">${dt.label || 'About the property or job'}</label>
     <div class="field__help" id="${pre}-details-help">${detailsHelp.map((t) => html`<p>${md(t)}</p>`)}</div>
     <textarea id="${pre}-details" name="details" rows="6" required minlength="${dt.minLength || 10}" maxlength="${dt.maxLength || 1200}" placeholder="${dt.placeholder || ''}" aria-describedby="${pre}-details-help"></textarea>
     ${errorLine(`${pre}-details`, 'details', dt.error || '')}
   </div>
 
-  <fieldset class="field qb-field" id="${pre}-timing" data-field="timing" data-msg="${tm.error || ''}">
+  <fieldset class="field qb-field" id="${pre}-timing" data-field="timing" data-msg="${ty(tm.error)}">
     <legend class="field__label">${tm.label || 'Timing'}</legend>
     <div class="qb-choices">${choices('timing', tm.options || [], 'radio', '')}</div>
     ${errorLine(`${pre}-timing`, 'timing', tm.error || '')}
   </fieldset>
 
-  <div class="field qb-field" data-field="name" data-msg="${nm.error || ''}">
+  <div class="field qb-field" data-field="name" data-msg="${ty(nm.error)}">
     <label class="field__label" for="${pre}-name">${nm.label || 'Your name'}</label>
     <input id="${pre}-name" name="name" type="text" required autocomplete="name" autocapitalize="words" spellcheck="false" maxlength="${nm.maxLength || 100}">
     ${errorLine(`${pre}-name`, 'name', nm.error || '')}
   </div>
 
-  <fieldset class="field qb-field" id="${pre}-contact" data-field="contact" data-msg="${ct.error || ''}"${ct.help ? raw(` aria-describedby="${pre}-contact-help"`) : ''}>
+  <fieldset class="field qb-field" id="${pre}-contact" data-field="contact" data-msg="${ty(ct.error)}"${ct.help ? raw(` aria-describedby="${pre}-contact-help"`) : ''}>
     <legend class="field__label">${ct.label || 'Best way to reach you'}</legend>
     ${ct.help ? html`<p class="field__help" id="${pre}-contact-help">${ct.help}</p>` : ''}
     <div class="qb-choices">${choices('contact', ct.options || [], 'radio', 'email')}</div>
     ${errorLine(`${pre}-contact`, 'contact', ct.error || '')}
   </fieldset>
   <div class="qb-reveal" data-show-when="contact=call,text">
-    <div class="field qb-field" data-field="phone" data-msg="${ph.error || ''}">
+    <div class="field qb-field" data-field="phone" data-msg="${ty(ph.error)}">
       <label class="field__label" for="${pre}-phone">${ph.label || 'Phone number'}</label>
       <p class="field__help" id="${pre}-phone-help">${ph.help || ''}</p>
       <input id="${pre}-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="${pre}-phone-help">
@@ -131,7 +134,7 @@ export function quoteForm(data, page, o = {}) {
     <p class="qb-ready__status" role="status" data-copy-status></p>
     <div class="qb-ready__row qb-ready__address" data-address>
       <span>${m.sendTo || 'Send it to'} <strong>${email || siteJson.nap.email}</strong></span>
-      <button type="button" class="btn btn--secondary btn--sm" data-copy-address>${icon('copy', { size: 16 })}${b.copyAddress || 'Copy address'}</button>
+      ${email ? html`<button type="button" class="btn btn--secondary btn--sm" data-copy-address>${icon('copy', { size: 16 })}${b.copyAddress || 'Copy address'}</button>` : ''}
     </div>
     ${phone ? html`<div class="qb-ready__row" data-ready-talk>
       <a class="btn btn--secondary" href="${tel}" data-track="call_click" data-track-location="quote_ready">${icon('phone', { size: 18 })}${b.call || 'Call'}</a>

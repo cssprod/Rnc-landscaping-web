@@ -108,9 +108,10 @@
     "talk": "Prefer to talk? Call or text [PHONE].",
     "truncated": "Your request is longer than some email apps accept from a link, so the email that opened is shortened. Copy the full request below and paste it over the email text before you send.",
     "truncatedNote": "[…] This email was shortened to fit an email link. Paste the full request you copied here.",
-    "noJs": "Your answers are listed one per line in the email that opens.",
+    "noJs": "Your answers are listed one per line in the email that opens. Some browsers change accented letters and symbols such as & or + in it, so check the email before you send.",
     "copyFailed": "Copying didn't work in this browser. The request is selected: press Ctrl+C (or Cmd+C) to copy it."
   },
+  "nextStepsHeading": "What happens next",
   "nextSteps": [
     {
       "title": "We read your request",

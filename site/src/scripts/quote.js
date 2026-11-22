@@ -219,7 +219,11 @@ function init(form) {
   };
 
   /* ----- draft (sessionStorage only; CONTRACT §8) ----- */
-  const saveDraft = () => safely(() => sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ v: 1, ...values() })));
+  // The phone number is kept only while the visitor wants a call or text: no personal data they said is not needed.
+  const saveDraft = () => safely(() => {
+    const v = values();
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ v: 1, ...v, phone: v.contact === 'call' || v.contact === 'text' ? v.phone : '' }));
+  });
   const draft = safely(() => JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null'));
   if (draft && draft.v === 1) apply(draft);
   // ?service= / ?area= fill only what the draft left empty.
@@ -232,6 +236,7 @@ function init(form) {
     if (!phoneGate) return;
     const on = ['call', 'text'].includes(values().contact);
     phoneGate.hidden = !on;
+    phoneGate.classList.toggle('is-open', on);
     const p = /** @type {HTMLInputElement|null} */ (ctl('phone'));
     if (p) p.required = on;
     if (!on) showError(/** @type {HTMLElement} */ (phoneGate.querySelector('[data-field]') || phoneGate), '');
@@ -246,7 +251,7 @@ function init(form) {
     if (!err) return;
     const text = /** @type {HTMLElement} */ (err.querySelector('[data-error-text]') || err);
     err.hidden = !msg;
-    if (msg) text.textContent = msg;
+    if (msg && text.textContent !== msg) text.textContent = msg;
     f.classList.toggle('has-error', !!msg);
     const target = f.matches('fieldset') ? [f] : controls(f);
     for (const el of target) {
@@ -276,9 +281,16 @@ function init(form) {
   /** @param {HTMLElement} f */
   const validate = (f) => { const m = check(f); showError(f, m); return m; };
   const firstControl = (/** @type {HTMLElement} */ f) => /** @type {HTMLElement|null} */ (f.querySelector('input:not([type=hidden]), select, textarea'));
-  /** @param {{ f: HTMLElement, msg: string }[]} bad */
+  /** Summary line of each field listed at the last submit. @type {Map<HTMLElement, HTMLLIElement>} */
+  const summaryItems = new Map();
+  /**
+   * Rebuilds the error summary. Only on submit: the summary is role=alert, so every change to its contents is
+   * announced over whatever the visitor is doing (C5.4).
+   * @param {{ f: HTMLElement, msg: string }[]} bad
+   */
   function renderSummary(bad) {
     if (!summaryBox || !summaryList) return;
+    summaryItems.clear();
     summaryList.replaceChildren(...bad.map(({ f, msg }) => {
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -287,9 +299,16 @@ function init(form) {
       a.textContent = msg;
       a.addEventListener('click', (e) => { e.preventDefault(); c?.focus(); });
       li.append(a);
+      summaryItems.set(f, li);
       return li;
     }));
     summaryBox.hidden = bad.length === 0;
+  }
+  /** While editing: drop, in place, the lines of fields that are now fine (removals are not announced). Nothing else changes. */
+  function pruneSummary() {
+    if (!summaryBox) return;
+    for (const [f, li] of summaryItems) if (!f.classList.contains('has-error')) { li.remove(); summaryItems.delete(f); }
+    if (!summaryItems.size && !summaryBox.hidden) summaryBox.hidden = true;
   }
   const validateAll = () => fields.map((f) => ({ f, msg: validate(f) })).filter((x) => x.msg);
 
@@ -299,7 +318,7 @@ function init(form) {
     if (/** @type {HTMLElement} */ (e.target).matches?.('input[name=contact]')) syncPhone();
     const f = /** @type {HTMLElement|null} */ (/** @type {HTMLElement} */ (e.target).closest('[data-field]'));
     if (f && (attempted || f.classList.contains('has-error'))) validate(f);
-    if (attempted) renderSummary(fields.map((x) => ({ f: x, msg: x.classList.contains('has-error') ? check(x) : '' })).filter((x) => x.msg));
+    if (attempted) pruneSummary();
     saveDraft();
   };
   form.addEventListener('input', onEdit);

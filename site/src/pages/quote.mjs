@@ -37,7 +37,7 @@ export function routes(env) {
       <div class="quote-page__main">${quoteForm(d, p)}</div>
       <div class="quote-page__side">
         <section class="quote-next" data-quote-next aria-labelledby="quote-next-h">
-          <h2 id="quote-next-h">What happens next</h2>
+          <h2 id="quote-next-h">${p.nextStepsHeading || 'What happens next'}</h2>
           <ol class="quote-next__list">${steps.map((s) => html`<li><h3>${s.title}</h3><p>${md(s.body)}</p></li>`)}</ol>
         </section>
         ${quoteContacts(p)}

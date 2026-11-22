@@ -129,18 +129,24 @@ test('the form: six inputs, a mailto action that works without JS, no email fiel
   assert.match(html, /data-show-when="contact=call,text"/);
   // Inline errors are tied by aria-describedby only while shown (quote.js), so a hidden error is never read out.
   assert.doesNotMatch(html, /aria-describedby="[^"]*-error/);
-  for (const hook of ['data-error-summary', 'data-quote-ready', 'data-copy', 'data-copy-address', 'data-copy-status', 'data-mailto', 'data-webmail="gmail"', 'data-webmail="outlook"', 'data-restart']) assert.ok(html.includes(hook), hook);
+  for (const hook of ['data-error-summary', 'data-quote-ready', 'data-copy', 'data-copy-status', 'data-mailto', 'data-webmail="gmail"', 'data-webmail="outlook"', 'data-restart']) assert.ok(html.includes(hook), hook);
   assert.match(html, /role="status" data-copy-status/);
+  // Messages quote.js writes from data-* get the same curly quotes as the server-rendered text.
+  assert.match(html, /data-field="timing" data-msg="Choose when you’d like the work done\."/);
+  assert.doesNotMatch(html, /data-(?:msg|copy-failed|truncated-note|label-[a-z-]+)="[^"]*(?:&#39;|')/);
 });
 
 test('ready panel: Call / Text links only once the phone number is known; never a URL on a token #ready-links', () => {
   const unknown = String(quoteForm({}, page)) + String(quoteContacts(page));
   assert.doesNotMatch(unknown, /href="(?:tel|sms):/);
   assert.doesNotMatch(unknown, /\s(?:href|action|src)="[^"]*(?:\[[A-Z ]+\]|%5B)/);
+  // Copy address only once [EMAIL] is known: never a placeholder on the clipboard.
+  assert.doesNotMatch(unknown, /data-copy-address/);
   const known = String(quoteForm({}, page, { phone: '250-555-0123', email: 'quotes@example.ca' }));
   assert.match(known, /<a class="btn btn--secondary" href="tel:\+12505550123" data-track="call_click" data-track-location="quote_ready">/);
   assert.match(known, /href="sms:\+12505550123" data-sms data-phone="\+12505550123" data-track="sms_click" data-track-location="quote_ready"/);
   assert.match(known, /action="mailto:quotes@example\.ca\?subject=Free%20quote%20request"/);
+  assert.match(known, /<strong>quotes@example\.ca<\/strong><\/span>\s*<button type="button" class="btn btn--secondary btn--sm" data-copy-address>/);
   const contacts = String(quoteContacts(page, { phone: '250-555-0123', email: 'quotes@example.ca' }));
   assert.match(contacts, /href="tel:\+12505550123" data-track="call_click" data-track-location="quote_aside"/);
   assert.match(contacts, /href="sms:\+12505550123" data-track="sms_click" data-track-location="quote_aside"/);

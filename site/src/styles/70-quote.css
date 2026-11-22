@@ -67,9 +67,12 @@
 .qb-card__icon { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: color-mix(in srgb, var(--color-brand) 12%, transparent); color: var(--color-brand); }
 .qb-card__label { flex: 1; min-width: 0; }
 .qb-card--plain .qb-card__icon { background: color-mix(in srgb, var(--color-ink) 8%, transparent); color: var(--color-ink-2); }
-/* The phone field sits under its question; shown without JS, toggled by quote.js. */
+/* The phone field sits under its question; shown without JS, toggled by quote.js ([hidden] + .is-open).
+   With JS on, it is also hidden from first paint, before the deferred module runs, unless Call me / Text me is already
+   chosen: no shift when quote.js hides it, and if quote.js never runs, choosing call or text still shows it. */
 .qb-reveal { margin-top: calc(var(--space-6) * -0.5); padding-left: 14px; border-left: 2px solid color-mix(in srgb, var(--color-brand) 40%, transparent); }
 .qb-reveal[hidden] { display: none; }
+.js .qb:not(:has(input[name=contact][value=call]:checked, input[name=contact][value=text]:checked)) .qb-reveal:not(.is-open) { display: none; }
 
 /* ---------- submit, error summary, ready panel ---------- */
 .qb__submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: var(--space-6); }

@@ -49,6 +49,15 @@ test('six inputs, one name field, no email field and no CAPTCHA #six-inputs', as
   await page.locator('#q-contact-email').check();
   await expect(page.locator('#q-phone')).toBeHidden();
   expect(errors).toEqual([]);
+  // With JS on, the phone field is hidden from first paint (no shift when quote.js runs), and if quote.js never
+  // runs, choosing call or text still shows it (CSS only).
+  await page.route('**/assets/build/quote.*.js', (r) => r.abort());
+  await page.goto(URL_);
+  await expect(page.locator('html')).toHaveClass(/\bjs\b/);
+  await expect(page.locator('form[data-quote-form]')).not.toHaveAttribute('data-enhanced', '');
+  await expect(page.locator('#q-phone')).toBeHidden();
+  await page.locator('#q-contact-text').check();
+  await expect(page.locator('#q-phone')).toBeVisible();
 });
 
 test('page order: H1 → reassurance strip → builder → what happens next (3) → other contacts → privacy note #page-order', async ({ page }) => {
@@ -124,10 +133,10 @@ test('ready panel: copy request with a status message, the address, call/text, G
   await page.locator('[data-copy]').click();
   await expect(status).toHaveText('Request copied');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(request);
-  // the address as text with its own copy button (chip until [EMAIL] is known)
+  // the address as text (chip until [EMAIL] is known); its Copy address button only once there is a real address,
+  // so a placeholder never lands on the clipboard (unit/quote-builder.test#ready-links covers the known case)
   await expect(page.locator('[data-address]')).toContainText('[EMAIL]');
-  await page.locator('[data-copy-address]').click();
-  await expect(status).toHaveText('Address copied');
+  await expect(page.locator('[data-copy-address]')).toHaveCount(0);
   // Call / Text: links once [PHONE] is known; until then the number shows as text and no tel:/sms: URL is built
   await expect(page.locator('[data-ready-talk]')).toContainText('[PHONE]');
   await expect(page.locator('main [href^="tel:"], main [href^="sms:"]')).toHaveCount(0);
@@ -174,6 +183,21 @@ test('validation: inline errors tied by aria-describedby, an error summary, valu
   await expect(page.locator('#q-area')).toHaveAttribute('aria-describedby', /q-area-help q-area-error/);
   await expect(page.locator('#q-services')).toHaveAttribute('aria-describedby', /q-services-error/);
   await expect(page.locator('#q-phone')).toHaveAttribute('aria-describedby', /q-phone-error/);
+  // The summary is role=alert: typing must not touch it unless a field's valid/invalid state changes, or screen
+  // readers re-read it over the visitor's typing.
+  await page.evaluate(() => {
+    const w = /** @type {any} */ (window);
+    w.__summaryMutations = 0;
+    new MutationObserver((list) => { w.__summaryMutations += list.length; })
+      .observe(/** @type {Node} */ (document.querySelector('[data-error-summary]')), { childList: true, subtree: true, characterData: true, attributes: true });
+  });
+  await page.locator('#q-details').pressSequentially('abc'); // still too short: stays invalid
+  await page.locator('#q-name').pressSequentially(' Jr'); // already valid: stays valid
+  await page.locator('#q-contact-text').check(); // valid → valid; the phone stays required and empty
+  expect(await page.evaluate(() => /** @type {any} */ (window).__summaryMutations)).toBe(0);
+  await expect(items).toHaveCount(5);
+  await page.locator('#q-name').fill('Alex Example');
+  await page.locator('#q-contact-call').check();
   // values are never cleared
   await expect(page.locator('#q-name')).toHaveValue('Alex Example');
   await expect(page.locator('#q-contact-call')).toBeChecked();
@@ -229,6 +253,10 @@ test('the draft survives leaving the page and coming back, in sessionStorage onl
   // a ?area= link does not overwrite the visitor's own answer
   await page.goto(`${URL_}?area=sooke`);
   await expect(page.locator('#q-area')).toHaveValue('saanich');
+  // switching to Reply by email drops the phone number from the draft (personal data that is no longer needed)
+  await page.locator('#q-contact-email').check();
+  const emailDraft = JSON.parse(/** @type {string} */ (await page.evaluate(() => sessionStorage.getItem('rnc-quote-draft'))));
+  expect(emailDraft).toMatchObject({ contact: 'email', phone: '' });
   // another tab starts empty (sessionStorage is per tab)
   const other = await page.context().newPage();
   await offline(other);
@@ -257,6 +285,26 @@ test('without JS the form opens a mailto; with JS the fallbacks show address, ca
   // the other ways to reach us need no JS: phone, text, email as text plus chip until the tokens are known
   await expect(nojs.locator('[data-quote-contacts]')).toContainText('[PHONE]');
   await expect(nojs.locator('[data-quote-contacts]')).toContainText('[EMAIL]');
+  // A real no-JS submit: the browser hands the email app a mailto: with every answer on its own name=value line under
+  // the "Free quote request" subject. Captured through CDP, because a mailto: navigation never reaches the page.
+  // ASCII answers only: Chromium double-encodes non-ASCII and turns a typed & into a line break in text/plain mailto
+  // bodies (requests/quote.md), which messages.noJs warns about.
+  const cdp = await ctx.newCDPSession(nojs);
+  await cdp.send('Page.enable');
+  const navigated = new Promise((resolve) => cdp.on('Page.frameRequestedNavigation', (e) => { if (e.url.startsWith('mailto:')) resolve(e.url); }));
+  await nojs.locator('#q-services-irrigation').check();
+  await nojs.locator('#q-services-grounds-maintenance').check();
+  await nojs.locator('#q-area').selectOption('saanich');
+  await nojs.locator('#q-details').fill('Spring start-up for a strata, about 12 zones.\nOne valve leaks by the entrance.');
+  await nojs.locator('#q-timing-this-season').check();
+  await nojs.locator('#q-name').fill('Alex Example');
+  await nojs.locator('#q-contact-call').check();
+  await nojs.locator('#q-phone').fill('250 555 0123');
+  await f.locator('button[type=submit]').click();
+  const mailto = /** @type {string} */ (await Promise.race([navigated, new Promise((_, no) => setTimeout(() => no(new Error('no mailto: navigation')), 5000))]));
+  expect(mailto).toMatch(/^mailto:\?subject=Free%20quote%20request&body=/);
+  const lines = decodeURIComponent(mailto.split('&body=')[1]).split(/\r?\n/);
+  for (const line of ['services=irrigation', 'services=grounds-maintenance', 'area=saanich', 'details=Spring start-up for a strata, about 12 zones.', 'One valve leaks by the entrance.', 'timing=this-season', 'name=Alex Example', 'contact=call', 'phone=250 555 0123']) expect(lines, line).toContain(line);
   await ctx.close();
 
   // With JS: the submit button opens the email app and the ready panel announces the fallbacks.
