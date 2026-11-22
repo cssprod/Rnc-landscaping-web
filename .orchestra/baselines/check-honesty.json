@@ -1,0 +1,10 @@
+{
+  "tool": "check-honesty",
+  "writtenAt": "w2/qa",
+  "entries": [
+    {
+      "rule": "reviews-credentials-guarantee",
+      "path": "reviews/index.html"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "tool": "a11y",
+  "writtenAt": "w2/qa",
+  "entries": [
+    {
+      "rule": "axe-matrix",
+      "path": "styleguide/index.html"
+    }
+  ]
+}

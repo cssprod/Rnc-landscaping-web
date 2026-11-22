@@ -1,0 +1,106 @@
+{
+  "tool": "check-seo",
+  "writtenAt": "w2/seo",
+  "entries": [
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/central-saanich/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/colwood/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/esquimalt/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/highlands/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/langford/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/metchosin/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/north-saanich/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/oak-bay/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/saanich/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/sidney/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/sooke/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/victoria/index.html"
+    },
+    {
+      "rule": "cross-area-duplicates",
+      "path": "areas/view-royal/index.html"
+    },
+    {
+      "rule": "decorative-duplicate",
+      "path": "styleguide/index.html"
+    },
+    {
+      "rule": "repeated-text",
+      "path": "styleguide/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "privacy/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/crd-watering-rules-guide/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/fall-cleanup-and-leaf-guide/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/irrigation-start-up-and-winterization/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/native-and-drought-tolerant-planting/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/spring-lawn-and-garden-checklist/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "resources/winter-pruning-and-storm-prep/index.html"
+    },
+    {
+      "rule": "time-format",
+      "path": "terms/index.html"
+    }
+  ]
+}
