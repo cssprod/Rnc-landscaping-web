@@ -1,118 +1,174 @@
 // @ts-check
 /**
- * Quote request form. There is no backend: the last step opens the visitor's
- * own email app with the request written out (mailto:), and shows the same
- * text with a Copy button in case no email app opens. Without JavaScript the
- * form submits as text/plain to mailto: with native validation.
- * Steps, labels, help and error text come from content/pages/quote.json
- * ([{ title, intro, fields: [{ name, type, label, help, required, options, errors }] }]).
+ * Free quote builder (C5; CONTRACT §6 quote.json v3, §13 events). One page, six inputs: services, area, details,
+ * timing, name and contact (the phone field appears for call or text and is then required). There is no email
+ * field and no backend: the form's action is a mailto:, so without JavaScript it opens the visitor's email app with
+ * the answers one per line (method=post, enctype=text/plain). With JavaScript, scripts/quote.js validates in place,
+ * writes a formatted email and shows the ready panel (copy, address, call/text, webmail).
+ * All copy comes from content/pages/quote.json; services and municipalities come from content/site.json.
  */
-import { html, raw, md } from '../lib/html.mjs';
-import { tok, has, mailLink } from '../lib/tokens.mjs';
-import { icon } from './sprite.mjs';
+import { html, raw, md, typographer } from '../lib/html.mjs';
+import { tok, has, telHref, smsHref, e164 } from '../lib/tokens.mjs';
+import { siteJson } from '../../site.config.mjs';
+import { icon, SERVICE_ICON } from './sprite.mjs';
+
+const NOT_SURE = 'not-sure';
+/** Copy that quote.js writes into the page from a data-* attribute gets the build's curly quotes too (the
+    typographer skips attributes). @param {any} s */
+const ty = (s) => (s ? typographer(String(s)) : '');
+const OTHER_AREA = 'other';
 
 /**
- * @typedef {{ name: string, type: string, label: string, help?: string, error?: string, required?: boolean, options?: [string,string][], autocomplete?: string, min?: number, max?: number, showWhen?: string, phoneError?: string }} Field
- * @typedef {{ title: string, intro?: string, fields: Field[] }} Step
+ * Contact values for links, with test overrides. A value is '' while its token is unresolved, so no URL is ever built
+ * on a bracket token (CONTRACT §3).
+ * @param {{ email?: string, phone?: string }} o
  */
-
-/** Short labels used in the email summary. */
-const SUMMARY_LABEL = {
-  services: 'Services', service: 'Service', propertyType: 'Property', property_type: 'Property', area: 'Area', areaOther: 'Community',
-  address: 'Address', location: 'Location', timing: 'Timing', details: 'About the work', name: 'Name', email: 'Email', phone: 'Phone',
-  contactPreference: 'Contact by', organization: 'Organization',
-};
-
-/** @param {any} f @returns {Field} */
-function fromContent(f) {
-  const type = f.type === 'checkbox-group' ? 'checks' : f.type;
-  return {
-    name: f.name, type, label: f.label, help: f.help,
-    error: f.errors?.required || f.errors?.format || f.errors?.minLength || '',
-    required: !!f.required, min: f.minLength, max: f.maxLength, autocomplete: f.autocomplete,
-    options: (f.options || []).map((/** @type {any} */ o) => /** @type {[string,string]} */ ([o.value, o.label])),
-    showWhen: f.requiredWhen ? Object.entries(f.requiredWhen).map(([k, v]) => `${k}=${v}`)[0] : undefined,
-    phoneError: f.errors?.phoneNeeded,
-  };
+function contactValues(o) {
+  const email = o.email ?? (has('EMAIL') ? tok('EMAIL') : '');
+  const phone = o.phone ?? (has('PHONE') ? tok('PHONE') : '');
+  const tel = phone ? (o.phone ? `tel:${e164(phone)}` : telHref()) : '';
+  const sms = phone ? (o.phone ? `sms:${e164(phone)}` : smsHref()) : '';
+  return { email, phone, tel, sms };
 }
 
-/** @param {any} data @param {any} page @returns {Step[]} */
-export function quoteSteps(data, page) {
-  const steps = Array.isArray(page?.steps) ? page.steps : [];
-  const out = steps.map((/** @type {any} */ st) => ({ title: st.title, intro: st.intro, fields: (st.fields || []).filter((/** @type {any} */ f) => f.type !== 'file').map(fromContent) }));
-  // The "phone needed" message belongs on the phone field.
-  const all = out.flatMap((/** @type {Step} */ x) => x.fields);
-  const pn = all.find((/** @type {Field} */ f) => f.phoneError)?.phoneError;
-  const ph = all.find((/** @type {Field} */ f) => f.name === 'phone');
-  if (ph && pn) ph.phoneError = pn;
-  return out;
-}
+/** Inline error line, hidden until quote.js shows it. @param {string} id @param {string} field @param {string} msg */
+const errorLine = (id, field, msg) => html`<p class="field__error" id="${id}-error" data-error-for="${field}" hidden>${icon('close', { size: 14 })}<span data-error-text>${msg}</span></p>`;
 
-/** @param {Field} f @param {string} pre */
-function field(f, pre) {
-  const inner = field0(f, pre);
-  return f.showWhen ? html`<div data-show-when="${f.showWhen}">${inner}</div>` : inner;
-}
-
-/** @param {Field} f @param {string} pre */
-function field0(f, pre) {
-  const id = `${pre}-${f.name}`;
-  const req = f.required ? raw(' required') : '';
-  const desc = [f.help ? `${id}-help` : '', `${id}-error`].filter(Boolean).join(' ');
-  const help = f.help ? html`<p class="field__help" id="${id}-help">${md(f.help)}</p>` : '';
-  const err = html`<p class="field__error" id="${id}-error" data-error-for="${f.name}" hidden>${icon('close', { size: 14 })}<span>${f.error || 'Check this field.'}</span></p>`;
-  const sum = raw(` data-summary="${(/** @type {any} */ (SUMMARY_LABEL))[f.name] || f.label.replace(/\s*\(optional\)\s*$/i, '')}"`);
-  if (f.type === 'radio' || f.type === 'checks') {
-    const t = f.type === 'radio' ? 'radio' : 'checkbox';
-    return html`<fieldset class="field field--choices" data-field="${f.name}"${f.type === 'checks' && f.required ? raw(' data-any') : ''} data-msg="${f.error || ''}" aria-describedby="${desc}"${sum}>
-      <legend>${f.label}</legend>${help}
-      <div class="choices">${(f.options || []).map(([v, l], i) => html`<label class="choice"><input type="${t}" name="${f.name}" value="${v}" id="${id}-${i}"${t === 'radio' && i === 0 ? req : ''}><span class="choice__label">${l}</span></label>`)}</div>${err}</fieldset>`;
-  }
-  if (f.type === 'select') {
-    return html`<div class="field" data-field="${f.name}" data-msg="${f.error || ''}"${sum}><label for="${id}">${f.label}</label>${help}
-      <div class="select"><select id="${id}" name="${f.name}"${req} aria-describedby="${desc}"><option value="">Choose…</option>${(f.options || []).map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select>${icon('chevron', { size: 18 })}</div>${err}</div>`;
-  }
-  if (f.type === 'textarea') {
-    return html`<div class="field" data-field="${f.name}" data-msg="${f.error || ''}"${sum}><label for="${id}">${f.label}</label>${help}
-      <textarea id="${id}" name="${f.name}" rows="6"${req}${f.min ? raw(` minlength="${f.min}"`) : ''}${f.max ? raw(` maxlength="${f.max}"`) : ''} aria-describedby="${desc}"></textarea>${err}</div>`;
-  }
-  if (f.type === 'checkbox') {
-    return html`<div class="field field--check" data-field="${f.name}" data-msg="${f.error || ''}"><label class="choice choice--check"><input type="checkbox" id="${id}" name="${f.name}" value="yes"${req} aria-describedby="${desc}"><span class="choice__label">${md(f.label)}</span></label>${err}</div>`;
-  }
-  return html`<div class="field" data-field="${f.name}" data-msg="${f.error || ''}"${sum}><label for="${id}">${f.label}</label>${help}
-    <input id="${id}" name="${f.name}" type="${f.type}"${req}${f.max ? raw(` maxlength="${f.max}"`) : ''}${f.name === 'phone' && f.phoneError ? raw(` data-phone-error="${f.phoneError.replace(/"/g, '&quot;')}"`) : ''}${f.autocomplete ? raw(` autocomplete="${f.autocomplete}"`) : ''} aria-describedby="${desc}">${err}</div>`;
-}
-
-/** @param {any} data @param {any} page */
-export function quoteForm(data, page) {
-  const steps = quoteSteps(data, page);
+/**
+ * The six-input quote builder form.
+ * @param {any} data build data (env.data); services and municipalities are read from content/site.json
+ * @param {any} page content/pages/quote.json (v3)
+ * @param {{ email?: string, phone?: string, id?: string }} [o] `email` / `phone` override the [EMAIL] / [PHONE] tokens (tests);
+ *   `id` prefixes every id (default "q")
+ */
+export function quoteForm(data, page, o = {}) {
+  void data;
+  const F = page?.fields || {};
   const b = page?.buttons || {};
-  const ready = page?.messages?.ready || {};
-  const email = tok('EMAIL');
-  // CONTRACT §3: a URL is never built on an unresolved token. Until [EMAIL] is known the mailto: has no recipient (the
-  // same target main.js composes) and the help text shows the address as text, so the chip marks it in showcase builds.
-  const to = has('EMAIL') ? email : '';
-  return html`<form class="quote-form glass-card" name="quote" method="post" action="mailto:${to}?subject=Free%20quote%20request" enctype="text/plain" data-stepper data-quote-form data-email="${email}" data-label-next="${b.next || 'Next'}" data-label-back="${b.back || 'Back'}" data-label-copied="${b.copied || 'Copied'}">
-  <ol class="stepper" data-stepper-progress>${steps.map((s, i) => html`<li data-step-label="${i}"${i === 0 ? raw(' class="is-current"') : ''}><span class="stepper__n">${i + 1}</span><span class="stepper__t">${s.title}</span></li>`)}</ol>
-  <p class="vh" role="status" aria-live="polite" data-stepper-status></p>
-  ${steps.map((s, i) => html`<fieldset class="step" data-step="${i}" id="step-${i + 1}">
-    <legend class="step__legend"><span class="step__count">Step ${i + 1} of ${steps.length}</span> ${s.title}</legend>
-    ${s.intro ? html`<p class="step__intro">${md(s.intro)}</p>` : ''}
-    ${s.fields.map((f) => field(f, 'q'))}
-    <div class="step__nav" data-step-nav></div>
-  </fieldset>`)}
-  <div class="quote-form__submit" data-submit-row><button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Create my email'}</button><p class="field__help">Opens your email app${has('EMAIL') ? '' : html` with the request written out. Add ${mailLink('quote_form')} as the recipient`}. Nothing is sent until you press send.</p></div>
-  <div class="quote-ready" data-quote-ready hidden tabindex="-1">
-    <span class="icon-tile icon-tile--success">${icon('check', { size: 24 })}</span>
-    <h2>${ready.heading || 'Your email is ready to send'}</h2>
-    <p>${md(ready.body || 'Your email app should now show your request. If nothing opened, copy the request below and email it to us.')}</p>
-    <label for="q-summary" class="quote-ready__label">Your request</label>
-    <textarea id="q-summary" readonly rows="11" data-quote-summary></textarea>
-    <div class="quote-ready__actions">
-      <button type="button" class="btn btn--primary" data-copy>${icon('copy', { size: 18 })}<span data-copy-label>${b.copy || 'Copy request'}</span></button>
-      <a class="btn btn--secondary" href="mailto:${to}" data-mailto>${icon('mail', { size: 18 })}${b.reopen || 'Open email again'}</a>
-      <button type="button" class="btn btn--plain" data-restart>${b.restart || 'Start over'}</button>
+  const m = page?.messages || {};
+  const pre = o.id || 'q';
+  const { email, phone, tel, sms } = contactValues(o);
+  const services = siteJson.services || [];
+  const areas = siteJson.municipalities || [];
+  const sv = F.services || {}, ar = F.area || {}, dt = F.details || {}, tm = F.timing || {}, nm = F.name || {}, ct = F.contact || {};
+  const ph = ct.phone || {};
+  const choices = (/** @type {string} */ name, /** @type {{ value: string, label: string }[]} */ opts, /** @type {string} */ type, /** @type {string} */ checkedValue) =>
+    opts.map((opt, i) => html`<label class="qb-choice"><input type="${type}" name="${name}" value="${opt.value}" id="${pre}-${name}-${opt.value}"${type === 'radio' && i === 0 ? raw(' required') : ''}${opt.value === checkedValue ? raw(' checked') : ''}><span class="qb-choice__label" data-label>${opt.label}</span></label>`);
+  const detailsHelp = [dt.help, dt.examples?.length ? `For example: ${dt.examples.slice(0, -1).join(', ')}${dt.examples.length > 1 ? ', or ' : ''}${dt.examples[dt.examples.length - 1]}.` : ''].filter(Boolean);
+
+  return html`<form class="qb" id="${pre}-form" name="quote" method="post" action="mailto:${email}?subject=Free%20quote%20request" enctype="text/plain" accept-charset="utf-8" data-stepper data-quote-form
+  data-email="${email || tok('EMAIL')}" data-subject="${page?.subject || 'Free quote request — {services} — {area}'}" data-max-url="1800"
+  data-summary-labels="${JSON.stringify(page?.summary || {})}" data-label-copied="${ty(b.copied || 'Copied')}" data-label-address-copied="${ty(b.addressCopied || 'Address copied')}"
+  data-copy-failed="${ty(m.copyFailed)}" data-truncated-note="${ty(m.truncatedNote || '[…] Shortened to fit an email link. Paste the full request you copied.')}">
+  <div class="qb__summary" id="${pre}-errors" data-error-summary tabindex="-1" role="alert" aria-labelledby="${pre}-errors-h" hidden>
+    <h2 class="qb__summary-h" id="${pre}-errors-h">${m.errorSummary || 'Check these answers'}</h2>
+    <ul></ul>
+  </div>
+
+  <fieldset class="field qb-field" id="${pre}-services" data-field="services" data-msg="${ty(sv.error)}" aria-describedby="${pre}-services-help">
+    <legend class="field__label">${sv.label || 'What do you need?'}</legend>
+    <p class="field__help" id="${pre}-services-help">${sv.help || ''}</p>
+    <div class="qb-cards">${services.map((s) => html`<label class="qb-card"><input type="checkbox" name="services" value="${s.slug}" id="${pre}-services-${s.slug}"><span class="qb-card__icon" aria-hidden="true">${icon(/** @type {any} */ (SERVICE_ICON)[s.slug] || 'leaf', { size: 22 })}</span><span class="qb-card__label" data-label>${s.navLabel || s.name}</span></label>`)}
+      <label class="qb-card qb-card--plain"><input type="checkbox" name="services" value="${NOT_SURE}" id="${pre}-services-${NOT_SURE}"><span class="qb-card__icon" aria-hidden="true">${icon('chat', { size: 22 })}</span><span class="qb-card__label" data-label>${sv.notSure || 'Not sure yet'}</span></label></div>
+    ${errorLine(`${pre}-services`, 'services', sv.error || '')}
+  </fieldset>
+
+  <div class="field qb-field" data-field="area" data-msg="${ty(ar.error)}">
+    <label class="field__label" for="${pre}-area">${ar.label || 'Municipality'}</label>
+    <p class="field__help" id="${pre}-area-help">${ar.help || ''}</p>
+    <div class="select"><select id="${pre}-area" name="area" required aria-describedby="${pre}-area-help"><option value="">${ar.placeholder || 'Choose…'}</option>${areas.map((a) => html`<option value="${a.slug}">${a.name}</option>`)}<option value="${OTHER_AREA}">${ar.other || 'Somewhere else in Greater Victoria'}</option></select>${icon('chevron', { size: 18 })}</div>
+    ${errorLine(`${pre}-area`, 'area', ar.error || '')}
+  </div>
+
+  <div class="field qb-field" data-field="details" data-msg="${ty(dt.error)}">
+    <label class="field__label" for="${pre}-details">${dt.label || 'About the property or job'}</label>
+    <div class="field__help" id="${pre}-details-help">${detailsHelp.map((t) => html`<p>${md(t)}</p>`)}</div>
+    <textarea id="${pre}-details" name="details" rows="6" required minlength="${dt.minLength || 10}" maxlength="${dt.maxLength || 1200}" placeholder="${dt.placeholder || ''}" aria-describedby="${pre}-details-help"></textarea>
+    ${errorLine(`${pre}-details`, 'details', dt.error || '')}
+  </div>
+
+  <fieldset class="field qb-field" id="${pre}-timing" data-field="timing" data-msg="${ty(tm.error)}">
+    <legend class="field__label">${tm.label || 'Timing'}</legend>
+    <div class="qb-choices">${choices('timing', tm.options || [], 'radio', '')}</div>
+    ${errorLine(`${pre}-timing`, 'timing', tm.error || '')}
+  </fieldset>
+
+  <div class="field qb-field" data-field="name" data-msg="${ty(nm.error)}">
+    <label class="field__label" for="${pre}-name">${nm.label || 'Your name'}</label>
+    <input id="${pre}-name" name="name" type="text" required autocomplete="name" autocapitalize="words" spellcheck="false" maxlength="${nm.maxLength || 100}">
+    ${errorLine(`${pre}-name`, 'name', nm.error || '')}
+  </div>
+
+  <fieldset class="field qb-field" id="${pre}-contact" data-field="contact" data-msg="${ty(ct.error)}"${ct.help ? raw(` aria-describedby="${pre}-contact-help"`) : ''}>
+    <legend class="field__label">${ct.label || 'Best way to reach you'}</legend>
+    ${ct.help ? html`<p class="field__help" id="${pre}-contact-help">${ct.help}</p>` : ''}
+    <div class="qb-choices">${choices('contact', ct.options || [], 'radio', 'email')}</div>
+    ${errorLine(`${pre}-contact`, 'contact', ct.error || '')}
+  </fieldset>
+  <div class="qb-reveal" data-show-when="contact=call,text">
+    <div class="field qb-field" data-field="phone" data-msg="${ty(ph.error)}">
+      <label class="field__label" for="${pre}-phone">${ph.label || 'Phone number'}</label>
+      <p class="field__help" id="${pre}-phone-help">${ph.help || ''}</p>
+      <input id="${pre}-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="${pre}-phone-help">
+      ${errorLine(`${pre}-phone`, 'phone', ph.error || '')}
     </div>
   </div>
+
+  <div class="qb__submit" data-submit-row>
+    <button class="btn btn--primary btn--lg" type="submit">${icon('mail', { size: 18 })}${b.submit || 'Open my email app'}</button>
+    <p class="field__help">${m.submitHelp || ''}${email ? '' : html` ${m.noRecipient || `Add ${siteJson.nap.email} as the recipient before you send.`}`}</p>
+    ${m.noJs ? html`<p class="field__help qb__nojs">${m.noJs}</p>` : ''}
+  </div>
+
+  <section class="qb-ready" data-quote-ready hidden aria-labelledby="${pre}-ready-h">
+    <span class="qb-ready__badge" aria-hidden="true">${icon('check', { size: 22 })}</span>
+    <h2 id="${pre}-ready-h" tabindex="-1" data-ready-heading>${m.ready?.heading || 'Your email is ready to send'}</h2>
+    <p>${md(m.ready?.body || '')}</p>
+    <p class="qb-ready__note" data-truncated hidden>${m.truncated || ''}</p>
+    <label class="field__label" for="${pre}-request">${m.requestLabel || 'Your request'}</label>
+    <textarea id="${pre}-request" readonly rows="10" data-quote-summary></textarea>
+    <div class="qb-ready__row">
+      <button type="button" class="btn btn--primary" data-copy>${icon('copy', { size: 18 })}${b.copy || 'Copy request'}</button>
+      <a class="btn btn--secondary" href="mailto:${email}" data-mailto>${icon('mail', { size: 18 })}${b.reopen || 'Open my email app again'}</a>
+    </div>
+    <p class="qb-ready__status" role="status" data-copy-status></p>
+    <div class="qb-ready__row qb-ready__address" data-address>
+      <span>${m.sendTo || 'Send it to'} <strong>${email || siteJson.nap.email}</strong></span>
+      ${email ? html`<button type="button" class="btn btn--secondary btn--sm" data-copy-address>${icon('copy', { size: 16 })}${b.copyAddress || 'Copy address'}</button>` : ''}
+    </div>
+    ${phone ? html`<div class="qb-ready__row" data-ready-talk>
+      <a class="btn btn--secondary" href="${tel}" data-track="call_click" data-track-location="quote_ready">${icon('phone', { size: 18 })}${b.call || 'Call'}</a>
+      <a class="btn btn--secondary" href="${sms}" data-sms data-phone="${e164(phone)}" data-track="sms_click" data-track-location="quote_ready">${icon('chat', { size: 18 })}${b.text || 'Text us'}</a>
+    </div>` : html`<p class="qb-ready__talk" data-ready-talk>${m.talk || `Prefer to talk? Call or text ${siteJson.nap.phone}.`}</p>`}
+    <div class="qb-ready__webmail">
+      <p>${m.webmail || ''}</p>
+      <div class="qb-ready__row">
+        <a class="btn btn--plain" data-webmail="gmail" target="_blank" rel="noopener noreferrer">${b.gmail || 'Gmail'}${icon('arrow-up-right', { size: 16 })}</a>
+        <a class="btn btn--plain" data-webmail="outlook" target="_blank" rel="noopener noreferrer">${b.outlook || 'Outlook.com'}${icon('arrow-up-right', { size: 16 })}</a>
+      </div>
+    </div>
+    <button type="button" class="btn btn--plain qb-ready__restart" data-restart>${b.restart || 'Start again'}</button>
+  </section>
 </form>`;
+}
+
+/**
+ * "Other ways to reach us": phone, text and email as links once known (CONTRACT §3: plain text plus the chip until then), and hours.
+ * @param {any} page content/pages/quote.json (v3)
+ * @param {{ email?: string, phone?: string, location?: string }} [o] token overrides (tests); `location` is the analytics placement (default quote_aside)
+ */
+export function quoteContacts(page, o = {}) {
+  const c = page?.contacts || {};
+  const loc = o.location || 'quote_aside';
+  const { email, phone, tel, sms } = contactValues(o);
+  const row = (/** @type {string} */ ic, /** @type {string} */ label, /** @type {any} */ value) => html`<div class="quote-contacts__row"><dt>${icon(ic, { size: 18 })}<span>${label}</span></dt><dd>${value}</dd></div>`;
+  return html`<section class="quote-contacts" data-quote-contacts aria-labelledby="quote-contacts-h">
+  <h2 id="quote-contacts-h">${c.heading || 'Other ways to reach us'}</h2>
+  <dl class="quote-contacts__list">
+    ${row('phone', c.phone || 'Phone', phone ? html`<a href="${tel}" data-track="call_click" data-track-location="${loc}">${phone}</a>` : siteJson.nap.phone)}
+    ${row('chat', c.text || 'Text', phone ? html`<a href="${sms}" data-track="sms_click" data-track-location="${loc}">${phone}</a>` : siteJson.nap.phone)}
+    ${row('mail', c.email || 'Email', email ? html`<a href="mailto:${email}" data-track="email_click" data-track-location="${loc}">${email}</a>` : siteJson.nap.email)}
+    ${row('clock', c.hours || 'Hours', siteJson.hours?.display || '')}
+  </dl>
+</section>`;
 }
