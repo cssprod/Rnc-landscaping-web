@@ -1,2 +1,64 @@
-/* 47-ui-cta.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/cta.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 47-ui-cta.css (ds-comp, W2): the CTA band ("a window into the night" in both themes: .on-deep), its living layer
+   (effects cta-band, conic-ring, grain) and the fallback contact panel (ui/cta.mjs).
+   T2 loops (blobs ×3, conic ring ×1) are marked [data-t2] in the markup: 95-motion.css runs them only under
+   html[data-alive], pauses them off-screen ([data-offscreen] on the [data-living] art layer) and stops them with motion
+   off or reduce. They move by transform only; nothing is blurred live (the blobs are pre-blurred gradients). The copy
+   sits on a fixed scrim: on-deep-2 stays >= 8.8:1 over the blob peaks. */
+@layer components {
+  .cta-band { container-type: inline-size; position: relative; isolation: isolate; overflow: hidden; margin-top: calc(var(--space-section) * 0.5); padding-block: clamp(4rem, 9vw, 7.5rem); background: var(--scene-band-bg); color: var(--color-on-deep); }
+  .cta-band__bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background:
+    radial-gradient(55% 75% at 8% 10%, rgba(64, 230, 160, 0.2), transparent 62%),
+    radial-gradient(45% 65% at 92% 90%, rgba(70, 200, 225, 0.14), transparent 62%),
+    linear-gradient(165deg, var(--color-deep-2), var(--scene-band-bg) 70%); }
+  /* Static survey contours on the right half (effect cta-band; never animated). */
+  .cta-band__contours { position: absolute; top: 0; right: 0; width: min(62%, 760px); height: 100%; color: var(--survey-contour-faint); }
+  /* Static grain (<= 5% opacity; removed under more contrast / reduced transparency / forced colours). */
+  .cta-band__grain { position: absolute; inset: 0; opacity: var(--grain-opacity); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 160px 160px; }
+  /* Living blobs: pre-blurred radial gradients (no filter), moved by transform. Static where motion is not effective. */
+  .cta-band__blobs { position: absolute; inset: 0; }
+  .cta-band__blob { position: absolute; width: 60vmax; max-width: 900px; aspect-ratio: 1; border-radius: 50%; will-change: transform; }
+  .cta-band__blob--1 { left: -18%; top: -40%; background: radial-gradient(closest-side, var(--scene-band-blob-1), transparent); animation: cta-drift-1 26s ease-in-out infinite alternate; }
+  .cta-band__blob--2 { right: -20%; top: -10%; background: radial-gradient(closest-side, var(--scene-band-blob-2), transparent); animation: cta-drift-2 32s ease-in-out infinite alternate; }
+  .cta-band__blob--3 { left: 40%; bottom: -55%; background: radial-gradient(closest-side, var(--scene-band-blob-3), transparent); animation: cta-drift-3 40s ease-in-out infinite alternate; }
+  @keyframes cta-drift-1 { to { transform: translate3d(12%, 10%, 0) scale(1.08); } }
+  @keyframes cta-drift-2 { to { transform: translate3d(-10%, 12%, 0) scale(0.94); } }
+  @keyframes cta-drift-3 { to { transform: translate3d(-14%, -8%, 0) scale(1.06); } }
+
+  .cta-band__panel { position: relative; max-width: 40rem; }
+  /* Fixed scrim under the copy (never moves). */
+  .cta-band__panel::before { content: ""; position: absolute; inset: -14% -18% -14% -30%; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, var(--scene-band-scrim), transparent); }
+  .cta-band h2 { max-width: 18ch; margin: 0 0 var(--space-4); color: #fff; font-size: var(--font-size-title-1); }
+  .cta-band__body, .cta-band__reply { max-width: 34em; margin: 0 0 var(--space-3); color: var(--color-on-deep-2); font-size: var(--font-size-lede); line-height: 1.5; }
+  .cta-band__reply { font-size: var(--font-size-body); }
+  .cta-band__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+  .cta-band__trust { margin: var(--space-4) 0 0; color: var(--color-on-deep-2); font-size: var(--font-size-footnote); }
+  @container (max-width: 39.99em) {
+    .cta-band__actions > * { flex: 1 1 auto; }
+    .cta-band__actions .conic .btn { width: 100%; }
+    .cta-band__contours { opacity: 0.6; }
+  }
+
+  /* Conic comet ring on the primary button (one per page by default, two at most; effect conic-ring): an oversized
+     conic-gradient child rotated by transform inside an overflow:hidden capsule; the button stays on solid brand.
+     Static rim when the loop is not running. */
+  .conic { position: relative; isolation: isolate; display: inline-flex; padding: 2px; border-radius: var(--radius-pill); overflow: hidden; background: color-mix(in srgb, var(--color-brand) 30%, transparent); }
+  .conic__ring { position: absolute; left: 50%; top: 50%; z-index: -1; width: 160%; aspect-ratio: 1; margin: -80% 0 0 -80%; background: conic-gradient(from 0deg, transparent 0 62%, var(--color-brand-2) 78%, var(--color-placeholder) 86%, var(--color-brand) 94%, transparent 100%); animation: conic-spin 14s linear infinite; }
+  @keyframes conic-spin { to { transform: rotate(1turn); } }
+  .conic > .btn { position: relative; }
+
+  /* ================= fallback contact panel ================= */
+  .contact-fallback { container-type: inline-size; padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
+  .contact-fallback__title { margin: 0 0 var(--space-4); font-size: var(--font-size-title-3); }
+  .contact-fallback__facts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); margin: var(--space-5) 0 0; }
+  @container (min-width: 40em) { .contact-fallback__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .contact-fallback__fact dt { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .contact-fallback__fact dt .i { color: var(--color-brand); }
+  .contact-fallback__fact dd { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin: 0; font-weight: var(--font-weight-semibold); }
+  .contact-fallback__status { color: var(--color-success); font-size: var(--font-size-footnote); }
+  html:not(.js) .contact-fallback__copy { display: none; }
+
+  @media (forced-colors: active) {
+    .cta-band__bg, .conic__ring { display: none; }
+    .contact-fallback { border: 1px solid CanvasText; }
+  }
+}

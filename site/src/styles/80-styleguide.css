@@ -1,2 +1,17 @@
-/* 80-styleguide.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (W2).
-   Wrap every rule in exactly one layer:  @layer pages { … }  */
+/* 80-styleguide.css (ds-comp, W2): the /styleguide/ showcase page only (showcase builds; noindex). Specimen frames and
+   labels; the primitives themselves are styled by 40–49. */
+@layer pages {
+  .sg-intro { display: grid; gap: var(--space-4); padding-block: var(--space-6) 0; }
+  @media (min-width: 64em) { .sg-intro { grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); align-items: start; } }
+  .sg-note { margin: 0; max-width: 46em; color: var(--color-ink-2); }
+  .sg-grid { container-type: inline-size; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: var(--space-4); }
+  .sg-grid--top { margin-top: var(--space-6); align-items: start; }
+  .sg-stack { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+  .sg-specimen { min-width: 0; padding: var(--space-5); border-radius: var(--radius-m); background: color-mix(in srgb, var(--color-bg-elevated) 60%, transparent); box-shadow: inset 0 0 0 1px var(--color-line); display: grid; gap: var(--space-3); align-content: start; }
+  .sg-specimen--wide { grid-column: 1 / -1; }
+  .sg-specimen--flush { padding: 0; background: none; box-shadow: none; }
+  .sg-label { margin: 0; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+  .sg-label code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.95em; color: var(--color-brand); }
+  .sg-points { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--space-4); color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+  .sg-points strong { display: block; margin-bottom: 2px; color: var(--color-ink); }
+}

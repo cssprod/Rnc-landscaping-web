@@ -1,2 +1,47 @@
-/* 49-ui-callouts.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/callouts.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 49-ui-callouts.css (ds-comp, W2): local rules, the shared regional aside, conditions, source chips, review dates,
+   the verify note, the guarantee and the reassurance strip (ui/callouts.mjs). Lit-solid surfaces; lists reflow in
+   inline-size containers. Source chips are >= 24 px targets; nothing here moves. */
+@layer components {
+  /* ================= sourced items (rules, conditions, regional blocks) ================= */
+  .local-rules, .conditions, .regional { container-type: inline-size; }
+  .local-rules { padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-l); background: var(--surface-card-hi); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-2); }
+  .local-rules__head { display: flex; align-items: flex-start; gap: var(--space-4); margin-bottom: var(--space-5); }
+  .local-rules__icon { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: var(--color-bg-tint); color: var(--color-brand); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .local-rules__title, .conditions__title, .regional__title { margin: 0; font-size: var(--font-size-title-2); }
+  .local-rules__area { margin: var(--space-2) 0 0; color: var(--color-ink-2); }
+  .local-rules__list, .conditions__list, .regional__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  @container (min-width: 40em) { .local-rules__list, .conditions__list, .regional__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .sourced { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding: 16px clamp(1rem, 2.4vw, 1.25rem); border-radius: var(--radius-m); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); }
+  .sourced > * { margin: 0; }
+  .sourced__label { color: var(--color-brand); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); letter-spacing: 0.02em; }
+  .sourced__title { font-size: var(--font-size-headline); }
+  .sourced__text { color: var(--color-ink); }
+  .sourced__excerpt { margin: 0; padding: 2px 0 2px 14px; border-left: 2px solid color-mix(in srgb, var(--color-brand) 50%, transparent); color: var(--color-ink-2); font-family: var(--font-family-serif); font-style: italic; font-size: var(--font-size-subheadline); }
+  .sourced__excerpt q { quotes: "\201C" "\201D" "\2018" "\2019"; }
+  .sourced__meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); margin-top: auto; }
+  .conditions { display: grid; gap: var(--space-4); }
+  .regional { display: grid; gap: var(--space-4); padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-l); background: var(--color-bg-grouped); box-shadow: inset 0 0 0 1px var(--color-line); }
+
+  /* Source chip and review date */
+  .source-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; max-width: 100%; padding: 4px 12px; border-radius: 16px; background: var(--color-bg-tint); color: var(--color-brand); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); text-decoration: none; box-shadow: inset 0 0 0 1px var(--color-line); }
+  .source-chip span { overflow-wrap: anywhere; }
+  .source-chip:hover { text-decoration: underline; text-underline-offset: 0.22em; }
+  .reviewed { display: inline-flex; align-items: center; gap: 6px; margin: 0; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+  .reviewed--pending { color: var(--color-placeholder); }
+  .verify-note { display: flex; align-items: flex-start; gap: 8px; color: var(--color-ink-2); font-size: var(--font-size-footnote); }
+  .verify-note .i { margin-top: 2px; color: var(--color-placeholder); }
+
+  /* ================= guarantee ================= */
+  .guarantee { container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: clamp(1.5rem, 4vw, 2.5rem); border-radius: var(--radius-l); background: radial-gradient(80% 120% at 0% 0%, color-mix(in srgb, var(--color-brand) 10%, transparent), transparent 60%), var(--surface-card-hi); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-2); }
+  @container (min-width: 40em) { .guarantee { grid-template-columns: auto minmax(0, 1fr); } }
+  .guarantee__icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 18px; background: var(--color-bg-tint); color: var(--color-brand); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .guarantee__title { margin: 0 0 var(--space-3); font-size: var(--font-size-title-2); }
+  .guarantee__body p { max-width: 62ch; color: var(--color-ink-2); }
+  .guarantee__body p:first-of-type { color: var(--color-ink); }
+  .guarantee__body p:last-child { margin-bottom: 0; }
+
+  /* ================= reassurance strip ================= */
+  .reassurance { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+  .reassurance__item { display: inline-flex; align-items: flex-start; gap: 8px; min-width: 0; }
+  .reassurance__item .i { margin-top: 3px; color: var(--color-brand); }
+}

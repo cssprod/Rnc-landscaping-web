@@ -1,2 +1,108 @@
-/* 40-ui-actions.css: pre-registered stub (CONTRACT §4, §12). Owner: ds-comp (ui/actions.mjs).
-   Wrap every rule in exactly one layer:  @layer components { … }  */
+/* 40-ui-actions.css (ds-comp, W2): buttons, the call button, chips, arrow links, contact links, placeholder chips and
+   the Sample label (ui/actions.mjs). Lit-solid capsules, no backdrop-filter on content (DESIGN-DIRECTION §7). T0 only:
+   every transition reads --dur-t0 / --dur-t0-fast, which are 0ms when motion is not effective (CONTRACT §9).
+   Touch targets: primary actions >= 44 px, everything else >= 24 px (C4.4a). Focus: the 02-base two-tone ring. */
+@layer components {
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    min-height: var(--h, 48px); min-width: var(--btn-min-w, 44px); padding: 0 var(--btn-px, 22px);
+    border: 0; border-radius: var(--radius-pill);
+    font: inherit; font-size: var(--btn-fs, 1rem); font-weight: var(--font-weight-semibold); line-height: 1.15; letter-spacing: -0.012em;
+    text-align: center; text-decoration: none; white-space: nowrap; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform var(--dur-t0) var(--ease-spring), background-color var(--dur-t0-fast) var(--ease), color var(--dur-t0-fast) var(--ease);
+  }
+  /* Lower-layer hooks. @layer components sits above @layer chrome, so chrome (30-chrome.css) cannot restyle a .btn by
+     declaring padding or background itself. The primitive reads these custom properties instead; no components rule
+     sets them: --btn-px, --btn-fs, --btn-min-w (size), --btn-bg, --btn-bg-hover, --btn-ink, --btn-shadow (primary fill).
+     Hand-off until ds-chrome moves to the hooks (requests/ds-comp.md §9): revert-layer gives these properties back to
+     the chrome layer for the chrome-owned buttons, so the header capsule and the action bar keep the chrome sizing. */
+  :is(.site-nav__quote, .action-bar__btn) { padding: revert-layer; font-size: revert-layer; }
+  .action-bar__btn { min-width: revert-layer; }
+  .site-header.is-over-media:not(.is-open) .site-nav__quote { background: revert-layer; color: revert-layer; box-shadow: revert-layer; }
+  .btn .i { flex: none; }
+  .btn:active { transform: scale(0.965); }
+  .btn--sm { --h: 44px; padding: 0 var(--btn-px, 16px); font-size: var(--btn-fs, var(--font-size-subheadline)); }
+  .btn--lg { --h: 56px; padding: 0 var(--btn-px, 28px); font-size: var(--btn-fs, 1.0625rem); }
+  /* Moss capsule (dark) / fir capsule (dawn); inside .on-deep the dark brand values apply in both themes. */
+  .btn--primary {
+    background: var(--btn-bg, var(--color-brand)); color: var(--btn-ink, var(--color-brand-ink));
+    box-shadow: var(--btn-shadow, inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 1px 2px rgba(0, 0, 0, 0.25), 0 10px 26px -12px var(--glow-moss));
+  }
+  .btn--primary:hover { background: var(--btn-bg-hover, var(--btn-bg, var(--color-brand-hover))); }
+  .btn--secondary { background: color-mix(in srgb, var(--color-ink) 8%, transparent); color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-line); }
+  .btn--secondary:hover { background: color-mix(in srgb, var(--color-ink) 13%, transparent); }
+  .btn--plain { background: transparent; color: var(--color-brand); padding-inline: 12px; }
+  .btn--plain:hover { background: color-mix(in srgb, var(--color-brand) 10%, transparent); }
+  /* White capsule: only over photographs. */
+  .btn--light { background: #fff; color: #0E1611; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 12px 28px -12px rgba(0, 0, 0, 0.45); }
+  .btn--light:hover { background: #EEF4F0; }
+  /* "Glass" secondary over art or photos: a thick fill, never a blur (J2 V2). */
+  .btn--glass { background: var(--material-media-strong); color: #fff; box-shadow: var(--glass-shadow-media); }
+  .btn--glass:hover { background: color-mix(in srgb, var(--material-media-strong) 80%, #fff 8%); }
+  .btn--on-deep { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
+  .btn--on-deep:hover { background: rgba(255, 255, 255, 0.16); }
+  /* Showcase only: the call button while [PHONE] is unresolved is text, not a control. It must not look pressable. */
+  .btn--pending, .btn--pending:hover { background: transparent; color: inherit; box-shadow: none; outline: 1px dashed var(--color-line-strong); outline-offset: -1px; cursor: default; }
+  .btn--pending:active { transform: none; }
+
+  .icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: inherit; text-decoration: none; background: color-mix(in srgb, currentColor 8%, transparent); transition: background-color var(--dur-t0-fast) var(--ease); }
+  .icon-btn:hover { background: color-mix(in srgb, currentColor 14%, transparent); }
+
+  /* Arrow link */
+  .link-more { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--color-brand); font-weight: var(--font-weight-semibold); text-decoration: none; white-space: nowrap; }
+  .link-more .i { transition: transform var(--dur-t0) var(--ease-spring); }
+  .link-more:hover .i { transform: translateX(4px); }
+  .link-more:hover { text-decoration: underline; text-underline-offset: 0.22em; }
+  .link-more--light { color: #fff; }
+
+  /* Pill links */
+  .chip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 15px;
+    border-radius: var(--radius-pill); background: var(--surface-card); color: var(--color-ink);
+    font-size: var(--font-size-subheadline); font-weight: var(--font-weight-medium); text-decoration: none;
+    box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line);
+    transition: background-color var(--dur-t0-fast) var(--ease), color var(--dur-t0-fast) var(--ease), transform var(--dur-t0) var(--ease-spring);
+  }
+  a.chip:hover { color: var(--color-brand); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px color-mix(in srgb, var(--color-brand) 55%, transparent); }
+  a.chip:active { transform: scale(0.97); }
+  .chip.is-current, .chip[aria-current] { background: var(--color-brand); color: var(--color-brand-ink); box-shadow: none; }
+  .chip--static { min-height: 32px; padding: 0 12px; font-size: var(--font-size-footnote); background: var(--color-bg-tint); box-shadow: none; }
+
+  /* Placeholders and samples (showcase edition): honey chips, never mistaken for content. */
+  mark.ph {
+    /* The inline margin and the extra vertical padding keep the chip's tinted fill and ring clear of the glyph boxes of
+       the text next to it and inside it (text-over-media measures each glyph box against its worst pixel). */
+    display: inline-block; margin-inline: 0.12em; padding: 0.12em 0.55em; border-radius: var(--radius-pill);
+    background: var(--color-placeholder-bg); color: var(--color-placeholder);
+    font: inherit; font-size: 0.84em; font-weight: var(--font-weight-semibold); letter-spacing: 0.01em; line-height: 1.45; white-space: nowrap;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 32%, transparent);
+  }
+  /* Over photographs and deep surfaces that do not carry .on-deep yet (the .on-deep scope sets its own colours). */
+  :is(.hero--photo, .tile__glass, .site-footer, .glass-card--media) mark.ph { background: rgba(242, 196, 98, 0.18); color: #F6D27E; box-shadow: inset 0 0 0 1px rgba(242, 196, 98, 0.4); }
+  .sample-label {
+    display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--radius-pill);
+    background: var(--color-placeholder-bg); color: var(--color-placeholder);
+    font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); letter-spacing: 0.02em; line-height: 1.2; white-space: nowrap;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-placeholder) 32%, transparent);
+  }
+
+  /* Call / Text / Email links with visible values */
+  .contact-links { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+  .contact-links__link {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--space-3); min-height: 52px; padding: 10px 16px;
+    border-radius: var(--radius-m); background: var(--surface-card); color: var(--color-ink); text-decoration: none;
+    box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line);
+  }
+  a.contact-links__link:hover { box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px color-mix(in srgb, var(--color-brand) 55%, transparent); }
+  .contact-links__icon { color: var(--color-brand); }
+  .contact-links__label { font-weight: var(--font-weight-semibold); min-width: 3.5em; }
+  .contact-links__value { color: var(--color-ink-2); overflow-wrap: anywhere; }
+  .contact-links__link--pending { box-shadow: inset 0 0 0 1px var(--color-line); background: transparent; }
+
+  @media (forced-colors: active) {
+    .btn { border: 1px solid ButtonText; }
+    .sample-label, mark.ph { border: 1px solid CanvasText; }
+  }
+}
