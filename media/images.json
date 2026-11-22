@@ -118,15 +118,12 @@
     "aspect": "16:9",
     "alt": "Landscaper mowing a residential lawn with a push mower",
     "brief": "Subject: a landscaper mowing a residential lawn with a walk-behind mower, clean stripes. Framing: wide to medium, subject on a third, clean background. Light: soft overcast or early-morning light, no harsh midday sun. Lens: 24-70mm at f/5.6-8. Season: late spring to early summer. Shoot in Greater Victoria; crew in plain RNC-branded or unbranded workwear with PPE, faces not the focus; get signed property releases.",
-    "stock": {
-      "provider": "Unsplash",
-      "pageUrl": "https://unsplash.com/photos/a-man-mows-a-lawn-with-a-push-mower-67XudSXgB5U",
-      "imageUrl": "https://images.unsplash.com/photo-1782613064276-750c3a3ccdec?w=1600&q=80&auto=format&fit=crop",
-      "photographer": "Kenny Perez",
-      "photographerUrl": "https://unsplash.com/@kenny_kalix",
-      "license": "Unsplash License (https://unsplash.com/license)"
-    },
-    "rncToSupply": true
+    "stock": null,
+    "rncToSupply": true,
+    "art": {
+      "scene": "svc-grounds-maintenance",
+      "palette": "theme"
+    }
   },
   {
     "id": "svc-grounds-maintenance-detail-1",
@@ -247,15 +244,12 @@
     "aspect": "16:9",
     "alt": "Landscaper pulling a loaded wheelbarrow on a job site",
     "brief": "Subject: a landscaper moving material with a wheelbarrow on a garden build. Framing: wide to medium, subject on a third, clean background. Light: soft overcast or early-morning light, no harsh midday sun. Lens: 24-70mm at f/5.6-8. Season: late spring to early summer. Shoot in Greater Victoria; crew in plain RNC-branded or unbranded workwear with PPE, faces not the focus; get signed property releases.",
-    "stock": {
-      "provider": "Unsplash",
-      "pageUrl": "https://unsplash.com/photos/a-man-pulling-a-wheelbarrow-with-a-wheel-LVJnIiIeyO0",
-      "imageUrl": "https://images.unsplash.com/photo-1734079692160-fcbe4be6ab96?w=1600&q=80&auto=format&fit=crop",
-      "photographer": "FRAEM GmbH",
-      "photographerUrl": "https://unsplash.com/@fraem",
-      "license": "Unsplash License (https://unsplash.com/license)"
-    },
-    "rncToSupply": true
+    "stock": null,
+    "rncToSupply": true,
+    "art": {
+      "scene": "svc-landscape-installation",
+      "palette": "theme"
+    }
   },
   {
     "id": "svc-landscape-installation-detail-1",
@@ -384,7 +378,11 @@
       "photographerUrl": "https://unsplash.com/@alef_visuals",
       "license": "Unsplash License (https://unsplash.com/license)"
     },
-    "rncToSupply": true
+    "rncToSupply": true,
+    "art": {
+      "scene": "svc-irrigation",
+      "palette": "theme"
+    }
   },
   {
     "id": "svc-irrigation-detail-1",
@@ -505,15 +503,12 @@
     "aspect": "16:9",
     "alt": "Arborist in a safety harness pruning a large tree",
     "brief": "Subject: an arborist in harness and helmet pruning a large conifer. Framing: wide to medium, subject on a third, clean background. Light: soft overcast or early-morning light, no harsh midday sun. Lens: 24-70mm at f/5.6-8. Season: late spring to early summer. Shoot in Greater Victoria; crew in plain RNC-branded or unbranded workwear with PPE, faces not the focus; get signed property releases.",
-    "stock": {
-      "provider": "Unsplash",
-      "pageUrl": "https://unsplash.com/photos/arborist-pruning-a-large-tree-with-safety-harness-oqYrgDrs9Xk",
-      "imageUrl": "https://images.unsplash.com/photo-1765064519883-651c506ec70d?w=1600&q=80&auto=format&fit=crop",
-      "photographer": "Dmytro Glazunov",
-      "photographerUrl": "https://unsplash.com/@d_glazun0v",
-      "license": "Unsplash License (https://unsplash.com/license)"
-    },
-    "rncToSupply": true
+    "stock": null,
+    "rncToSupply": true,
+    "art": {
+      "scene": "svc-tree-vegetation",
+      "palette": "theme"
+    }
   },
   {
     "id": "svc-tree-vegetation-detail-1",
@@ -748,14 +743,7 @@
     "aspect": "16:9",
     "alt": "Lush flower beds and clipped shrubs at The Butchart Gardens",
     "brief": "Subject: flower beds at The Butchart Gardens in Central Saanich. Framing: wide to medium, subject on a third, clean background. Light: soft overcast or early-morning light, no harsh midday sun. Lens: 24mm at f/8. Season: any, ideally spring or early autumn. Shoot in Greater Victoria; crew in plain RNC-branded or unbranded workwear with PPE, faces not the focus; get signed property releases.",
-    "stock": {
-      "provider": "Unsplash",
-      "pageUrl": "https://unsplash.com/photos/flower-beds-in-the-butchart-gardens-KcQuXaHCSPE",
-      "imageUrl": "https://images.unsplash.com/photo-1597201278257-3687be27d954?w=1600&q=80&auto=format&fit=crop",
-      "photographer": "Jan Canty",
-      "photographerUrl": "https://unsplash.com/@jcanty123",
-      "license": "Unsplash License (https://unsplash.com/license)"
-    },
+    "stock": null,
     "rncToSupply": false,
     "art": {
       "scene": "area-central-saanich",

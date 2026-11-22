@@ -131,4 +131,35 @@ test('motion safety: loops only under html[data-alive], transform/opacity keyfra
   }
   assert.ok(!/animation[^;]*--lv-rim/.test(css), '@property rim is a hover/focus transition, never a loop');
   assert.ok(!/\bfilter\s*:/.test(css.replace(/backdrop-filter/g, '')), 'no filter on scenes');
+  // T2 periods: every literal loop period is ≥ 5 s (motion policy T2 > 5 s; check-motion-policy #raw-durations).
+  for (const m of css.matchAll(/animation:\s*[\w-]+\s+([\d.]+)s\b[^;]*\binfinite\b/g)) assert.ok(Number(m[1]) >= 5, `loop period ${m[1]}s ≥ 5 s`);
+});
+
+test('slots sharing one scene get their own art well; the same slot keeps its bytes #slot-seed', () => {
+  for (const v of SERVICE_SLUGS) {
+    const a = s(livingScene(`svc-${v}`, { variant: 'card', seed: `svc-${v}-after` }));
+    const b = s(livingScene(`svc-${v}`, { variant: 'card', seed: `svc-${v}-detail-1` }));
+    const c = s(livingScene(`svc-${v}`, { variant: 'card', seed: `svc-${v}-detail-2` }));
+    assert.equal(new Set([a, b, c]).size, 3, `svc-${v}: after, detail-1 and detail-2 differ`);
+    assert.equal(a, s(livingScene(`svc-${v}`, { variant: 'card', seed: `svc-${v}-after` })), `svc-${v}: deterministic per slot`);
+  }
+  // Without a seed the well keeps its scene-id bytes (unchanged callers).
+  assert.equal(s(livingScene('svc-irrigation', { variant: 'card' })), s(livingScene('svc-irrigation', { variant: 'card', seed: 'svc-irrigation' })));
+});
+
+test('aurora: "still" paints the aurora without its loop; the other loops stay #aurora-still', () => {
+  const live = s(livingScene('home')), calm = s(livingScene('home', { aurora: 'still' }));
+  assert.match(live, /class="sc-aurora" data-layer="aurora" data-t2/);
+  assert.match(calm, /class="sc-aurora" data-layer="aurora" data-parallax/);
+  assert.equal(loops(calm), loops(live) - 1);
+});
+
+test('project art reads the area: a seaside project shows water, an inland one does not #project-area', () => {
+  const base = { slug: 'x-test', service: 'landscape-installation', season: 'Spring' };
+  const sea = Object.keys(AREAS).find((a) => AREAS[a].water === 'sea');
+  const dry = Object.keys(AREAS).find((a) => AREAS[a].water !== 'sea');
+  assert.ok(sea && dry);
+  assert.match(s(projectArt({ ...base, area: sea })), /class="f-w1"/, `${sea} project shows the sea`);
+  assert.doesNotMatch(s(projectArt({ ...base, area: dry })), /class="f-w1"/, `${dry} project has no sea`);
+  for (const p of projects.filter((q) => AREAS[q.area]?.water === 'sea')) assert.match(s(projectArt(p)), /class="f-w1"/, p.slug);
 });

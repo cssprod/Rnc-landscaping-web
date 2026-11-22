@@ -47,9 +47,12 @@ export function sceneRecipe(sceneId) {
  * - `band`: the same engine at ≤ 3 loops (CTA band, process).
  * - `card`: a small static art well (no loops, no ids), sized by `aspect`.
  * @param {string} sceneId `home`, `area-<slug>`, `svc-<slug>`, `process`, `cta`, `404`…
- * @param {{ variant?: 'hero'|'band'|'card', aspect?: string, priority?: boolean, label?: string, still?: boolean, uid?: string, chip?: boolean }} [o]
+ * @param {{ variant?: 'hero'|'band'|'card', aspect?: string, priority?: boolean, label?: string, still?: boolean, uid?: string, chip?: boolean, seed?: string, aurora?: 'loop'|'still' }} [o]
  *   `label` replaces the chip text (e.g. "Photo to come"); `still` renders 0 loops (quote-calm); `uid` overrides the id
- *   prefix when one scene id appears twice on a page; `chip: false` omits the chip (the caller shows its own).
+ *   prefix when one scene id appears twice on a page; `chip: false` omits the chip (the caller shows its own);
+ *   `seed` seeds a `card` well (default: the scene id), so several slots sharing one scene each get their own picture;
+ *   `aurora: 'still'` paints the aurora without its drift loop (the costliest composited layer; for heroes that still
+ *   sit under backdrop-filter glass).
  * @returns {any}
  */
 export function livingScene(sceneId, o = {}) {
@@ -60,7 +63,7 @@ export function livingScene(sceneId, o = {}) {
     const [aw, ah] = String(o.aspect || '4:3').split(':').map(Number);
     const w = 480, h = Math.round((480 * (ah || 3)) / (aw || 4));
     const kind = motif || (id.startsWith('area-') ? id : 'cove');
-    return html`<div class="scene scene--card" data-scene="${id}" aria-hidden="true">${raw(vignette(kind, id, { w, h }))}${chip}</div>`;
+    return html`<div class="scene scene--card" data-scene="${id}" aria-hidden="true">${raw(vignette(kind, o.seed || id, { w, h }))}${chip}</div>`;
   }
   // Ids are namespaced `lv-` + a short hash of the scene id and variant (or `o.uid`), so two scenes never collide.
   const uid = `lv-${hash(o.uid || `${id}|${variant}`).toString(36).slice(0, 5)}-`;
@@ -69,7 +72,8 @@ export function livingScene(sceneId, o = {}) {
   const land = [];
   let aurora = '';
   for (const l of parts.layers) {
-    const attrs = `data-layer="${l.name}"${l.t2 ? ' data-t2' : ''}`;
+    const t2 = l.t2 && !(l.name === 'aurora' && o.aurora === 'still');
+    const attrs = `data-layer="${l.name}"${t2 ? ' data-t2' : ''}`;
     if (l.html) {
       const el = `<div class="${l.cls}" ${attrs}${l.name === 'aurora' ? ' data-parallax style="--depth:.03"' : ''}>${l.svg}</div>`;
       if (l.name === 'aurora') aurora = el; else land.push(el);
@@ -91,7 +95,7 @@ export function livingScene(sceneId, o = {}) {
 export function projectArt(project, o = {}) {
   const [aw, ah] = String(o.aspect || '4:3').split(':').map(Number);
   const w = 480, h = Math.round((480 * (ah || 3)) / (aw || 4));
-  const p = { slug: String(project?.slug || 'project'), service: project?.service, season: project?.season };
+  const p = { slug: String(project?.slug || 'project'), service: project?.service, season: project?.season, area: project?.area };
   return html`<div class="scene scene--card" data-scene="proj-${p.slug}" aria-hidden="true">${raw(projectVignette(p, { w, h }))}${o.chip === false ? '' : illustrationChip(o.label)}</div>`;
 }
 

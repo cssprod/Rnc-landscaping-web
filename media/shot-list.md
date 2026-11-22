@@ -2,16 +2,19 @@
 
 Until RNC supplies its own photos, every image slot shows labelled living vector art (an "Illustration" chip) or, outside
 `/projects/`, a credited stock placeholder. **No stock photo is ever used under `/projects/`** and no stock person stands
-for the owner or crew (CONTRACT §2, §7): every project and portfolio slot, `about-crew`, `about-owner` and `home-hero`
-have `stock: null`. To replace a slot with RNC's own photo, follow `media/photos/README.md` (one file per slot id plus a
-licence record, processed by `site/tools/process-images.mjs` to AVIF/WebP/JPEG with all metadata stripped).
+for the owner or crew (CONTRACT §2, §7): every project and portfolio slot, `about-crew`, `about-owner`, `home-hero` and
+the three service heroes that pictured a person (`svc-grounds-maintenance-hero`, `svc-landscape-installation-hero`,
+`svc-tree-vegetation-hero`) have `stock: null` and show their living scene. `area-central-saanich` also shows its living
+scene, so all 13 area pages read alike. To replace a slot with RNC's own photo, follow `media/photos/README.md` (one
+file per slot id plus a licence record, processed by `site/tools/process-images.mjs` to AVIF/WebP/JPEG with all metadata stripped).
 
 ## Living art until photos arrive
 Slots with an `art` record in `media/images.json` render theme-reactive living art through `picture()` when no photo exists:
 - `art.scene: "project:<slug>"`: per-project art (lit cottage, stone path, beds in the project's season, the service
   motif); `palette` names the season. Used by `proj-<service>-<n>` (each project's main image) and `proj-<slug>-art`.
 - `art.scene: "area-<slug>"`: the municipality's landscape (a hero scene on the area page, an art well on cards).
-- `art.scene: "svc-<slug>"`: the service vignette (detail, before and after slots); `"home"`, `"process"`, `"cove"`
+- `art.scene: "svc-<slug>"`: the service nocturne (a hero scene on the service page) or vignette (detail, before and
+  after slots; each slot seeds its own picture); `"home"`, `"process"`, `"cove"`
   for the home hero, the process header and the people slots (labelled "Photo to come"). `palette: "theme"` means the
   art follows the site theme (night by default, dawn in the light theme).
 
@@ -83,11 +86,7 @@ Slots with an `art` record in `media/images.json` render theme-reactive living a
 - commercial-hero: "Large well-kept lawn with shrubs and mature trees" by [Raelle Cameron](https://unsplash.com/@raegocreative) on [Unsplash](https://unsplash.com/photos/a-large-green-lawn-with-bushes-and-trees-JUNyb_cetns), Unsplash License (https://unsplash.com/license)
 - quote-aside: "Wheelbarrow in a garden beside a small shed and flowering shrubs" by [Annie Spratt](https://unsplash.com/@anniespratt) on [Unsplash](https://unsplash.com/photos/wheelbarrow-in-garden-with-shed-ch_j5gH6INY), Unsplash License (https://unsplash.com/license)
 - og-default: "Brick garden path lined with flowers and trees" by [Annie Tray-Gavin](https://unsplash.com/@annietraygavin) on [Unsplash](https://unsplash.com/photos/a-brick-path-with-a-garden-of-flowers-and-trees-aqqx2yrVB2M), Unsplash License (https://unsplash.com/license)
-- svc-grounds-maintenance-hero: "Landscaper mowing a residential lawn with a push mower" by [Kenny Perez](https://unsplash.com/@kenny_kalix) on [Unsplash](https://unsplash.com/photos/a-man-mows-a-lawn-with-a-push-mower-67XudSXgB5U), Unsplash License (https://unsplash.com/license)
-- svc-landscape-installation-hero: "Landscaper pulling a loaded wheelbarrow on a job site" by [FRAEM GmbH](https://unsplash.com/@fraem) on [Unsplash](https://unsplash.com/photos/a-man-pulling-a-wheelbarrow-with-a-wheel-LVJnIiIeyO0), Unsplash License (https://unsplash.com/license)
 - svc-irrigation-hero: "Sprinklers watering a green lawn at sunset" by [Alef Morais](https://unsplash.com/@alef_visuals) on [Unsplash](https://unsplash.com/photos/sprinklers-watering-a-green-lawn-at-sunset-RjxqFCXpt2c), Unsplash License (https://unsplash.com/license)
-- svc-tree-vegetation-hero: "Arborist in a safety harness pruning a large tree" by [Dmytro Glazunov](https://unsplash.com/@d_glazun0v) on [Unsplash](https://unsplash.com/photos/arborist-pruning-a-large-tree-with-safety-harness-oqYrgDrs9Xk), Unsplash License (https://unsplash.com/license)
-- area-central-saanich: "Lush flower beds and clipped shrubs at The Butchart Gardens" by [Jan Canty](https://unsplash.com/@jcanty123) on [Unsplash](https://unsplash.com/photos/flower-beds-in-the-butchart-gardens-KcQuXaHCSPE), Unsplash License (https://unsplash.com/license)
 - res-1: "Fresh green spring lawn" by [Petar Tonchev](https://unsplash.com/@ptonchev) on [Unsplash](https://unsplash.com/photos/green-grass-field-c-5-QE5kBYk), Unsplash License (https://unsplash.com/license)
 - res-2: "Grass and leaves covered in water droplets" by [Lorenzo Maranci](https://unsplash.com/@lorenzo06x) on [Unsplash](https://unsplash.com/photos/a-field-with-grass-and-leaves-covered-in-rain-AI-OQtNS958), Unsplash License (https://unsplash.com/license)
 - res-3: "Pile of fallen autumn leaves" by [Vasilina Sirotina](https://unsplash.com/@luniavis) on [Unsplash](https://unsplash.com/photos/a-pile-of-leaves-swSa-DbI-eo), Unsplash License (https://unsplash.com/license)

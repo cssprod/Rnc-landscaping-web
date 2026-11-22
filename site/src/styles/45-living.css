@@ -2,7 +2,7 @@
    Living scenes, art wells, the media frame of picture(), the T3 spotlight and the hover/focus @property rim.
    Colours: the --sc-* scene palette (night by default, dawn under [data-theme=light]), derived from the ds-core scene
    tokens where they exist. Motion: T2 loops are declared only under html[data-alive] (scripts/living.js sets it after
-   load + idle while motion is effective) and follow var(--alive-play); nothing here reads prefers-reduced-motion.
+   load + idle while motion is effective) and follow var(--alive-play); this file never reads the OS reduced-motion setting itself.
    Only transform and opacity animate; inner SVG nodes never animate. */
 @layer living {
 
@@ -111,7 +111,8 @@
 .scene--hero .media__chip--art { top: calc(var(--layout-header-h, 64px) + 8px); bottom: auto; right: max(var(--layout-gutter, 16px), env(safe-area-inset-right)); }
 
 /* Aurora: two pre-blurred CSS washes (ellipses + masked rays). Moved by transform only (T2) and translate (T4). */
-.sc-aurora { position: absolute; inset: -10% -20% 18%; }
+/* Sized to the visible sky (not the whole hero), so the composited quad stays small. */
+.sc-aurora { position: absolute; inset: -4% -8% 30%; }
 .sc-aurora > div { position: absolute; inset: 0; }
 .sc-aurora-a { background:
   radial-gradient(30% 16% at 66% 30%, var(--sc-aurora-1), transparent 70%),
@@ -200,7 +201,7 @@
 /* ------------------------------------------------------- T2 ambient loops
    Declared only under html[data-alive]; paused off-screen ([data-offscreen]) and on hidden tabs ([data-hidden]). */
 [data-living][data-offscreen], html[data-hidden] { --alive-play: paused; }
-@keyframes lv-aurora { 0% { transform: translate3d(-3%, 0, 0) scale(1); } 100% { transform: translate3d(4%, -2%, 0) scale(1.08); } }
+@keyframes lv-aurora { 0% { transform: translate3d(-3%, 0, 0); } 100% { transform: translate3d(4%, -2%, 0); } }
 @keyframes lv-twinkle { 0%, 100% { opacity: var(--stars-o); } 50% { opacity: calc(var(--stars-o) * .25); } }
 @keyframes lv-glint-a { 0% { opacity: 1; transform: translate3d(0, 0, 0); } 100% { opacity: .2; transform: translate3d(-14px, 0, 0); } }
 @keyframes lv-glint-b { 0% { opacity: .15; transform: translate3d(10px, 0, 0); } 100% { opacity: .85; transform: translate3d(0, 0, 0); } }
@@ -212,7 +213,7 @@ html[data-alive] [data-living]:not([data-still]) .sc-stars-a[data-t2] { animatio
 html[data-alive] [data-living]:not([data-still]) .sc-glint-a[data-t2] { animation: lv-glint-a 5.5s ease-in-out infinite alternate var(--alive-play, running); }
 html[data-alive] [data-living]:not([data-still]) .sc-glint-b[data-t2] { animation: lv-glint-b 7.5s ease-in-out infinite alternate var(--alive-play, running); }
 html[data-alive] [data-living]:not([data-still]) .sc-mist[data-t2] { animation: lv-mist 70s ease-in-out infinite alternate var(--alive-play, running); }
-html[data-alive] [data-living]:not([data-still]) .sc-fly-a[data-t2] { animation: lv-fly-a 4.2s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-fly-a[data-t2] { animation: lv-fly-a 5.4s ease-in-out infinite alternate var(--alive-play, running); }
 html[data-alive] [data-living]:not([data-still]) .sc-fly-b[data-t2] { animation: lv-fly-b 6.4s ease-in-out infinite alternate var(--alive-play, running); }
 
 /* ---------------------------------------------------- T3 cursor spotlight

@@ -15,6 +15,13 @@ import { site } from '../../site.config.mjs';
 import { landscapeSvg } from './art.mjs';
 import { livingScene, projectArt } from '../components/living.mjs';
 
+/**
+ * Heroes placed through picture() are the legacy page heads, whose buttons and dock still use backdrop-filter glass
+ * (DESIGN-DIRECTION: never blur over animation). Until W3 hero(p) places the scene itself, those scenes paint the
+ * aurora still: it is the largest composited layer, and its drift loop is the one that costs frames under the glass.
+ */
+const LEGACY_HERO = /** @type {const} */ ({ aurora: 'still' });
+
 /** Local photo widths (CONTRACT §7). */
 export const PHOTO_WIDTHS = [480, 768, 1024, 1600];
 const MEDIA = new URL('../../../media/', import.meta.url);
@@ -112,7 +119,10 @@ export function slotArt(slot, aspect, o) {
   const label = slot.art.label || undefined;
   const chip = o.chip !== false;
   if (scene.startsWith('project:')) return projectArt(projectFor(scene.slice(8)), { aspect, label, chip });
-  return livingScene(scene, { variant: o.eager ? 'hero' : 'card', aspect, label, chip });
+  // A card well is seeded by the slot id, so the slots that share one scene (svc-<slug>-after, -detail-1, -detail-2…)
+  // each get their own picture; the same slot always gives the same bytes.
+  if (!o.eager) return livingScene(scene, { variant: 'card', aspect, label, chip, seed: slot.id });
+  return livingScene(scene, { variant: 'hero', aspect, label, chip, ...LEGACY_HERO });
 }
 
 /**
