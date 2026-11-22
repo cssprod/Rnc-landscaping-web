@@ -118,7 +118,7 @@ test('footer: the drawn-art honesty line in every build; the showcase note only 
   assert.match(page(testEnv()), /Illustrations are drawn art, not photos of RNC projects\./);
   assert.match(page(testEnv({ launch: true })), /Illustrations are drawn art, not photos of RNC projects\./);
   assert.doesNotMatch(page(testEnv({ launch: true })), /Showcase edition/);
-  assert.match(page(testEnv()), /<footer class="site-footer on-deep">/);
+  assert.match(page(testEnv()), /<footer class="site-footer">\s*<div class="site-footer__glow" aria-hidden="true"><\/div>\s*<div class="on-deep site-footer__body">/);
 });
 
 test('main.js: no pointer sheen, no static feature imports, no direct reduced-motion query (CONTRACT §8, §12)', () => {

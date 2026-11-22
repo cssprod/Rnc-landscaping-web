@@ -137,8 +137,11 @@ function googleProfile(env) {
 
 /** @param {Env} env */
 function footer(env) {
-  return html`<footer class="site-footer on-deep">
+  // The class attribute stays exactly "site-footer" (check-html and the ia tests find the footer by it); the deep-band
+  // token scope (.on-deep: dark ink, line, brand and ring values in both themes) sits on the inner wrapper.
+  return html`<footer class="site-footer">
   <div class="site-footer__glow" aria-hidden="true"></div>
+  <div class="on-deep site-footer__body">
   <div class="wrap site-footer__top">
     <div class="site-footer__brand">
       <a class="brand brand--footer" href="/" aria-label="RNC Landscaping home">${logo()}</a>
@@ -161,6 +164,7 @@ function footer(env) {
   <div class="wrap site-footer__notes">
     <p class="site-footer__note">Illustrations are drawn art, not photos of RNC projects.</p>
     ${env.launch ? '' : html`<p class="site-footer__note">Showcase edition: highlighted details are placeholders still to be confirmed, and work labelled Sample is illustrative.</p>`}
+  </div>
   </div>
 </footer>`;
 }
