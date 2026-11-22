@@ -104,7 +104,9 @@ test('two builds into different --out directories in parallel do not interfere #
   assert.equal(ra.code, 0, ra.err);
   assert.equal(rb.code, 0, rb.err);
   const sa = snapshot(a), sb = snapshot(b);
-  assert.ok(Object.keys(sa).length > 100);
+  // Living art is inline now (requests/living.md #2), so count the pages, not every file.
+  const pages = Object.keys(sa).filter((f) => f.endsWith('.html'));
+  assert.ok(pages.length >= 56, `expected the full site (>= 56 pages), got ${pages.length}`);
   assert.deepEqual(Object.keys(sa), Object.keys(sb));
   for (const f of Object.keys(sa)) assert.equal(sa[f], sb[f], `${f} differs between the two builds`);
   assert.ok(existsSync(join(a, MARKER)) && existsSync(join(b, MARKER)));
