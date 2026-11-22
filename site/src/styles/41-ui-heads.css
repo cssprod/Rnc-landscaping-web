@@ -27,7 +27,9 @@
   .hero--photo .hero__title { color: #fff; text-shadow: 0 1px 30px rgba(0, 0, 0, 0.22); }
   .hero--photo .hero__lede, .hero--photo .hero__proof { color: rgba(255, 255, 255, 0.88); }
   .hero__media { position: absolute; inset: 0; z-index: -2; }
-  .hero__media .media { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; background: var(--color-deep); }
+  /* picture() writes an inline aspect-ratio (16/9 here) on .media; only an author !important beats a style attribute, so
+     the photo box always matches the hero box (width and height set as well, so no ratio can resize it). */
+  .hero__media .media { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto !important; background: var(--color-deep); }
   .hero__media .media__credit, .hero__media .media__chip { top: calc(var(--layout-header-h) + 8px); bottom: auto; right: max(var(--layout-gutter), env(safe-area-inset-right)); left: auto; }
   .hero__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background:
     linear-gradient(180deg, rgba(5, 12, 8, 0.52) 0%, rgba(5, 12, 8, 0) 24%),
@@ -69,6 +71,9 @@
   .dock__item:hover { background: rgba(255, 255, 255, 0.14); }
   .dock__note { flex: none; display: inline-flex; align-items: center; gap: 8px; margin-left: auto; padding: 0 16px; color: rgba(255, 255, 255, 0.82); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); white-space: nowrap; }
   @container (max-width: 39.99em) { .dock__note { display: none; } }
+  /* The legacy .glass-bar blurs; over a running living loop a blur re-composites every frame (policy tiers, J2 V2), so the
+     dock is a thick solid material there instead. */
+  .hero:has([data-living]) .dock { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--material-media-strong); }
 
   /* ================= page head ================= */
   .page-head { container-type: inline-size; position: relative; isolation: isolate; overflow: hidden; padding-top: calc(var(--layout-header-h) + clamp(2rem, 5vw, 4.5rem)); padding-bottom: clamp(2rem, 4vw, 3.5rem); }

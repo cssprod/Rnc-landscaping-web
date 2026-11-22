@@ -47,13 +47,14 @@ export function reviewedOn(iso) {
 
 /**
  * One sourced item (rule, condition or regional block): label, text, the verbatim excerpt, source chip, review date and
- * the verify note.
+ * the verify note. The excerpt is an inline `<q cite>` in a `<p>`, never a `<blockquote>`: blockquotes are reserved for
+ * testimonials (check-honesty reads every blockquote as a review).
  * @param {any} r @param {string} label @param {any} [title] heading markup (regional blocks)
  */
 function sourced(r, label, title) {
   return html`${label ? html`<p class="sourced__label">${label}</p>` : ''}${title || ''}
     ${r.text ? html`<p class="sourced__text">${md(r.text)}</p>` : ''}
-    ${r.excerpt && r.sourceUrl ? html`<blockquote class="sourced__excerpt" cite="${r.sourceUrl}"><p>${r.excerpt}</p></blockquote>` : ''}
+    ${r.excerpt && r.sourceUrl ? html`<p class="sourced__excerpt"><q cite="${r.sourceUrl}">${r.excerpt}</q></p>` : ''}
     <div class="sourced__meta">${sourceChip(r.sourceUrl, r.sourceTitle)}${reviewedOn(r.reviewedOn)}</div>
     ${r.verify ? verifyNote() : ''}`;
 }

@@ -109,7 +109,7 @@ export function reviewsBand(data, list = [], o = /** @type {any} */ ({})) {
 export function credentialsRow(o = {}) {
   const items = o.items || siteJson.credentials;
   if (!items.length) return '';
-  return html`<section class="credentials"${o.id ? raw(` id="${o.id}"`) : ''} aria-label="${o.label || 'Credentials'}">
+  return html`<section class="credentials"${o.id ? raw(` id="${o.id}"`) : ''} aria-label="${o.label || 'Licences and insurance'}">
   <dl class="credentials__list">${items.map((c) => html`<div class="credentials__item"><dt>${icon(CREDENTIAL_ICON[c.id] || 'badge', { size: 18 })}${c.label}</dt><dd>${c.value}${c.issuerUrl ? html` <a class="credentials__issuer" href="${c.issuerUrl}" rel="noopener">Check with the issuer</a>` : ''}</dd></div>`)}</dl>
 </section>`;
 }

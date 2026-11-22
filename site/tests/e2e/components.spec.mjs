@@ -127,3 +127,26 @@ test('/styleguide/ call button and contact links never link an unresolved token 
     expect(['call_click', 'sms_click', 'email_click', 'capability_statement_downloaded']).toContain(v);
   }
 });
+
+for (const path of ['/', '/about/']) {
+  for (const width of [320, 1440]) {
+    test(`photo hero media fills the hero and its chip stays on screen: ${path} at ${width} px #hero-media`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path);
+      const hero = page.locator('.hero--photo').first();
+      const media = hero.locator('.hero__media .media');
+      await expect(media).toHaveCount(1);
+      const [h, m] = await Promise.all([hero.boundingBox(), media.boundingBox()]);
+      if (!h || !m) throw new Error('hero or media has no box');
+      // picture()'s inline aspect-ratio must not resize the box (41-ui-heads.css: aspect-ratio auto !important).
+      for (const k of /** @type {const} */ (['x', 'y', 'width', 'height'])) expect(Math.abs(m[k] - h[k]), `${k}: media ${m[k]} vs hero ${h[k]}`).toBeLessThanOrEqual(1);
+      const chips = hero.locator('.hero__media :is(.media__chip, .media__credit)');
+      for (let i = 0; i < await chips.count(); i++) {
+        const c = await chips.nth(i).boundingBox();
+        if (!c) continue;
+        expect(c.x).toBeGreaterThanOrEqual(0);
+        expect(c.x + c.width).toBeLessThanOrEqual(width);
+      }
+    });
+  }
+}

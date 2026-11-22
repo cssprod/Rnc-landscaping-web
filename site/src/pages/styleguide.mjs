@@ -42,6 +42,7 @@ function body(d) {
   const testimonials = Object.values(d.testimonials || {});
   const regional = (d.regional?.blocks || []).filter((/** @type {any} */ b) => (area.sharedRegional || []).includes(b.id));
   const svcItems = sec('services')?.items || [];
+  /* Specimen fallback (labelled on the page) until quote.json carries `reassurance`; each line repeats existing site copy. */
   const reassurance = quote.reassurance?.length ? quote.reassurance
     : ['Free, no obligation', `We reply within ${siteJson.replyTime}`, 'No prices shown here: every quote is site-specific'];
 
@@ -87,7 +88,7 @@ function body(d) {
     <div class="sg-specimen">${label('contactLinks()')}${ui.contactLinks('contact_page')}</div>
     <div class="sg-specimen">${label('linkMore() · chips()')}${ui.linkMore('/projects/', 'See our work')}${ui.chips(svcSlugs.map((s, n) => /** @type {[string, string]} */ ([`/services/${s}/`, siteJson.services[n].navLabel || s])))}</div>
     <div class="sg-specimen">${label('sampleLabel()')}<div class="l-cluster">${ui.sampleLabel()}${ui.sampleLabel('project')}${ui.sampleLabel('review')}</div></div>
-    <div class="sg-specimen">${label('reassuranceStrip()')}${ui.reassuranceStrip(reassurance)}</div>
+    <div class="sg-specimen">${label('reassuranceStrip()')}${quote.reassurance?.length ? '' : html`<p class="sg-label">Specimen text (content/pages/quote.json has no <code>reassurance</code> yet)</p>`}${ui.reassuranceStrip(reassurance)}</div>
   </div>
 </div></section>
 
