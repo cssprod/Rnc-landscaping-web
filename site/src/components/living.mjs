@@ -102,6 +102,8 @@ export function projectArt(project, o = {}) {
 /**
  * The /styleguide/ living section (showcase builds only): the hero, three area scenes, a service nocturne, a still
  * band and project and vignette art wells, each in a labelled frame. ds-comp places it on /styleguide/.
+ * Only the home-hero specimen is live (≤ 7 loops); the area, service and band frames sit side by side in one grid,
+ * so they render still (`data-still`, 0 loops) and no viewport holds more than the 8 loops motion-audit allows.
  * @param {{ projects?: any[], id?: string }} [o]
  * @returns {any}
  */
@@ -115,8 +117,8 @@ export function livingSpecimens(o = {}) {
   <p>Layered vector landscapes: night is bioluminescent, the light theme is dawn. Loops run only while Animations is on, pause off-screen and on hidden tabs, and never run without JavaScript.</p>
   ${frame('Home hero (≤ 7 loops)', livingScene('home'), 'lv-spec--hero')}
   <div class="lv-spec-grid">
-    ${['sea', 'lake', 'none'].map((water) => Object.keys(AREAS).find((a) => AREAS[a].water === water) || '').map((a) => frame(`Area scene: ${a}`, livingScene(`area-${a}`)))}
-    ${frame('Service nocturne: irrigation', livingScene('svc-irrigation'))}
+    ${['sea', 'lake', 'none'].map((water) => Object.keys(AREAS).find((a) => AREAS[a].water === water) || '').map((a) => frame(`Area scene: ${a} (still)`, livingScene(`area-${a}`, { still: true })))}
+    ${frame('Service nocturne: irrigation (still)', livingScene('svc-irrigation', { still: true }))}
     ${frame('Still band (0 loops)', livingScene('cta', { variant: 'band', still: true }))}
   </div>
   <div class="lv-spec-grid lv-spec-grid--cards">

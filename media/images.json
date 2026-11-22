@@ -20,15 +20,12 @@
     "aspect": "16:9",
     "alt": "Aerial view of a worker trimming a large sports field",
     "brief": "Subject: a worker mowing a large institutional sports field and its edges, seen from high above. Framing: high vantage or drone, geometric mowing stripes. Light: soft overcast or early-morning light, no harsh midday sun. Lens: 24-70mm at f/5.6-8. Season: late spring to early summer. Shoot in Greater Victoria; crew in plain RNC-branded or unbranded workwear with PPE, faces not the focus; get signed property releases.",
-    "stock": {
-      "provider": "Unsplash",
-      "pageUrl": "https://unsplash.com/photos/aerial-photography-of-person-trimming-sports-field-during-day-LlHgaeBwYVE",
-      "imageUrl": "https://images.unsplash.com/photo-1501520158826-76df880863a3?w=1600&q=80&auto=format&fit=crop",
-      "photographer": "Rémi Müller",
-      "photographerUrl": "https://unsplash.com/@remimullercha",
-      "license": "Unsplash License (https://unsplash.com/license)"
-    },
-    "rncToSupply": true
+    "stock": null,
+    "rncToSupply": true,
+    "art": {
+      "scene": "svc-grounds-maintenance",
+      "palette": "theme"
+    }
   },
   {
     "id": "about-crew",

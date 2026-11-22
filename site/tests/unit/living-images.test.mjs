@@ -124,11 +124,43 @@ test('no stock under /projects/: every project and portfolio slot has stock null
   assert.equal(artSlots.length, 16);
   assert.ok(byId.get('process-hero')?.art?.scene);
   for (const id of ['about-crew', 'about-owner']) assert.equal(byId.get(id).stock, null, `${id} never gets stock`);
+  // No stock person stands for RNC's owner, crew or capacity (CONTRACT §2): these slots show living art online too.
+  for (const id of ['home-commercial', 'svc-grounds-maintenance-hero', 'svc-landscape-installation-hero', 'svc-tree-vegetation-hero']) {
+    assert.equal(byId.get(id).stock, null, `${id} has no stock person`);
+    assert.ok(byId.get(id).art?.scene, `${id} has living art`);
+    assert.ok(!/unsplash|pexels/.test(s(picture(id, { eager: /-hero$/.test(id) }))), `${id} renders no stock online`);
+  }
   // usedOn lists the new URLs only.
   for (const x of images) assert.ok(!/\/portfolio\/|\/quote\//.test(x.usedOn || ''), `${x.id} usedOn uses new URLs`);
   // Unknown slots still render labelled art.
   const unknown = s(picture('no-such-slot'));
   assert.match(unknown, /<img src="\/assets\/art\/no-such-slot\.svg"[^>]*alt=""/);
   assert.match(unknown, /<span class="media__chip" aria-hidden="true">Illustration<\/span>/);
+  initImages(images, { offline: true, photos: [] });
+});
+
+test('stock srcsets stop at 1600 w like the local photos (A13#27, budgets#image-widths) #image-widths', () => {
+  initImages(images, { offline: false, photos: [] });
+  const stocked = images.filter((/** @type {any} */ x) => x.stock?.imageUrl);
+  assert.ok(stocked.length > 0);
+  for (const x of stocked) {
+    const h = s(picture(x.id, { eager: true }));
+    const widths = [...h.matchAll(/\s(\d+)w(?=[,"])/g)].map((m) => Number(m[1]));
+    assert.ok(widths.length >= 3, `${x.id} has a srcset`);
+    assert.ok(Math.max(...widths) <= 1600, `${x.id} srcset ${widths.join(',')}`);
+    assert.ok(!/[?&]w=(?:1[7-9]\d\d|[2-9]\d{3})/.test(h), `${x.id} requests no candidate wider than 1600`);
+  }
+  initImages(images, { offline: true, photos: [] });
+});
+
+test('legacy heroes placed through picture({ eager }) render still: no loop sits under the legacy glass #legacy-still', () => {
+  for (const offline of [true, false]) {
+    initImages(images, { offline, photos: [] });
+    for (const id of ['home-hero', 'area-oak-bay', 'area-sooke', 'svc-grounds-maintenance-hero']) {
+      const h = s(picture(id, { eager: true }));
+      assert.match(h, /data-living[^>]*data-still/, `${id} is still`);
+      assert.equal((h.match(/\sdata-t2[\s>]/g) || []).length, 0, `${id} has no loop boxes`);
+    }
+  }
   initImages(images, { offline: true, photos: [] });
 });

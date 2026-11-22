@@ -147,6 +147,22 @@ test('slots sharing one scene get their own art well; the same slot keeps its by
   assert.equal(s(livingScene('svc-irrigation', { variant: 'card' })), s(livingScene('svc-irrigation', { variant: 'card', seed: 'svc-irrigation' })));
 });
 
+test('livingSpecimens(): only the home-hero specimen loops; every grid row is still, so no viewport holds > 8 loops #specimen-budget', () => {
+  const out = s(livingSpecimens({ projects }));
+  const hero = out.slice(out.indexOf('lv-spec--hero'), out.indexOf('<div class="lv-spec-grid'));
+  assert.equal(loops(hero), 7, 'the home hero specimen is live');
+  const grids = out.split('<div class="lv-spec-grid').slice(1);
+  assert.equal(grids.length, 2);
+  for (const g of grids) {
+    const frames = g.split('<figure class="lv-spec').slice(1);
+    assert.ok(frames.length >= 4, `${frames.length} frames`);
+    // A row holds at most 4 frames at 1440 px; with the hero above it in the same viewport the sum stays ≤ 8.
+    for (let i = 0; i < frames.length; i += 4) assert.equal(frames.slice(i, i + 4).reduce((n, f) => n + loops(f), 0), 0, 'grid row is still');
+  }
+  assert.ok(loops(out) <= 8, `whole section ${loops(out)} loops`);
+  assert.equal((out.match(/data-living[^>]*data-still/g) || []).length, 5, 'area ×3, service and band frames carry data-still');
+});
+
 test('aurora: "still" paints the aurora without its loop; the other loops stay #aurora-still', () => {
   const live = s(livingScene('home')), calm = s(livingScene('home', { aurora: 'still' }));
   assert.match(live, /class="sc-aurora" data-layer="aurora" data-t2/);

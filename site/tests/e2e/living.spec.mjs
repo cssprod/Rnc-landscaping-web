@@ -3,11 +3,29 @@
  * Living art (owner: living from W2): data-alive, loop budgets, motion off, off-screen and hidden-tab pausing, theme
  * reactivity, the spotlight, and per-project art with no stock under /projects/ (CONTRACT §7–§9).
  * Pages carry scenes through media/images.json in W2: the home hero (home-hero), every area hero (area-<slug>) and
- * every project card and case study (project art). /styleguide/ shows the full set once ds-comp places
- * livingSpecimens() there.
+ * every project card and case study (project art). Scenes inside legacy heroes render still (data-still, 0 loops),
+ * because legacy hero buttons and the dock still blur (backdrop-filter) over them; the loop runtime is exercised on a
+ * live scene placed outside any glass (`liveScene()`, the same markup W3 hero(p) and livingSpecimens() render).
  */
 import { test, expect } from 'playwright/test';
 import { offline, collectErrors } from '../helpers/server.mjs';
+import { livingScene } from '../../src/components/living.mjs';
+
+/**
+ * Place a live scene (full loop budget) as the first block of <main>, in a positioned 70vh stage with no glass over
+ * it, before living.js starts (it observes scenes on load).
+ * @param {import('playwright/test').BrowserContext} ctx @param {string} sceneId
+ */
+const liveScene = (ctx, sceneId) => ctx.addInitScript((markup) => {
+  document.addEventListener('DOMContentLoaded', () => {
+    const stage = document.createElement('section');
+    stage.setAttribute('data-live-fixture', '');
+    stage.style.cssText = 'position:relative;height:70vh;overflow:hidden';
+    stage.innerHTML = markup;
+    (document.querySelector('main') || document.body).prepend(stage);
+  });
+}, String(livingScene(sceneId, { uid: 'e2e-live' })));
+const FIX = '[data-live-fixture] [data-living]';
 
 /** Running infinite animations on the page. @param {import('playwright/test').Page} page */
 const running = (page) => page.evaluate(() => document.getAnimations().filter((a) => a.effect?.getTiming().iterations === Infinity && a.playState === 'running').length);
@@ -28,9 +46,10 @@ test('without JavaScript nothing is alive: no data-alive, no js class', async ({
   await ctx.close();
 });
 
-test('motion on: data-alive after load + idle, the hero runs ≤ 7 loops, all ambient loops pause off-screen #loops', async ({ browser }) => {
+test('motion on: data-alive after load + idle, a live hero scene runs ≤ 7 loops, all ambient loops pause off-screen #loops', async ({ browser }) => {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   await prefs(ctx, 'on');
+  await liveScene(ctx, 'home');
   const page = await ctx.newPage();
   const errors = collectErrors(page);
   await offline(page);
@@ -38,15 +57,35 @@ test('motion on: data-alive after load + idle, the hero runs ≤ 7 loops, all am
   await expect(page.locator('html')).toHaveAttribute('data-alive', '');
   await expect.poll(() => running(page)).toBeGreaterThan(0);
   expect(await running(page)).toBeLessThanOrEqual(7);
-  // Scroll the hero out of view: its scene gets data-offscreen and every loop pauses.
+  // Scroll the scene out of view: it gets data-offscreen and every loop pauses.
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  await expect(page.locator('[data-living][data-scene="home"]')).toHaveAttribute('data-offscreen', '');
+  await expect(page.locator(FIX)).toHaveAttribute('data-offscreen', '');
   await expect.poll(() => running(page)).toBe(0);
   await page.evaluate(() => window.scrollTo(0, 0));
-  await expect(page.locator('[data-living][data-scene="home"]')).not.toHaveAttribute('data-offscreen', /.*/);
+  await expect(page.locator(FIX)).not.toHaveAttribute('data-offscreen', /.*/);
   await expect.poll(() => running(page)).toBeGreaterThan(0);
   expect(errors).toEqual([]);
   await ctx.close();
+});
+
+test('legacy heroes (under backdrop-filter glass) render still: 0 loops with motion on #legacy-still', async ({ browser }) => {
+  for (const width of [390, 1440]) {
+    const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+    await prefs(ctx, 'on');
+    const page = await ctx.newPage();
+    await offline(page);
+    for (const path of ['/', '/areas/oak-bay/', '/services/grounds-maintenance/']) {
+      await page.goto(path);
+      await expect(page.locator('html')).toHaveAttribute('data-alive', '');
+      const hero = page.locator('.hero__media [data-living]');
+      await expect(hero).toHaveCount(1);
+      await expect(hero).toHaveAttribute('data-still', '');
+      await expect(hero.locator('[data-t2]')).toHaveCount(0);
+      await page.waitForTimeout(300);
+      expect(await running(page), `${path} at ${width}`).toBe(0);
+    }
+    await ctx.close();
+  }
 });
 
 test('motion off (stored choice) and OS reduce with no choice: no infinite animation runs, T1 hooks settle still #motion-off', async ({ browser }) => {
@@ -70,6 +109,7 @@ test('motion off (stored choice) and OS reduce with no choice: no infinite anima
 test('turning Animations off at runtime stops every loop; turning it on restarts them; hidden tabs pause #runtime', async ({ browser }) => {
   const ctx = await browser.newContext();
   await prefs(ctx, 'on');
+  await liveScene(ctx, 'area-sooke');
   const page = await ctx.newPage();
   await offline(page);
   await page.goto('/areas/sooke/');

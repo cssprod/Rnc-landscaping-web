@@ -3,7 +3,8 @@
  * Image slots from media/images.json (CONTRACT §7). picture() renders, in order of preference:
  *   1. RNC's own photo, processed by tools/process-images.mjs (media/photos.json manifest): a <picture> with AVIF,
  *      WebP and JPEG sources at 480/768/1024/1600, explicit width/height, hand-written alt;
- *   2. a stock placeholder (online showcase builds only; never under /projects/, where every slot has stock: null);
+ *   2. a stock placeholder (online showcase builds only; never under /projects/, where every slot has stock: null),
+ *      its srcset capped at 1600 w like the local photos;
  *   3. living art for a slot that has `art` (components/living.mjs): projectArt() for `project:<slug>` scenes, the
  *      layered livingScene() for an eager hero, a static art well otherwise. Labelled with the "Illustration" chip;
  *   4. a labelled standalone illustration file (/assets/art/<slot>.svg) for any other slot, unknown ids included.
@@ -17,13 +18,17 @@ import { livingScene, projectArt } from '../components/living.mjs';
 
 /**
  * Heroes placed through picture() are the legacy page heads, whose buttons and dock still use backdrop-filter glass
- * (DESIGN-DIRECTION: never blur over animation). Until W3 hero(p) places the scene itself, those scenes paint the
- * aurora still: it is the largest composited layer, and its drift loop is the one that costs frames under the glass.
+ * (DESIGN-DIRECTION: never blur over animation; motion-audit #policy-tiers). The loop boxes (stars, glints, mist,
+ * fireflies) span the whole land band, so they cannot be kept out from under the glass: until W3 hero(p) places the
+ * scene itself without glass on top, scenes in legacy heroes render still (0 loops, `data-still`). The T1 dolly and
+ * the theme swap still apply.
  */
-const LEGACY_HERO = /** @type {const} */ ({ aurora: 'still' });
+const LEGACY_HERO = /** @type {const} */ ({ still: true });
 
 /** Local photo widths (CONTRACT §7). */
 export const PHOTO_WIDTHS = [480, 768, 1024, 1600];
+/** Widest image candidate any srcset offers (A13#27, budgets#image-widths). */
+export const MAX_IMAGE_W = 1600;
 const MEDIA = new URL('../../../media/', import.meta.url);
 const CONTENT = new URL('../../../content/', import.meta.url);
 
@@ -153,7 +158,7 @@ export function picture(id, o = {}) {
   if (isStock(id)) {
     const st = slot.stock;
     const W = 1600, H = Math.round((1600 * rh) / rw);
-    const srcset = site.imageWidths.map((w) => `${sized(st.imageUrl, w)} ${w}w`).join(', ');
+    const srcset = site.imageWidths.filter((w) => w <= MAX_IMAGE_W).map((w) => `${sized(st.imageUrl, w)} ${w}w`).join(', ');
     const sampleTag = o.sample ? html`<span class="media__chip media__chip--sample">Sample image</span>` : '';
     const credit = o.credit !== false && st.photographer
       ? html`<figcaption class="media__credit">Photo: ${st.photographerUrl ? html`<a href="${st.photographerUrl}" rel="noopener">${st.photographer}</a>` : st.photographer} / ${st.provider || 'Stock'}</figcaption>`

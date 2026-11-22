@@ -587,6 +587,12 @@ export function landscapeSvg(id, aspect = '16:9', o = {}) {
   const sunX = Wd * recipe.sunX, sunY = hz - Hd * (0.1 + rand() * 0.08), sunR = Math.min(Wd, Hd) * 0.06;
   parts.push(`<circle cx="${r0(sunX)}" cy="${r0(sunY)}" r="${r0(sunR * 6)}" fill="url(#g)" opacity="${theme === 'night' ? 0.35 : 1}"/>`);
   parts.push(`<circle cx="${r0(sunX)}" cy="${r0(sunY)}" r="${r0(sunR)}" fill="${P.sun}"/>`);
+  if (theme !== 'photo') {
+    // The top band sits under the header and a legacy hero's breadcrumb (white copy): keep it the plain sky-top
+    // colour, so the moon glow never lifts it (text-over-media on /services/irrigation/ offline, 320 px).
+    defs.push(`<linearGradient id="k" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.skyTop}"/><stop offset=".6" stop-color="${P.skyTop}" stop-opacity=".85"/><stop offset="1" stop-color="${P.skyTop}" stop-opacity="0"/></linearGradient>`);
+    parts.push(`<rect width="${Wd}" height="${r0(Hd * 0.34)}" fill="url(#k)"/>`);
+  }
   if (recipe.distant === 'range') {
     const peaks = Array.from({ length: 3 }, () => ({ x: rand(), h: 0.08 + rand() * 0.08, w: 0.05 + rand() * 0.06 }));
     const jag = (/** @type {number} */ base, /** @type {number} */ scale, /** @type {number} */ n, /** @type {number} */ rough) => {

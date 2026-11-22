@@ -2,8 +2,8 @@
 
 Until RNC supplies its own photos, every image slot shows labelled living vector art (an "Illustration" chip) or, outside
 `/projects/`, a credited stock placeholder. **No stock photo is ever used under `/projects/`** and no stock person stands
-for the owner or crew (CONTRACT §2, §7): every project and portfolio slot, `about-crew`, `about-owner`, `home-hero` and
-the three service heroes that pictured a person (`svc-grounds-maintenance-hero`, `svc-landscape-installation-hero`,
+for the owner, the crew or RNC's capacity (CONTRACT §2, §7): every project and portfolio slot, `about-crew`, `about-owner`,
+`home-hero`, `home-commercial` (the commercial teaser on `/`) and the three service heroes that pictured a person (`svc-grounds-maintenance-hero`, `svc-landscape-installation-hero`,
 `svc-tree-vegetation-hero`) have `stock: null` and show their living scene. `area-central-saanich` also shows its living
 scene, so all 13 area pages read alike. To replace a slot with RNC's own photo, follow `media/photos/README.md` (one
 file per slot id plus a licence record, processed by `site/tools/process-images.mjs` to AVIF/WebP/JPEG with all metadata stripped).
@@ -82,7 +82,6 @@ Slots with an `art` record in `media/images.json` render theme-reactive living a
 - General: drone pass over a finished property (Transport Canada rules apply; verify before flying).
 
 ## Stock photo credits (placeholders in use outside /projects/)
-- home-commercial: "Aerial view of a worker trimming a large sports field" by [Rémi Müller](https://unsplash.com/@remimullercha) on [Unsplash](https://unsplash.com/photos/aerial-photography-of-person-trimming-sports-field-during-day-LlHgaeBwYVE), Unsplash License (https://unsplash.com/license)
 - commercial-hero: "Large well-kept lawn with shrubs and mature trees" by [Raelle Cameron](https://unsplash.com/@raegocreative) on [Unsplash](https://unsplash.com/photos/a-large-green-lawn-with-bushes-and-trees-JUNyb_cetns), Unsplash License (https://unsplash.com/license)
 - quote-aside: "Wheelbarrow in a garden beside a small shed and flowering shrubs" by [Annie Spratt](https://unsplash.com/@anniespratt) on [Unsplash](https://unsplash.com/photos/wheelbarrow-in-garden-with-shed-ch_j5gH6INY), Unsplash License (https://unsplash.com/license)
 - og-default: "Brick garden path lined with flowers and trees" by [Annie Tray-Gavin](https://unsplash.com/@annietraygavin) on [Unsplash](https://unsplash.com/photos/a-brick-path-with-a-garden-of-flowers-and-trees-aqqx2yrVB2M), Unsplash License (https://unsplash.com/license)
