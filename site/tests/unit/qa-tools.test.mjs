@@ -531,12 +531,13 @@ test('measure text contrast: glass over art, text over images and painted siblin
       <p class="solid">Solid text on the page</p>
       <div><mark class="chip" style="background:rgba(0,0,0,.1);color:#111">[PHONE]</mark></div>
       <p class="faint" style="color:#bbb">Faint text</p>
+      <div style="background:color-mix(in srgb, white 60%, transparent)"><p class="mixed" style="color:#1a1a1a">On a color-mix() tint, computed as color(srgb 1 1 1 / 0.6)</p></div>
       <a class="tile" href="#" style="position:relative;display:block;width:300px;height:160px"><img class="abs" src="${art}" alt="" style="pointer-events:none"><span class="tile__glass" style="position:absolute;left:0;right:0;bottom:0;padding:12px;background:rgba(9,17,12,.34)"><span class="tile__text" style="color:rgba(255,255,255,.82)">Lawn care</span></span></a>
       <div style="position:relative;height:60px"><img class="abs" src="${art}" alt="" style="pointer-events:none"><p class="over-art" style="position:relative;margin:0;color:#fff">Over the art</p></div>
       <div style="background-image:linear-gradient(#000,#333)"><p class="grad" style="color:#fff">On a gradient</p></div>
       <div style="position:relative;height:40px"><div class="abs" style="background:#000"></div><p class="sibling" style="position:relative;margin:0;color:#fff">On a painted sibling</p></div>`);
     const c = await page.evaluate(textContrast);
-    assert.equal(c.textElements, 3, JSON.stringify(c));
+    assert.equal(c.textElements, 4, JSON.stringify(c));
     assert.equal(c.skipped, 4, JSON.stringify(c));
     assert.equal(c.under45, 1);
     assert.equal(c.minAt, 'p.faint');

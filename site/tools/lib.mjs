@@ -249,8 +249,22 @@ export const primaryTargets = () => {
 export const textContrast = () => {
   const lin = (/** @type {number} */ v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
   const L = (/** @type {number[]} */ c) => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
-  const rgba = (/** @type {string} */ s) => { const n = (s.match(/[\d.]+/g) || []).map(Number); return [n[0] || 0, n[1] || 0, n[2] || 0, n[3] === undefined ? 1 : n[3]]; };
-  const over = (/** @type {number[]} */ top, /** @type {number[]} */ under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3]));
+  // Computed colours are rgb()/rgba() or, for color-mix() and the CSS Color 4 spaces, color(srgb 1 1 1 / 0.6), oklch(…):
+  // anything but rgb() is painted on a 1×1 canvas and read back as 8-bit sRGB.
+  const cv = document.createElement('canvas'); cv.width = 1; cv.height = 1;
+  const g = cv.getContext('2d', { willReadFrequently: true });
+  /** @type {Map<string, number[]>} */ const seen = new Map();
+  const rgba = (/** @type {string} */ s) => {
+    let v = seen.get(s);
+    if (v) return v;
+    const m = s.match(/^rgba?\(([^)]*)\)$/);
+    if (m) { const n = m[1].split(/[\s,/]+/).filter(Boolean).map((x) => (x.endsWith('%') ? parseFloat(x) / 100 : Number(x))); v = [n[0] || 0, n[1] || 0, n[2] || 0, n[3] === undefined ? 1 : n[3]]; }
+    else if (g) { g.clearRect(0, 0, 1, 1); g.fillStyle = '#000'; g.fillStyle = s; g.fillRect(0, 0, 1, 1); const d = g.getImageData(0, 0, 1, 1).data; v = [d[0], d[1], d[2], d[3] / 255]; }
+    else v = [0, 0, 0, 1];
+    seen.set(s, v);
+    return v;
+  };
+  const over =(/** @type {number[]} */ top, /** @type {number[]} */ under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3]));
   const paints = (/** @type {CSSStyleDeclaration} */ s) => s.backgroundImage !== 'none' || rgba(s.backgroundColor)[3] > 0;
   /** A ::before/::after that paints at least half of its element's box (an overlay, not an accent line). */
   const pseudoCovers = (/** @type {Element} */ e) => {

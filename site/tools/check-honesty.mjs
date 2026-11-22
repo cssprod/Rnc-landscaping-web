@@ -42,7 +42,8 @@
  *   credential-claims              no credential claim ("fully insured", "licensed and bonded") while that credential is
  *                                  unresolved, and no guarantee claim ("money-back", "lifetime", "100 % satisfaction")
  *                                  that [WARRANTY] does not state.
- *   reviews-credentials-guarantee  /reviews/ points to the Google reviews; credentials rows show each credential's token
+ *   reviews-credentials-guarantee  /reviews/ points to the Google reviews in its <main> (the footer's "Google profile"
+ *                                  row does not count); credentials rows show each credential's token
  *                                  or value; a workmanship guarantee is shown with [WARRANTY] (or its value).
  * Hard rules (CONTRACT §2) never share an id with a structural gap, and the ones that hold on the W1 base (HARD below)
  * are never baselined: report() leaves them out of --write-baseline and ignores any baseline entry for them.
@@ -267,7 +268,9 @@ for (const f of pages) {
     if (!/class="[^"]*\bsample-label\b|>\s*Sample\b/.test(card.html || m[0])) fail('sample-label', f, `sample review "${q.slice(0, 60)}" has no visible "Sample" label in its card`);
   }
   /* reviews-credentials-guarantee */
-  if (f === 'reviews/index.html' && !/reviews?\s+on\s+google|google\s+(?:business\s+)?(?:profile|reviews)/i.test(text)) fail('reviews-credentials-guarantee', f, 'no "Read all reviews on Google" link or text (with the [GOOGLE PROFILE] chip until it is known)');
+  // In the page's own content: the footer's "Google profile [GOOGLE PROFILE]" row is on every page and is not the link.
+  const main = visibleText(body.match(/<main\b[\s\S]*<\/main>/i)?.[0] || body);
+  if (f === 'reviews/index.html' && !/reviews?\s+on\s+google|google\s+(?:business\s+)?(?:profile|reviews)/i.test(main)) fail('reviews-credentials-guarantee', f, 'no "Read all reviews on Google" link or text (with the [GOOGLE PROFILE] chip until it is known)');
   for (const m of body.matchAll(/<(\w+)\b[^>]*class="[^"]*\bcred(?:entials?|s)?(?:[-_][\w-]*)?\b[^"]*"[\s\S]*?<\/\1>/g)) {
     const t = visibleText(m[0]);
     for (const c of site.credentials || []) {
