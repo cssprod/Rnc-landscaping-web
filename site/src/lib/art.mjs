@@ -401,7 +401,7 @@ function miniScene(seed, o) {
   const w = o.w || 480, h = o.h || 360, R = rng(hash(seed));
   const hz = r0(h * (o.ground ?? 0.52));
   const mx = r0(w * (o.orbX ?? (0.62 + R() * 0.24))), my = r0(h * 0.2), mr = r0(h * 0.045);
-  const st = []; for (let i = 0; i < 6; i++) { const x = R() * w, y = R() * hz * 0.7; if (Math.hypot(x - mx, y - my) > mr * 3) st.push([x, y]); }
+  const st = []; for (let i = 0; i < 5; i++) { const x = R() * w, y = R() * hz * 0.7; if (Math.hypot(x - mx, y - my) > mr * 3) st.push([x, y]); }
   const peaks = [];
   for (let i = 0; i <= 8; i++) peaks.push([(i / 8) * w, hz - 6 - R() * h * 0.1 * (i % 2 ? 1 : 0.45)]);
   const ph = R();
@@ -497,7 +497,7 @@ export function projectVignette(p, o = {}) {
       for (let i = 0; i < 3; i++) { const t = (i + 1) / 3, x = hx + (left ? 1 : -1) * t * t * w * 0.14, y = gy + 8 + t * (h - gy) * 0.86, sw = r0(7 + t * 18), sh = r0(2 + t * 6); st += `M${r0(x - sw)} ${r0(y)}q${sw}-${sh} ${2 * sw} 0q-${sw} ${sh}-${2 * sw} 0z`; }
       s += `<path class="f-stone" d="${st}"/>`;
       // Beds either side of the path, in the season's colour.
-      const bl = []; for (let i = 0; i < 8; i++) { const side = i % 2 ? 1 : -1; bl.push([hx + side * (bw * 0.6 + R() * w * 0.14), gy + 4 + R() * h * 0.12]); }
+      const bl = []; for (let i = 0; i < 7; i++) { const side = i % 2 ? 1 : -1; bl.push([hx + side * (bw * 0.6 + R() * w * 0.14), gy + 4 + R() * h * 0.12]); }
       s += `<path class="ln s-bloom" d="${dots(bl)}"/>`;
       // The service, small, in the yard.
       const yx = r0(left ? w * 0.68 : w * 0.24), yy = r0(ground(yx) + h * 0.12);
