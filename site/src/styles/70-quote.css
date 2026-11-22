@@ -1,2 +1,122 @@
-/* 70-quote.css: pre-registered stub (CONTRACT §4, §12). Owner: quote (W2).
-   Wrap every rule in exactly one layer:  @layer pages { … }  */
+/* 70-quote.css: the free quote page and builder (owner: quote; CONTRACT §12). Replaces legacy slices 19 and 26.
+   Calm by design (DESIGN-DIRECTION §9 quote-calm): a still backdrop behind the head only; nothing moves near the inputs;
+   the ready panel and error summary enter once (T1, var(--dur-t1)). Lit-solid surfaces, no backdrop-filter.
+   Durations come only from the motion tokens, so data-motion=off / reduced motion make them instant. */
+@layer pages {
+
+/* ---------- shared form controls (also used by the projects filter select until t-projects restyles it in W3) ----------
+   Only properties the filter's own rule (legacy slice 20) does not set, so its pill shape and height still apply. */
+.select { position: relative; }
+.select select { -webkit-appearance: none; appearance: none; padding-inline: 16px 44px; border: 1px solid var(--color-line-strong); background: var(--color-bg-elevated); color: var(--color-ink); font-family: inherit; cursor: pointer; transition: border-color var(--dur-t0, var(--dur-fast)) var(--ease); }
+.select select:hover { border-color: var(--color-ink-3); }
+.select > .i { position: absolute; top: 50%; right: 14px; translate: 0 -50%; color: var(--color-ink-3); pointer-events: none; }
+.js .filters [data-filters-submit] { display: none; }
+
+/* ---------- page ---------- */
+.quote-page { position: relative; isolation: isolate; overflow: clip; padding-top: calc(var(--layout-header-h) + clamp(1.25rem, 4vw, 3rem)); padding-bottom: calc(var(--space-section) * 0.75); }
+.quote-page__backdrop { position: absolute; inset: 0 0 auto; z-index: -1; height: min(34rem, 70%); pointer-events: none;
+  background:
+    radial-gradient(60% 70% at 85% 0%, color-mix(in srgb, var(--color-brand-2) 16%, transparent), transparent 70%),
+    radial-gradient(50% 60% at 10% 10%, color-mix(in srgb, var(--color-brand) 14%, transparent), transparent 72%);
+  -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
+.quote-head { max-width: 46rem; margin-bottom: var(--space-6); }
+.quote-head h1 { margin-bottom: var(--space-3); }
+.quote-head__lede { max-width: 54ch; margin: 0; color: var(--color-ink-2); font-size: var(--font-size-lede); line-height: 1.45; }
+.quote-reassure { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: var(--space-5) 0 0; padding: 0; list-style: none; }
+.quote-reassure li { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 14px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--color-brand) 9%, var(--color-bg-elevated)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand) 26%, transparent); color: var(--color-ink); font-size: var(--font-size-subheadline); font-weight: var(--font-weight-medium); }
+.quote-reassure .i { flex: none; color: var(--color-brand); }
+.quote-page__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); align-items: start; }
+.quote-page__side { display: grid; gap: var(--space-5); }
+@media (min-width: 64em) {
+  .quote-page__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(1.5rem, 3vw, 3rem); }
+  .quote-page__side { position: sticky; top: calc(var(--layout-header-h) + 16px); }
+}
+
+/* ---------- lit-solid surfaces ---------- */
+.qb, .quote-next, .quote-contacts { border-radius: var(--radius-2xl); background: var(--surface-card, var(--color-bg-elevated)); box-shadow: inset 0 1px 0 var(--glass-rim, transparent), 0 0 0 1px var(--color-line), var(--shadow-1); }
+.qb { padding: clamp(1.25rem, 3.5vw, 2.5rem); }
+.quote-next, .quote-contacts { padding: clamp(1.25rem, 2.5vw, 1.75rem); }
+.quote-next h2, .quote-contacts h2 { margin: 0 0 var(--space-4); font-size: var(--font-size-title-3); }
+
+/* ---------- fields ---------- */
+.qb .field { min-width: 0; margin: 0 0 var(--space-6); padding: 0; border: 0; }
+.qb .field__label { display: block; margin: 0 0 6px; padding: 0; color: var(--color-ink); font-size: var(--font-size-headline, 1.0625rem); font-weight: var(--font-weight-semibold); letter-spacing: -0.012em; }
+.qb .field__help { margin: 0 0 10px; color: var(--color-ink-2); font-size: var(--font-size-footnote); }
+.qb .field__help p { margin: 0 0 4px; }
+.qb .field__error { display: flex; align-items: flex-start; gap: 6px; margin: 8px 0 0; color: var(--color-error); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); }
+.qb .field__error .i { flex: none; margin-top: 2px; }
+.qb .field__error[hidden], .qb [hidden] { display: none; }
+.qb input[type=text], .qb input[type=tel], .qb select, .qb textarea { width: 100%; min-height: 52px; padding: 12px 16px; border: 1px solid var(--color-line-strong); border-radius: var(--radius-m); background: var(--color-bg-elevated); color: var(--color-ink); font: inherit; font-size: 1rem; transition: border-color var(--dur-t0, var(--dur-fast)) var(--ease), box-shadow var(--dur-t0, var(--dur-fast)) var(--ease); }
+.qb .select select { padding-right: 44px; }
+.qb textarea { min-height: 9.5rem; resize: vertical; line-height: 1.5; }
+.qb textarea::placeholder { color: var(--color-ink-3); opacity: 1; }
+.qb input:hover, .qb textarea:hover { border-color: var(--color-ink-3); }
+.qb input:focus-visible, .qb select:focus-visible, .qb textarea:focus-visible { outline: 2.5px solid var(--color-focus); outline-offset: 2px; border-color: var(--color-focus); }
+.qb [aria-invalid="true"] { border-color: var(--color-error); }
+.qb .has-error .qb-card, .qb .has-error .qb-choice { box-shadow: inset 0 0 0 1.5px var(--color-error); }
+
+/* service cards (multi-select) and radio choices: native controls tinted with accent-color (follows color-scheme) */
+.qb-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); gap: 10px; }
+.qb-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.qb-card, .qb-choice { position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; margin: 0; padding: 12px 16px; border-radius: var(--radius-l); background: var(--color-bg-elevated); box-shadow: inset 0 0 0 1px var(--color-line-strong); color: var(--color-ink); font-weight: var(--font-weight-medium); cursor: pointer; transition: box-shadow var(--dur-t0, var(--dur-fast)) var(--ease), background-color var(--dur-t0, var(--dur-fast)) var(--ease); }
+.qb-choice { min-height: 48px; padding: 10px 16px; border-radius: var(--radius-pill); }
+.qb-card:hover, .qb-choice:hover { box-shadow: inset 0 0 0 1px var(--color-ink-3); }
+.qb-card input, .qb-choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--color-brand); cursor: pointer; }
+.qb-card input:focus-visible, .qb-choice input:focus-visible { outline: 2.5px solid var(--color-focus); outline-offset: 3px; }
+.qb-card:has(input:checked), .qb-choice:has(input:checked) { background: color-mix(in srgb, var(--color-brand) 10%, var(--color-bg-elevated)); box-shadow: inset 0 0 0 2px var(--color-brand); }
+.qb-card__icon { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: color-mix(in srgb, var(--color-brand) 12%, transparent); color: var(--color-brand); }
+.qb-card__label { flex: 1; min-width: 0; }
+.qb-card--plain .qb-card__icon { background: color-mix(in srgb, var(--color-ink) 8%, transparent); color: var(--color-ink-2); }
+/* The phone field sits under its question; shown without JS, toggled by quote.js. */
+.qb-reveal { margin-top: calc(var(--space-6) * -0.5); padding-left: 14px; border-left: 2px solid color-mix(in srgb, var(--color-brand) 40%, transparent); }
+.qb-reveal[hidden] { display: none; }
+
+/* ---------- submit, error summary, ready panel ---------- */
+.qb__submit { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: var(--space-6); }
+.qb__submit .field__help { flex: 1 1 18rem; margin: 0; }
+.js .qb__nojs { display: none; }
+.qb__summary { margin: 0 0 var(--space-6); padding: var(--space-4) var(--space-5); border-radius: var(--radius-l); background: color-mix(in srgb, var(--color-error) 9%, var(--color-bg-elevated)); box-shadow: inset 0 0 0 1.5px var(--color-error); }
+.qb__summary:focus { outline: 2.5px solid var(--color-focus); outline-offset: 3px; }
+.qb__summary-h { margin: 0 0 8px; font-size: var(--font-size-headline, 1.0625rem); }
+.qb__summary ul { margin: 0; padding-left: 1.2em; }
+.qb__summary li + li { margin-top: 4px; }
+.qb__summary a { color: var(--color-error); font-weight: var(--font-weight-semibold); text-decoration: underline; text-underline-offset: 3px; }
+.qb-ready { margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-line); }
+.qb-ready h2 { margin: var(--space-3) 0 var(--space-2); font-size: var(--font-size-title-2); }
+.qb-ready h2:focus { outline: none; }
+.qb-ready h2:focus-visible { outline: 2.5px solid var(--color-focus); outline-offset: 4px; }
+.qb-ready > p { color: var(--color-ink-2); }
+.qb-ready__badge { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: color-mix(in srgb, var(--color-success, var(--color-brand)) 18%, transparent); color: var(--color-success, var(--color-brand)); }
+.qb-ready > .qb-ready__note { padding: 12px 14px; border-radius: var(--radius-m); background: color-mix(in srgb, var(--color-sun, var(--color-brand)) 14%, var(--color-bg-elevated)); color: var(--color-ink); font-size: var(--font-size-subheadline); }
+.qb-ready textarea { min-height: 13rem; background: var(--color-bg-grouped, var(--color-bg-elevated)); font-size: 0.9375rem; }
+.qb-ready__row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: var(--space-4); }
+.qb-ready__status { min-height: 1.5em; margin: 10px 0 0; color: var(--color-ink); font-weight: var(--font-weight-semibold); }
+.qb-ready__address { padding: 12px 14px; border-radius: var(--radius-m); background: color-mix(in srgb, var(--color-ink) 5%, transparent); }
+.qb-ready__address strong { overflow-wrap: anywhere; }
+.qb-ready__talk { margin-top: var(--space-4); }
+.qb-ready__webmail { margin-top: var(--space-5); }
+.qb-ready__webmail p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.qb-ready__restart { margin-top: var(--space-5); }
+/* T1: enters once. Opacity only, and an instant change whenever motion is not effective (--dur-t1 is 0 then). */
+.qb-ready[data-entered], .qb__summary[data-entered] { animation: qb-enter var(--dur-t1, 0ms) var(--ease-out, ease-out) both; }
+@keyframes qb-enter { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- what happens next, other contacts, privacy ---------- */
+.quote-next__list { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; counter-reset: qn; }
+.quote-next__list li { position: relative; padding-left: 44px; counter-increment: qn; }
+.quote-next__list li::before { content: counter(qn); position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: color-mix(in srgb, var(--color-brand) 14%, transparent); color: var(--color-brand); font-size: 0.875rem; font-weight: var(--font-weight-bold); }
+.quote-next__list h3 { margin: 3px 0 4px; font-size: 1rem; }
+.quote-next__list p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.quote-contacts__list { display: grid; gap: 12px; margin: 0; }
+.quote-contacts__row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 4px 12px; align-items: baseline; }
+.quote-contacts__row dt { display: inline-flex; align-items: center; gap: 8px; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.quote-contacts__row dt .i { color: var(--color-brand); }
+.quote-contacts__row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; font-weight: var(--font-weight-semibold); }
+.quote-contacts__row a { display: inline-flex; align-items: center; min-height: 44px; }
+.quote-privacy { display: flex; align-items: flex-start; gap: 10px; max-width: 62rem; margin: var(--space-7) 0 0; color: var(--color-ink-2); font-size: var(--font-size-footnote); }
+.quote-privacy .i { flex: none; margin-top: 2px; color: var(--color-brand); }
+@media (max-width: 39.99em) {
+  .qb__submit .btn { width: 100%; justify-content: center; }
+  .quote-contacts__row { grid-template-columns: minmax(0, 1fr); }
+}
+}

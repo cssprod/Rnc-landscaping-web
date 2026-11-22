@@ -1,342 +1,136 @@
 {
-  "_notes": "Four-step quote request. The website stores nothing: the last step opens the visitor's own email app with the request written out (mailto), and a copy-able summary is shown in case no email app opens. 'steps' defines fields; 'messages' covers form-level states. Field names are stable.",
+  "_notes": "Free quote page (CONTRACT §6 quote.json v3; owner: quote). One page, six inputs: services, area, details, timing, name, contact (the phone field appears for call or text and is then required). There is no email field: the visitor sends from their own email app. The site stores nothing: the form writes an email (mailto) and shows a copyable request; a draft stays in this browser tab (sessionStorage) only. Service options come from site.json plus 'Not sure yet'; municipality options come from site.json plus 'other'. Field names and option values are stable: quote.js reads them. No prices anywhere.",
   "seo": {
     "title": "Get a Free Landscaping Quote | RNC Landscaping Victoria",
-    "description": "Tell us about your property and project in a few short steps and RNC Landscaping will follow up to arrange your free quote anywhere in Greater Victoria."
+    "description": "Answer six short questions and your email app opens with the request written out. Free quotes, no obligation, anywhere in Greater Victoria, BC."
   },
   "h1": "Get a free quote",
-  "lede": "Four short steps, then your email app opens with everything written out, ready to send. A quote costs nothing and comes with no obligation.",
-  "aside": {
-    "image": "quote-aside",
-    "heading": "What happens next",
-    "items": [
-      "We read your request.",
-      "We get back to you to ask any questions and arrange a site visit if needed.",
-      "You get a written quote with the scope and schedule."
-    ]
-  },
-  "steps": [
-    {
-      "id": "service",
-      "title": "Service and property",
-      "progressLabel": "Step 1 of 4: Service and property",
-      "fields": [
-        {
-          "name": "services",
-          "type": "checkbox-group",
-          "label": "What do you need help with?",
-          "help": "Choose all that apply.",
-          "required": true,
-          "options": [
-            {
-              "value": "grounds-maintenance",
-              "label": "Grounds maintenance"
-            },
-            {
-              "value": "landscape-installation",
-              "label": "Landscape installation"
-            },
-            {
-              "value": "irrigation",
-              "label": "Irrigation"
-            },
-            {
-              "value": "tree-vegetation",
-              "label": "Tree and vegetation work"
-            },
-            {
-              "value": "not-sure",
-              "label": "Not sure yet"
-            }
-          ],
-          "errors": {
-            "required": "Choose at least one service, or choose Not sure yet."
-          }
-        },
-        {
-          "name": "propertyType",
-          "type": "radio",
-          "label": "What type of property is it?",
-          "required": true,
-          "options": [
-            {
-              "value": "home",
-              "label": "House"
-            },
-            {
-              "value": "acreage",
-              "label": "Acreage or rural property"
-            },
-            {
-              "value": "strata",
-              "label": "Strata or townhouse complex"
-            },
-            {
-              "value": "commercial",
-              "label": "Commercial property"
-            },
-            {
-              "value": "institutional",
-              "label": "Institutional or public site"
-            },
-            {
-              "value": "construction",
-              "label": "Construction project (general contractor)"
-            },
-            {
-              "value": "other",
-              "label": "Other"
-            }
-          ],
-          "errors": {
-            "required": "Choose the type of property."
-          }
-        }
-      ]
-    },
-    {
-      "id": "location",
-      "title": "Location and timing",
-      "progressLabel": "Step 2 of 4: Location and timing",
-      "fields": [
-        {
-          "name": "area",
-          "type": "select",
-          "label": "Where is the property?",
-          "required": true,
-          "placeholder": "Choose an area",
-          "options": [
-            {
-              "value": "victoria",
-              "label": "Victoria"
-            },
-            {
-              "value": "saanich",
-              "label": "Saanich"
-            },
-            {
-              "value": "oak-bay",
-              "label": "Oak Bay"
-            },
-            {
-              "value": "esquimalt",
-              "label": "Esquimalt"
-            },
-            {
-              "value": "langford",
-              "label": "Langford"
-            },
-            {
-              "value": "colwood",
-              "label": "Colwood"
-            },
-            {
-              "value": "view-royal",
-              "label": "View Royal"
-            },
-            {
-              "value": "sooke",
-              "label": "Sooke"
-            },
-            {
-              "value": "central-saanich",
-              "label": "Central Saanich"
-            },
-            {
-              "value": "north-saanich",
-              "label": "North Saanich"
-            },
-            {
-              "value": "sidney",
-              "label": "Sidney"
-            },
-            {
-              "value": "highlands",
-              "label": "Highlands"
-            },
-            {
-              "value": "metchosin",
-              "label": "Metchosin"
-            },
-            {
-              "value": "other",
-              "label": "Other"
-            }
-          ],
-          "errors": {
-            "required": "Choose the area where the property is."
-          }
-        },
-        {
-          "name": "areaOther",
-          "type": "text",
-          "label": "Community name",
-          "help": "Shown when you choose Other.",
-          "requiredWhen": {
-            "area": "other"
-          },
-          "maxLength": 80,
-          "errors": {
-            "required": "Enter the community where the property is."
-          }
-        },
-        {
-          "name": "address",
-          "type": "text",
-          "label": "Street address (optional)",
-          "help": "Helps us plan a site visit. Stratas: use the complex's street address.",
-          "required": false,
-          "maxLength": 160
-        },
-        {
-          "name": "timing",
-          "type": "radio",
-          "label": "When would you like the work done?",
-          "required": true,
-          "options": [
-            {
-              "value": "asap",
-              "label": "As soon as possible"
-            },
-            {
-              "value": "1-3-months",
-              "label": "In the next 1 to 3 months"
-            },
-            {
-              "value": "later",
-              "label": "Later this year or next season"
-            },
-            {
-              "value": "ongoing",
-              "label": "Ongoing or recurring service"
-            },
-            {
-              "value": "flexible",
-              "label": "Flexible"
-            }
-          ],
-          "errors": {
-            "required": "Choose when you would like the work done."
-          }
-        }
-      ]
-    },
-    {
-      "id": "details",
-      "title": "Project details",
-      "progressLabel": "Step 3 of 4: Project details",
-      "fields": [
-        {
-          "name": "details",
-          "type": "textarea",
-          "label": "Tell us about the work",
-          "help": "For example: lawn size, number of hedges, trees you're concerned about, or a specification or tender you want us to quote to.",
-          "required": true,
-          "minLength": 10,
-          "maxLength": 2000,
-          "errors": {
-            "required": "Tell us a little about the work so we can prepare.",
-            "minLength": "Add a few more words so we understand the job (at least 10 characters).",
-            "maxLength": "Keep this under 2,000 characters. You can send more detail later."
-          }
-        }
-      ],
-      "intro": "Photos help a lot: you can attach them to the email before you send it."
-    },
-    {
-      "id": "contact",
-      "title": "Your contact details",
-      "progressLabel": "Step 4 of 4: Contact details",
-      "fields": [
-        {
-          "name": "name",
-          "type": "text",
-          "label": "Your name",
-          "required": true,
-          "autocomplete": "name",
-          "maxLength": 100,
-          "errors": {
-            "required": "Enter your name."
-          }
-        },
-        {
-          "name": "email",
-          "type": "email",
-          "label": "Email (optional)",
-          "required": false,
-          "autocomplete": "email",
-          "errors": {
-            "required": "Enter your email address.",
-            "format": "Enter an email address like name@example.com."
-          },
-          "help": "We reply to the address you send from. Add another if you prefer."
-        },
-        {
-          "name": "phone",
-          "type": "tel",
-          "label": "Phone (optional)",
-          "help": "If you'd rather we call.",
-          "required": false,
-          "autocomplete": "tel",
-          "errors": {
-            "format": "Enter a phone number with area code, like 250 555 0123."
-          }
-        },
-        {
-          "name": "contactPreference",
-          "type": "radio",
-          "label": "How should we contact you?",
-          "required": true,
-          "options": [
-            {
-              "value": "email",
-              "label": "Email"
-            },
-            {
-              "value": "phone",
-              "label": "Phone"
-            }
-          ],
-          "errors": {
-            "required": "Choose how we should contact you.",
-            "phoneNeeded": "Add a phone number, or choose Email."
-          }
-        },
-        {
-          "name": "organization",
-          "type": "text",
-          "label": "Strata, company or organization (optional)",
-          "required": false,
-          "maxLength": 120
-        }
-      ],
-      "intro": "Nothing is sent until you press send in your email app. We use these details only to reply to your request, as set out in the [privacy policy](/privacy/)."
-    }
+  "lede": "Answer six short questions and your own email app opens with the request written out, ready to send. Nothing is sent until you press send.",
+  "reassurance": [
+    "Free, no obligation",
+    "We reply within [REPLY TIME]",
+    "No prices shown here — every quote is site-specific"
   ],
+  "fields": {
+    "services": {
+      "label": "What do you need?",
+      "help": "Choose one or more.",
+      "notSure": "Not sure yet",
+      "error": "Choose at least one service, or choose Not sure yet."
+    },
+    "area": {
+      "label": "Municipality",
+      "help": "Somewhere else? Choose the last option and say where in your description.",
+      "placeholder": "Choose your municipality",
+      "other": "Somewhere else in Greater Victoria",
+      "error": "Choose the municipality where the property is."
+    },
+    "details": {
+      "label": "About the property or job",
+      "help": "A few sentences is plenty. Photos help: you can attach them to the email before you send it.",
+      "examples": [
+        "the size of the lawn and beds",
+        "hedges or trees you're concerned about",
+        "an irrigation zone that isn't working",
+        "a specification or tender you want us to quote to"
+      ],
+      "placeholder": "For example: a strata with two lawns and shrub beds, looking for regular maintenance from spring.",
+      "minLength": 10,
+      "maxLength": 1200,
+      "error": "Tell us a little about the property or the work (a sentence is enough)."
+    },
+    "timing": {
+      "label": "Timing",
+      "options": [
+        { "value": "asap", "label": "As soon as possible" },
+        { "value": "this-season", "label": "This season" },
+        { "value": "planning", "label": "Planning ahead" }
+      ],
+      "error": "Choose when you'd like the work done."
+    },
+    "name": {
+      "label": "Your name",
+      "maxLength": 100,
+      "error": "Enter your name."
+    },
+    "contact": {
+      "label": "Best way to reach you",
+      "help": "We reply to the email address you send from.",
+      "options": [
+        { "value": "email", "label": "Reply by email" },
+        { "value": "call", "label": "Call me" },
+        { "value": "text", "label": "Text me" }
+      ],
+      "error": "Choose how we should reach you.",
+      "phone": {
+        "label": "Phone number",
+        "help": "Needed for a call or text. Include the area code.",
+        "error": "Enter a phone number with the area code, like 250 555 0123, or choose Reply by email."
+      }
+    }
+  },
+  "subject": "Free quote request — {services} — {area}",
+  "summary": {
+    "title": "Free quote request",
+    "services": "Services",
+    "area": "Municipality",
+    "timing": "Timing",
+    "name": "Name",
+    "contact": "Best way to reach me",
+    "phone": "Phone",
+    "details": "About the property or job",
+    "footer": "Written with the free quote form on the RNC Landscaping website."
+  },
   "buttons": {
-    "next": "Next",
-    "back": "Back",
-    "submit": "Create my email",
+    "submit": "Open my email app",
     "copy": "Copy request",
-    "copied": "Copied",
-    "reopen": "Open email again",
-    "restart": "Start over"
+    "copied": "Request copied",
+    "copyAddress": "Copy address",
+    "addressCopied": "Address copied",
+    "reopen": "Open my email app again",
+    "restart": "Start again",
+    "gmail": "Gmail",
+    "outlook": "Outlook.com",
+    "call": "Call",
+    "text": "Text us"
   },
   "messages": {
-    "errorSummary": "There is a problem with {count} field(s). Fix the items below and try again.",
+    "submitHelp": "Your email app opens with the request written out. Nothing is sent until you press send.",
+    "noRecipient": "Add [EMAIL] as the recipient before you send.",
+    "errorSummary": "Check these answers before we write your email",
     "ready": {
       "heading": "Your email is ready to send",
-      "body": "Your email app should now show your request, addressed to [EMAIL]. Attach any photos, then press send. If nothing opened, copy the request below and email it to us, or call [PHONE]."
+      "body": "Your email app should have opened with your request. Didn't open? Copy the request below and email it to us, or use one of the other options here."
     },
-    "noJs": "Without JavaScript, this form opens your email app with your answers as plain text."
+    "requestLabel": "Your request",
+    "sendTo": "Send it to",
+    "webmail": "Use webmail? These convenience links open a new message with the same text in a new tab:",
+    "talk": "Prefer to talk? Call or text [PHONE].",
+    "truncated": "Your request is longer than some email apps accept from a link, so the email that opened is shortened. Copy the full request below and paste it over the email text before you send.",
+    "truncatedNote": "[…] This email was shortened to fit an email link. Paste the full request you copied here.",
+    "noJs": "Your answers are listed one per line in the email that opens.",
+    "copyFailed": "Copying didn't work in this browser. The request is selected: press Ctrl+C (or Cmd+C) to copy it."
   },
-  "sections": [
+  "nextSteps": [
     {
-      "id": "other-ways",
-      "heading": "Prefer to talk?",
-      "body": [
-        "Call [PHONE] or email [EMAIL]. See [contact details](/contact/) and [common questions](/faq/)."
-      ]
+      "title": "We read your request",
+      "body": "We reply within [REPLY TIME] with any questions about the property or the work."
+    },
+    {
+      "title": "A site visit if needed",
+      "body": "If the job needs one, we arrange a time to walk the property with you."
+    },
+    {
+      "title": "Your written quote",
+      "body": "You get a written quote with the scope and schedule. It's free, with no obligation."
     }
-  ]
+  ],
+  "contacts": {
+    "heading": "Other ways to reach us",
+    "phone": "Phone",
+    "text": "Text",
+    "email": "Email",
+    "hours": "Hours"
+  },
+  "privacy": "This page doesn't send or store your request: it's written into your own email app, and you choose whether to send it. While you fill it in, a draft is kept in this browser tab only (session storage) so your answers survive going back; closing the tab clears it. See our [privacy policy](/privacy/)."
 }

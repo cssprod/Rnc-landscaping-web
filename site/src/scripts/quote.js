@@ -1,156 +1,393 @@
 // @ts-check
-/* Quote stepper: builds an email, nothing is sent from this site. Self-initialising: does nothing on a page without
-   form[data-stepper] / form[data-quote-form] steps. Loaded by main.js in W1 and by /free-quote/'s scripts: ['quote']
-   (CONTRACT §12); the quote stream replaces it with the six-input builder in W2. */
+/* Free quote builder (C5; CONTRACT §6, §12, §13). Nothing is sent from this site: the form writes an email in the
+   visitor's own email app (mailto:) and shows the same request with Copy, the address, Call / Text and webmail links.
+   Without JS the form submits itself to its mailto: action (method=post, enctype=text/plain).
+   The top half of this module is pure string builders (unit-tested in node); the bottom half wires them to
+   form[data-quote-form] and does nothing on a page without one. */
 import { track } from './lib/track.js';
 
-/* ---------- form validation helpers ---------- */
-/** @param {Element} f */
-function fieldValid(f) {
-  const wrap = /** @type {HTMLElement} */ (f);
-  const err = /** @type {HTMLElement|null} */ (wrap.querySelector('.field__error'));
-  const errText = /** @type {HTMLElement|null} */ (err?.querySelector('span') || err);
-  /** @type {string|null} */ let msg = null;
-  const gate = /** @type {HTMLElement|null} */ (wrap.closest('[data-show-when]'));
-  if (gate?.hidden) { if (err) err.hidden = true; return true; }
-  if (wrap.hasAttribute('data-any')) {
-    const boxes = /** @type {HTMLInputElement[]} */ ([...wrap.querySelectorAll('input')]);
-    if (!boxes.some((b) => b.checked)) msg = wrap.dataset.msg || 'Choose at least one option.';
-  } else {
-    const inputs = /** @type {(HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement)[]} */ ([...wrap.querySelectorAll('input, select, textarea')]);
-    const bad = inputs.find((i) => !i.checkValidity());
-    if (bad) msg = (bad.validity.valueMissing && wrap.dataset.msg) || (bad.validity.tooShort && wrap.dataset.msg) || (bad.validity.typeMismatch ? (bad.type === 'email' ? 'Enter an email address like name@example.ca.' : bad.validationMessage) : wrap.dataset.msg) || bad.validationMessage;
-    inputs.forEach((i) => i.setAttribute('aria-invalid', String(!!bad)));
+/** sessionStorage key of the draft (CONTRACT §8). */
+export const DRAFT_KEY = 'rnc-quote-draft';
+/** Longest mailto: URL we hand to an email app: some clients cut longer links (C5). */
+export const MAX_URL = 1800;
+/** Service value for "Not sure yet". */
+export const NOT_SURE = 'not-sure';
+/** Area value for "Somewhere else in Greater Victoria". */
+export const OTHER_AREA = 'other';
+/** Retired service slugs that still arrive in ?service= links (CONTRACT §1, §5). */
+const SERVICE_ALIAS = /** @type {Record<string, string>} */ ({ 'tree-vegetation-management': 'tree-vegetation' });
+
+/**
+ * @typedef {{ services?: string[], area?: string, timing?: string, name?: string, contact?: string, phone?: string, details?: string }} QuoteRequest
+ *   Display strings (labels, not slugs) of one request.
+ * @typedef {{ title?: string, services?: string, area?: string, timing?: string, name?: string, contact?: string, phone?: string, details?: string, footer?: string }} SummaryLabels
+ */
+
+/* ---------- pure builders ---------- */
+
+/** RFC 6068 percent-encoding: UTF-8, %20 for spaces, CRLF line breaks. @param {string} s */
+export const encodeMail = (s) => encodeURIComponent(String(s ?? '').replace(/\r\n|\r|\n/g, '\r\n'));
+
+/**
+ * Subject from the content template ("Free quote request — {services} — {area}"). A part with no value is dropped
+ * together with its separator, so the subject never ends in a dash.
+ * @param {string} template @param {{ services?: string[], area?: string }} [v]
+ */
+export function buildSubject(template, v = {}) {
+  const services = (v.services || []).filter(Boolean).join(', ');
+  const parts = String(template || 'Free quote request — {services} — {area}').split(/\s+[—–]\s+/);
+  return parts.map((p) => p.replace('{services}', services).replace('{area}', v.area || '').trim()).filter(Boolean).join(' — ');
+}
+
+/**
+ * Plain-text body: one "Label: value" line per short answer, the description as its own paragraph.
+ * @param {QuoteRequest} req @param {SummaryLabels} [labels]
+ */
+export function buildBody(req, labels = {}) {
+  const L = { title: 'Free quote request', services: 'Services', area: 'Municipality', timing: 'Timing', name: 'Name',
+    contact: 'Best way to reach me', phone: 'Phone', details: 'About the property or job', footer: '', ...labels };
+  /** @type {string[]} */ const lines = [L.title, ''];
+  const add = (/** @type {string} */ label, /** @type {string|undefined} */ value) => { const v = String(value ?? '').trim(); if (v) lines.push(`${label}: ${v}`); };
+  add(L.services, (req.services || []).join(', '));
+  add(L.area, req.area);
+  add(L.timing, req.timing);
+  add(L.name, req.name);
+  add(L.contact, req.contact);
+  add(L.phone, req.phone);
+  const details = String(req.details ?? '').replace(/\r\n?/g, '\n').trim();
+  if (details) lines.push('', `${L.details}:`, details);
+  if (L.footer) lines.push('', L.footer);
+  return lines.join('\n');
+}
+
+/**
+ * Shortens `text` so its encoded form is at most `max` characters, cutting at a line or word break where one is near,
+ * never inside a character, and ending with `note` when it had to cut.
+ * @param {string} text @param {number} max encoded length budget @param {{ note?: string, encode?: (s: string) => string }} [o]
+ * @returns {{ text: string, truncated: boolean }}
+ */
+export function capLength(text, max, o = {}) {
+  const enc = o.encode || encodeMail;
+  const s = String(text ?? '');
+  if (enc(s).length <= max) return { text: s, truncated: false };
+  const tail = `\n\n${o.note || '[…] Shortened: paste the full request you copied.'}`;
+  const chars = Array.from(s);
+  // Longest prefix (in whole code points) that fits with the tail.
+  let lo = 0, hi = chars.length;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (enc(chars.slice(0, mid).join('').trimEnd() + tail).length <= max) lo = mid; else hi = mid - 1;
   }
-  if (err && errText) { err.hidden = !msg; if (msg) errText.textContent = msg; }
-  wrap.classList.toggle('has-error', !!msg);
-  return !msg;
+  let cut = chars.slice(0, lo).join('');
+  const brk = Math.max(cut.lastIndexOf('\n'), cut.lastIndexOf(' '));
+  if (brk > cut.length - 80 && brk > 0) cut = cut.slice(0, brk);
+  const out = cut.trimEnd() + tail;
+  return enc(out).length <= max ? { text: out, truncated: true } : { text: '', truncated: true };
 }
-/** Conditional fields (data-show-when="name=value") and the phone-needed rule. @param {HTMLFormElement} form */
-function conditionals(form) {
-  const gates = /** @type {HTMLElement[]} */ ([...form.querySelectorAll('[data-show-when]')]);
-  const sync = () => {
-    for (const g of gates) {
-      const [k, v] = (g.dataset.showWhen || '=').split('=');
-      const ctl = /** @type {HTMLInputElement|null} */ (form.elements.namedItem(k));
-      const on = ctl?.value === v;
-      g.hidden = !on;
-      for (const i of /** @type {HTMLInputElement[]} */ ([...g.querySelectorAll('input')])) i.required = on;
-    }
+
+/**
+ * The mailto: URL, at most `max` characters long (the body is shortened to fit).
+ * @param {string} to recipient ('' while [EMAIL] is unknown: the visitor adds it) @param {string} subject @param {string} body
+ * @param {{ max?: number, note?: string }} [o]
+ * @returns {{ href: string, body: string, truncated: boolean }}
+ */
+export function buildMailto(to, subject, body, o = {}) {
+  const max = o.max ?? MAX_URL;
+  const addr = /^\[|^$/.test(to || '') ? '' : encodeURIComponent(to).replace(/%40/g, '@');
+  const head = `mailto:${addr}?subject=${encodeMail(subject)}&body=`;
+  const fit = capLength(body, Math.max(0, max - head.length), { note: o.note });
+  return { href: head + encodeMail(fit.text), body: fit.text, truncated: fit.truncated };
+}
+
+/**
+ * Webmail compose link ("convenience links", C5). Gmail and Outlook.com take the same subject and body.
+ * @param {'gmail'|'outlook'} provider @param {string} to @param {string} subject @param {string} body
+ */
+export function buildWebmail(provider, to, subject, body) {
+  const addr = /^\[|^$/.test(to || '') ? '' : to;
+  const q = (/** @type {[string, string][]} */ pairs) => pairs.filter(([, v]) => v).map(([k, v]) => `${k}=${encodeMail(v)}`).join('&');
+  if (provider === 'gmail') return `https://mail.google.com/mail/?view=cm&fs=1&${q([['to', addr], ['su', subject], ['body', body]])}`;
+  return `https://outlook.live.com/mail/0/deeplink/compose?${q([['to', addr], ['subject', subject], ['body', body]])}`;
+}
+
+/**
+ * sms: link with a short prefilled message, or '' while the number is unknown (CONTRACT §3: no URL on a token).
+ * @param {string} phone the number (any format; E.164 preferred) @param {string} [text]
+ */
+export function buildSms(phone, text = '') {
+  const p = String(phone || '');
+  if (!p || /\[/.test(p)) return '';
+  const digits = p.replace(/[^\d+]/g, '');
+  if (digits.replace(/\D/g, '').length < 7) return '';
+  return `sms:${digits}${text ? `?body=${encodeMail(text)}` : ''}`;
+}
+
+/** The services a ?service= value names (comma list or repeated; retired aliases mapped). @param {URLSearchParams} params @param {string[]} known */
+export function prefillServices(params, known) {
+  return [...new Set(params.getAll('service').flatMap((v) => v.split(',')).map((v) => v.trim().toLowerCase()).map((v) => SERVICE_ALIAS[v] || v))]
+    .filter((v) => known.includes(v));
+}
+
+/** The area a ?area= value names, if it is a known option. @param {URLSearchParams} params @param {string[]} known */
+export function prefillArea(params, known) {
+  const v = (params.get('area') || '').trim().toLowerCase();
+  return known.includes(v) ? v : '';
+}
+
+/**
+ * Props of quote_mailto_opened (CONTRACT §13). Only fixed slugs: never a name, phone number, description or free text.
+ * @param {{ services?: string[], area?: string }} pick chosen option values @param {{ services: string[], areas: string[] }} known
+ * @returns {{ service: string, area: string }}
+ */
+export function mailtoEventProps(pick, known) {
+  const real = (pick.services || []).filter((s) => s !== NOT_SURE && known.services.includes(s));
+  const service = real.length === 0 ? NOT_SURE : real.length === 1 ? real[0] : 'multiple';
+  const area = known.areas.includes(pick.area || '') ? /** @type {string} */ (pick.area) : OTHER_AREA;
+  return { service, area };
+}
+
+/** Props of quote_webmail_opened. @param {string} provider @returns {{ provider: 'gmail'|'outlook' }} */
+export const webmailEventProps = (provider) => ({ provider: provider === 'gmail' ? 'gmail' : 'outlook' });
+
+/** Ten to fifteen digits: a North American number with area code, or an international one. @param {string} s */
+export const phoneLooksValid = (s) => { const n = String(s || '').replace(/\D/g, '').length; return n >= 10 && n <= 15; };
+
+/* ---------- the page ---------- */
+
+/** @param {() => any} fn */
+const safely = (fn) => { try { return fn(); } catch { return undefined; } };
+
+/** @param {HTMLFormElement} form */
+function init(form) {
+  const ds = form.dataset;
+  const $ = (/** @type {string} */ sel) => /** @type {HTMLElement|null} */ (form.querySelector(sel));
+  const $$ = (/** @type {string} */ sel) => /** @type {HTMLElement[]} */ ([...form.querySelectorAll(sel)]);
+  const fields = $$('[data-field]');
+  const summaryBox = $('[data-error-summary]');
+  const summaryList = $('[data-error-summary] ul');
+  const ready = $('[data-quote-ready]');
+  const requestBox = /** @type {HTMLTextAreaElement|null} */ ($('[data-quote-summary]'));
+  const copyStatus = $('[data-copy-status]');
+  const truncNote = $('[data-truncated]');
+  const phoneGate = $('[data-show-when]');
+  const labels = /** @type {SummaryLabels} */ (safely(() => JSON.parse(ds.summaryLabels || '{}')) || {});
+  const known = {
+    services: $$('input[name=services]').map((i) => /** @type {HTMLInputElement} */ (i).value).filter((v) => v !== NOT_SURE),
+    areas: [...(/** @type {HTMLSelectElement|null} */ (form.elements.namedItem('area'))?.options || [])].map((o) => o.value).filter((v) => v && v !== OTHER_AREA),
   };
-  form.addEventListener('change', sync); sync();
-  const phone = /** @type {HTMLInputElement|null} */ (form.querySelector('[data-phone-error]'));
-  if (phone) {
-    const pref = () => /** @type {HTMLInputElement|null} */ (form.querySelector('input[name=contactPreference]:checked'))?.value;
-    const rule = () => { phone.required = pref() === 'phone'; };
-    form.addEventListener('change', rule); rule();
-    const f = /** @type {HTMLElement} */ (phone.closest('[data-field]'));
-    if (f) f.dataset.msg = phone.dataset.phoneError || '';
+  const to = /^\[/.test(ds.email || '') ? '' : (ds.email || '');
+  let attempted = false, started = false;
+
+  form.noValidate = true; // JS takes over: native constraint checks, our inline messages
+  form.classList.add('is-enhanced');
+
+  /* ----- reading and writing values ----- */
+  const ctl = (/** @type {string} */ n) => /** @type {any} */ (form.elements.namedItem(n));
+  const checked = (/** @type {string} */ n) => /** @type {HTMLInputElement[]} */ ($$(`input[name="${n}"]`)).filter((i) => i.checked);
+  const labelOf = (/** @type {HTMLInputElement} */ i) => i.closest('label')?.querySelector('[data-label]')?.textContent?.trim() || i.value;
+  const values = () => ({
+    services: checked('services').map((i) => i.value),
+    area: /** @type {HTMLSelectElement} */ (ctl('area'))?.value || '',
+    details: /** @type {HTMLTextAreaElement} */ (ctl('details'))?.value || '',
+    timing: checked('timing')[0]?.value || '',
+    name: /** @type {HTMLInputElement} */ (ctl('name'))?.value || '',
+    contact: checked('contact')[0]?.value || '',
+    phone: /** @type {HTMLInputElement} */ (ctl('phone'))?.value || '',
+  });
+  /** @param {Partial<ReturnType<typeof values>>} v */
+  const apply = (v) => {
+    if (Array.isArray(v.services)) for (const i of /** @type {HTMLInputElement[]} */ ($$('input[name=services]'))) i.checked = v.services.includes(i.value);
+    const area = /** @type {HTMLSelectElement} */ (ctl('area'));
+    if (typeof v.area === 'string' && area && [...area.options].some((o) => o.value === v.area)) area.value = v.area;
+    for (const k of /** @type {const} */ (['details', 'name', 'phone'])) if (typeof v[k] === 'string' && ctl(k)) ctl(k).value = v[k];
+    for (const k of /** @type {const} */ (['timing', 'contact'])) if (typeof v[k] === 'string') for (const i of /** @type {HTMLInputElement[]} */ ($$(`input[name="${k}"]`))) i.checked = i.value === v[k];
+  };
+  /** The request as display strings (labels, not slugs). */
+  const request = () => {
+    const v = values();
+    const area = /** @type {HTMLSelectElement} */ (ctl('area'));
+    const phoneOn = v.contact === 'call' || v.contact === 'text';
+    return {
+      services: checked('services').map(labelOf),
+      area: v.area ? area.selectedOptions[0]?.textContent?.trim() || v.area : '',
+      timing: checked('timing').map(labelOf)[0] || '',
+      name: v.name.trim(),
+      contact: checked('contact').map(labelOf)[0] || '',
+      phone: phoneOn ? v.phone.trim() : '',
+      details: v.details,
+    };
+  };
+
+  /* ----- draft (sessionStorage only; CONTRACT §8) ----- */
+  const saveDraft = () => safely(() => sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ v: 1, ...values() })));
+  const draft = safely(() => JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null'));
+  if (draft && draft.v === 1) apply(draft);
+  // ?service= / ?area= fill only what the draft left empty.
+  const params = new URLSearchParams(location.search);
+  if (!checked('services').length) apply({ services: prefillServices(params, known.services) });
+  if (!values().area) { const a = prefillArea(params, known.areas); if (a) apply({ area: a }); }
+
+  /* ----- the phone field: shown and required for call or text ----- */
+  const syncPhone = () => {
+    if (!phoneGate) return;
+    const on = ['call', 'text'].includes(values().contact);
+    phoneGate.hidden = !on;
+    const p = /** @type {HTMLInputElement|null} */ (ctl('phone'));
+    if (p) p.required = on;
+    if (!on) showError(/** @type {HTMLElement} */ (phoneGate.querySelector('[data-field]') || phoneGate), '');
+  };
+
+  /* ----- validation: native constraint checks, inline messages, error summary ----- */
+  /** @param {HTMLElement} f */
+  const controls = (f) => /** @type {(HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement)[]} */ ([...f.querySelectorAll('input, select, textarea')]);
+  /** @param {HTMLElement} f @param {string} msg */
+  function showError(f, msg) {
+    const err = /** @type {HTMLElement|null} */ (f.querySelector('[data-error-for]'));
+    if (!err) return;
+    const text = /** @type {HTMLElement} */ (err.querySelector('[data-error-text]') || err);
+    err.hidden = !msg;
+    if (msg) text.textContent = msg;
+    f.classList.toggle('has-error', !!msg);
+    const target = f.matches('fieldset') ? [f] : controls(f);
+    for (const el of target) {
+      const ids = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter((x) => x && x !== err.id);
+      if (msg) ids.push(err.id);
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' ')); else el.removeAttribute('aria-describedby');
+    }
+    for (const el of controls(f)) { if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid'); }
   }
-}
-/** @param {Element} root */
-const validateAll = (root) => {
-  const fields = [...root.querySelectorAll('[data-field]')];
-  const bad = fields.filter((f) => !fieldValid(f));
-  if (bad[0]) /** @type {HTMLElement|null} */ (bad[0].querySelector('input, select, textarea'))?.focus();
-  return bad.length === 0;
-};
-/** Re-validate a field once it has shown an error. @param {HTMLFormElement} form */
-function liveFix(form) {
-  form.addEventListener('input', (e) => { const f = /** @type {HTMLElement} */ (e.target).closest('[data-field]'); if (f?.classList.contains('has-error')) fieldValid(f); });
-  form.addEventListener('change', (e) => { const f = /** @type {HTMLElement} */ (e.target).closest('[data-field]'); if (f?.classList.contains('has-error')) fieldValid(f); });
-}
+  /** The error message for a field, or '' when it is fine. @param {HTMLElement} f */
+  function check(f) {
+    if (f.closest('[hidden]')) return '';
+    const msg = f.dataset.msg || 'Check this answer.';
+    const name = f.dataset.field;
+    if (name === 'services') return checked('services').length ? '' : msg;
+    const els = controls(f);
+    for (const el of els) {
+      if (el instanceof HTMLInputElement && el.type === 'tel') el.setCustomValidity(el.value.trim() && !phoneLooksValid(el.value) ? msg : '');
+      if (el instanceof HTMLInputElement && el.type === 'text') el.setCustomValidity(el.required && !el.value.trim() ? msg : '');
+      if (el instanceof HTMLTextAreaElement) {
+        const min = Number(el.getAttribute('minlength') || 0);
+        el.setCustomValidity(el.required && el.value.trim().length < Math.max(1, min) ? msg : '');
+      }
+    }
+    return els.every((el) => el.checkValidity()) ? '' : msg;
+  }
+  /** @param {HTMLElement} f */
+  const validate = (f) => { const m = check(f); showError(f, m); return m; };
+  const firstControl = (/** @type {HTMLElement} */ f) => /** @type {HTMLElement|null} */ (f.querySelector('input:not([type=hidden]), select, textarea'));
+  /** @param {{ f: HTMLElement, msg: string }[]} bad */
+  function renderSummary(bad) {
+    if (!summaryBox || !summaryList) return;
+    summaryList.replaceChildren(...bad.map(({ f, msg }) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      const c = firstControl(f);
+      a.href = `#${c?.id || f.id}`;
+      a.textContent = msg;
+      a.addEventListener('click', (e) => { e.preventDefault(); c?.focus(); });
+      li.append(a);
+      return li;
+    }));
+    summaryBox.hidden = bad.length === 0;
+  }
+  const validateAll = () => fields.map((f) => ({ f, msg: validate(f) })).filter((x) => x.msg);
 
-/* ---------- quote stepper: builds an email, nothing is sent from this site ---------- */
-const quote = /** @type {HTMLFormElement|null} */ (document.querySelector('form[data-stepper], form[data-quote-form]'));
-if (quote && quote.querySelector('[data-step]')) {
-  quote.noValidate = true; liveFix(quote); conditionals(quote);
-  const steps = /** @type {HTMLFieldSetElement[]} */ ([...quote.querySelectorAll('[data-step]')]);
-  const progress = /** @type {HTMLElement} */ (quote.querySelector('[data-stepper-progress]'));
-  const status = /** @type {HTMLElement} */ (quote.querySelector('[data-stepper-status]'));
-  const submitRow = /** @type {HTMLElement} */ (quote.querySelector('[data-submit-row]'));
-  const ready = /** @type {HTMLElement} */ (quote.querySelector('[data-quote-ready]'));
-  const summary = /** @type {HTMLTextAreaElement} */ (quote.querySelector('[data-quote-summary]'));
-  const mailto = /** @type {HTMLAnchorElement} */ (quote.querySelector('[data-mailto]'));
-  const to = /^\[/.test(quote.dataset.email || '') ? '' : (quote.dataset.email || '');
-  let current = 0, started = false;
-  const pre = new URLSearchParams(location.search).get('service');
-  if (pre) { const r = /** @type {HTMLInputElement|null} */ (quote.querySelector(`input[name=services][value="${CSS.escape(pre)}"], input[name=service][value="${CSS.escape(pre)}"]`)); if (r) r.checked = true; }
-  quote.classList.add('is-stepped');
-  const show = (/** @type {number} */ i, /** @type {boolean} */ focus) => {
-    current = i;
-    steps.forEach((s, n) => { s.hidden = n !== i; });
-    [...progress.children].forEach((li, n) => { li.classList.toggle('is-current', n === i); li.classList.toggle('is-done', n < i); n === i ? li.setAttribute('aria-current', 'step') : li.removeAttribute('aria-current'); });
-    submitRow.hidden = i !== steps.length - 1;
-    status.textContent = `Step ${i + 1} of ${steps.length}: ${steps[i].querySelector('legend')?.textContent?.replace(/^\s*Step \d+ of \d+\s*/, '')}`;
-    if (focus) { const l = /** @type {HTMLElement} */ (steps[i].querySelector('legend')); l.tabIndex = -1; l.focus(); }
+  /* ----- events ----- */
+  const onEdit = (/** @type {Event} */ e) => {
+    if (!started) { started = true; track('quote_started'); }
+    if (/** @type {HTMLElement} */ (e.target).matches?.('input[name=contact]')) syncPhone();
+    const f = /** @type {HTMLElement|null} */ (/** @type {HTMLElement} */ (e.target).closest('[data-field]'));
+    if (f && (attempted || f.classList.contains('has-error'))) validate(f);
+    if (attempted) renderSummary(fields.map((x) => ({ f: x, msg: x.classList.contains('has-error') ? check(x) : '' })).filter((x) => x.msg));
+    saveDraft();
   };
-  steps.forEach((s, i) => {
-    const navRow = /** @type {HTMLElement} */ (s.querySelector('[data-step-nav]'));
-    if (i < steps.length - 1) {
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn--primary'; b.textContent = quote.dataset.labelNext || 'Next'; b.dataset.next = '';
-      b.addEventListener('click', () => { if (validateAll(s)) { track('quote_step_completed', { step: i + 1 }); show(i + 1, true); } });
-      navRow.append(b);
-    }
-    if (i > 0) { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn--secondary'; b.textContent = quote.dataset.labelBack || 'Back'; b.addEventListener('click', () => show(i - 1, true)); navRow.append(b); }
-  });
-  quote.addEventListener('focusin', () => { if (!started) { started = true; track('quote_started'); } }, { once: true });
-  quote.addEventListener('keydown', (e) => { // Enter in a text input moves forward instead of submitting early
-    const t = /** @type {HTMLElement} */ (e.target);
-    if (e.key === 'Enter' && t.tagName === 'INPUT' && current < steps.length - 1) { e.preventDefault(); /** @type {HTMLButtonElement} */ (steps[current].querySelector('[data-next]')).click(); }
+  form.addEventListener('input', onEdit);
+  form.addEventListener('change', onEdit);
+  // Leaving a field that was answered checks it once (not while typing for the first time).
+  form.addEventListener('focusout', (e) => {
+    const t = /** @type {HTMLInputElement} */ (e.target);
+    const f = /** @type {HTMLElement|null} */ (t.closest?.('[data-field]'));
+    if (f && !f.contains(/** @type {Node|null} */ (e.relatedTarget)) && t.value && !(t.type === 'radio' || t.type === 'checkbox')) validate(f);
   });
 
-  /** Plain-text request built from the visible labels of every answered field. */
-  const compose = () => {
-    const lines = ['Free quote request', ''];
-    let subjectSvc = '', subjectArea = '';
-    for (const f of /** @type {HTMLElement[]} */ ([...quote.querySelectorAll('[data-field]')])) {
-      if (f.closest('[data-show-when]')?.hasAttribute('hidden')) continue;
-      const label = f.dataset.summary || '';
-      const picked = /** @type {HTMLInputElement[]} */ ([...f.querySelectorAll('input:checked')]).map((i) => i.closest('label')?.querySelector('.choice__label')?.textContent?.trim() || i.value);
-      const sel = /** @type {HTMLSelectElement|null} */ (f.querySelector('select'));
-      const txt = /** @type {HTMLInputElement|HTMLTextAreaElement|null} */ (f.querySelector('input:not([type=radio]):not([type=checkbox]), textarea'));
-      const value = picked.length ? picked.join(', ') : sel ? (sel.value ? sel.selectedOptions[0].textContent?.trim() || '' : '') : (txt?.value.trim() || '');
-      if (!value) continue;
-      if (/^(services|service)$/.test(f.dataset.field || '')) subjectSvc = value;
-      if (f.dataset.field === 'area') subjectArea = value;
-      if (f.dataset.field === 'areaOther') subjectArea = value;
-      if (txt?.tagName === 'TEXTAREA') lines.push('', `${label}:`, value, '');
-      else lines.push(`${label}: ${value}`);
-    }
-    lines.push('', 'Sent from the quote form on the RNC Landscaping website.');
-    const subject = `Free quote request${subjectSvc ? `: ${subjectSvc}` : ''}${subjectArea ? ` in ${subjectArea}` : ''}`;
-    return { subject, body: lines.join('\n').replace(/\n{3,}/g, '\n\n') };
+  const reveal = (/** @type {HTMLElement} */ el, /** @type {HTMLElement|null} */ focusEl) => {
+    el.hidden = false;
+    el.removeAttribute('data-entered');
+    requestAnimationFrame(() => el.setAttribute('data-entered', ''));
+    (focusEl || el).focus({ preventScroll: false });
   };
 
-  let sent = false;
-  quote.addEventListener('submit', (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    for (let i = 0; i < steps.length; i++) if (!validateAll(steps[i])) { show(i, false); validateAll(steps[i]); return; }
-    const { subject, body } = compose();
-    const href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    summary.value = `Subject: ${subject}\n\n${body}`;
-    mailto.href = href;
-    if (!sent) track('quote_step_completed', { step: steps.length });
-    sent = true;
-    track('quote_submitted', { service: /** @type {any} */ ((/** @type {HTMLInputElement[]} */ ([...quote.querySelectorAll('input[name=services]:checked, input[name=service]:checked')])).length === 1 ? /** @type {HTMLInputElement} */ (quote.querySelector('input[name=services]:checked, input[name=service]:checked')).value : 'not-sure') });
-    steps.forEach((s) => { s.hidden = true; });
-    progress.hidden = true; submitRow.hidden = true; ready.hidden = false;
-    ready.focus();
-    location.href = href;
+    attempted = true;
+    syncPhone();
+    const bad = validateAll();
+    renderSummary(bad);
+    if (bad.length) {
+      if (ready) ready.hidden = true;
+      if (summaryBox) reveal(summaryBox, summaryBox);
+      return;
+    }
+    const req = request();
+    const subject = buildSubject(ds.subject || '', { services: req.services, area: req.area });
+    const body = buildBody(req, labels);
+    const mail = buildMailto(to, subject, body, { max: Number(ds.maxUrl) || MAX_URL, note: ds.truncatedNote });
+    if (requestBox) requestBox.value = `Subject: ${subject}\n\n${body}`;
+    const reopen = /** @type {HTMLAnchorElement|null} */ ($('[data-mailto]'));
+    if (reopen) reopen.href = mail.href;
+    for (const a of /** @type {HTMLAnchorElement[]} */ ($$('[data-webmail]'))) a.href = buildWebmail(/** @type {any} */ (a.dataset.webmail), to, subject, mail.body);
+    const sms = /** @type {HTMLAnchorElement|null} */ ($('[data-sms]'));
+    if (sms && sms.dataset.phone) {
+      const href = buildSms(sms.dataset.phone, [ds.smsIntro || 'Hi RNC, I just emailed a free quote request', [req.services.join(', '), req.area].filter(Boolean).join(', ')].filter(Boolean).join(': ') + '.');
+      if (href) sms.href = href;
+    }
+    if (truncNote) truncNote.hidden = !mail.truncated;
+    if (copyStatus) copyStatus.textContent = '';
+    saveDraft();
+    track('quote_mailto_opened', mailtoEventProps(values(), known));
+    if (ready) reveal(ready, /** @type {HTMLElement|null} */ (ready.querySelector('[data-ready-heading]')));
+    location.href = mail.href;
   });
-  quote.querySelector('[data-copy]')?.addEventListener('click', async (e) => {
-    const btn = /** @type {HTMLButtonElement} */ (e.currentTarget);
-    const lab = /** @type {HTMLElement} */ (btn.querySelector('[data-copy-label]'));
-    const was = lab.textContent;
-    try { await navigator.clipboard.writeText(summary.value); lab.textContent = quote.dataset.labelCopied || 'Copied'; }
-    catch { summary.select(); }
-    setTimeout(() => { lab.textContent = was; }, 2000);
+
+  /* ----- ready panel ----- */
+  /** @param {string} text @param {HTMLTextAreaElement|null} fallbackSelect */
+  async function copy(text, fallbackSelect) {
+    try { await navigator.clipboard.writeText(text); return true; } catch { /* fall through */ }
+    if (fallbackSelect) {
+      fallbackSelect.focus(); fallbackSelect.select();
+      try { if (document.execCommand('copy')) return true; } catch { /* not supported */ }
+    }
+    return false;
+  }
+  const say = (/** @type {string} */ msg) => { if (copyStatus) { copyStatus.textContent = ''; requestAnimationFrame(() => { copyStatus.textContent = msg; }); } };
+  $('[data-copy]')?.addEventListener('click', async () => {
+    const ok = await copy(requestBox?.value || '', requestBox);
+    if (ok) { say(ds.labelCopied || 'Copied'); track('quote_copied'); }
+    else { requestBox?.select(); say(ds.copyFailed || 'Copying did not work. The request is selected: copy it with your keyboard.'); }
   });
-  quote.querySelector('[data-restart]')?.addEventListener('click', () => {
-    quote.reset(); sent = false; ready.hidden = true; progress.hidden = false;
-    quote.querySelectorAll('[data-show-when]').forEach((g) => { /** @type {HTMLElement} */ (g).hidden = true; });
-    show(0, true);
+  $('[data-copy-address]')?.addEventListener('click', async () => {
+    const ok = await copy(ds.email || '', null);
+    say(ok ? (ds.labelAddressCopied || 'Address copied') : (ds.copyFailed || 'Copying did not work.'));
   });
-  show(0, false);
+  for (const a of $$('[data-webmail]')) a.addEventListener('click', () => track('quote_webmail_opened', webmailEventProps(a.dataset.webmail || '')));
+  $('[data-restart]')?.addEventListener('click', () => {
+    form.reset();
+    safely(() => sessionStorage.removeItem(DRAFT_KEY));
+    attempted = false;
+    for (const f of fields) showError(f, '');
+    renderSummary([]);
+    if (ready) ready.hidden = true;
+    syncPhone();
+    const first = fields[0] && firstControl(fields[0]);
+    first?.focus();
+  });
+
+  syncPhone();
+}
+
+const form = typeof document === 'undefined' ? null : /** @type {HTMLFormElement|null} */ (document.querySelector('form[data-quote-form]'));
+if (form && form.querySelector('[data-field]') && !form.hasAttribute('data-enhanced')) {
+  form.setAttribute('data-enhanced', '');
+  init(form);
 }
