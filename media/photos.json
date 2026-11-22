@@ -1,0 +1,10 @@
+{
+  "$comment": "Written by site/tools/process-images.mjs: RNC's own photos (media/photos/<slot>.jpg + <slot>.licence.json) processed to site/static/img/<slot>-<w>.(avif|webp|jpg), all metadata stripped. picture() in lib/images.mjs reads this. Do not hand-edit.",
+  "widths": [
+    480,
+    768,
+    1024,
+    1600
+  ],
+  "photos": []
+}
