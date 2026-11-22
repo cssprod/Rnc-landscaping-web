@@ -11,6 +11,7 @@
  * Strings are escaped exactly once, by the html`` template; JSON-LD is raw JSON with "<" written as <.
  */
 import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, raw } from './html.mjs';
 import { hasPhoto, ogUrl } from './images.mjs';
@@ -37,10 +38,10 @@ export const ogKey = (path) => (path === '/' ? 'home' : path.replace(/^\/|\/$/g,
 
 /** @type {Map<string, string|null>} */
 const cardCache = new Map();
-/** Root-relative URL of the page's committed card, or null. @param {string} path */
-export function ogCard(path) {
-  const key = ogKey(path);
-  if (!cardCache.has(key)) cardCache.set(key, OG_EXTS.map((e) => `${key}.${e}`).find((f) => existsSync(`${OG_DIR}${f}`)) ?? null);
+/** Root-relative URL of the page's committed card, or null. @param {string} path @param {string} [dir] card folder (tests) */
+export function ogCard(path, dir = OG_DIR) {
+  const key = `${dir}\u0000${ogKey(path)}`;
+  if (!cardCache.has(key)) cardCache.set(key, OG_EXTS.map((e) => `${ogKey(path)}.${e}`).find((f) => existsSync(join(dir, f))) ?? null);
   const f = cardCache.get(key);
   return f ? `/og/${f}` : null;
 }
