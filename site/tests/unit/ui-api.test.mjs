@@ -97,7 +97,6 @@ api('ui/cta.mjs', 'contactCards', []);
 api('ui/seasons.mjs', 'seasons', ['list']);
 api('layout.mjs', 'layout', ['env', 'p'], ['path', 'title', 'description', 'crumbs', 'body', 'jsonld', 'ogImage', 'ogType', 'bodyClass', 'noindex', 'hero', 'scripts']);
 api('layout.mjs', 'breadcrumbNav', ['crumbs']);
-api('layout.mjs', 'JS_FLAG', null);
 api('sprite.mjs', 'icon', ['name'], ['size', 'className']);
 api('sprite.mjs', 'logo', []);
 api('sprite.mjs', 'sprite', []);
