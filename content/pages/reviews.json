@@ -2,10 +2,10 @@
   "_notes": "Lists all testimonials; each sample one shows a visible 'Sample' label. googleLink has only a label; templates take the URL from site.json googleProfile (the optional [GOOGLE PROFILE] token): showcase renders the label as plain text plus the chip, launch omits it while the token is unset (CONTRACT section 3). No Review or AggregateRating schema.",
   "seo": {
     "title": "Reviews and Client Feedback | RNC Landscaping",
-    "description": "Read what homeowners, strata councils, property managers and contractors say about landscaping work in Greater Victoria. Then request your own free quote."
+    "description": "Client reviews for RNC Landscaping in Greater Victoria. Reviews marked Sample are examples until real reviews are shared with permission."
   },
   "h1": "Reviews",
-  "lede": "What clients say about working with us. Reviews marked Sample are examples until we publish real reviews with permission.",
+  "lede": "Reviews marked Sample are examples, not feedback from real clients. We will replace them with real reviews, shared with permission.",
   "testimonials": [
     "strata-council-sidney",
     "homeowner-gordon-head",
@@ -24,7 +24,7 @@
       "id": "sample-note",
       "heading": "About sample reviews",
       "body": [
-        "Sample reviews show the kind of feedback we work toward. They are not from identified clients."
+        "Sample reviews show the kind of feedback we work toward. They were written as examples and do not come from clients."
       ]
     },
     {
