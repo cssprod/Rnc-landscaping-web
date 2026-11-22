@@ -51,6 +51,21 @@ const STROKE = {
   compass: '<circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
   chat: '<path d="M4.5 6.5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H11l-4.5 4v-4h0a2 2 0 0 1-2-2z"/>',
   ruler: '<path d="m3.5 15.5 12-12 5 5-12 12z"/><path d="m7 12 2 2M10 9l2 2M13 6l2 2"/>',
+  /* W2 (ds-chrome): every icon DESIGN-DIRECTION.md and site/COMPONENTS.md name. The sprite is frozen from W3. */
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  fireflies: '<path d="M5 16h0M12 9h0M18 14h0" stroke-width="4.2"/><path d="M5 16c2-4 4.5-6 7-7M12 9c2.5 1 4.5 2.6 6 5" stroke-width="1.3" opacity=".55" stroke-dasharray="1.5 2.5"/>',
+  external: '<path d="M14 4.5h5.5V10M19.5 4.5 11 13"/><path d="M17 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 4 18.5v-10A1.5 1.5 0 0 1 5.5 7H10"/>',
+  question: '<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.7M12 16.8h0"/>',
+  info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6h0"/>',
+  alert: '<path d="M10.3 4.4 3.2 17a2 2 0 0 0 1.7 3h14.2a2 2 0 0 0 1.7-3L13.7 4.4a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4M12 16.8h0"/>',
+  columns: '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M12 4.5v15"/>',
+  building: '<path d="M4.5 20.5V5a1.5 1.5 0 0 1 1.5-1.5h7A1.5 1.5 0 0 1 14.5 5v15.5M14.5 9.5H18a1.5 1.5 0 0 1 1.5 1.5v9.5M3 20.5h18"/><path d="M8 7.5h3M8 11h3M8 14.5h3M17 13.5h0M17 17h0"/>',
+  home: '<path d="M4 10.5 12 4l8 6.5"/><path d="M6 9v10.5h12V9M10 19.5v-5h4v5"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  minus: '<path d="M5 12h14"/>',
+  filter: '<path d="M4 6h16M7 12h10M10 18h4"/>',
+  contour: '<path d="M3.5 17c3-1.5 5-5.5 8.5-5.5s5.5 4 8.5 5.5"/><path d="M6.5 17.5c2-1 3.5-3 5.5-3s3.5 2 5.5 3"/><path d="M3.5 12.5C6 10 8.5 6 12 6s6 4 8.5 6.5"/>',
+  route: '<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7.5a3 3 0 0 0 0-6h-7a3 3 0 0 1 0-6H16"/>',
 };
 
 /** Which icon represents each service and season. */
@@ -66,9 +81,18 @@ export const icon = (name, o = {}) => html`<svg class="i ${o.className || ''}" w
 const [, , WORD_W, WORD_H] = WORD_VIEWBOX.split(' ').map(Number);
 export const logo = () => html`<svg class="brand__tile" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><use href="#logo-tile"/></svg><svg class="brand__word" viewBox="0 0 ${WORD_W} ${WORD_H}" aria-hidden="true" focusable="false"><use href="#logo-word" width="${WORD_W}" height="${WORD_H}"/></svg>`;
 
-export function sprite() {
-  const icons = Object.entries(STROKE).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`).join('');
-  const quote = '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M7 17.5c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1S9.1 17.5 7 17.5zm10 0c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1s-1.4 3.2-3.5 3.2z"/></symbol>';
+/** Every icon name the sprite can draw (stroke icons plus the filled quote mark). */
+export const ICON_NAMES = [...Object.keys(STROKE), 'quote'];
+
+/**
+ * The page sprite: logo symbols plus icons. The build keeps only the symbols a page references
+ * (src/lib/build/sprite-shake.mjs), so pages pass nothing; `used` limits the icons up front (e.g. for a fragment).
+ * @param {string[]} [used] icon names to include (default: all)
+ */
+export function sprite(used) {
+  const want = (/** @type {string} */ k) => !used || used.includes(k);
+  const icons = Object.entries(STROKE).filter(([k]) => want(k)).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`).join('');
+  const quote = !want('quote') ? '' : '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M7 17.5c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1S9.1 17.5 7 17.5zm10 0c-1.8 0-3.2-1.4-3.2-3.3 0-3.9 2.8-7 6.4-8.4l.7 1.3c-2 1.2-3.3 2.7-3.6 4.1h.2c1.7 0 3 1.3 3 3.1s-1.4 3.2-3.5 3.2z"/></symbol>';
   const tile = `<symbol id="logo-tile" viewBox="0 0 64 64"><g clip-path="url(#logo-c)"><path d="${TILE}" fill="url(#logo-g)"/><rect width="64" height="64" fill="url(#logo-s)"/><path d="${GROUND}" fill="url(#logo-h)"/><path d="${FIR}" fill="#fff"/></g><path d="${TILE}" fill="none" stroke="#fff" stroke-opacity=".22"/></symbol>`;
   const word = `<symbol id="logo-word" viewBox="${WORD_VIEWBOX}"><path d="${WORD_RNC}" fill="currentColor"/><path d="${WORD_LANDSCAPING}" fill="currentColor"/></symbol>`;
   const defs = `<defs><linearGradient id="logo-g" x1="12" y1="0" x2="52" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A7D55"/><stop offset=".55" stop-color="#1D4A33"/><stop offset="1" stop-color="#0B1F15"/></linearGradient><radialGradient id="logo-s" cx="18" cy="6" r="44" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".6" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><linearGradient id="logo-h" x1="32" y1="43" x2="32" y2="64" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7CC596"/><stop offset=".45" stop-color="#3F8A5A"/><stop offset="1" stop-color="#2A6A43"/></linearGradient><clipPath id="logo-c"><path d="${TILE}"/></clipPath></defs>`;

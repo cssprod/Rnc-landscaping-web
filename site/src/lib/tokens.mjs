@@ -52,18 +52,32 @@ export const telHref = () => {
 export const smsHref = () => (tokens.PHONE ? `sms:${e164(tokens.PHONE)}` : 'sms:[PHONE]');
 
 /**
- * Phone number as a link once it is known; until then the [PHONE] chip as plain text.
- * @param {string} location analytics location label @param {{ className?: string }} [o]
+ * Contact links (CONTRACT §3, §13). A link whose URL depends on an unresolved token is never written: until the token is
+ * known the text renders as a plain <span> (the token becomes a placeholder chip in showcase builds), never an href.
+ * Each link carries the CONTRACT §13 event name in data-track and the placement in data-track-location.
+ * `label` is optional text in front of the value, inside the link ("Text [PHONE]").
+ * @typedef {{ className?: string, label?: string }} LinkOptions
  */
+
+/** @param {LinkOptions} o @param {string} value */
+const linkText = (o, value) => (o.label ? `${o.label} ${value}` : value);
+
+/** Phone number as a tel: link (data-track="call_click") once PHONE is known; until then the [PHONE] chip as plain text. @param {string} location analytics location label @param {LinkOptions} [o] */
 export function telLink(location, o = {}) {
-  if (!has('PHONE')) return html`<span class="${o.className || ''}">[PHONE]</span>`;
-  return html`<a class="${o.className || ''}" href="${telHref()}" data-track="call_clicked" data-track-location="${location}">[PHONE]</a>`;
+  if (!has('PHONE')) return html`<span class="${o.className || ''}">${linkText(o, '[PHONE]')}</span>`;
+  return html`<a class="${o.className || ''}" href="${telHref()}" data-track="call_click" data-track-location="${location}">${linkText(o, '[PHONE]')}</a>`;
 }
 
-/** @param {string} location @param {{ className?: string }} [o] */
+/** Phone number as an sms: link (data-track="sms_click") once PHONE is known; until then plain text with the chip. @param {string} location @param {LinkOptions} [o] */
+export function smsLink(location, o = {}) {
+  if (!has('PHONE')) return html`<span class="${o.className || ''}">${linkText(o, '[PHONE]')}</span>`;
+  return html`<a class="${o.className || ''}" href="${smsHref()}" data-track="sms_click" data-track-location="${location}">${linkText(o, '[PHONE]')}</a>`;
+}
+
+/** Email address as a mailto: link (data-track="email_click") once EMAIL is known; until then plain text with the chip. @param {string} location @param {LinkOptions} [o] */
 export function mailLink(location, o = {}) {
-  if (!has('EMAIL')) return html`<span class="${o.className || ''}">[EMAIL]</span>`;
-  return html`<a class="${o.className || ''}" href="mailto:${tok('EMAIL')}" data-track="email_clicked" data-track-location="${location}">[EMAIL]</a>`;
+  if (!has('EMAIL')) return html`<span class="${o.className || ''}">${linkText(o, '[EMAIL]')}</span>`;
+  return html`<a class="${o.className || ''}" href="mailto:${tok('EMAIL')}" data-track="email_click" data-track-location="${location}">${linkText(o, '[EMAIL]')}</a>`;
 }
 
 const SKIP = /(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<title>[\s\S]*?<\/title>|<textarea[\s\S]*?<\/textarea>|<option[\s\S]*?<\/option>|<!--[\s\S]*?-->|<[^>]+>)/;

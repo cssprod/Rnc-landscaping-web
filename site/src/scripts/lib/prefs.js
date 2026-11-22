@@ -48,10 +48,15 @@ export function motionOn() {
   return root.classList.contains('js') && osMotion.matches;
 }
 
-/** @param {boolean} on */
+/**
+ * Store an explicit choice. Turning motion off also drops data-alive at once, so no T2 loop survives the click;
+ * living.js sets data-alive again (after idle) when it hears rnc:motion with on: true.
+ * @param {boolean} on
+ */
 export function setMotion(on) {
   const v = on ? 'on' : 'off';
   root.setAttribute('data-motion', v);
+  if (!on) root.removeAttribute('data-alive');
   store(MOTION_KEY, v);
   document.dispatchEvent(new CustomEvent('rnc:motion', { detail: { on: !!on, source: 'user' } }));
 }
