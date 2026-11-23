@@ -58,3 +58,16 @@ Previous session: https://claude.ai/code/session_014B2BmbM1MDbDgrkVGzif9y. It st
 - Playwright 1.63 is in `/opt/node-tools`; run `node site/tools/dev-setup.mjs` in each worktree.
 - 4 CPUs, so 2 agents per workflow. Run sibling workflows for parallelism, but prefer fewer agents (token budget).
 - Agent worktrees are under `.claude/worktrees/`. Add that path to `.git/info/exclude`.
+
+
+## Update 2026-11-23 (session 014B2BmbxghRKSaZqjQgzRvE)
+- **W2 is integrated and pushed** at `5740f57` (fast-forward of local `wave-2-int`). The Deploy Preview shows the Living Coast design. The full gate is green; baselines are in `.orchestra/baselines/`; the carry log is in `.orchestra/carry.json`.
+- **W2 independent verification:** `.orchestra/reports/w2-verify.json`.
+  - The gates and honesty lenses completed.
+  - The design lens and most skeptic confirmations hit the usage limit.
+  - The findings route to W3 (t-home, t-company, t-projects) and W4 (fix-qa).
+- **CI on 5740f57:** motion-audit `[policy-tiers]` fails on /process/: 4 glass step cards in a 390px viewport, budget 3. The t-company process template must fix it.
+- **Netlify Lighthouse:** Performance is still 18, which goes to W4 f-perf.
+- **W3 builders hit the usage limit mid-build.**
+  - Partial branches are in `.orchestra/handoff/w3-wip.bundle` (t-home, t-services, t-projects, t-company; base `5740f57`). Restore them with `git fetch .orchestra/handoff/w3-wip.bundle 'refs/heads/w3/*:refs/heads/w3/*'`.
+  - t-areas and t-editorial have no commits yet.

@@ -1,0 +1,329 @@
+{
+ "tip": "5740f57",
+ "note": "W2 independent verification. gates + honesty lenses completed; design lens and most skeptic confirmations hit the usage limit (not run). Unconfirmed blocker/major findings below are reported by one verifier only.",
+ "lenses": [
+  {
+   "pass": false,
+   "gates": [
+    {
+     "cmd": "cd site && node build.mjs --offline-images --out=$OUT && SITE_DIST=$OUT node tools/check-all.mjs --no-build --strict-redirects",
+     "ok": true,
+     "note": "10 tools green; check-honesty 1 baselined (known reviews Google link), check-seo 32 baselined (known)"
+    },
+    {
+     "cmd": "node build.mjs --out=$OUT_ON && SITE_DIST=$OUT_ON node tools/check-honesty.mjs",
+     "ok": true,
+     "note": "Passes on the online (Deploy Preview) build too, even though it has the uncredited stock in finding 1. There is no stock-credit rule."
+    },
+    {
+     "cmd": "SITE_DIST=$OUT node tools/check-honesty.mjs --no-baseline",
+     "ok": false,
+     "note": "Only the known carry item fails: reviews-credentials-guarantee on reviews/index.html (t-company W3)"
+    },
+    {
+     "cmd": "node <scratch>/facts.mjs (191 area/regional facts vs research/area-facts)",
+     "ok": true,
+     "note": "Every fact has a sourceUrl, an excerpt and verify:true. Facts that differ from or are missing in research are explained in requests/areas-content.md. The CRD Stage 1 text matches crd.ca, fetched 2026-11-23. The ca-migratory-bird-nests 'protected at all times' text matches its PDF."
+    },
+    {
+     "cmd": "Playwright: .sample-label visibility on /, /reviews/, /projects/, a case study, a service page and an area page at 320/1440 in dark and light",
+     "ok": true,
+     "note": "All 40 labels per pass are visible; none hidden. Temp script deleted; worktree clean."
+    }
+   ],
+   "findings": [
+    {
+     "severity": "blocker",
+     "item": "Online build shows Unsplash stock on cards with no credit and no placeholder label (CONTRACT §2 'credited', locked decision 'labelled placeholders')",
+     "detail": "Card callers pass `credit: false` to picture(): ui/cards.mjs:47 serviceTiles and pages/_shared.mjs:82 resource card (behaviour since W1 commit 68dfaaf). In the online build, which is what the Deploy Preview builds, the stock photos therefore show with no credit and no 'stock' or 'placeholder' label. Affected cards: the Irrigation service tile on /, /services/ and /commercial/ (svc-irrigation-hero, sprinklers at sunset), plus the res-1..res-4 guide cards on / and /resources/. Only full-width figures get 'Photo: X / Unsplash'. og-default stock is also the og:image of 33 pages, where no credit is possible. check-honesty has no rule for uncredited or unlabelled stock, so the gate passes. The offline build is unaffected ('Photo to come').",
+     "repro": "cd site && node build.mjs --out=$OUT_ON; for f in index.html services/index.html resources/index.html commercial/index.html; do echo $f $(grep -o '<img src=\"https://images.unsplash' $OUT_ON/$f|wc -l) $(grep -o 'class=\"media__credit\"' $OUT_ON/$f|wc -l); done  -> 3/0, 1/0, 4/0, 2/1 (imgs/credits). Deploy Preview / at 1440, dark: the Irrigation tile photo has no credit. SITE_DIST=$OUT_ON node tools/check-honesty.mjs -> passes.",
+     "file": "site/src/components/ui/cards.mjs",
+     "fix": "Stock photos keep the credit, or carry a visible 'Stock photo' chip, wherever they render, including cards. Or cards use living art or 'Photo to come' instead of stock. Add a check-honesty rule: every external stock <img> has a credit or placeholder label in its figure.",
+     "owner": "t-home (W3, owns ui/cards.mjs) plus whoever owns pages/_shared.mjs (fix-pages W4); gate: qa to fix-qa (W4)"
+    },
+    {
+     "severity": "major",
+     "item": "Stock photo of a worker (res-4) on an RNC guide, uncredited on /resources/, and used as the social and JSON-LD image",
+     "detail": "media/images.json res-4 ('Person in protective gear trimming a tall hedge from a ladder') is the hero of /resources/winter-pruning-and-storm-prep/ (credited there). It is also the uncredited card image on /resources/ and the og:image of that guide. Under the guide's '[OWNER NAME], RNC Landscaping' authorship it reads as RNC crew; CONTRACT §2 says never use stock for a person shown as the owner or crew. no-stock-people only covers about/process/contact/reviews and slots described as crew, so editorial pages and cards slip through. The Article.image stock URL is already carried (t-editorial hasPhoto); the person aspect and the og:image are not.",
+     "repro": "node build.mjs --out=$OUT_ON; grep -l 'alt=\"Person in protective gear' -r $OUT_ON --include=*.html  -> resources/index.html (no media__credit on that card), resources/winter-pruning-and-storm-prep/index.html; grep -o '<meta property=\"og:image\"[^>]*' $OUT_ON/resources/winter-pruning-and-storm-prep/index.html  -> photo-1788610830488 (res-4)",
+     "file": "media/images.json",
+     "fix": "Give res-4 a stock photo with no person (or stock:null so it renders art). Widen check-honesty#no-stock-people to any page or card that shows a person stock slot, and to og:image.",
+     "owner": "living (W2, media/images.json); seo / fix-features (W4) for the og:image fallback; qa / fix-qa for the rule"
+    },
+    {
+     "severity": "major",
+     "item": "Home reviews band is headed 'What clients say' over 3 sample reviews; /reviews/ h2 is 'Client feedback'. Routed W2 fix not done and missing from carry.json",
+     "detail": "ui/trust.mjs:31 (testimonials) and :97 (reviewsBand) still fall back to 'What clients say'. requests/content.md #23 asked ds-comp (W2) to change that fallback to a neutral heading, and it was not done. home.mjs:38 passes no heading, so home.json reviewsBand.heading 'Reviews' and its lede ('A quote marked Sample is an example, not a review from a client') never render. company.mjs:63 hard-codes 'Client feedback' on /reviews/ (#29). Every card has a visible 'Sample review' chip, so this is not a §2 label breach, but the heading says RNC has client feedback when it has none. Neither #23 nor #29 appears in carry.json, so they may be dropped.",
+     "repro": "grep -o '<h2 id=\"quotes-h\">[^<]*' $OUT/index.html  -> 'What clients say'; grep -n \"What clients say\" site/src/components/ui/trust.mjs  -> lines 31, 97; http://localhost:4482/ at 1440, dark, scroll to the reviews band.",
+     "file": "site/src/components/ui/trust.mjs",
+     "fix": "Make the fallback neutral ('Reviews'). t-home passes reviewsBand.heading and lede from home.json; t-company takes the /reviews/ heading and lede from reviews.json. Add both items to carry.json for W3.",
+     "owner": "t-home (W3) for home.mjs; t-company (W3) for ui/trust.mjs and the /reviews/ route"
+    },
+    {
+     "severity": "major",
+     "item": "Sample gates cannot catch an unlabelled sample: the launch build would publish one as real",
+     "detail": "CONTRACT §1 says launch 'fails while any ... Sample item ... remains'. But build.mjs:130 and check-placeholders --strict only look for a rendered class=\"sample-label\". check-content --strict does not look at sample:true. check-honesty#sample-label judges review quotes only, not projects, plant palettes or job notes. Several W3 paths make the label opt-in: ui/projects.mjs:83 plantPalette() shows 'Plant palette' with no chip unless o.sample is passed; the 13 area proof job-notes (all sample:true) have no component yet. A W3 template that leaves the label off would pass every gate, and the launch build would ship that content as real. Latent today: 16 project cards and 8 reviews are labelled, and palettes and job notes are not rendered yet.",
+     "repro": "Read site/build.mjs:130 (only `/class=\"sample-label\"/.test(out)`), tools/check-placeholders.mjs:20, tools/check-honesty.mjs:255-268 (blockquotes only), src/components/ui/projects.mjs:83-89 (`o.sample ? sampleLabel()… : 'Plant palette'`). grep -c '\"sample\": true' content/projects/*.json content/areas/*.json -> sample items whose rendering nobody checks.",
+     "file": "site/build.mjs",
+     "fix": "Launch, and check-content --strict, fail on any content item with sample:true (projects, testimonials, proof job-notes, plantPalette of sample projects) whether or not it renders. Showcase check-honesty asserts that each rendered sample project, palette or job note sits next to a Sample label.",
+     "owner": "qa to fix-qa (W4) for the tools; ds-core to fix-system (W4) for build.mjs"
+    },
+    {
+     "severity": "minor",
+     "item": "Sooke page prose repeats an unverified fact with no source or 'Review date to confirm'",
+     "detail": "The /areas/sooke/ summary (legacy template intro) says 'some rural lots beyond the mains are reported to use wells or hauled water'. That comes from sooke-water-edges, which has reviewedOn:null: the host was refused and the source was never fetched. CONTRACT §2/§6 says it should render 'Review date to confirm'. carry.json lists the 3 null facts but not that summary prose repeats one. No gate checks summary or servicesBlurb sentences against null facts. All numbers in the 13 summaries do trace to sourced facts (checked).",
+     "repro": "grep -o 'reported to use wells or hauled water' $OUT/areas/sooke/index.html; node -e 'console.log(require(\"./content/areas/sooke.json\").conditions.concat(require(\"./content/areas/sooke.json\").localRules).filter(x=>x.reviewedOn==null).map(x=>x.id))'",
+     "file": "content/areas/sooke.json",
+     "fix": "Drop the clause from summary until sooke-water-edges is fetched, or render it only through the sourced block with 'Review date to confirm'.",
+     "owner": "areas-content (W2) to fix-content (W4); t-areas (W3) for rendering"
+    },
+    {
+     "severity": "minor",
+     "item": "FAQ answers state local rules with no source chip or review date, and are copied into FAQPage JSON-LD",
+     "detail": "/faq/ ('From May 1 to September 30, CRD Stage 1 rules allow lawn watering on two days a week...', 'Most municipalities here have a tree bylaw... protect Garry oak, arbutus...'). /services/tree-vegetation/ (Wildlife Act nests; 'North Saanich's tree bylaw prohibits [topping]'). /services/irrigation/ (CRD Stage 1 drip any day). None of these pages has a sourced block (0 sourced/sourceChip). The same text goes into the FAQPage mainEntity, where there are no links at all. The facts are accurate (crd.ca re-fetched 2026-11-23 matches), but the §2 pattern (sourceUrl, excerpt, reviewedOn) is not shown where the rule is stated.",
+     "repro": "grep -o 'CRD Stage 1 rules allow lawn watering' $OUT/faq/index.html | wc -l -> 2 (HTML + JSON-LD); grep -c 'class=\"sourced' $OUT/faq/index.html $OUT/services/tree-vegetation/index.html -> 0",
+     "file": "content/pages/faq.json",
+     "fix": "Reference regional ids from each FAQ answer and render them with sourceChip()/reviewedOn() (services already have localRulesRefs for this), or reword the answers to point to the sourced page without stating the rule.",
+     "owner": "content to fix-content (W4); t-services / t-company (W3) for rendering refs"
+    },
+    {
+     "severity": "minor",
+     "item": "RNC practice and track-record claims missing from the owner-confirm list",
+     "detail": "requests/content.md #11 lists the practice claims for the LAUNCH-CHECKLIST, but these are not on it: 'Do you top trees? No.' (/services/tree-vegetation/ FAQ); 'That is one reason we often convert beds from spray heads to drip' (/resources/crd-watering-rules-guide/), which implies a track record; 'In spring and summer we check for nests before cutting' (tree FAQ); 'Crews plan each job...' (plural crews while [CREW SIZE] is unknown, /about/). RNC has not confirmed any of these.",
+     "repro": "grep -ohE \"we often convert[^.]*|Do you top trees\\?|we check for nests[^.]*\" $TXT/*.txt  (or view /resources/crd-watering-rules-guide/ and /services/tree-vegetation/ at 1440)",
+     "file": "content/resources/crd-watering-rules-guide.json",
+     "fix": "Change 'we often convert' to 'drip is one reason to convert beds' and add the rest to the #11 owner-confirm list for docs (W5).",
+     "owner": "content to fix-content (W4); docs (W5) LAUNCH-CHECKLIST"
+    },
+    {
+     "severity": "minor",
+     "item": "CTA band repeats the reply-time promise and promises a site visit on every request",
+     "detail": "The default body in ui/cta.mjs:45 says 'we will follow up to arrange a site visit', with no condition. /contact/, /faq/, /process/ and /free-quote/ all say a visit happens only 'if the job needs one'. On /, home's own body ('We reply within [REPLY TIME] and arrange a site visit if the job needs one.') is followed by the component's 'We get back to you within [REPLY TIME]...', so two reply-time promises sit in one band.",
+     "repro": "http://localhost:4482/ (any width or theme), scroll to 'Ready to talk about your property?': two [REPLY TIME] sentences. grep -n 'follow up to arrange a site visit' site/src/components/ui/cta.mjs",
+     "file": "site/src/components/ui/cta.mjs",
+     "fix": "Make the default body conditional ('...and arrange a site visit if the job needs one'). Drop the reply line when the caller's body already promises it, or take it out of home.json ctaBand.",
+     "owner": "t-home (W3, owns ui/cta.mjs); content for home.json"
+    },
+    {
+     "severity": "minor",
+     "item": "Highlands SEO title suggests RNC offers well services",
+     "detail": "content/areas/highlands.json seo.title is 'Landscaping in Highlands, BC — Tree Work & Wells | RNC'. In the CONTRACT's 'X & Y' pattern that names services, so it reads as if RNC does well work. The description only means 'acreages on wells'. The title tag and JSON-LD WebPage.name use it.",
+     "repro": "grep -o '<title>[^<]*' $OUT/areas/highlands/index.html",
+     "file": "content/areas/highlands.json",
+     "fix": "e.g. 'Landscaping in Highlands, BC — Tree Work & Acreage Care | RNC'",
+     "owner": "areas-content to fix-content (W4)"
+    },
+    {
+     "severity": "minor",
+     "item": "bc-riparian block states facts its cited source cannot hold",
+     "detail": "content/regional.json bc-riparian cites only the 2016 RAR brochure. Its text also says 'Amendments to the regulation take effect January 1, 2027' and gives the CRD scope ('except the City of Victoria and Esquimalt'). Both come from two other gov.bc.ca pages, per the research note on regional-bc-rapr. Once t-areas renders sharedRegional, the sourced callout will credit a 2016 brochure with a 2027 date. Visible today only in /styleguide/ patterns.",
+     "repro": "node -e 'const b=require(\"./content/regional.json\").blocks.find(x=>x.id===\"bc-riparian\");console.log(b.sourceUrl,\"\\n\",b.text)'",
+     "file": "content/regional.json",
+     "fix": "Cite the regulation page (it has 'Amendments to RAPR come into effect on January 1, 2027'), or split the 2027 sentence into its own sourced block.",
+     "owner": "areas-content to fix-content (W4)"
+    }
+   ]
+  },
+  {
+   "pass": true,
+   "gates": [
+    {
+     "cmd": "node ../brand/build-tokens.mjs --check",
+     "ok": true
+    },
+    {
+     "cmd": "node ../brand/check-contrast.mjs",
+     "ok": true,
+     "note": "726 checks, 0 failures"
+    },
+    {
+     "cmd": "npx --no-install tsc -p jsconfig.json",
+     "ok": true,
+     "note": "tsc 6.0.2 locally; CI installs typescript@5"
+    },
+    {
+     "cmd": "node --test \"tests/unit/**/*.test.mjs\"",
+     "ok": true,
+     "note": "254/254"
+    },
+    {
+     "cmd": "node build.mjs --offline-images --out=$S/dist-off && SITE_DIST=$S/dist-off node tools/check-all.mjs --no-build --strict-redirects (also with --offline-images as in CI)",
+     "ok": true,
+     "note": "10 tools pass; check-honesty 1 baselined, check-seo 32 baselined; --no-baseline shows exactly those 33"
+    },
+    {
+     "cmd": "node build.mjs && node tools/check-all.mjs --no-build (netlify.toml command, online images, default dist)",
+     "ok": true
+    },
+    {
+     "cmd": "node tools/csp.mjs --check",
+     "ok": true
+    },
+    {
+     "cmd": "PORT=4481 SITE_DIST=$S/dist-off node node_modules/playwright/cli.js test --trace off",
+     "ok": true,
+     "note": "101 passed, 1 skipped (before/after slider needs photos; offline build)"
+    },
+    {
+     "cmd": "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+     "ok": true,
+     "note": "160 runs, 1 baselined; also --pages=all at 320 dark+light: 112 runs, green"
+    },
+    {
+     "cmd": "node tools/motion-audit.mjs",
+     "ok": true
+    },
+    {
+     "cmd": "node tools/text-over-media.mjs",
+     "ok": true,
+     "note": "2 baselined; also --pages=all --widths=390 both themes: 1432 measurements, green"
+    },
+    {
+     "cmd": "node tools/trace.mjs --upto=w2",
+     "ok": true,
+     "note": "78/78 machine-checked (existence only)"
+    },
+    {
+     "cmd": "node tools/lighthouse.mjs --runs=3",
+     "ok": true,
+     "note": "NOT RUN (quiet-slot only per REDESIGN-PLAN); not counted"
+    },
+    {
+     "cmd": "Regression diff vs W1 a3a99dd (offline builds of both): _redirects, robots.txt, sitemap <loc> set identical; titles/canonicals/robots/h1/lang unchanged except intentional /reviews/ title+desc, /about/ and /free-quote/ desc; Playwright probe of all 60 url-map URLs x dark/light x JS on/off at 390: 0 console errors, 0 pageerrors, 0 securitypolicyviolation, 0 failed requests; no-JS h1 visible, no hidden copy, no sideways scroll, header disclosure works; /nope/ -> 404 page; retired URLs 301 in one hop",
+     "ok": true
+    },
+    {
+     "cmd": "Mutation spot-checks (scratch dist copies): $49 / 49 dollars / CA$ 49 / price range, superlatives, years, invented stats, unlabelled sample review, AggregateRating JSON-LD, unhashed inline script, third-party img/script/css (offline + online), broken link, marquee, video autoplay, stock img under /projects/, counter markup, 'fully insured', infinite animation with motion off, mid-page low contrast; content: $ in service lede, rule without sourceUrl/excerpt, verify:false, 'has no bylaw' in a rule",
+     "ok": true,
+     "note": "all caught by the expected gate; the escapes are listed as findings"
+    }
+   ],
+   "findings": [
+    {
+     "severity": "major",
+     "item": "A baseline row hides hard §2 breaches on /reviews/ (check-honesty#reviews-credentials-guarantee)",
+     "detail": "One rule id covers three checks: the structural 'Read all reviews on Google' gap (routed to W3 t-company) and two hard checks. The hard ones are credentials rows that must show their [TOKEN] or value, and a 'workmanship guarantee' that must state [WARRANTY]. The baseline entry {reviews-credentials-guarantee, reviews/index.html} therefore passes invented credential values and invented guarantee terms on /reviews/. The header comment in check-honesty.mjs says hard constraints never share an id with a structural gap, but this one does. The same rows on /about/ fail correctly.",
+     "repro": "S=/tmp/claude-0/-home-user-Rnc-landscaping-web/1b1c3386-abd5-5106-9812-a4a24d622d93/scratchpad; cd site; bash $S/runmut.sh warranty_reviews cred_reviews. The first inserts 'Every job carries our 2-year workmanship guarantee.' into the /reviews/ section lede. The second inserts <ul class=\"credentials\"><li>WorkSafeBC: active account in good standing</li><li>Liability insurance: 5 million</li></ul>. Result: check-all=0 with '✓ check-honesty (2 baselined)' and '(3 baselined)'. Control: cred_about (the same row on /about/) gives check-all=1.",
+     "file": "site/tools/check-honesty.mjs:273-285; .orchestra/baselines/check-honesty.json",
+     "fix": "Split the rule: reviews-google-link (baselineable) plus credentials-rows and warranty-wording added to HARD. Re-key the baseline to reviews-google-link (an orchestrator decision logged in carry).",
+     "owner": "W4 fix-qa (site/tools/**); baseline re-key: orchestrator/integrator; clears in W3 t-company"
+    },
+    {
+     "severity": "major",
+     "item": "The workmanship-guarantee check accepts any page that shows a [WARRANTY] chip somewhere",
+     "detail": "The check is `/workmanship (guarantee|warranty)/ && !text.includes('[WARRANTY]')` over the whole page text. The home page and 7 other pages already carry a [WARRANTY] chip in a trust or credentials list, so on them an invented 'our 2-year workmanship guarantee' passes every gate.",
+     "repro": "bash $S/runmut.sh warranty_home (adds 'Every job carries our 2-year workmanship guarantee.' to the home hero__lede). Result: check-all=0, csp=0. grep -l '\\[WARRANTY\\]' -r $S/dist-off --include=*.html | wc -l gives 8.",
+     "file": "site/tools/check-honesty.mjs:285",
+     "fix": "Require [WARRANTY] (or its resolved value) in the same sentence or block as the guarantee wording. Fail on any duration or number next to guarantee/warranty unless [WARRANTY] states it.",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "major",
+     "item": "Sample labels on sample projects and sample job notes are not gated",
+     "detail": "CONTRACT §2 requires every sample project, job note and plant palette to render a visible 'Sample' label. check-honesty#sample-label only judges review <blockquote>s. The only e2e check is the first .sample-label on hrefs[0] of /projects/ (projects.spec:39) and the first .quote label on /reviews/. Removing every 'Sample project' label from /projects/ (16 cards) and from the Oak Bay case study, plus the job-note label on /areas/oak-bay/, passes everything. W3 t-projects and t-areas will rebuild exactly these templates without a guard.",
+     "repro": "bash $S/runmut.sh proj_unlabelled projlist_unlabelled jobnote_unlabelled gives check-all=0 for all 3. Combined /projects/ + case-study removal in $S/mut/pl, then PORT=4482 SITE_DIST=$S/mut/pl node node_modules/playwright/cli.js test tests/e2e/projects.spec.mjs tests/e2e/components.spec.mjs tests/e2e/living.spec.mjs gives 24 passed.",
+     "file": "site/tools/check-honesty.mjs (sample-label section ~l.255)",
+     "fix": "Extend sample-label (HARD) so that every page or card rendering a content item with sample:true (projects, area proof job-notes, palettes) has a visible .sample-label in that card or page head.",
+     "owner": "W4 fix-qa (gate) before W3 t-projects / t-areas land"
+    },
+    {
+     "severity": "major",
+     "item": "Stock-photo credits are not gated on the online (Netlify) build",
+     "detail": "CONTRACT §2 says stock photos are placeholders only and credited. No check-* rule looks at .media__credit or attribution. Browser specs only run the offline build, which has no stock. Stripping credits on the Deploy Preview build passes the Netlify gate.",
+     "repro": "SRC=<worktree>/site/dist node $S/mutate.mjs nocredit $S/mut/nocredit (removes every figcaption.media__credit from /about/ and /services/irrigation/), then SITE_DIST=$S/mut/nocredit node tools/check-all.mjs --no-build. Result: '✓ check-all: 10 tools passed'.",
+     "file": "site/tools/check-honesty.mjs",
+     "fix": "New HARD rule stock-credited: every rendered image whose slot has stock (media/images.json provider) has a visible credit (photographer + provider link) in its figure. Run it on the online build that Netlify checks.",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "major",
+     "item": "Misspelled or unknown bracket tokens pass every gate, including the launch gate",
+     "detail": "CONTRACT §3 says exact spelling, only these tokens. TOKEN_RE (src/lib/tokens.mjs) only matches the known names. check-placeholders, including --strict / SITE_MODE=launch, check-content and check-html never flag [PHONE NUMBER] or [EMAIL ADDRESS]. Such a token would ship to production unresolved.",
+     "repro": "Built page: bash $S/runmut.sh token (adds '<p>Call [PHONE NUMBER]</p>' on /contact/) gives check-all=0. Content: bash $S/runcmut.sh badtoken (adds ' Call [PHONE NUMBER] or [EMAIL ADDRESS].' to content/services/irrigation.json hero.lede in a scratch copy) gives check-content=0 and check-all=0.",
+     "file": "site/tools/check-placeholders.mjs; site/tools/check-content.mjs",
+     "fix": "Flag any /\\[[A-Z][A-Z ]{2,}\\]/ in dist text or content strings that is not in TOKEN_NAMES (allow-list legit uses such as the styleguide token demo).",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "major",
+     "item": "Contrast gates are blind to footer text (and to many nodes axe marks incomplete)",
+     "detail": "a11y.mjs keeps only axe violations. axe returns color-contrast 'incomplete' for 56–143 nodes per page (bgOverlap, pseudoContent, bgGradient). text-over-media only measures heroes, page heads, CTA bands and [data-living]. The footer on every page sits over .site-footer__glow (absolute, z-index:-1), which overlaps its text, so neither tool measures footer copy. A ~1.5:1 planted footer colour passes both tools. The same colour on a project card is caught. Today's footer is fine (I measured >= 7.7:1 against the dominant pixel, dark and light, 1440), so this is a coverage hole, not a live defect.",
+     "repro": "node $S/mutate.mjs lowfooter $S/mut/lowfooter (sets color:#24352c on the footer brand <p> and on one .card__text of /). Then SITE_DIST=$S/mut/lowfooter PORT=0 node tools/a11y.mjs --pages=/ --themes=dark --widths=1440 --motion=off flags only the card. SITE_DIST=$S/mut/lowfooter PORT=0 node tools/text-over-media.mjs --pages=/ --themes=dark --widths=1440 gives ✓. Incomplete counts: node $S/incomplete.mjs with dist-off served on 4481.",
+     "file": "site/tools/a11y.mjs:72; site/tools/text-over-media.mjs (scope); site/src/styles/30-chrome.css (.site-footer__glow)",
+     "fix": "Add the footer (and [data-spotlight] / glass cards) to text-over-media's measured regions, or have a11y fail or worst-pixel-measure axe 'incomplete' color-contrast nodes.",
+     "owner": "W4 fix-qa (tools); footer glow is ds-chrome → W4 fix-system"
+    },
+    {
+     "severity": "major",
+     "item": "Local-rule hard rule: the 'no bylaw' regex is narrow and summary prose is unguarded",
+     "detail": "check-content#area-local-blocks only tests localRules text against /no (tree )?bylaw (exists|applies)|there is no (tree )?bylaw|has no (tree )?bylaw/. So 'There is no watering bylaw in Oak Bay.' passes inside a localRule and also in the area summary. CONTRACT §2 says never claim 'no bylaw exists'. An unsourced rule written into summary ('Oak Bay requires a permit to remove any tree over 30 cm.') also passes. Area summaries today already hold many rule-like sentences; spot-checked Oak Bay ones paraphrase sourced localRules on the same page.",
+     "repro": "bash $S/runcmut.sh nowatering_rule nobylaw_summary rule_in_summary gives check-content=0 and check-all=0 for all three. Control: nobylaw_rule ('has no bylaw on hedges') gives 1.",
+     "file": "site/tools/check-content.mjs:375",
+     "fix": "Broaden to /\\bno\\s+(?:\\w+\\s+){0,2}bylaws?\\b|does not have (?:a|any) bylaw|isn'?t (?:a|any) bylaw/ and apply it to every area prose field (summary, intro, servicesBlurb, proof text, localNotes) and regional.json.",
+     "owner": "W4 fix-qa (gate); content: W4 fix-content"
+    },
+    {
+     "severity": "major",
+     "item": "The styleguide baselines mask any new a11y or text-over-media failure on /styleguide/",
+     "detail": "a11y records every axe rule under the single id 'axe-matrix', and text-over-media under 'worst-pixel'. So the routed light-theme crumb contrast rows {axe-matrix, styleguide/index.html} and {worst-pixel, styleguide/index.html} also pass new critical violations on the W2 component showcase, which is published on the Deploy Preview.",
+     "repro": "node $S/mutate.mjs sg_a11y $S/mut/sg_a11y (adds an empty <button class=btn> and an <img> without alt after the styleguide h1). Then SITE_DIST=$S/mut/sg_a11y PORT=0 node tools/a11y.mjs --pages=/styleguide/ --themes=light --widths=1440 --motion=off gives '✓ a11y (3 baselined)' and exit 0. With --no-baseline it lists button-name (critical) and image-alt (critical).",
+     "file": ".orchestra/baselines/a11y.json; .orchestra/baselines/text-over-media.json; site/tools/a11y.mjs:81",
+     "fix": "Key a11y failures by axe rule id (e.g. rule 'color-contrast' / path) so the baseline holds only the routed contrast row, then re-write it. Or have the orchestrator drop the entry and fix the crumbs.",
+     "owner": "W4 fix-qa (tool) / fix-system (crumb contrast, carry w4)"
+    },
+    {
+     "severity": "minor",
+     "item": "The cross-area-duplicates baseline is count-blind, and carry understates it",
+     "detail": "carry w3/t-areas says the template repeats 4 sentences. In fact every area page repeats 7 outside [data-shared], and W2 added one ('We get back to you within [REPLY TIME] to ask any questions and arrange your free quote'): W1 build has 6, W2 has 7. Oak Bay and Sidney also share the content H1 'Landscaping and garden care in {place}' (areas-content, not template). Wrapping the template blocks in W3 will not clear that pair.",
+     "repro": "node $S/dup.mjs $S/dist-off vs node $S/dup.mjs $S/dist-w1 (W1 a3a99dd built offline); SITE_DIST=$S/dist-off node tools/check-seo.mjs --no-baseline (oak-bay/sidney '6 sentence(s)').",
+     "file": "content/areas/oak-bay.json:8, content/areas/sidney.json:8; .orchestra/carry.json w3/t-areas",
+     "fix": "Update the carry text. Vary one of the two H1s. Consider baselines that record a count.",
+     "owner": "W3 t-areas (template); W4 fix-content (H1)"
+    },
+    {
+     "severity": "minor",
+     "item": "'Five-star' rating claims slip through unverifiable-claims",
+     "detail": "'Rated 4.9 stars' and '★★★★★' are caught, but '5-star service every time.' and 'Five-star rated on Google.' pass. An invented rating claim is a §2 hard rule.",
+     "repro": "PHRASE='Five-star rated on Google.' node $S/mutate.mjs claim $S/mut/claim && SITE_DIST=$S/mut/claim node tools/check-honesty.mjs gives exit 0.",
+     "file": "site/tools/check-honesty.mjs (NUMBERS/SUPERLATIVE)",
+     "fix": "Add /\\b(?:five|5)[- ]star\\b/i and 'go-to' to the claim patterns.",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "minor",
+     "item": "Gates pass vacuously when SITE_DIST names a missing directory",
+     "detail": "check-all reports '10 tools passed', exit 0, and check-seo even lists its 25 entries as stale. a11y, motion-audit and csp also exit 0 with no pages. A mistyped $OUT in the REDESIGN-PLAN gate commands would show green. CI and Netlify build first, so exposure is limited to manual or integrator runs.",
+     "repro": "SITE_DIST=/nonexistent node tools/check-all.mjs --no-build; echo $? gives 0. SITE_DIST=/nonexistent PORT=0 node tools/a11y.mjs; echo $? gives 0.",
+     "file": "site/tools/check-all.mjs; site/tools/lib.mjs",
+     "fix": "Under --no-build (or when SITE_DIST is set), fail if DIST/index.html is missing.",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "minor",
+     "item": "Subset runs report un-run baseline entries as stale",
+     "detail": "With --pages=/x/, a11y and text-over-media print '1 stale baseline entry … axe-matrix styleguide/index.html' although /styleguide/ was not checked. A --prune-baseline on a subset run would drop a live entry.",
+     "repro": "SITE_DIST=$S/dist-off PORT=0 node tools/a11y.mjs --pages=/ --themes=dark --widths=1440 --motion=off gives a 'stale baseline entry' warning.",
+     "file": "site/tools/lib.mjs:139-145",
+     "fix": "Only judge staleness for paths the run covered; refuse --prune-baseline with --pages.",
+     "owner": "W4 fix-qa"
+    },
+    {
+     "severity": "minor",
+     "item": "No gate covers §2 rule 1 (internal software, bid tools, automation)",
+     "detail": "A planted sentence naming a bid tool and automation passes every gate. A manual grep of the built pages is clean today; 'tender' only appears as client tender documents.",
+     "repro": "bash $S/runmut.sh internal gives check-all=0, csp=0.",
+     "file": "site/tools/check-honesty.mjs",
+     "fix": "Add a generic deny-list (bid tool, bid-finding, contract-finding, lead automation, scraper …) over dist text, comments and file names, without naming any real product.",
+     "owner": "W4 fix-qa / orchestrator decision"
+    }
+   ]
+  }
+ ],
+ "verdicts": [
+  {
+   "real": true,
+   "severity": "major",
+   "evidence": "I reproduced this on 5740f57, but I rate it major, not blocker.\n\nREPRO: `cd site && node build.mjs --out=$S/on` (online, which is what netlify.toml builds) and `node build.mjs --offline-images --out=$S/off`.\n- Stock <img> count / media__credit count per page, online build:\n  - index 3/0\n  - services 1/0\n  - resources 4/0\n  - commercial 2/1\n- The offline build has 0 Unsplash images on all four pages.\n- The uncredited figures are svc-irrigation-hero (on /, /services/ and /commercial/), res-2 and res-3 (on /), and res-1..res-4 (on /resources/). None has a figcaption.\n- I served the build with `SITE_DIST=$S/on PORT=4492 node tools/serve.mjs` and checked with Playwright at 1440x900, colorScheme dark. Each stock card (288x360 tile, 384x288 resource card) has no visible 'photo', 'stock', 'Unsplash' or 'placeholder' text anywhere in its <li>. The commercial-hero has its credit.\n- No CSS ::after label exists: a grep of src/styles found none.\n- og-default stock is the og:image of 33 pages, as claimed (39 pages in all use a stock og:image).\n- `SITE_DIST=$S/on node tools/check-honesty.mjs` exits 0. Its rules cover stock only for people and /projects/ (no-stock-people, no-stock-people-hero, stock-in-projects). Nothing checks credit or label.\n\nCAUSE: in picture() (src/lib/images.mjs:158-166), the stock branch's only label is the credit figcaption; the 'Sample image' chip appears only with o.sample. Callers that pass `credit: false` therefore render bare stock:\n- ui/cards.mjs:47, serviceTiles\n- pages/_shared.mjs:82, resourceCards\n\nNOT KNOWN OR ROUTED: carry.json has no credit or label item. Its stock items are about /projects/ and stock people, and those are resolved. No baseline covers it. .orchestra/requests/living.md:84 even says svc-irrigation-hero 'keeps its credited stock', so the expected state is credited.\n\nWHY NOT A BLOCKER:\n1. It is not a W2 regression, and the finding's history is wrong. `credit: false` on the service tile and resource card dates from the initial v2 commit 377e8af (components/ui.mjs:56/71, pages/routes.mjs:61), not from W1 68dfaaf. The v2 CONTRACT already had the same 'placeholders only, credited' rule.\n2. Every affected photo is credited on the page its card links to. 'Photo: X / Unsplash' is present on /services/irrigation/, the four guide pages and /about/.\n3. The images are generic service and guide imagery: sprinklers, leaves, a lawn, hedge trimming. They are not presented as RNC's completed work, and they invent no RNC fact.\n4. The og:image part is not actionable: an og:image cannot carry a credit, so that sub-claim should be dropped.\n\nStill, it is a real, visible gap from CONTRACT §2 'credited' and the locked §1 'Unsplash stock stays as labelled placeholders'. The honesty gate also passes it silently, which counts as major under the brief.\n\nOWNERS:\n- ui/cards.mjs: ds-comp in W2, t-home in W3.\n- pages/_shared.mjs: frozen in W3, fix-pages in W4.\n- The picture() label fallback is lib/images.mjs: living in W2, fix-features in W4.\n- A check-honesty rule for uncredited or unlabelled external stock: fix-qa (W4, owns site/tools/**)."
+  }
+ ]
+}
