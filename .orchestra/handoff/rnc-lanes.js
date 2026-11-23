@@ -1,13 +1,13 @@
 export const meta = {
   name: 'rnc-lanes',
-  description: 'W1 stream lanes: worktree builder → adversarial reviewer → fixer (≤2 rounds) per stream',
+  description: 'Stream lanes: worktree builder (or resume) → adversarial reviewer → fixer per stream',
   phases: [{ title: 'Build', detail: 'stream builders in isolated worktrees' }, { title: 'Review', detail: 'adversarial reviewers (detached worktrees, read-only)' }, { title: 'Fix', detail: 'fix chains on --fixN branches' }],
 }
 const REPO = '/home/user/Rnc-landscaping-web'
-const S = '/tmp/claude-0/-home-user-Rnc-landscaping-web/5110250c-2871-5a49-ba20-c506ac0ea22b/scratchpad'
+const S = '/tmp/claude-0/-home-user-Rnc-landscaping-web/1b1c3386-abd5-5106-9812-a4a24d622d93/scratchpad'
 const SEED = args.seed
 const WAVE = args.wave
-const ATTR = 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_014B2BmbM1MDbDgrkVGzif9y'
+const ATTR = 'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_014B2BmbxghRKSaZqjQgzRvE'
 const BUILD_SCHEMA = { type: 'object', properties: {
   branch: { type: 'string' }, head: { type: 'string' }, base: { type: 'string' },
   files: { type: 'array', items: { type: 'string' } },
@@ -23,8 +23,8 @@ const REVIEW_SCHEMA = { type: 'object', properties: {
   required: ['pass', 'findings'] }
 
 const COMMON = (id, B) => `You are part of Wave ${WAVE.slice(1)} of the RNC Landscaping website redesign (main repo ${REPO}; you run in an ISOLATED git worktree — your cwd — sharing the same .git).
-Your complete brief: ${REPO}/.orchestra/briefs/${id}.json — use its "${WAVE}" entries (owns, forbidden, port, out, gates, integrationGates) plus deliverables, acceptance, providesRules, rules, context. ALSO READ: ${REPO}/CONTRACT.md (v3), ${REPO}/REDESIGN-PLAN.md (v3), ${REPO}/.orchestra/ownership.json, ${REPO}/.orchestra/carry.json (items for "${id}"), ${S}/PLAN.md (locked user decisions), ${REPO}/DESIGN-DIRECTION.md (art direction "Living Coast"). Where EXECUTION-SPEC.md and CONTRACT/ownership.json differ, CONTRACT + ownership.json win (they are newer). Content streams: also ${REPO}/.orchestra/reports/content-audit.json and research/area-facts/*.json, research/area-verification-V*.md.
-Wave base for your stream: ${B} (for W2 this is wave-1-int, or the final tip of the upstream stream you build on). Hard rules: CONTRACT hard rules (never invent RNC facts; samples labelled; no prices; no superlatives; local rules need source + verify); write ONLY files matching your ${WAVE} owns globs; never edit forbidden globs; requests for other owners go to .orchestra/requests/${id}.md. Tools: Playwright 1.63 (site/node_modules after dev-setup), tsc at /opt/node22/bin/tsc or /opt/node-tools/node_modules/.bin/tsc, Chromium in /opt/pw-browsers. Do NOT push. Do not touch the main checkout at ${REPO} (read it only).`
+Your complete brief: ${REPO}/.orchestra/briefs/${id}.json — use its "${WAVE}" entries (owns, forbidden, port, out, gates, integrationGates) plus deliverables, acceptance, providesRules, rules, context. ALSO READ: ${REPO}/CONTRACT.md (v3), ${REPO}/REDESIGN-PLAN.md (v3), ${REPO}/.orchestra/ownership.json, ${REPO}/.orchestra/carry.json (items for "${id}"), ${REPO}/.orchestra/handoff/PLAN.md (locked user decisions), ${REPO}/DESIGN-DIRECTION.md (art direction "Living Coast"). Where EXECUTION-SPEC.md and CONTRACT/ownership.json differ, CONTRACT + ownership.json win (they are newer). Content streams: also ${REPO}/.orchestra/reports/content-audit.json and research/area-facts/*.json, research/area-verification-V*.md.
+Wave base for your stream: ${B} (the previous wave's pushed integration tip, or the final tip of the upstream stream you build on). Hard rules: CONTRACT hard rules (never invent RNC facts; samples labelled; no prices; no superlatives; local rules need source + verify); write ONLY files matching your ${WAVE} owns globs; never edit forbidden globs; requests for other owners go to .orchestra/requests/${id}.md. Tools: Playwright 1.63 (site/node_modules after dev-setup), tsc at /opt/node22/bin/tsc or /opt/node-tools/node_modules/.bin/tsc, Chromium in /opt/pw-browsers. Do NOT push. Do not touch the main checkout at ${REPO} (read it only).`
 
 const builder = (id, port, B) => `${COMMON(id, B)}
 ROLE: "${id}" stream BUILDER. Lens: see brief.
@@ -51,16 +51,20 @@ ${JSON.stringify(findings).slice(0, 9000)}`
 
 async function lane(st, B) {
   const { id, port } = st
-  const b = await agent(builder(id, port, B), { label: `${id} build`, phase: 'Build', isolation: 'worktree', schema: BUILD_SCHEMA, effort: 'high' })
+  let b
+  if (st.tip) b = { branch: st.tip, head: st.head, base: B, notes: st.note || 'built in previous session; no report available', acceptance: [], gates: [] }
+  else if (st.resume) b = await agent(builder(id, port, B).replace(`\`git switch -c ${WAVE}/${id}\``, `\`git switch ${WAVE}/${id}\` (it EXISTS with partial work from a previous builder that hit a usage limit mid-build: first read \`git log --stat ${B}..${WAVE}/${id}\` and .orchestra/requests/${id}.md, assess what is done vs the brief's deliverables/acceptance, then finish the rest; do not redo finished work)`) + (st.note ? `\nADDITIONAL INPUT (from the W2 independent verification and CI; in scope for you):\n${st.note}` : ''), { label: `${id} build (resume)`, phase: 'Build', isolation: 'worktree', schema: BUILD_SCHEMA, effort: 'high' })
+  else b = await agent(builder(id, port, B) + (st.note ? `\nADDITIONAL INPUT (from the W2 independent verification and CI; in scope for you):\n${st.note}` : ''), { label: `${id} build`, phase: 'Build', isolation: 'worktree', schema: BUILD_SCHEMA, effort: 'high' })
   if (!b) return { id, failed: 'builder' }
+  const MAXR = args.maxRounds || 3
   let tip = b.branch, last = b, review = null
-  for (let round = 1; round <= 3; round++) {
+  for (let round = 1; round <= MAXR; round++) {
     review = await agent(reviewer(id, port, tip, last, round, B), { label: `${id} review ${round}`, phase: 'Review', isolation: 'worktree', schema: REVIEW_SCHEMA, effort: 'high' })
     if (!review) break
     const serious = (review.findings || []).filter((f) => f.severity !== 'minor')
     log(`${id} review ${round}: ${review.pass ? 'PASS' : 'FAIL'} (${serious.length} blocker/major, ${(review.findings || []).length - serious.length} minor)`)
-    if (review.pass || round === 3) break
-    const f = await agent(fixer(id, port, tip, review.findings, round, B), { label: `${id} fix ${round}`, phase: 'Fix', isolation: 'worktree', schema: BUILD_SCHEMA, effort: 'high' })
+    if (review.pass || round === MAXR) break
+    const f = await agent(fixer(id, port, tip, review.findings, (st.fixStart || 1) + round - 1, B), { label: `${id} fix ${round}`, phase: 'Fix', isolation: 'worktree', schema: BUILD_SCHEMA, effort: 'high' })
     if (!f) break
     tip = f.branch; last = f
   }
@@ -68,7 +72,7 @@ async function lane(st, B) {
 }
 const P = {}
 for (const st of args.streams) P[st.id] = (async () => {
-  let B = SEED
+  let B = st.base || SEED
   if (st.after) { const up = await P[st.after]; if (!up || !up.head) return { id: st.id, failed: "upstream " + st.after }; B = up.head }
   return lane(st, B)
 })()

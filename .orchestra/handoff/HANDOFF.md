@@ -71,3 +71,24 @@ Previous session: https://claude.ai/code/session_014B2BmbM1MDbDgrkVGzif9y. It st
 - **W3 builders hit the usage limit mid-build.**
   - Partial branches are in `.orchestra/handoff/w3-wip.bundle` (t-home, t-services, t-projects, t-company; base `5740f57`). Restore them with `git fetch .orchestra/handoff/w3-wip.bundle 'refs/heads/w3/*:refs/heads/w3/*'`.
   - t-areas and t-editorial have no commits yet.
+
+
+## Update 2026-11-23 08:00Z: W3 lanes finished (not integrated)
+- **`.orchestra/handoff/w3-wip.bundle` now holds every W3 branch** (base `5740f57`). Restore with `git fetch .orchestra/handoff/w3-wip.bundle 'refs/heads/w3/*:refs/heads/w3/*'`.
+
+| Stream | Final tip | Status |
+|---|---|---|
+| t-projects | w3/t-projects 417340a | PASS |
+| t-company | w3/t-company e71e009 | PASS (/process/ step cards have no glass at 390px, which fixes the CI motion-audit) |
+| t-editorial | w3/t-editorial 787044f | PASS |
+| t-home | w3/t-home--fix1 74bd721 | fix 1 done; **re-review not run** (usage limit). The open blocker is 4 frozen W2 e2e tests that assert the old home hero; requests/t-home.md §1/§1b/§13 give the exact edits for the integrator. |
+| t-services | w3/t-services--fix1 950c9a0 | fix 1 done; **re-review not run** (usage limit) |
+| t-areas | w3/t-areas--fix1 59fabfe | fix 1 done; **re-review not run** (usage limit) |
+
+## Next steps
+1. Re-review t-home, t-services and t-areas (one round), using `rnc-lanes.js` with `tip`/`head`/`fixStart: 2`.
+2. Run the W3 integrator in mergeOrder.w3:
+   - Apply the requests/t-*.md integrator items, including the frozen-e2e edits and the COMPONENTS.md and ui-api append-only lines.
+   - Run the codemod, write baselines, run the full gate, push.
+   - Then run the independent verifier, including the design lens that never ran for W2.
+3. W3b css-consolidator, then W4 and W5, per PLAN.md.
