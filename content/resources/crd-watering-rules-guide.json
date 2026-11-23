@@ -3,14 +3,21 @@
   "title": "CRD watering rules: lawn days, times and new sod",
   "seo": {
     "title": "CRD Watering Rules Explained: Lawn Days & Times",
-    "description": "A plain guide to CRD Stage 1 lawn watering days and times, new sod rules and how to set irrigation timers to match, with a link to the CRD source. Free quote."
+    "description": "A plain guide to CRD Stage 1 lawn watering days and times, new sod rules and setting an irrigation timer to match, with a link to the CRD source."
   },
-  "date": "2026-11-19",
   "summary": "A plain-language summary of the Capital Regional District's summer watering schedule for lawns, gardens and new sod.",
   "image": "res-2",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": "2026-11-21",
+  "date": "2026-11-19",
   "body": [
     {
-      "p": "Most properties in Greater Victoria get their water from the regional supply run by the Capital Regional District (CRD). From May 1 to September 30, Stage 1 watering rules set when lawns can be watered. Properties on private wells are not on the regional supply."
+      "p": "Properties connected to a Capital Regional District (CRD) water system follow its summer watering rules. From May 1 to September 30, Stage 1 of the CRD Water Conservation Bylaw sets when lawns can be watered. Properties on private wells are not on the CRD schedule."
     },
     {
       "h2": "Lawn watering days and times (Stage 1)"
@@ -19,7 +26,8 @@
       "list": [
         "Even-numbered addresses: Wednesdays and Saturdays.",
         "Odd-numbered addresses: Thursdays and Sundays.",
-        "Times: 4 am to 10 am, or 7 pm to 10 pm.",
+        "Times for any watering method: 4 am to 10 am, or 7 pm to 10 pm.",
+        "Timed or automatic irrigation: 12:01 am to 10 am, or 7 pm to 10 pm.",
         "Multi-unit complexes, such as stratas, use the complex's street address, not each unit's number."
       ]
     },
@@ -27,7 +35,7 @@
       "h2": "Trees, shrubs and gardens"
     },
     {
-      "p": "Under Stage 1, hand watering and drip irrigation of trees, shrubs and flower and vegetable gardens is allowed on any day. That is one reason we often convert beds from spray heads to drip."
+      "p": "Under Stage 1, trees, shrubs and flower and vegetable gardens may be sprinkled on any day from 4 am to 10 am or 7 pm to 10 pm. Hand watering and drip irrigation are allowed any day, at any time. That is one reason we often convert beds from spray heads to drip."
     },
     {
       "h2": "New sod and seed"
@@ -53,10 +61,10 @@
       ]
     },
     {
-      "p": "Need your system set up or adjusted? See [irrigation services](/services/irrigation/), our [spring checklist](/resources/spring-lawn-and-garden-checklist/) or [get a free quote](/quote/)."
+      "p": "Need your system set up or adjusted? See [irrigation services](/services/irrigation/), our [spring checklist](/resources/spring-lawn-and-garden-checklist/) or [get a free quote](/free-quote/)."
     },
     {
-      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+      "p": "The CRD can change the stage or the schedule in a dry year. Check its watering page, linked below, before you set a controller. This summary was prepared in November 2026."
     }
   ],
   "sources": [

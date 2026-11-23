@@ -1,0 +1,38 @@
+{
+  "$id": "resource.schema.json",
+  "title": "content/resources/<slug>.json (schema v3): named author, real publish date",
+  "x-files": ["resources/*.json"],
+  "type": "object",
+  "required": ["slug", "title", "seo", "summary", "image", "body", "sources", "author", "published", "updated"],
+  "properties": {
+    "_notes": { "type": "string" },
+    "slug": { "$ref": "_defs.schema.json#/definitions/slug" },
+    "title": { "$ref": "_defs.schema.json#/definitions/text" },
+    "seo": { "$ref": "_defs.schema.json#/definitions/seo" },
+    "summary": { "$ref": "_defs.schema.json#/definitions/text" },
+    "image": { "$ref": "_defs.schema.json#/definitions/slot" },
+    "body": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "anyOf": [
+          { "type": "object", "required": ["h2"], "properties": { "h2": { "$ref": "_defs.schema.json#/definitions/text" } } },
+          { "type": "object", "required": ["p"], "properties": { "p": { "$ref": "_defs.schema.json#/definitions/text" } } },
+          { "type": "object", "required": ["list"], "properties": { "list": { "type": "array", "minItems": 1, "items": { "$ref": "_defs.schema.json#/definitions/text" } } } }
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "object", "required": ["label", "url"], "properties": { "label": { "$ref": "_defs.schema.json#/definitions/text" }, "url": { "$ref": "_defs.schema.json#/definitions/url" } } }
+    },
+    "author": {
+      "type": "object",
+      "required": ["name", "org", "url"],
+      "properties": { "name": { "$ref": "_defs.schema.json#/definitions/text" }, "org": { "$ref": "_defs.schema.json#/definitions/text" }, "url": { "$ref": "_defs.schema.json#/definitions/path" } }
+    },
+    "published": { "$ref": "_defs.schema.json#/definitions/date" },
+    "updated": { "$ref": "_defs.schema.json#/definitions/dateOrNull" },
+    "date": { "$ref": "_defs.schema.json#/definitions/date", "x-deprecated": "alias of published" }
+  }
+}

@@ -23,6 +23,27 @@
     "after": "proj-landscape-installation-3",
     "gallery": [
       "svc-landscape-installation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-colwood-landscape-fixture-3-art"
+  },
+  "seo": {
+    "title": "Colwood landscape installation project 3 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample landscape installation project in Colwood."
+  },
+  "season": "Summer",
+  "tags": [
+    "landscape-installation",
+    "colwood"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": [
+    {
+      "common": "Fixture plant",
+      "botanical": "Fixturea exemplaris",
+      "note": "Fixture note"
+    }
+  ]
 }

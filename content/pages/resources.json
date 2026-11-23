@@ -5,7 +5,7 @@
     "description": "Practical seasonal guides for Greater Victoria: spring checklist, CRD watering rules, fall cleanup, winter pruning, native planting and irrigation care."
   },
   "h1": "Seasonal guides for Greater Victoria gardens",
-  "lede": "Practical, local guides to lawn, garden, irrigation and tree care through the year, with links to the official rules.",
+  "lede": "Practical, local guides to lawn, garden, irrigation and tree care through the year. Each guide is written by [OWNER NAME] of RNC Landscaping, shows when it was published, and links to the official source for any rule it summarises.",
   "articles": [
     "spring-lawn-and-garden-checklist",
     "crd-watering-rules-guide",
@@ -19,7 +19,7 @@
       "id": "help",
       "heading": "Want it done for you?",
       "body": [
-        "See [grounds maintenance](/services/grounds-maintenance/), [irrigation](/services/irrigation/) or [get a free quote](/quote/)."
+        "See [grounds maintenance](/services/grounds-maintenance/), [irrigation](/services/irrigation/) or [get a free quote](/free-quote/)."
       ]
     }
   ]

@@ -1,0 +1,5 @@
+/* 00-layers.css (ds-core): the cascade-layer order, lowest priority first (CONTRACT §12). The build puts this file first in
+   the bundle, ahead of brand/tokens.css (whose custom properties are unlayered; its .on-deep scope is in @layer base), so
+   this statement is the first thing that names a layer. Every other file wraps its rules in exactly one of these layers.
+   The build concatenates site/src/styles/*.css in file-name order into one hashed stylesheet. */
+@layer legacy, reset, base, layout, chrome, components, living, pages, utilities, motion, print;

@@ -2,32 +2,46 @@ name: ci
 on:
   push: { branches: [main] }
   pull_request:
+# Every gate here fails the run on a regression (site/tools/check-ci.mjs#required-gates checks this file): only the
+# launch gate is allowed to fail, because it fails by design until RNC's real details replace the [TOKEN] placeholders.
 jobs:
   build-and-check:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: site } }
+    env:
+      # Offline build used by the browser gates: no CDN photos, so the pages measure only themselves.
+      SITE_DIST: ../ci-dist
+      PORT: "4321"
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 } # full history: the sitemap <lastmod> comes from git
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      # Dev tools go into site/node_modules (git-ignored, no package.json): the site itself has no dependencies.
+      - name: Install dev tools
+        run: |
+          npm install --no-save --no-package-lock --no-audit --no-fund typescript@5 @types/node@22 playwright@1.63 axe-core@4 lighthouse@12
+          npx --no-install playwright install --with-deps chromium
       - name: Typecheck (JSDoc)
-        run: npx --yes -p typescript -p @types/node tsc -p jsconfig.json
-      - name: Design tokens and contrast (light and dark)
+        run: npx --no-install tsc -p jsconfig.json
+      - name: Design tokens and contrast (dark and light)
         run: node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs
-      - name: Build (showcase) and static checks
-        run: node tools/check-all.mjs
-      - name: Browser tests
-        run: |
-          npx --yes playwright install --with-deps chromium
-          npx --yes -p playwright playwright test
+      - name: Unit tests
+        run: node --test "tests/unit/**/*.test.mjs"
+      - name: Build (showcase, offline images) and static checks, link checker included
+        run: node build.mjs --offline-images --out=../ci-dist && node tools/check-all.mjs --no-build --offline-images --strict-redirects
+      - name: CSP hashes
+        run: node tools/csp.mjs --check
+      - name: Playwright (real CSP via tools/serve.mjs)
+        run: node node_modules/playwright/cli.js test --trace off
+      - name: Accessibility matrix (axe, 5 widths, both themes, motion off and on)
+        run: node tools/a11y.mjs --themes=dark,light --widths=320,390,768,1024,1440 --motion=off,on
+      - name: Motion and text-over-media audits
+        run: node tools/motion-audit.mjs && node tools/text-over-media.mjs
+      - name: Lighthouse budgets (mobile, median of 3, every template)
+        run: CHROME_PATH="$(command -v google-chrome || command -v chromium)" node tools/lighthouse.mjs --runs=3
+      - name: Netlify parity (online images, default dist, no extra flags)
+        run: SITE_DIST= node build.mjs && SITE_DIST= node tools/check-all.mjs --no-build
       - name: Launch gate (expected to fail until tokens are filled)
-        run: SITE_MODE=launch node build.mjs
+        run: SITE_MODE=launch node build.mjs --out=../launch-dist
         continue-on-error: true
-      - name: Lighthouse CI
-        run: |
-          node build.mjs
-          npx --yes @lhci/cli@0.14 autorun --collect.staticDistDir=dist --collect.url=/ --collect.url=/services/irrigation/ --collect.url=/quote/ --assert.preset=lighthouse:no-pwa --assert.assertions.categories:performance=warn --assert.assertions.categories:accessibility=error --assert.assertions.categories:seo=warn --assert.assertions.is-crawlable=off --upload.target=temporary-public-storage
-      - name: axe accessibility
-        run: |
-          node tools/serve.mjs 4321 & sleep 2
-          for p in / /services/irrigation/ /quote/ /portfolio/ /areas/oak-bay/ /contact/; do npx --yes @axe-core/cli "http://localhost:4321$p" --exit; done

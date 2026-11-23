@@ -1,35 +1,49 @@
 {
   "slug": "rockland-spring-start-up-and-repair",
+  "sample": true,
   "title": "Spring start-up and repairs in Rockland",
   "service": "irrigation",
   "area": "victoria",
   "clientType": "Homeowner",
   "seo": {
     "title": "Sample project: Rockland irrigation start-up | RNC",
-    "description": "Sample project: spring irrigation start-up for a Rockland heritage garden in Victoria, with frost-damage repairs and a CRD-ready controller. Get a free quote."
+    "description": "Sample project: a Rockland heritage garden's irrigation started up after frost damage, repaired and set to CRD lawn days."
   },
   "summary": "Start-up of a heritage garden's system after a cold snap cracked lines.",
+  "season": "Spring",
+  "duration": "1 day",
   "scope": [
     "System charge and leak check",
     "Repair of cracked lateral lines",
     "Head adjustment",
     "Controller set for Stage 1"
   ],
-  "duration": "1 day",
-  "story": [
-    "The system had not been drained before a cold snap.",
-    "We found and repaired two cracked lines, adjusted heads off the heritage stonework and set the controller before May 1.",
-    "Read more about [irrigation](/services/irrigation/), see our work in [Victoria](/areas/victoria/), or [get a free quote](/quote/)."
+  "tags": [
+    "spring-start-up",
+    "frost-damage",
+    "heritage-garden",
+    "controller-set-up"
+  ],
+  "challenge": "The system had not been drained before a cold snap, and two lines cracked.",
+  "approach": [
+    "We charged the system slowly, found and repaired the two cracked lines and adjusted the heads away from the heritage stonework.",
+    "The controller was set to the CRD lawn watering days before Stage 1 began on May 1."
   ],
   "result": "System running before the watering season, with a reminder booked for fall shutdown.",
+  "plantPalette": [],
   "testimonial": null,
-  "sample": true,
   "images": {
     "before": "svc-irrigation-before",
     "after": "proj-irrigation-3",
     "gallery": [
       "svc-irrigation-after",
       "svc-irrigation-detail-2"
-    ]
-  }
+    ],
+    "art": "proj-rockland-spring-start-up-and-repair-art"
+  },
+  "story": [
+    "The system had not been drained before a cold snap, and two lines cracked.",
+    "We charged the system slowly, found and repaired the two cracked lines and adjusted the heads away from the heritage stonework.",
+    "The controller was set to the CRD lawn watering days before Stage 1 began on May 1."
+  ]
 }

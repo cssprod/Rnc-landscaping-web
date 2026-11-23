@@ -1,0 +1,100 @@
+{
+  "id": "fix-pages",
+  "wave": "w4",
+  "lens": "Page-template fixer",
+  "branch": [
+    "w4/r<round>/fix-pages"
+  ],
+  "base": {
+    "w4": "tag wave-3b-int, then the previous round tip w4/r<n-1>-int"
+  },
+  "port": {
+    "w4": 4443
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w4": [
+      "site/src/pages/{_shared,home,services,areas,projects,company,editorial}.mjs",
+      "site/src/styles/6?-*.css",
+      "site/src/components/map.mjs",
+      "site/src/scripts/{areas,projects}.js",
+      "site/tests/e2e/{home,services,areas,projects,company,editorial}.spec.mjs",
+      "site/tests/unit/t-*.test.mjs",
+      ".orchestra/requests/fix-pages.md"
+    ]
+  },
+  "forbidden": {
+    "w4": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    ".orchestra/tickets/*.json (yours only)",
+    ".orchestra/reports/w4/**",
+    "site/COMPONENTS.md"
+  ],
+  "context": [
+    "Your base is tag wave-3b-int (round 1) or the previous round tip. Every baseline must be empty when W4 exits."
+  ],
+  "deliverables": [
+    "Fix every ticket assigned to you this round, on branch w4/r<round>/fix-pages, inside your owns; a ticket that needs another owner's path goes back to triage as a request.",
+    "Prune: make every baseline entry for your files or pages pass, so the integrator can remove it (W4 exits only with every baseline empty)."
+  ],
+  "acceptance": [
+    "Every assigned ticket's closure check passes on the round tip"
+  ],
+  "providesRules": [],
+  "gates": {
+    "w4": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+      "node tools/trace.mjs --upto=w4 --stream=fix-pages",
+      "node tools/lighthouse.mjs --runs=3   # quiet slot only",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=fix-pages --wave=w4 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "Ticket closure verifier: re-run each ticket's repro and check on the round tip",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/fix-pages.md (never edit a file outside owns; describe the change there)"
+}

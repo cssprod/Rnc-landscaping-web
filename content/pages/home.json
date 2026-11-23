@@ -1,20 +1,24 @@
 {
-  "_notes": "Featured items reference services, projects and testimonials by slug.",
+  "_notes": "Featured items reference services, projects and testimonials by slug. featuredProject is the single spec-strip project; process.source points at content/pages/process.json overview (not repeated here); faq.ids reference content/pages/faq.json; reviewsBand shows the featuredTestimonials list (one list, so the two cannot drift); reviewsBand.googleLink has only a label, and templates take its URL from site.json googleProfile. cta.secondary carries a token-built URL that templates must never put in an href while the token is unresolved (CONTRACT section 3).",
   "seo": {
     "title": "Landscaping in Greater Victoria, BC | RNC Landscaping",
-    "description": "Grounds maintenance, landscape installation, irrigation and tree care for homes, stratas and businesses across Greater Victoria. Request your free quote today."
+    "description": "Grounds maintenance, landscape installation, irrigation and tree care for homes, stratas and businesses in Greater Victoria. Free, site-specific quotes."
   },
   "h1": "Landscaping, grounds care, irrigation and tree work in Greater Victoria",
-  "lede": "One local crew for four services, for homes, stratas and commercial sites. We check the local rules first and tell you what happens next.",
+  "lede": "One local contractor for four services, for homes, stratas and commercial sites. We check the local rules first and tell you what happens next.",
   "heroImage": "home-hero",
   "cta": {
     "primary": {
       "label": "Get a free quote",
-      "href": "/quote/"
+      "href": "/free-quote/"
     },
     "secondary": {
       "label": "Call [PHONE]",
-      "href": "tel:[PHONE]"
+      "href": "tel:[PHONE]",
+      "fallback": {
+        "label": "See our work",
+        "href": "/projects/"
+      }
     }
   },
   "featuredServices": [
@@ -29,17 +33,62 @@
     "view-royal-townhouse-irrigation-audit",
     "sooke-acreage-brush-and-broom-clearing"
   ],
+  "featuredProject": "oak-bay-front-garden-renewal",
+  "process": {
+    "heading": "How it works",
+    "lede": "Four steps from your first message to scheduled work.",
+    "source": "process.overview",
+    "link": {
+      "label": "See how we work",
+      "href": "/process/"
+    }
+  },
   "featuredTestimonials": [
     "strata-council-sidney",
     "homeowner-oak-bay",
     "general-contractor-langford"
   ],
+  "reviewsBand": {
+    "heading": "Reviews",
+    "lede": "The kind of feedback we work toward from homeowners, strata councils and contractors. A quote marked Sample is an example, not a review from a client.",
+    "googleLink": {
+      "label": "Read all reviews on Google"
+    }
+  },
+  "localExpertise": {
+    "heading": "Local rules, handled",
+    "body": [
+      "Tree bylaws, watering schedules and well rules differ from one municipality to the next. We check the rules for your address before work starts, and each area page links to the official source."
+    ],
+    "areas": [
+      "oak-bay",
+      "north-saanich",
+      "highlands",
+      "sooke"
+    ],
+    "regional": [
+      "crd-watering"
+    ],
+    "link": {
+      "label": "Find your municipality",
+      "href": "/areas/"
+    }
+  },
+  "faq": {
+    "heading": "Questions we hear often",
+    "ids": [
+      "how-quotes-work",
+      "reply-time",
+      "tree-permits",
+      "areas"
+    ]
+  },
   "sections": [
     {
       "id": "services",
       "heading": "What we do",
       "body": [
-        "Four services from one contractor and one point of contact, so nothing falls between trades."
+        "Four services from one contractor and one point of contact, so fewer things fall between trades."
       ],
       "items": [
         {
@@ -62,16 +111,16 @@
     },
     {
       "id": "why",
-      "heading": "How we work",
+      "heading": "What to expect from us",
       "body": [],
       "items": [
         {
-          "title": "Local rules, handled",
+          "title": "Rules checked first",
           "body": "We check CRD watering rules and your municipality's tree bylaw before we start, and point you to the official source."
         },
         {
           "title": "A written scope",
-          "body": "Every quote says what we will do, how often and when. No surprises at the first visit."
+          "body": "Your quote says what we will do, how often and when, so you see the scope before the first visit."
         },
         {
           "title": "One contact",
@@ -94,7 +143,7 @@
         },
         {
           "title": "Commercial and public buyers",
-          "body": "Work to your specification, with insurance and safety documents on request. [Commercial capability](/commercial/)."
+          "body": "Work to your specification. Insurance and safety details are on our [commercial page](/commercial/)."
         }
       ]
     },
@@ -109,14 +158,14 @@
       "id": "projects",
       "heading": "Sample projects",
       "body": [
-        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/portfolio/)."
+        "Examples of the kind of work we do. Each one is labelled Sample. [Browse the portfolio](/projects/)."
       ]
     },
     {
       "id": "cta",
       "heading": "Ready to talk about your property?",
       "body": [
-        "Tell us what you need in a few short steps. We'll get back to you to arrange your free quote."
+        "Tell us what you need on our quote form. We reply within [REPLY TIME] and arrange a site visit if the job needs one."
       ]
     }
   ]

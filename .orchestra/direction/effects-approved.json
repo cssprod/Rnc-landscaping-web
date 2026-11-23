@@ -1,0 +1,418 @@
+[
+  {
+    "id": "focus-ring",
+    "name": "Two-tone sandwich focus ring",
+    "technique": "outline:2px solid var(--focus-ring); outline-offset:2px; box-shadow:0 0 0 6px var(--focus-halo), 0 0 24px 6px var(--focus-glow). Inside .on-deep scopes the ring/halo swap to focus.ring-on-deep / focus.halo-on-deep. :focus-visible only.",
+    "budgetBytesGz": 300,
+    "tier": "T0",
+    "fallback": "forced-colors: outline 2px solid Highlight, box-shadow none.",
+    "a11y": "MANDATORY. Best tone >= 3:1 on every surface incl. art extremes and the brand button (min 3.80 light, 5.33 dark); ring vs halo 10.30 / 7.55. scroll-padding keeps it unobscured (2.4.11).",
+    "owner": "ds-core",
+    "labVerdict": "n/a",
+    "source": "P3 sandwich + P1 values"
+  },
+  {
+    "id": "motion-gate",
+    "name": "Shared motion gate (95-motion.css)",
+    "technique": "One file holds every tier gate: --dur-t0/--dur-t1 zeroed under reduce (unless data-motion=on) and under data-motion=off; T2 and T4 key off html[data-alive]; T1 off JS state attributes set only when prefs.motionOn(); reduce backstop sets animation:none on [data-t2] unless data-motion=on.",
+    "budgetBytesGz": 900,
+    "tier": "T0-T4",
+    "fallback": "Static frame.",
+    "a11y": "WCAG 2.2.2 (pause), 2.3.3. 0 infinite animations with motion off or reduce+no choice (J2 gate 1).",
+    "owner": "ds-core",
+    "labVerdict": "n/a"
+  },
+  {
+    "id": "living-hero",
+    "name": "Living night cove / dawn hero scene",
+    "technique": "<=6 OUTER layer boxes (HTML wrapper div > inner <svg>, shared viewBox 0 0 1600 400, xMidYMax slice) over a static CSS sky gradient: aurora wrap, stars (masked behind copy), moon/sun, far+mid ranges with tonal fills, water+glints, near shore+bioluminescent surf, fore firs, mist band, fireflies/dew. Loops: transform/opacity on the inner <svg> only. Theme swaps --sc-* vars only (one DOM).",
+    "budgetBytesGz": 6300,
+    "tier": "T1 entrance + T2 loops (<=7 in hero viewport)",
+    "fallback": "Static frame (no JS, reduce, Animations off) is fully composed: ranges filled, surf lit, fireflies visible at rest opacity.",
+    "a11y": "aria-hidden; visible \"Illustration\" chip; H1 is LCP and never animated; copy never overlaps land (light ink-2 over far range = 4.32 forbidden); stars/glints masked to 10% behind copy; fireflies <= 0.5 Hz; no flashing.",
+    "owner": "living",
+    "labVerdict": "safe (4.3 ms/s over baseline)",
+    "limits": {
+      "rawBytes": 16000,
+      "loopsInHeroViewport": 7,
+      "layers": 6
+    },
+    "source": "P1 base; J3 fixes; P2 masks; P3 wrapper split"
+  },
+  {
+    "id": "hero-dolly",
+    "name": "Land settles into place (dolly-in)",
+    "technique": "HTML land wrapper: scale 1.04 -> 1 over 1.4s, ease-out, triggered by [data-entered] which living.js sets on the first rAF after load (never during the LCP window). Separate property from parallax translate; inner <svg> keeps transform for drift.",
+    "budgetBytesGz": 200,
+    "tier": "T1",
+    "fallback": "No entrance; scale 1.",
+    "a11y": "Transform only, no CLS; skipped when motion is not effective.",
+    "owner": "living",
+    "labVerdict": "safe (transform on HTML wrapper)",
+    "source": "P3/J3 (replaces P1 translate rise, J2 V9)"
+  },
+  {
+    "id": "scene-parallax",
+    "name": "Hero depth parallax",
+    "technique": "animation-timeline: scroll(root); animation-range: 0 100vh; translate on <=5 HTML wrappers (never on <svg>), depths .04-.15. Inside @supports (animation-timeline: scroll()) and html[data-alive].",
+    "budgetBytesGz": 400,
+    "tier": "T4",
+    "fallback": "Layers stay put.",
+    "a11y": "Vestibular: off under reduce/Animations off; small amplitude (<= 15% of land height); no scroll-jacking.",
+    "owner": "living",
+    "labVerdict": "ration (+31 ms/s scroll)",
+    "limits": {
+      "wrappers": 5,
+      "scrollBudgetShareMsPerSec": 31
+    }
+  },
+  {
+    "id": "ridge-contours",
+    "name": "Glowing contour lines on the headland",
+    "technique": "2-4 contour paths following the near/mid ridges, pathLength=1, one-shot stroke-dashoffset draw <=1.6s, started by living.js after load+idle ([data-drawn]); glow baked as a second wider low-opacity stroke (no drop-shadow, no filter).",
+    "budgetBytesGz": 500,
+    "tier": "T1",
+    "fallback": "Drawn statically.",
+    "a11y": "Decorative; never under copy; not a loop.",
+    "owner": "living",
+    "labVerdict": "ration (non-composited while drawing, bounded <=1.6s)",
+    "limits": {
+      "pathsInView": 4
+    },
+    "source": "P2 via J3 graft"
+  },
+  {
+    "id": "hero-seam",
+    "name": "Mist and fore-ridge fade into the page",
+    "technique": "Static: fore ridge silhouette plus a mist gradient band ending in var(--color-bg); never a straight cut.",
+    "budgetBytesGz": 300,
+    "tier": "static",
+    "fallback": "Same.",
+    "a11y": "None needed.",
+    "owner": "living",
+    "source": "J3 must-fix 1"
+  },
+  {
+    "id": "art-wells",
+    "name": "Theme-reactive vignettes (service, area, project, \"Not sure?\", \"Where we work\")",
+    "technique": "Small inline SVGs drawn with the hero hand and --sc-* vars; shared <symbol> firs; per-service motifs (mown stripes, terraces+flagstones, drip line with droplets, fir with pruning cut / tree rings); per-project cottage-and-path template seeded by project slug. Static.",
+    "budgetBytesGz": 600,
+    "tier": "static",
+    "fallback": "Same.",
+    "a11y": "aria-hidden + \"Illustration\" chip where it could be mistaken for a photo; no fake data; no empty wells.",
+    "owner": "living",
+    "limits": {
+      "rawBytesPerVignette": 1500,
+      "inlineSvgPerPageRaw": 45000
+    },
+    "source": "P1 hand + P3 subjects + P2 motifs"
+  },
+  {
+    "id": "area-scenes",
+    "name": "13 distinct municipality scenes",
+    "technique": "livingScene(\"area:<slug>\") reads the art.mjs AREAS recipe (water sea|lake|none, distant range|islands|hills, trees, horizon, orb x) and renders the night/dawn layer system with <=5 loops (aurora, stars, glints, mist, fireflies).",
+    "budgetBytesGz": 4000,
+    "tier": "T2",
+    "fallback": "Static frame.",
+    "a11y": "Same as living-hero. Scene choices are landform cues only, never claims about the place.",
+    "owner": "living",
+    "limits": {
+      "rawBytes": 12000,
+      "loops": 5
+    }
+  },
+  {
+    "id": "service-nocturne",
+    "name": "Service page hero scene",
+    "technique": "Same engine, 4 layers + the service motif as the foreground; <=4 loops (aurora, fireflies, glints, mist).",
+    "budgetBytesGz": 3000,
+    "tier": "T2",
+    "fallback": "Static frame.",
+    "a11y": "Same as living-hero.",
+    "owner": "living",
+    "limits": {
+      "rawBytes": 10000,
+      "loops": 4
+    }
+  },
+  {
+    "id": "reveal-io",
+    "name": "One-shot section reveals",
+    "technique": "living.js IntersectionObserver arms [data-reveal] below the first viewport (data-reveal=\"armed\": opacity .4, translate 0 24px), flips to \"in\" once (600ms transition), then unobserves. Section wrappers only.",
+    "budgetBytesGz": 400,
+    "tier": "T1",
+    "fallback": "Always visible; no JS = never armed.",
+    "a11y": "Never on H1/LCP or first-viewport content; never from opacity 0; content readable mid-transition.",
+    "owner": "living",
+    "labVerdict": "safe-ish (+11 ms/s scroll vs +36 for view())",
+    "source": "J2 V10"
+  },
+  {
+    "id": "spotlight",
+    "name": "Cursor spotlight on bento tiles",
+    "technique": "One passive rAF-throttled pointermove on the grid; per hovered tile, one aria-hidden glow child (radial glow.spot) moved by translate3d. Never sets vars on :root.",
+    "budgetBytesGz": 400,
+    "tier": "T3",
+    "fallback": "No glow.",
+    "a11y": "(hover:hover) and (pointer:fine) only, and only when prefs.motionOn(); purely decorative.",
+    "owner": "living",
+    "labVerdict": "ration (+43 ms/s while pointer moves, transform version)"
+  },
+  {
+    "id": "edge-glow",
+    "name": "Gradient rim on tile hover/focus",
+    "technique": "Tile ::after ring (1px, mask-composite exclude) filled with surface.edge (moss -> sea-glass -> honey); opacity 0 -> 1 on :hover/:focus-within (T0). The spotlight child also lights the rim where the pointer is.",
+    "budgetBytesGz": 300,
+    "tier": "T0 (+T3 pointer part)",
+    "fallback": "Hairline line border.",
+    "a11y": "No violet (focus colour stays unique); decorative; focus ring is separate and always on top.",
+    "owner": "ds-comp",
+    "source": "P3 border, recoloured per J1"
+  },
+  {
+    "id": "lift",
+    "name": "3px lift on tile hover",
+    "technique": "translate 0 -3px + shadow change, var(--dur-t0).",
+    "budgetBytesGz": 100,
+    "tier": "T0",
+    "fallback": "No lift.",
+    "a11y": "Instant under reduce/off.",
+    "owner": "ds-comp"
+  },
+  {
+    "id": "conic-ring",
+    "name": "Comet ring on the CTA band primary button",
+    "technique": "Oversized conic-gradient child (inset:-50%) rotated by transform (14s linear infinite) inside an overflow:hidden capsule, inner surface 2px in. 1 per page by default, 2 max (styleguide only shows 2).",
+    "budgetBytesGz": 300,
+    "tier": "T2",
+    "fallback": "Static conic rim.",
+    "a11y": "Never @property; pauses off-screen; counts toward 8 loops per viewport; button text sits on solid brand.",
+    "owner": "ds-comp",
+    "labVerdict": "safe (3.6 ms/s)",
+    "limits": {
+      "perPage": 1,
+      "maxPerPage": 2
+    },
+    "source": "J2 V1 replacement"
+  },
+  {
+    "id": "cta-band",
+    "name": "Living CTA band (\"a window into the night\")",
+    "technique": "Deep band in both themes (.on-deep scope): 3 pre-blurred radial-gradient blobs moved by transform (26/32/40s), static contour rings from 3 real TILES polygons (survey.contour-faint), static grain, fixed scrim under the copy. Copy: Newsreader accent line + reply promise + trust micro-line.",
+    "budgetBytesGz": 1100,
+    "tier": "T2",
+    "fallback": "Static blobs.",
+    "a11y": "on-deep-2 >= 8.81 over blob peaks with scrim; focus uses ring-on-deep; no filter: blur.",
+    "owner": "ds-comp",
+    "labVerdict": "safe (2.9 ms/s)",
+    "limits": {
+      "loops": 3
+    }
+  },
+  {
+    "id": "grain",
+    "name": "Static grain on deep bands",
+    "technique": "<=1 KB PNG data-URI tile at 4-5% opacity, no blend modes, never animated, never background-attachment:fixed.",
+    "budgetBytesGz": 900,
+    "tier": "static",
+    "fallback": "Removed under prefers-contrast:more, reduced transparency and forced-colors.",
+    "a11y": "Never behind small text on light surfaces.",
+    "owner": "ds-comp",
+    "labVerdict": "safe"
+  },
+  {
+    "id": "stage",
+    "name": "Static \"spatial floor\" under bento grids",
+    "technique": "Pre-blurred radial glows (glow.moss/sea, honey in light) plus a radial-masked 48px hairline grid behind the grid gaps. Never animated, never behind text.",
+    "budgetBytesGz": 300,
+    "tier": "static",
+    "fallback": "Removed under prefers-contrast:more / reduced transparency.",
+    "a11y": "Decorative only.",
+    "owner": "ds-comp",
+    "source": "P3 via J3"
+  },
+  {
+    "id": "lit-solid",
+    "name": "Lit-solid cards",
+    "technique": "Opaque surface.card / card-hi gradients + glass.rim inset highlight + glass.edge hairline + sheen. No backdrop-filter.",
+    "budgetBytesGz": 400,
+    "tier": "static",
+    "fallback": "Flat bg-elevated under prefers-contrast:more.",
+    "a11y": "Contrast computed per gradient stop and under spotlight peak (ink-3 min 5.10 dark, 4.95 light worst text pair).",
+    "owner": "ds-comp",
+    "source": "P1"
+  },
+  {
+    "id": "glass-header",
+    "name": "Header capsule glass",
+    "technique": "material.chrome fill; real backdrop-filter blur(16px) saturate(1.5) ONLY when html[data-scrolled] (past the hero) and NOT [data-header-over-living] (ds-chrome IO on [data-living] elements under the header strip).",
+    "budgetBytesGz": 400,
+    "tier": "T0 (state change)",
+    "fallback": "Fill alone (alpha .82 dark / .84 light) carries contrast; solid under reduced transparency.",
+    "a11y": "Contrast checked with no blur over art extremes; <= 1 backdrop-filter element per mobile viewport.",
+    "owner": "ds-chrome",
+    "labVerdict": "ration over static content; avoid over animated (J2 V2)"
+  },
+  {
+    "id": "pref-toggles",
+    "name": "Dark theme / Animations toggles",
+    "technique": "Two aria-pressed buttons. >= 80em: pill with icon + visible label + state dot (filled brand = on, hollow ink-2 ring = off); labels start at 80em because nav + labelled pills + Free quote do not fit at 64-80em (measured). < 80em: 44x44 icon buttons keep the dot as a corner badge; the label is the same text node, visually hidden. Icons: moon (theme), three fireflies (animations).",
+    "budgetBytesGz": 700,
+    "tier": "T0",
+    "fallback": "Hidden without JS (CSS default applies).",
+    "a11y": "State is shape (filled vs hollow) + aria-pressed, not colour alone (1.4.1); dot >= 3:1 (min 6.67); one name source, no aria-label duplication; 44x44.",
+    "owner": "ds-chrome",
+    "source": "P2 dot + P1/P3 icon buttons (J2 V5, V6)"
+  },
+  {
+    "id": "theme-reveal",
+    "name": "Moonrise theme reveal",
+    "technique": "document.startViewTransition; ::view-transition-new(root) clip-path circle grows from the toggle (--vt-x/--vt-y), 520ms; updates <meta name=theme-color>.",
+    "budgetBytesGz": 400,
+    "tier": "T1",
+    "fallback": "Instant swap.",
+    "a11y": "Only when prefs.motionOn(); focus stays on the toggle; no flashing (dark->light is a wipe, not a flash).",
+    "owner": "ds-chrome"
+  },
+  {
+    "id": "xdoc-vt",
+    "name": "Cross-document crossfade + title morph",
+    "technique": "@view-transition{navigation:auto} inside (prefers-reduced-motion:no-preference); names: site-header, page-title (max 3); pageswap moves page-title from the old H1 to the clicked card title so it morphs into the new H1; 250ms.",
+    "budgetBytesGz": 400,
+    "tier": "T1",
+    "fallback": "Instant navigation.",
+    "a11y": "Pseudo-elements animation:none under [data-motion=off]; never name living layers or images.",
+    "owner": "ds-chrome",
+    "labVerdict": "ration (+134 ms main thread per navigation)",
+    "limits": {
+      "names": 3,
+      "durationMs": 250
+    }
+  },
+  {
+    "id": "sticky-bar",
+    "name": "Sticky Call / Free quote bar (< 64em)",
+    "technique": "Solid material.thick bar (no blur), glass rim on top, two equal 48px buttons; translateY in/out var(--dur-t0); hidden while hero actions, [data-quote-form] or the on-screen keyboard are in view; always shown with no JS.",
+    "budgetBytesGz": 600,
+    "tier": "T0",
+    "fallback": "Always shown (no JS).",
+    "a11y": "safe-area-inset-bottom; scroll-padding-bottom = bar height (2.4.11); Call reads \"Contact\" until [PHONE] resolves.",
+    "owner": "ds-chrome"
+  },
+  {
+    "id": "where-we-work",
+    "name": "\"Where we work\" tile: 13 named municipalities",
+    "technique": "13 chip links (the keyboard path) + a constellation of dots placed from real lon/lat; :has() lights the matching dot on chip hover/focus; \"Sidney to Sooke\" in prose.",
+    "budgetBytesGz": 900,
+    "tier": "T0",
+    "fallback": "Static dots and chips.",
+    "a11y": "Chips are the accessible route; dots aria-hidden; names always visible (J1 must-fix 5).",
+    "owner": "t-home",
+    "source": "P3"
+  },
+  {
+    "id": "next-step",
+    "name": "\"Next step\" card beside the hero art (>= 64em)",
+    "technique": "Lit-solid (material.thick fill, no blur) link card over the sky: \"Free quote\" + \"We get back to you within [REPLY TIME]\". Second depth plane.",
+    "budgetBytesGz": 300,
+    "tier": "static",
+    "fallback": "Same.",
+    "a11y": "It is a real link to /free-quote/ (J1 must-fix 4); contrast checked over orb/aurora.",
+    "owner": "t-home",
+    "source": "P3 via J1/J3"
+  },
+  {
+    "id": "area-map",
+    "name": "Glowing interactive area map",
+    "technique": "TILES polygons as contour hills (3 inset rings each), municipality names on the plate; hover/focus (via the list) switches a drop-shadow on instantly on ONE tile, fill/stroke transition T0; current area pulse = aria-hidden HTML glow box animated by opacity (T2, 1 loop). \"Schematic, not to scale\".",
+    "budgetBytesGz": 1200,
+    "tier": "T0 + T2 (1 loop)",
+    "fallback": "Static highlight.",
+    "a11y": "One keyboard path: the list; tiles tabindex=-1 mirrored via :has(); names visible.",
+    "owner": "t-areas",
+    "labVerdict": "ration (instant filter) + safe (opacity pulse)",
+    "source": "P2 plate (no grid letters, no S-codes) + P1 glow"
+  },
+  {
+    "id": "plate-draw",
+    "name": "Contour plate draw-in",
+    "technique": "IO-triggered one-shot stroke-dashoffset, <=12 paths, <=1.6s, after the map enters view.",
+    "budgetBytesGz": 400,
+    "tier": "T1",
+    "fallback": "Drawn statically.",
+    "a11y": "Never on page load, never looping.",
+    "owner": "t-areas",
+    "labVerdict": "ration (bounded)"
+  },
+  {
+    "id": "projects-filter-vt",
+    "name": "Projects filter re-sort",
+    "technique": "Links work without JS; with JS, startViewTransition with per-card view-transition-name (<= 24 cards), 250ms.",
+    "budgetBytesGz": 400,
+    "tier": "T1",
+    "fallback": "Instant re-render / full navigation.",
+    "a11y": "Focus kept on the filter control; result count announced in a polite live region.",
+    "owner": "t-projects"
+  },
+  {
+    "id": "before-after",
+    "name": "Before/after comparison",
+    "technique": "Keyboard range input drives a clip-path; \"Side by side\" toggle swaps layout with a 250ms same-document VT.",
+    "budgetBytesGz": 600,
+    "tier": "T0 + T1",
+    "fallback": "Side-by-side layout.",
+    "a11y": "Range has a name and value text; works at 320; no drag-only interaction.",
+    "owner": "t-projects"
+  },
+  {
+    "id": "process-path",
+    "name": "Path of fireflies (process timeline)",
+    "technique": "One spine path drawn once (IO, <=1.6s); each step node lights once (opacity glow 600ms).",
+    "budgetBytesGz": 500,
+    "tier": "T1",
+    "fallback": "Drawn and lit.",
+    "a11y": "Numbers are step labels, not counters.",
+    "owner": "t-company"
+  },
+  {
+    "id": "toc-firefly",
+    "name": "Service sticky TOC firefly marker",
+    "technique": "Active TOC item gets a 6px moss dot with glow; IO sets aria-current=\"true\"; transition var(--dur-t0).",
+    "budgetBytesGz": 200,
+    "tier": "T0",
+    "fallback": "Underline only.",
+    "a11y": "Active state is shape + aria-current, not colour alone.",
+    "owner": "t-services"
+  },
+  {
+    "id": "reading-progress",
+    "name": "Guide reading progress filament",
+    "technique": "2px bar under the header, scaleX via animation-timeline: scroll(root), inside @supports and html[data-alive].",
+    "budgetBytesGz": 200,
+    "tier": "T4",
+    "fallback": "Hidden.",
+    "a11y": "aria-hidden; decorative.",
+    "owner": "t-editorial"
+  },
+  {
+    "id": "off-the-map",
+    "name": "\"Off the map\" 404",
+    "technique": "Static contour plate of the 13 tiles with no marker, a hairline compass rose, area and service links.",
+    "budgetBytesGz": 800,
+    "tier": "static",
+    "fallback": "Same.",
+    "a11y": "Links are the content; plate aria-hidden.",
+    "owner": "t-editorial",
+    "source": "P2"
+  },
+  {
+    "id": "quote-calm",
+    "name": "Calm quote page",
+    "technique": "Still scene variant (data-still: no T2) behind the header only; no ambient motion near inputs; ready panel enters once (T1 260ms).",
+    "budgetBytesGz": 100,
+    "tier": "T0/T1",
+    "fallback": "Same.",
+    "a11y": "Nothing moves near the form; sticky bar hidden while the form is in view.",
+    "owner": "quote"
+  }
+]

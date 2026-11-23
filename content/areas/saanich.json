@@ -2,14 +2,13 @@
   "slug": "saanich",
   "name": "Saanich",
   "seo": {
-    "title": "Landscaping in Saanich, BC | RNC Landscaping",
-    "description": "Grounds maintenance, landscape installs, irrigation and tree care across Saanich, from Gordon Head to Cordova Bay, with tree permit checks. Get a free quote."
+    "title": "Landscaping in Saanich, BC — Grounds & Tree Care | RNC",
+    "description": "Grounds care, tree work, irrigation and garden builds across Saanich, from Gordon Head lots to rural acreage outside the Urban Containment Boundary."
   },
   "h1": "Landscaping in Saanich, BC",
-  "intro": [
-    "Saanich covers suburban streets in Gordon Head and Cadboro Bay, rural lots near Prospect Lake and Blenkinsop, and stratas and plazas around Royal Oak and Shelbourne. Each needs a different plan.",
-    "Saanich protects Garry oak, arbutus, Pacific dogwood and Pacific yew at small sizes, plus trees with raptor or heron nests, and a permit is needed before cutting a protected tree even if it is dead. We build that check into every tree job. See [grounds maintenance](/services/grounds-maintenance/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Saanich is two places in one. Inside the Urban Containment Boundary are suburban streets in Gordon Head, Cadboro Bay and Royal Oak; outside it, policy keeps lots large and rural, and many homes and farms draw on groundwater.",
+    "The District's tree bylaw reaches small trees: arbutus, Garry oak, Pacific dogwood and Pacific yew are protected from 2 m tall or 4 cm across, and streamside and steep-slope trees from 10 cm. A rewrite is under way, but the 2014 bylaw applies until a new one passes."
   ],
   "neighbourhoods": [
     "Gordon Head",
@@ -29,34 +28,232 @@
   ],
   "propertyTypes": [
     "single-family homes on suburban lots",
-    "rural and acreage properties",
+    "rural acreage outside the Urban Containment Boundary",
     "townhouse and condo stratas",
     "commercial plazas",
     "institutional campuses"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply: lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "sa-tree-native-small",
+      "topic": "trees",
+      "text": "Saanich protects arbutus, Garry oak, Pacific dogwood and Pacific yew once they reach 2 m tall or 4 cm in diameter at breast height.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Protected at 2m or more in height or 4cm or more in DBH",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Saanich's Tree Protection Bylaw protects Garry oak, arbutus, Pacific dogwood and Pacific yew at 2 m tall or 4 cm diameter; Douglas-fir, grand fir, bigleaf maple and western redcedar at 30 cm diameter; any other tree at 60 cm; plus replacement, significant and nesting trees. A tree cutting permit is required before cutting a protected tree, even if dead or dying, and the bylaw also covers pruning or damaging protected trees.",
-      "sourceUrl": "https://saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
-      "verify": true
+      "id": "sa-tree-large",
+      "topic": "trees",
+      "text": "In Saanich, Douglas-fir, grand fir, western redcedar and bigleaf maple are protected from 30 cm in diameter at breast height, and any other species from 60 cm. Even dead or dying protected trees need a permit before removal.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "All species of trees within the District of Saanich are protected at 60cm or more in DBH",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "sa-tree-steep-slope",
+      "topic": "trees",
+      "text": "On Saanich lots inside a mapped Steep Slope Area (Schedule A of the bylaw), a permit may be needed for trees as small as 10 cm in diameter or 5 m tall.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "A permit may be required for trees that are 10 cm or more in diameter, or 5 metres in height, that are growing in a Steep Slope Areas",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-tree-sdpa",
+      "topic": "trees",
+      "text": "In Saanich, any tree over 10 cm in diameter or 5 m tall inside the Streamside Development Permit Area is protected, so creekside clearing needs a check first.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/trees/tree-protection-bylaw.html",
+      "sourceTitle": "Tree Protection Bylaw | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "Any tree over 10cm in diameter or 5m tall located in a Streamside Permit Area.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-tree-pruning",
+      "topic": "trees",
+      "text": "Saanich needs no permit to prune a protected tree, other than a Significant Tree, if the work follows ISA or ANSI standards. Removing 25% of the live crown, re-topping, or cutting roots in the protected root zone counts as altering and needs a permit.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "A permit is required for “altering” a Protected Tree, including removing 25% of the live crown of the tree, re-topping a tree",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-tree-bylaw-review",
+      "topic": "trees",
+      "text": "Saanich is updating its Tree Protection Bylaw (9272, 2014). Drafting, testing and legal review continue through fall 2026, and the existing bylaw applies until a revised one passes. Proposals include lowering one size threshold inside the Urban Containment Boundary to 30 cm and ending the rural allowance to remove some protected trees each year. Neither is law yet.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Q&A-Tree-Bylaw-project-update-June-2026.pdf",
+      "sourceTitle": "Q&A: Tree Bylaw project update, June 2026 (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Until a revised bylaw is passed, the existing Tree Protection Bylaw will continue to apply.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-streamside-dpa",
+      "topic": "other",
+      "text": "All land within 30 m of a stream in Saanich is in the Streamside Development Permit Area (SDPA). Altering land there needs a Streamside Development Permit or a valid exemption, and maintaining an existing house or landscape is one of the common exemptions. Saanich encourages owners to talk to staff before changing land or vegetation; the page's contact is Planning, 250-475-5471.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/environmental-planning/streamside-development-permit-area.html",
+      "sourceTitle": "Streamside Development Permit Area | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "You cannot alter land, subdivide, or start construction in the SDPA without a Streamside Development Permit or a valid exemption.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-pesticide-bylaw",
+      "topic": "other",
+      "text": "Saanich's Pesticide Bylaw (9054, 2010, updated 2020) bars using pesticides to maintain outdoor trees, shrubs, flowers, ornamental plants and turf on residential and public land. It does not apply to agricultural, commercial, institutional or industrial land. Products on its low-risk list need no permit. Anything else needs a permit and a certified pesticide applicator, and residents may not apply glyphosate themselves.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/pesticide-reduction/pesticides-bylaw.html",
+      "sourceTitle": "Pesticide Bylaw | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "Saanich does not permit residents to apply glyphosate themselves. A Pesticide Permit is needed and a Certified Pesticide Applicator must do the treatment.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-boulevard-permit",
+      "topic": "other",
+      "text": "Saanich owners must maintain the boulevard beside their property, and landscaping or otherwise altering it needs a Boulevard Permit. Rocks, gravel, pavers, raised beds, fences and walls on a boulevard also need a permit, and planting a tree there is prohibited.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/local-government/departments/engineering-department/boulevards.html",
+      "sourceTitle": "Boulevards | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "Property owners wanting to landscape or alter the boulevard area abutting their properties require a Boulevard Permit.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-boulevard-heights",
+      "topic": "other",
+      "text": "Saanich's Boulevard Regulation Bylaw (9487) keeps boulevard grass at 15 cm or less. Other landscaping must stay below 1.0 m within 3.3 m of the curb and below 1.5 m farther back, at least 0.5 m from sidewalks and at least 2 m from fire hydrants. Plants allowed under a permit come from the bylaw's approved boulevard list, or need written approval from the Director of Parks.",
+      "sourceUrl": "https://www.saanich.ca/assets/Local~Government/Documents/Engineering/Blvd-Regulation-Bylaw.pdf",
+      "sourceTitle": "Boulevard Regulation Bylaw, 2018, No. 9487 (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "below a maximum height of 1.0 metres, measured from the grade of the boulevard, within 3.3 metres of the curb of the roadway",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "sa-urban-rural-split",
+      "kind": "lot-types",
+      "text": "Saanich is split by an Urban Containment Boundary. Outside it, policy keeps lots large and rural, with agricultural uses and rural servicing standards, so acreage and farm-edge properties are common.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Planning/plans/Rural_lap_web.pdf",
+      "sourceTitle": "Rural Saanich Local Area Plan (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "maintain large lot sizes, rural residential and agricultural land uses, and rural servicing standards outside the Urban Containment Boundary",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-rural-groundwater",
+      "kind": "wells",
+      "text": "Saanich's Rural Local Area Plan says many residential wells and farms rely on groundwater, and it backs water-conservation education for private well users. Irrigation on rural Saanich lots may draw on a private well rather than the regional supply.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Planning/plans/Rural_lap_web.pdf",
+      "sourceTitle": "Rural Saanich Local Area Plan (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Many residential wells and agriculture operations rely upon groundwater.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-interface-fire",
+      "kind": "other",
+      "text": "Saanich has an Interface Fire Development Permit Area. There, the tree bylaw allows removal of protected trees identified as a fire hazard to property when the risk cannot be reduced another way, so wildfire clearance is a real local issue on some lots.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 9272: Highlights for Property Owners (District of Saanich)",
+      "sourceType": "official",
+      "excerpt": "Interface Fire Development Permit Area: Trees that have been identified as a fire hazard to property and risk cannot be otherwise be removed or reduced",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "sa-pulling-together",
+      "kind": "other",
+      "text": "Invasive plants are a constant pressure in Saanich. The Pulling Together program has more than 200 volunteers removing Scotch broom, Himalayan blackberry, English ivy and other invasives in 44 parks and natural areas.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/parks-recreation-community/parks/natural-areas/volunteer-for-pulling-together.html",
+      "sourceTitle": "Volunteer for Pulling Together | District of Saanich",
+      "sourceType": "official",
+      "excerpt": "now unites over 200 volunteers across 44 parks and natural areas",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "ca-migratory-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "gordon-head-weekly-garden-care"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Mapped the arbutus and Garry oak saplings over 2 m on a Cordova Bay lot before a bed renovation, so none were cut without a District permit.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "grounds-maintenance",
+    "tree-vegetation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Lawn, bed and hedge care for suburban lots, with moss plans for shady yards under big firs.",
-    "landscape-installation": "Front and back garden builds on suburban lots, and planting on rural properties.",
-    "irrigation": "Start-up, repair and winterization for home and strata systems across Saanich.",
-    "tree-vegetation": "Pruning and removals planned around Saanich's protected species and nesting trees."
+    "grounds-maintenance": "Suburban Saanich yards under big firs often need steady lawn, moss and bed care, and boulevard grass in the District is kept to 15 cm or less.",
+    "landscape-installation": "Landscaping a Saanich boulevard needs a Boulevard Permit, so front-garden plans that reach the curb include that step.",
+    "irrigation": "On rural lots outside the containment boundary a system may run off a private well, which changes how zones and run times are set.",
+    "tree-vegetation": "Pruning to ISA or ANSI standards needs no permit in Saanich, but taking 25% of the live crown or cutting in the root zone does."
   },
+  "neighbours": [
+    "victoria",
+    "oak-bay",
+    "view-royal",
+    "central-saanich",
+    "highlands"
+  ],
   "featuredProject": "gordon-head-weekly-garden-care",
-  "image": "area-saanich"
+  "image": "area-saanich",
+  "intro": [
+    "Saanich is two places in one. Inside the Urban Containment Boundary are suburban streets in Gordon Head, Cadboro Bay and Royal Oak; outside it, policy keeps lots large and rural, and many homes and farms draw on groundwater.",
+    "The District's tree bylaw reaches small trees: arbutus, Garry oak, Pacific dogwood and Pacific yew are protected from 2 m tall or 4 cm across, and streamside and steep-slope trees from 10 cm. A rewrite is under way, but the 2014 bylaw applies until a new one passes."
+  ],
+  "localNotes": [
+    {
+      "text": "Saanich protects arbutus, Garry oak, Pacific dogwood and Pacific yew once they reach 2 m tall or 4 cm in diameter at breast height.",
+      "sourceUrl": "https://www.saanich.ca/assets/Community/Documents/Tree-Bylaw-Overview.pdf",
+      "verify": true
+    },
+    {
+      "text": "All land within 30 m of a stream in Saanich is in the Streamside Development Permit Area (SDPA). Altering land there needs a Streamside Development Permit or a valid exemption, and maintaining an existing house or landscape is one of the common exemptions. Saanich encourages owners to talk to staff before changing land or vegetation; the page's contact is Planning, 250-475-5471.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/environmental-planning/streamside-development-permit-area.html",
+      "verify": true
+    },
+    {
+      "text": "Saanich owners must maintain the boulevard beside their property, and landscaping or otherwise altering it needs a Boulevard Permit. Rocks, gravel, pavers, raised beds, fences and walls on a boulevard also need a permit, and planting a tree there is prohibited.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/local-government/departments/engineering-department/boulevards.html",
+      "verify": true
+    },
+    {
+      "text": "Saanich's Pesticide Bylaw (9054, 2010, updated 2020) bars using pesticides to maintain outdoor trees, shrubs, flowers, ornamental plants and turf on residential and public land. It does not apply to agricultural, commercial, institutional or industrial land. Products on its low-risk list need no permit. Anything else needs a permit and a certified pesticide applicator, and residents may not apply glyphosate themselves.",
+      "sourceUrl": "https://www.saanich.ca/EN/main/community/natural-environment/pesticide-reduction/pesticides-bylaw.html",
+      "verify": true
+    }
+  ]
 }

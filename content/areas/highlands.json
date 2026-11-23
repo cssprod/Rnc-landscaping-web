@@ -2,14 +2,13 @@
   "slug": "highlands",
   "name": "Highlands",
   "seo": {
-    "title": "Landscaping & Tree Work in Highlands, BC | RNC",
-    "description": "Tree work, brush clearing, landscaping and property upkeep for Highlands acreages, with tree permit checks near lakes and steep slopes. Get your free quote."
+    "title": "Landscaping in Highlands, BC — Tree Work & Wells | RNC",
+    "description": "Tree work, brush clearing, drip irrigation and upkeep for Highlands acreages on wells, near Millstream Creek and the lakes, with permit checks first."
   },
   "h1": "Landscaping and tree work in Highlands",
-  "intro": [
-    "Highlands is rural and forested, with homes near lakes and on steep, rocky lots around Millstream, Caleb Pike and Fork Lake.",
-    "A tree cutting permit is needed for protected species and for any tree near a watercourse, lake or steep slope, and cutting a significant tree is prohibited. Many homes use wells, so CRD watering rules apply only where connected. See [tree and vegetation work](/services/tree-vegetation/) or [request a free quote](/quote/).",
-    "See [sample projects](/portfolio/) and our [seasonal guides](/resources/) for more."
+  "summary": [
+    "Most Highlands residents rely on private wells in a bedrock aquifer, and groundwater falls to a seasonal low from May to September, the months gardens need water most. The District asks for drought-resistant planting, ground-level soakers and watering at night or early in the morning.",
+    "Forested lots near Millstream Creek and lakes such as Fork, Eagles and Pease need a tree cutting permit for trees close to the water, and earthworks within 30 m of any watercourse need a Qualified Environmental Professional. Every outdoor fire in Highlands, campfires included, needs a free permit all year."
   ],
   "neighbourhoods": [
     "Millstream area",
@@ -20,29 +19,281 @@
     "rural acreage on forested lots",
     "homes near lakes and watercourses"
   ],
-  "localNotes": [
+  "localRules": [
     {
-      "text": "CRD Stage 1 watering rules run May 1 to September 30 for properties on the regional water supply (many rural properties use wells; the rules apply only where connected): lawns may be watered on Wednesdays and Saturdays (even addresses) or Thursdays and Sundays (odd addresses), 4-10 am or 7-10 pm; hand watering and drip irrigation of trees, shrubs and gardens is allowed any day. Multi-unit complexes use the complex's street address. New sod or seed does not need a permit and has a temporary schedule.",
-      "sourceUrl": "https://www.crd.ca/environment/water-conservation/watering-schedule",
-      "verify": true
+      "id": "highlands-tree-bylaw-10",
+      "topic": "trees",
+      "text": "Highlands' Tree Management Bylaw 10 (1994) needs a tree cutting permit to remove a protected tree or any tree near a watercourse, lake or steep slope, and prohibits cutting a significant tree. Significant trees are specific trees the bylaw lists in its Schedule A, not a size class.",
+      "sourceUrl": "https://www.highlands.ca/sustainability-and-climate-action/tree-management",
+      "sourceTitle": "Tree Management | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "A tree cutting permit is necessary when removing a protected tree or any tree located near a watercourse, lake, or steep slope area.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "Under Highlands' Tree Management Bylaw No. 10, cutting a protected tree (Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara, manzanita, Douglas-fir over 60 cm, any tree over 80 cm) or any tree near a watercourse, lake or steep slope needs a permit; cutting a significant tree is prohibited. Check for nesting birds before felling in nesting season.",
-      "sourceUrl": "https://www.highlands.ca/node/133",
-      "verify": true
+      "id": "highlands-protected-species",
+      "topic": "trees",
+      "text": "Highlands lists Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara and manzanita as protected trees, plus Douglas-fir over 60 cm in diameter and any tree over 80 cm in diameter. The bylaw defines a tree as a woody plant 5 m or taller or 10 cm or more in diameter, with diameter measured 1.4 m above the ground. The only bylaw copy online is a 2001 office consolidation, so confirm the thresholds with the District.",
+      "sourceUrl": "https://www.highlands.ca/sustainability-and-climate-action/tree-management",
+      "sourceTitle": "Tree Management | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "Douglas Fir tree (Pseudotsuga menziesii), having a diameter greater than 60 centimetres (24 inches)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     },
     {
-      "text": "The CRD Regional Invasive Species Program lists priority species (including giant hogweed, knotweed, gorse, poison hemlock, shiny geranium and yellow toadflax) and asks for sightings to be reported. Invasive plants must be disposed of properly: Hartland Landfill takes them bagged and labelled or in covered loads, and knotweed needs a controlled waste permit and is not accepted at municipal yard-waste drop-offs.",
-      "sourceUrl": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species",
-      "verify": true
+      "id": "highlands-tree-cutdown-def",
+      "topic": "trees",
+      "text": "Under Highlands' tree bylaw, 'cut down' includes topping a tree and removing any branch or trunk over 10 cm in diameter, so that kind of pruning on a regulated tree is treated like cutting and needs a permit. Damaging roots inside the drip line, placing fill or materials there, running heavy equipment over the roots, removing soil or blasting near the roots also need a permit first.",
+      "sourceUrl": "https://www.highlands.ca/media/1417",
+      "sourceTitle": "Tree Management Bylaw No. 10, 1994 (office consolidation to October 15, 2001), District of Highlands",
+      "sourceType": "official",
+      "excerpt": "includes the topping of a tree and the removal of any branch or trunk of a tree having a diameter of more than 10 centimetres",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-tree-water-setbacks",
+      "topic": "trees",
+      "text": "In Highlands, cutting any tree needs a permit within 30 m of Millstream Creek or 15 m of any other watercourse, and within 30 m of Teanook, Matson, Fizzle, Fork, Eagles, Mitchell, Second, Third or Pease Lakes or 15 m of any other lake.",
+      "sourceUrl": "https://www.highlands.ca/media/1417",
+      "sourceTitle": "Tree Management Bylaw No. 10, 1994 (office consolidation to October 15, 2001), District of Highlands",
+      "sourceType": "official",
+      "excerpt": "growing within 30 metres of the natural boundary of Millstream Creek or within 15 metres of any other watercourse",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-tree-slopes-buffers",
+      "topic": "trees",
+      "text": "Highlands' tree bylaw needs a permit to cut more than 2 trees a year on a steep slope (an average slope over 30% across 6 m), and stumps and roots on steep slopes may not be removed without written permission; the District's web page says any tree near a steep slope area needs a permit, so check first. As consolidated, the bylaw also lists buffers along lot lines, so check with the District before cutting near a property line.",
+      "sourceUrl": "https://www.highlands.ca/media/1417",
+      "sourceTitle": "Tree Management Bylaw No. 10, 1994 (office consolidation to October 15, 2001), District of Highlands",
+      "sourceType": "official",
+      "excerpt": "No person shall, without first obtaining a tree cutting permit, cut down more than 2 trees in any one calendar year growing on any steep slope",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-dpas",
+      "topic": "other",
+      "text": "Highlands has six development permit areas: Steep Slopes, Water and Riparian Areas, Sensitive Vegetation, Regenerative Development, Intensive Residential, and Energy and Water Conservation and Reduction of Greenhouse Gases. Inside one, a development permit is needed before subdividing or before building, adding to or altering a building. Whether a lot is in one depends on what is on the ground, usually confirmed by a qualified professional.",
+      "sourceUrl": "https://www.highlands.ca/building-development-planning/development/development-permit-areas",
+      "sourceTitle": "Development Permit Areas | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "The determinant for whether an area is subject to a development permit will be dictated by what is on the ground.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-riparian-30m",
+      "topic": "other",
+      "text": "In Highlands, earthworks or tree removal within 30 m of any watercourse or water body, whatever its size, needs a Qualified Environmental Professional and the District's Water and Riparian Areas development permit; soil deposit or removal sends the application to Council. Installing a structure, including a fence, within 30 m needs a development variance permit under section 3.3 of the Zoning Bylaw.",
+      "sourceUrl": "https://www.highlands.ca/building-development-planning/development/riparian-area-regulations",
+      "sourceTitle": "Riparian Area Regulations | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "If you plan to undertake earthworks or construction within 30 meters (approximately 100 feet) of any watercourse or water body, regardless of its size",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-burning-permits",
+      "topic": "burning",
+      "text": "Highlands has no open burning season: a free permit is required for every outdoor fire, all year, including campfires and incinerators, and is issued online. Campfires up to 0.5 m x 0.5 m and open fires up to 1 m x 1 m are approved automatically; larger fires are approved by staff. Under Fire Control and Protection Bylaw 474 (2025), fires larger than a campfire may be lit only when the venting index is 'Good'.",
+      "sourceUrl": "https://www.highlands.ca/community-services/protective-services/fire-services/wood-and-backyard-burning/burning-permits",
+      "sourceTitle": "Burning Permits | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "These permits are mandatory year-round and are free of charge.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-burning-distances",
+      "topic": "burning",
+      "text": "Highlands' fire bylaw requires any fire larger than 0.5 cubic metres to be at least 6 m from any building or property line and 1 m from shrubs, tall grass, fences or other combustibles; fires over 1 cubic metre have much larger distances (as written, 500 m from any residence or business and 15 m from combustibles). Garden refuse may be burned only as dry garden refuse under a permit, and construction waste never.",
+      "sourceUrl": "https://www.highlands.ca/media/1612",
+      "sourceTitle": "Fire Control and Protection Bylaw No. 474, 2025 (District of Highlands)",
+      "sourceType": "official",
+      "excerpt": "No person shall permit any fire larger than 0.5 metre cubed to be located within 6 metres of any building or property line",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
     }
   ],
+  "conditions": [
+    {
+      "id": "highlands-dead-trees",
+      "kind": "other",
+      "text": "Highlands reports a fast-rising number of dead and dying Douglas-fir and cedar trees linked to drought and heat stress. Removing a dead or dying tree may still need a permit under the tree bylaw or a development permit area, and land title covenants can add limits. The District advises checking for nesting birds before felling, and chipping or mulching instead of burning.",
+      "sourceUrl": "https://www.highlands.ca/sustainability-and-climate-action/tree-management",
+      "sourceTitle": "Tree Management | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "A permit may be required under the Highlands Tree Management Bylaw or Development Permit Area and restrictions may apply under land title covenants.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-wells-aquifer",
+      "kind": "wells",
+      "text": "Most Highlands homes draw drinking water from private wells in a bedrock aquifer (BC Aquifer #680), so irrigation is planned around well yield. CRD watering rules apply only to the parts of Highlands on the Juan de Fuca system.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/District%20of%20Highlands%20Groundwater%20Protection%20-%20Final%20Work%20Plan%20and%20Implementation%20Report.pdf",
+      "sourceTitle": "Groundwater Protection - Final Work Plan and Implementation Report (District of Highlands)",
+      "sourceType": "official",
+      "excerpt": "The majority of residents in the District obtain their drinking water from private wells that tap into the local bedrock aquifer (BC Aquifer #680).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-iron-wells",
+      "kind": "wells",
+      "text": "Many Highlands wells are high in iron and manganese. The District's well pamphlet advises testing household taps at least once a year for coliform bacteria and every few years for metals, and its groundwater brochure says these minerals stain plumbing, dishes and laundry.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/CaringforYourWell_2024_202404121146355894.pdf",
+      "sourceTitle": "Caring for Your Well (District of Highlands pamphlet, 2024)",
+      "sourceType": "official",
+      "excerpt": "many wells in the Highlands are high in iron and manganese",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-groundwater-seasonal",
+      "kind": "wells",
+      "text": "In the District's 2025 monitoring, Highlands groundwater levels were highest in the wet months of December to April and fell to a seasonal low over the dry May-to-September period, the same months gardens need the most water.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2026-11/2025%20DoH%20Report-16JUN_26.pdf",
+      "sourceTitle": "Results of 2025 Groundwater Level Monitoring Program, District of Highlands (WSP, June 16, 2026)",
+      "sourceType": "official",
+      "excerpt": "declining to a seasonal low during the dry summer period from May to September",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-water-conservation-advice",
+      "kind": "water-supply",
+      "text": "The District's groundwater brochure asks residents to cut outdoor water use by replacing irrigated lawn with drought-resistant plants or letting lawns go dormant in summer, and, where they do irrigate, to use ground-level soakers instead of spray heads and water at night or early morning.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2025-02/2017%20Version%20%3D%20taking%20care%20of%20our%20water%20supply_201805241433132505.pdf",
+      "sourceTitle": "Taking Care of Our Water Supply (District of Highlands brochure, 2017 version)",
+      "sourceType": "official",
+      "excerpt": "Replace spray heads with ground-level soakers. Irrigate at night or early morning rather than in the heat of the day.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-firesmart-wui",
+      "kind": "other",
+      "text": "Highlands says its wildfire risk is real and its terrain is challenging for both fire behaviour and evacuation. The District offers free, no-obligation FireSmart home assessments (250-474-1773 or firesmart@highlands.ca), and the first phase of its FireSmart program includes a Community Wildfire Resiliency Plan.",
+      "sourceUrl": "https://www.highlands.ca/community-services/protective-services/fire-services/firesmart-program",
+      "sourceTitle": "FireSmart Program | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "Book a Free Home Assessment with no obligations",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-firesmart-zones",
+      "kind": "other",
+      "text": "Highlands' FireSmart guidance: within 1.5 m of the house, remove mulch, vegetation and stored items and choose non-combustible surfaces such as landscape rock; from 1.5 to 10 m, space out deciduous trees and shrubs, prune branches up to 2 m from the ground, keep grass under 10 cm and avoid conifers and firewood; from 10 to 30 m, keep volatile fuels to a minimum and increase spacing between tree crowns.",
+      "sourceUrl": "https://www.highlands.ca/community-services/protective-services/fire-services/firesmart-program",
+      "sourceTitle": "FireSmart Program | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "Remove flammable materials beside house (mulch, vegetation, stored items)",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-wells-proof",
+      "kind": "wells",
+      "text": "Groundwater in Highlands also supplies the Hanington Estates subdivision, through two communal supply wells, and Bear Mountain Golf Course irrigation draws on wells within Highlands.",
+      "sourceUrl": "https://www.highlands.ca/sites/31/files/2026-11/2025%20DoH%20Report-16JUN_26.pdf",
+      "sourceTitle": "Results of 2025 Groundwater Level Monitoring Program, District of Highlands (WSP, June 16, 2026)",
+      "sourceType": "official",
+      "excerpt": "Irrigation water for the Bear Mountain Golf Course (Bear Mountain) is sourced from groundwater wells located within the Highlands.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-broom-bash",
+      "kind": "other",
+      "text": "Scotch broom grows throughout Highlands. The District says it thrives in sunny, disturbed areas, can intensify wildfires and block road sightlines, and leaves seed that stays viable in the soil for 30 years. A community Broom Bash runs each Saturday in May at the Highlands Community Hall.",
+      "sourceUrl": "https://www.highlands.ca/sustainability-and-climate-action/invasive-species",
+      "sourceTitle": "Invasive Species | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "Scotch Broom can be found throughout the Highlands.",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    },
+    {
+      "id": "highlands-wildlife-attractants",
+      "kind": "other",
+      "text": "Highlands advises residents in bear country to plant non-attractant plants, use a bear-proof composter, pick fruit a few days before it ripens, clear fallen fruit, and keep lawns mowed and weeded, because grasses, dandelion and clover are natural bear foods. Mountain ash, blueberries, huckleberries and clover are named as strong bear attractants. Deer are also seen in neighbourhoods.",
+      "sourceUrl": "https://www.highlands.ca/community-services/animals-wildlife/wildlife-sightings-information",
+      "sourceTitle": "Wildlife Sightings and Information | District of Highlands",
+      "sourceType": "official",
+      "excerpt": "Keep lawns mowed and weeded (grasses, dandelion and clover are natural bear foods).",
+      "verify": true,
+      "reviewedOn": "2026-11-21"
+    }
+  ],
+  "sharedRegional": [
+    "crd-watering",
+    "crd-water-systems",
+    "crd-invasives",
+    "bc-riparian",
+    "bc-bird-nests",
+    "ca-migratory-bird-nests",
+    "bc-private-wells"
+  ],
+  "proof": [
+    {
+      "kind": "project",
+      "project": "highlands-acreage-tree-pruning"
+    },
+    {
+      "kind": "job-note",
+      "service": "tree-vegetation",
+      "text": "Lifted Douglas-fir limbs over a Caleb Pike driveway with every cut under 10 cm, because larger branches count as cutting down under the District's bylaw.",
+      "sample": true
+    }
+  ],
+  "topServices": [
+    "tree-vegetation",
+    "irrigation"
+  ],
   "servicesBlurb": {
-    "grounds-maintenance": "Property upkeep around the house, driveway and outbuildings.",
-    "landscape-installation": "Planting suited to rocky, dry sites and native meadow edges.",
-    "irrigation": "Drip systems for gardens on well water, designed for low flow.",
-    "tree-vegetation": "Clearance pruning and removals after a permit check near lakes and slopes."
+    "grounds-maintenance": "Keeping lawns mowed and weeded matters in Highlands bear country, since the District names grasses, dandelion and clover as natural bear foods.",
+    "landscape-installation": "Planting leans toward drought-resistant, non-attractant species, as the District's groundwater and wildlife advice both ask.",
+    "irrigation": "Drip and ground-level soakers suit Highlands wells that fall to a seasonal low each summer.",
+    "tree-vegetation": "Dead and dying Douglas-fir and cedar are on the rise in the District, and removing one can still need a permit, a nest check and chipping instead of burning."
   },
+  "neighbours": [
+    "langford",
+    "view-royal",
+    "saanich"
+  ],
   "featuredProject": "highlands-acreage-tree-pruning",
-  "image": "area-highlands"
+  "image": "area-highlands",
+  "intro": [
+    "Most Highlands residents rely on private wells in a bedrock aquifer, and groundwater falls to a seasonal low from May to September, the months gardens need water most. The District asks for drought-resistant planting, ground-level soakers and watering at night or early in the morning.",
+    "Forested lots near Millstream Creek and lakes such as Fork, Eagles and Pease need a tree cutting permit for trees close to the water, and earthworks within 30 m of any watercourse need a Qualified Environmental Professional. Every outdoor fire in Highlands, campfires included, needs a free permit all year."
+  ],
+  "localNotes": [
+    {
+      "text": "Highlands lists Garry oak, arbutus, Pacific dogwood, Pacific yew, cascara and manzanita as protected trees, plus Douglas-fir over 60 cm in diameter and any tree over 80 cm in diameter. The bylaw defines a tree as a woody plant 5 m or taller or 10 cm or more in diameter, with diameter measured 1.4 m above the ground. The only bylaw copy online is a 2001 office consolidation, so confirm the thresholds with the District.",
+      "sourceUrl": "https://www.highlands.ca/sustainability-and-climate-action/tree-management",
+      "verify": true
+    },
+    {
+      "text": "In Highlands, cutting any tree needs a permit within 30 m of Millstream Creek or 15 m of any other watercourse, and within 30 m of Teanook, Matson, Fizzle, Fork, Eagles, Mitchell, Second, Third or Pease Lakes or 15 m of any other lake.",
+      "sourceUrl": "https://www.highlands.ca/media/1417",
+      "verify": true
+    },
+    {
+      "text": "In Highlands, earthworks or tree removal within 30 m of any watercourse or water body, whatever its size, needs a Qualified Environmental Professional and the District's Water and Riparian Areas development permit; soil deposit or removal sends the application to Council. Installing a structure, including a fence, within 30 m needs a development variance permit under section 3.3 of the Zoning Bylaw.",
+      "sourceUrl": "https://www.highlands.ca/building-development-planning/development/riparian-area-regulations",
+      "verify": true
+    },
+    {
+      "text": "Highlands has no open burning season: a free permit is required for every outdoor fire, all year, including campfires and incinerators, and is issued online. Campfires up to 0.5 m x 0.5 m and open fires up to 1 m x 1 m are approved automatically; larger fires are approved by staff. Under Fire Control and Protection Bylaw 474 (2025), fires larger than a campfire may be lit only when the venting index is 'Good'.",
+      "sourceUrl": "https://www.highlands.ca/community-services/protective-services/fire-services/wood-and-backyard-burning/burning-permits",
+      "verify": true
+    }
+  ]
 }

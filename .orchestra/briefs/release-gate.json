@@ -1,0 +1,109 @@
+{
+  "id": "release-gate",
+  "wave": "w5",
+  "lens": "Release gatekeeper (read-only)",
+  "branch": [
+    "w5/release-gate"
+  ],
+  "base": {
+    "w5": "tag wave-4-int"
+  },
+  "port": {
+    "w5": 4454
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w5": [
+      ".orchestra/reports/w5/**",
+      ".orchestra/requests/release-gate.md"
+    ]
+  },
+  "forbidden": {
+    "w5": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "site/**",
+      "content/**",
+      "brand/**",
+      "media/**"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "REDESIGN-PLAN.md §Verification",
+    ".orchestra/traceability.json",
+    ".orchestra/reports/trace-status.json"
+  ],
+  "context": [
+    "Your base is tag wave-4-int. Baselines are empty; the release gate runs with --no-baseline."
+  ],
+  "deliverables": [
+    "Run the full REDESIGN-PLAN §Verification gate with --no-baseline on the W5 tip and write .orchestra/reports/w5/release-gate.json; git hygiene (no stray files, no secrets, branch refs, tags)"
+  ],
+  "acceptance": [
+    "P4#19: Final regression: Lighthouse ≥ 95 ×4, 0 axe, manual SR pass, 200 % zoom, 320 px, CLS ≤ 0.05 — check full-gate#no-baseline (you author it); evidence .orchestra/reports/w5/release-gate.json; blueprint checklist item 19; the full REDESIGN-PLAN §Verification gate with --no-baseline, plus C7.5"
+  ],
+  "providesRules": [
+    {
+      "check": "full-gate#no-baseline",
+      "kind": "gate",
+      "file": null,
+      "shipIn": "w5",
+      "neededBy": "w5",
+      "forItems": "P4#19",
+      "implementers": "release-gate"
+    }
+  ],
+  "gates": {
+    "w5": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs",
+      "node tools/trace.mjs --upto=w5 --stream=release-gate",
+      "node tools/lighthouse.mjs --runs=3   # quiet slot only",
+      "node tools/check-all.mjs --no-build --no-baseline",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=release-gate --wave=w5 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "n/a (gate)",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/release-gate.md (never edit a file outside owns; describe the change there)"
+}

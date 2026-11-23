@@ -1,0 +1,61 @@
+/* 44-ui-trust.css (ds-comp, W2): testimonials, the deep credentials band, review cards, the reviews band and the
+   credentials row (ui/trust.mjs). Lit-solid cards, Newsreader italic quotations, the "Sample review" chip next to what it
+   labels. No stars, ratings, counts or review schema. Grids reflow with container queries (C4.1). */
+@layer components {
+  /* ================= testimonials ================= */
+  .quotes-band { position: relative; isolation: isolate; overflow: hidden; }
+  .quotes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  @container (min-width: 40em) { .quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .quote { container-type: inline-size; position: relative; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
+  .quote__mark { color: var(--color-brand-2); }
+  .quote blockquote { margin: 0; }
+  /* .case__quote (the case-study quotation on project pages) shared this rule in the legacy slice; it stays here until
+     t-projects re-homes it in 63-projects.css. */
+  .quote blockquote p, .case__quote p { margin: 0; color: var(--color-ink); font-family: var(--font-family-serif); font-style: italic; font-weight: 420; font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.5rem); line-height: 1.38; letter-spacing: -0.006em; }
+  .quote__by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: auto 0 0; color: var(--color-ink-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .quote__svc, .review__svc { display: inline-flex; align-items: center; gap: 5px; min-height: 26px; padding: 0 10px; border-radius: var(--radius-pill); background: var(--color-bg-tint); color: var(--color-brand); }
+  .quote .sample-label { align-self: flex-start; }
+
+  /* ================= deep band: credentials ================= */
+  .deep-band { position: relative; isolation: isolate; overflow: hidden; margin-block: calc(var(--space-section) * 0.25); padding-block: calc(var(--space-section) * 0.7); background: linear-gradient(165deg, var(--color-deep-2), var(--color-deep) 62%); color: var(--color-on-deep); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+  .deep-band h2, .deep-band h3 { color: #fff; }
+  .deep-band__glow { position: absolute; inset: -30% -10% -30% 40%; z-index: -1; pointer-events: none; opacity: var(--stage-opacity); background: radial-gradient(closest-side, rgba(108, 196, 144, 0.26), transparent), radial-gradient(40% 40% at 20% 80%, rgba(111, 224, 210, 0.12), transparent); }
+  .trust__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); margin: 0; }
+  @container (min-width: 40em) { .trust__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .trust__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .trust__item { min-width: 0; padding: 20px 22px; border-radius: var(--radius-m); background: rgba(255, 255, 255, 0.05); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.08); }
+  .trust__item dt { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--color-on-deep-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .trust__item dd { margin: 0; color: #fff; font-size: 1.125rem; font-weight: var(--font-weight-semibold); letter-spacing: -0.012em; overflow-wrap: anywhere; }
+
+  /* ================= review card ================= */
+  .review { container-type: inline-size; position: relative; display: flex; flex-direction: column; gap: var(--space-4); height: 100%; margin: 0; padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--radius-l); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line), var(--shadow-1); }
+  .review__mark { color: var(--color-brand-2); }
+  .review__quote { margin: 0; }
+  .review__quote p { margin: 0; color: var(--color-ink); font-family: var(--font-family-serif); font-style: italic; font-weight: 420; font-size: clamp(1.1875rem, 1.1rem + 0.45vw, 1.4375rem); line-height: 1.4; letter-spacing: -0.006em; }
+  .review__by { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: auto; color: var(--color-ink-2); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .review__who { flex-basis: 100%; color: var(--color-ink); font-weight: var(--font-weight-semibold); }
+
+  /* ================= reviews band ================= */
+  .reviews { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+  @container (min-width: 40em) { .reviews { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .reviews__item { min-width: 0; }
+  .reviews-band__foot { margin-top: var(--space-5); }
+  .reviews-band__google--pending { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); min-height: 44px; margin: 0; color: var(--color-ink-2); font-weight: var(--font-weight-semibold); }
+
+  /* ================= credentials row ================= */
+  .credentials { container-type: inline-size; }
+  .credentials__list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2); margin: 0; }
+  @container (min-width: 40em) { .credentials__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @container (min-width: 64em) { .credentials__list { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+  .credentials__item { min-width: 0; padding: 14px 16px; border-radius: var(--radius-m); background: var(--surface-card); box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px var(--color-line); }
+  .credentials__item dt { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+  .credentials__item dt .i { color: var(--color-brand); }
+  .credentials__item dd { margin: 0; color: var(--color-ink); font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+  .credentials__issuer { display: inline-flex; align-items: center; min-height: 24px; font-size: var(--font-size-footnote); font-weight: var(--font-weight-medium); }
+
+  @media (forced-colors: active) {
+    .quote, .review, .trust__item, .credentials__item { border: 1px solid CanvasText; }
+  }
+}

@@ -23,6 +23,21 @@
     "after": "proj-irrigation-3",
     "gallery": [
       "svc-irrigation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-langford-irrigation-fixture-3-art"
+  },
+  "seo": {
+    "title": "Langford irrigation project 3 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample irrigation project in Langford."
+  },
+  "season": "Spring",
+  "tags": [
+    "irrigation",
+    "langford"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

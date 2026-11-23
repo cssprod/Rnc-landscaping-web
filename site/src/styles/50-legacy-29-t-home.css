@@ -1,0 +1,10 @@
+/* 50-legacy-29-t-home.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: t-home. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (max-width: 959.98px) {
+  .feature-split { grid-template-columns: minmax(0, 1fr); }
+  .feature-split__media { min-height: 380px; }
+}
+}

@@ -22,22 +22,62 @@ export const val = (name) => tokens[name] ?? undefined;
 /** @param {TokenName} name */
 export const has = (name) => tokens[name] != null && tokens[name] !== '';
 
-/** Digits-only tel: target. */
-export const telHref = () => (tokens.PHONE ? `tel:${tokens.PHONE.replace(/[^\d+]/g, '')}` : 'tel:[PHONE]');
+/** A trailing extension ("ext 2", "ext. 2", "x2", "#2", "extension 2") and the number before it. @param {string} s */
+const splitExt = (s) => {
+  const m = /^(.*?)[\s,;]*(?:ext(?:ension)?\.?|x|#)\s*(\d+)\s*$/i.exec(s);
+  return m ? { number: m[1], ext: m[2] } : { number: s, ext: '' };
+};
 
 /**
- * Phone number as a link once it is known; until then the [PHONE] chip as plain text.
- * @param {string} location analytics location label @param {{ className?: string }} [o]
+ * E.164 digits for a North American number ("250-555-0100" → "+12505550100"); other forms keep their digits.
+ * An extension is dropped ("250-555-0100 ext 2" → "+12505550100"); telHref() adds it back as ";ext=".
+ * @param {string} s
  */
+export const e164 = (s) => {
+  const d = splitExt(s).number.replace(/[^\d+]/g, '');
+  if (d.startsWith('+')) return d;
+  if (/^\d{10}$/.test(d)) return `+1${d}`;
+  if (/^1\d{10}$/.test(d)) return `+${d}`;
+  return d;
+};
+
+/** tel: target with the country code (tel:+1…) and any extension as ";ext=" (RFC 3966). Call it only once PHONE is known. */
+export const telHref = () => {
+  if (!tokens.PHONE) return 'tel:[PHONE]';
+  const { ext } = splitExt(tokens.PHONE);
+  return `tel:${e164(tokens.PHONE)}${ext ? `;ext=${ext}` : ''}`;
+};
+
+/** sms: target with the country code. A text cannot reach an extension, so it is left off. Call it only once PHONE is known. */
+export const smsHref = () => (tokens.PHONE ? `sms:${e164(tokens.PHONE)}` : 'sms:[PHONE]');
+
+/**
+ * Contact links (CONTRACT §3, §13). A link whose URL depends on an unresolved token is never written: until the token is
+ * known the text renders as a plain <span> (the token becomes a placeholder chip in showcase builds), never an href.
+ * Each link carries the CONTRACT §13 event name in data-track and the placement in data-track-location.
+ * `label` is optional text in front of the value, inside the link ("Text [PHONE]").
+ * @typedef {{ className?: string, label?: string }} LinkOptions
+ */
+
+/** @param {LinkOptions} o @param {string} value */
+const linkText = (o, value) => (o.label ? `${o.label} ${value}` : value);
+
+/** Phone number as a tel: link (data-track="call_click") once PHONE is known; until then the [PHONE] chip as plain text. @param {string} location analytics location label @param {LinkOptions} [o] */
 export function telLink(location, o = {}) {
-  if (!has('PHONE')) return html`<span class="${o.className || ''}">[PHONE]</span>`;
-  return html`<a class="${o.className || ''}" href="${telHref()}" data-track="call_clicked" data-track-location="${location}">[PHONE]</a>`;
+  if (!has('PHONE')) return html`<span class="${o.className || ''}">${linkText(o, '[PHONE]')}</span>`;
+  return html`<a class="${o.className || ''}" href="${telHref()}" data-track="call_click" data-track-location="${location}">${linkText(o, '[PHONE]')}</a>`;
 }
 
-/** @param {string} location @param {{ className?: string }} [o] */
+/** Phone number as an sms: link (data-track="sms_click") once PHONE is known; until then plain text with the chip. @param {string} location @param {LinkOptions} [o] */
+export function smsLink(location, o = {}) {
+  if (!has('PHONE')) return html`<span class="${o.className || ''}">${linkText(o, '[PHONE]')}</span>`;
+  return html`<a class="${o.className || ''}" href="${smsHref()}" data-track="sms_click" data-track-location="${location}">${linkText(o, '[PHONE]')}</a>`;
+}
+
+/** Email address as a mailto: link (data-track="email_click") once EMAIL is known; until then plain text with the chip. @param {string} location @param {LinkOptions} [o] */
 export function mailLink(location, o = {}) {
-  if (!has('EMAIL')) return html`<span class="${o.className || ''}">[EMAIL]</span>`;
-  return html`<a class="${o.className || ''}" href="mailto:${tok('EMAIL')}" data-track="email_clicked" data-track-location="${location}">[EMAIL]</a>`;
+  if (!has('EMAIL')) return html`<span class="${o.className || ''}">${linkText(o, '[EMAIL]')}</span>`;
+  return html`<a class="${o.className || ''}" href="mailto:${tok('EMAIL')}" data-track="email_click" data-track-location="${location}">${linkText(o, '[EMAIL]')}</a>`;
 }
 
 const SKIP = /(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<title>[\s\S]*?<\/title>|<textarea[\s\S]*?<\/textarea>|<option[\s\S]*?<\/option>|<!--[\s\S]*?-->|<[^>]+>)/;

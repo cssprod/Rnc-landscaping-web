@@ -1,8 +1,8 @@
 {
-  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies.",
+  "_notes": "Owner must supply the capability statement PDF, equipment list and references. Procurement page. All credential facts are bracket tokens until the owner confirms them. 'capabilityStatement' is a download link the engineering agent wires to a PDF the owner supplies. The commitments section (A12 #5) states operational commitments only: no response-time numbers beyond [REPLY TIME], fleet sizes, client names or invented figures. Owner to confirm each before launch.",
   "seo": {
     "title": "Commercial & Strata Landscaping in Greater Victoria",
-    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a free quote and site visit."
+    "description": "Grounds maintenance and landscape work for stratas, property managers, institutions and contractors in Greater Victoria. Request a quote and site visit."
   },
   "h1": "Commercial, strata and institutional landscaping",
   "lede": "Grounds maintenance, installation, irrigation and tree work for stratas, property managers, public and institutional buyers, and general contractors across Greater Victoria.",
@@ -24,7 +24,7 @@
         },
         {
           "title": "Property managers",
-          "body": "Several sites on one schedule, with issue reports in writing."
+          "body": "Several sites on one visit schedule, with the same scope format for each."
         },
         {
           "title": "Public and institutional buyers",
@@ -33,6 +33,31 @@
         {
           "title": "General contractors and developers",
           "body": "Soft and hard landscape packages built to drawings, coordinated through your site supervisor."
+        }
+      ]
+    },
+    {
+      "id": "commitments",
+      "heading": "What you can expect",
+      "body": [
+        "These are commitments about how we work on managed sites, not results claimed for past clients."
+      ],
+      "items": [
+        {
+          "title": "A written scope before work starts",
+          "body": "Tasks for each visit, how often we come and the season covered, in a quote your council or procurement team can review."
+        },
+        {
+          "title": "One contact",
+          "body": "One person for questions, scope changes and owner or tenant concerns."
+        },
+        {
+          "title": "Visit notes and issue reports",
+          "body": "After recurring visits, a short note of what was done. Problems we find, such as a damaged sprinkler line, are reported in writing before we act on anything outside the scope."
+        },
+        {
+          "title": "A reply within [REPLY TIME]",
+          "body": "For new requests and for questions about an existing scope."
         }
       ]
     },
@@ -106,7 +131,7 @@
       "items": [
         {
           "title": "Send the request",
-          "body": "Use the [quote form](/quote/) or email [EMAIL] with your specification or drawings."
+          "body": "Use the [quote form](/free-quote/) or email [EMAIL] with your specification or drawings."
         },
         {
           "title": "Site review",
@@ -133,7 +158,7 @@
       "id": "cta",
       "heading": "Request a quote or site visit",
       "body": [
-        "[Get a free quote](/quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
+        "[Get a free quote](/free-quote/) or [download the capability statement](/downloads/rnc-capability-statement.pdf)."
       ]
     }
   ]

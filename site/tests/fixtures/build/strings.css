@@ -1,0 +1,11 @@
+/* Golden fixture: strings and url() bodies are copied byte for byte. */
+.a::before { content: "  two  spaces ; { } /* not a comment */ "; }
+.b::after { content: '\'quoted\'  ;' ; }
+.c { background: url( "/img/a b.png" ) no-repeat , url(/img/c.svg#frag) ; }
+.d { background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E); }
+.e { font-family: "Inter Variable" , "Inter Fallback" , system-ui ; }
+[data-x="a , b > c"] > .f , .g + .h ~ .i { color : red ; }
+.j { grid-template-areas: "a b" "c d"; quotes: "«" "»"; }
+.k[lang |= en i] { color: blue }
+.l { border: 1px/**/solid red; margin: 0 /* inline */ auto; }
+div/**/.m { color: green; }

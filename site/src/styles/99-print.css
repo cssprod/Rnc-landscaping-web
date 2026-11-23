@@ -1,0 +1,18 @@
+/* 99-print.css (ds-core, W2): paper output. brand/tokens.css switches every colour token to its light value for print, so
+   dark-first pages print dark-on-white; this file hides chrome, living art and preference toggles, and flattens glass.
+   The chrome !important declarations came from 50-legacy-32-ds-core.css (deleted in W2). */
+@layer print {
+  @media print {
+    .site-header, .cta-band, .hero__dock, .skip-link, .site-footer__glow, [data-action-bar], [data-pref] { display: none !important; }
+    html, body { background: #fff; color: #000; }
+    .hero { min-height: 0; color: #000; background: none; padding-top: 0; }
+    .hero__media, .hero__scrim, .aurora, [data-living], .spot-glow { display: none; }
+    .hero__title, .hero__lede { color: #000; text-shadow: none; }
+    .glass-card, .glass-bar { box-shadow: none; border: 1px solid #ccc; background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .on-deep, .deep-band, .site-footer { background: none; color: #000; }
+    :is(.on-deep, .deep-band, .site-footer) * { color: #000; }
+    em.accent { text-shadow: none; }
+    h1, h2, h3, h4 { break-after: avoid; }
+    figure, blockquote, .glass-card { break-inside: avoid; }
+  }
+}

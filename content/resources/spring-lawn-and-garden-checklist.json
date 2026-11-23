@@ -3,14 +3,21 @@
   "title": "Spring lawn and garden checklist for Greater Victoria",
   "seo": {
     "title": "Spring Lawn & Garden Checklist for Greater Victoria",
-    "description": "A practical list of spring lawn, bed and pruning tasks suited to Greater Victoria's coastal climate, plus the local rules to know first. Need help? Free quote."
+    "description": "A practical list of spring lawn, bed and pruning tasks suited to Greater Victoria's coastal climate, plus the local rules to know before you start."
   },
-  "date": "2026-11-19",
   "summary": "What to do in your lawn and beds from March to May on southern Vancouver Island.",
   "image": "res-1",
+  "author": {
+    "name": "[OWNER NAME]",
+    "org": "RNC Landscaping",
+    "url": "/about/"
+  },
+  "published": "2026-11-19",
+  "updated": "2026-11-21",
+  "date": "2026-11-19",
   "body": [
     {
-      "p": "Spring comes early on southern Vancouver Island. Lawns start growing in March, and beds wake up well before the last frost in much of the rest of Canada. A little work now saves a lot in summer, when the CRD lawn watering schedule limits how much water you can use."
+      "p": "Spring comes early on southern Vancouver Island. Lawns start growing in March, and beds wake up weeks earlier than in most of Canada. A little work now saves a lot in summer, when the CRD lawn watering schedule limits how much water you can use."
     },
     {
       "h2": "Lawn"
@@ -43,7 +50,7 @@
       "list": [
         "Prune summer-flowering shrubs in early spring.",
         "Wait until after flowering for spring bloomers like rhododendron, forsythia and lilac.",
-        "Check for nesting birds in hedges and trees before cutting. Federal and provincial rules protect active nests."
+        "Check hedges and trees for active nests before cutting. B.C.'s Wildlife Act protects any bird's nest while it holds a bird or egg, and the nests of eagles, ospreys, herons, peregrine falcons, gyrfalcons and burrowing owls all year."
       ]
     },
     {
@@ -56,13 +63,13 @@
       "h2": "Before you cut a tree"
     },
     {
-      "p": "Every municipality in the region has its own tree bylaw. If a tree is large, native (like Garry oak or arbutus) or near a slope or stream, check the rules first. Find your municipality's link on our [area pages](/areas/)."
+      "p": "Check your municipality's tree rules before you prune hard or remove a tree. Our [winter pruning guide](/resources/winter-pruning-and-storm-prep/) explains what they usually cover, and each [area page](/areas/) links to the official source for your municipality."
     },
     {
-      "p": "Want this handled for you? [Get a free quote](/quote/) for [grounds maintenance](/services/grounds-maintenance/)."
+      "p": "Want this handled for you? [Get a free quote](/free-quote/) for [grounds maintenance](/services/grounds-maintenance/)."
     },
     {
-      "p": "Rules change. Check the official source linked below before you act; this summary was prepared in November 2026."
+      "p": "Watering and tree rules can change between seasons. Check the sources linked below and your municipality before you start. This checklist was prepared in November 2026."
     }
   ],
   "sources": [
@@ -73,6 +80,10 @@
     {
       "label": "CRD: Invasive species",
       "url": "https://www.crd.ca/environment/biodiversity-flora-wildlife/invasive-species"
+    },
+    {
+      "label": "Province of B.C.: Migratory and breeding birds, federal and provincial legislation (PDF)",
+      "url": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/bc-timber-sales/ems-sfm-certification/business-area/chinook/tch_bcts_migratory_and_breeding_birds_guidance.pdf"
     }
   ]
 }

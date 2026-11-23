@@ -1,0 +1,32 @@
+/* 05-layout.css (ds-core, W2): containers, section rhythm and reflow (C4.6: >= 16 px body, no horizontal scroll at 320 px,
+   200 % zoom). One left edge for hero, sections and CTA band: .wrap with the fluid gutter (16 px at 320/360, 36 px at 1440).
+   Breakpoints are 40em, 64em and 80em; cards and tiles size themselves with container queries (.l-cq). */
+@layer layout {
+  /* Focus is never hidden under the sticky header or the mobile action bar (2.4.11). */
+  html {
+    scroll-padding-top: calc(var(--layout-header-h) + var(--space-4));
+    scroll-padding-bottom: calc(var(--layout-actionbar-h) + env(safe-area-inset-bottom, 0px) + var(--space-2));
+  }
+  @media (min-width: 64em) { html { scroll-padding-bottom: var(--space-2); } }
+  /* Reflow: a long word, URL or token chip wraps instead of widening the page. */
+  body { overflow-wrap: break-word; }
+
+  .wrap { width: 100%; max-width: calc(var(--layout-content-max) + 2 * var(--layout-gutter)); margin-inline: auto; padding-inline: max(var(--layout-gutter), env(safe-area-inset-left)) max(var(--layout-gutter), env(safe-area-inset-right)); }
+  .wrap--narrow { max-width: calc(var(--layout-content-narrow) + 2 * var(--layout-gutter)); }
+  .wrap--wide { max-width: calc(var(--layout-content-wide) + 2 * var(--layout-gutter)); }
+
+  .section--flush { padding-top: 0; }
+  .section--tight { padding-block: calc(var(--space-section) * 0.35); }
+  .section--elevated, .bento-band, .quotes-band { margin-block: calc(var(--space-section) * 0.25); padding-block: calc(var(--space-section) * 0.7); }
+  .section--elevated { background: var(--color-bg-elevated); }
+  .section--elevated .glass-card { --card-fill: var(--color-bg); }
+  main > :first-child.section { padding-top: calc(var(--layout-header-h) + var(--space-6)); }
+
+  /* Layout primitives for new components (l- prefix: no legacy class uses it). */
+  .l-cq { container-type: inline-size; }
+  .l-stack { display: flex; flex-direction: column; gap: var(--l-gap, var(--space-4)); }
+  .l-stack > * { margin-block: 0; }
+  .l-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--l-gap, var(--space-3)); }
+  .l-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--l-min, 16rem)), 1fr)); gap: var(--l-gap, var(--space-5)); }
+  .l-grid > *, .l-cluster > * { min-width: 0; }
+}

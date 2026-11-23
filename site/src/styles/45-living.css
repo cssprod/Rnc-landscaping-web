@@ -1,0 +1,252 @@
+/* 45-living.css (owner: living; CONTRACT §7–§10, DESIGN-DIRECTION §2.4, §8, §10).
+   Living scenes, art wells, the media frame of picture(), the T3 spotlight and the hover/focus @property rim.
+   Colours: the --sc-* scene palette (night by default, dawn under [data-theme=light]), derived from the ds-core scene
+   tokens where they exist. Motion: T2 loops are declared only under html[data-alive] (scripts/living.js sets it after
+   load + idle while motion is effective) and follow var(--alive-play); this file never reads the OS reduced-motion setting itself.
+   Only transform and opacity animate; inner SVG nodes never animate. */
+@layer living {
+
+/* ---------------------------------------------------------------- palette */
+:root {
+  --sc-sky-top: var(--scene-sky-top, #030A10);
+  --sc-sky-mid: var(--scene-sky-mid, #081B22);
+  --sc-sky-low: var(--scene-sky-low, #0D2A28);
+  --sc-aurora-1: var(--scene-aurora-1, rgba(64, 230, 160, .22));
+  --sc-aurora-2: var(--scene-aurora-2, rgba(70, 200, 225, .24));
+  --sc-aurora-3: var(--scene-aurora-3, rgba(150, 132, 255, .22));
+  --sc-star: #DDEBF5;
+  --sc-moon: var(--scene-orb, #E4EEF2);
+  --sc-halo: #CFE6EE;
+  --sc-far1: #1B3746;
+  --sc-far2: #13293A;
+  --sc-farrim: rgba(170, 215, 235, .55);
+  --sc-w1: #0C2A33;
+  --sc-w2: #03110D;
+  --sc-glint: #CDEBF2;
+  --sc-mid: #0B2820;
+  --sc-near: #04150F;
+  --sc-fore: #010806;
+  --sc-rim: rgba(127, 235, 176, .75);
+  --sc-forerim: rgba(127, 235, 176, .38);
+  --sc-surf: #6FE0D2;
+  --sc-cont: var(--survey-contour, #5ED8C6);
+  --sc-fly: var(--glow-firefly, #E6FFA3);
+  --sc-mist: rgba(111, 224, 210, .10);
+  --sc-ray: rgba(110, 240, 190, .085);
+  --sc-win: #F6D27E;
+  --sc-house: #071A12;
+  --sc-stripe: rgba(127, 235, 176, .16);
+  --sc-bloom: #7FEBB0;
+  --sc-bark: #C9925A;
+  --stars-o: 1;
+  --moon-y: 0%;
+  --full-o: .07;
+  --fly-o: 1;
+  --spot: var(--glow-spot, rgba(127, 235, 176, .08));
+}
+:root[data-theme="light"] {
+  --sc-sky-top: var(--scene-sky-top, #C9DCE4);
+  --sc-sky-mid: var(--scene-sky-mid, #EADFD6);
+  --sc-sky-low: var(--scene-sky-low, #F8E3CC);
+  --sc-aurora-1: var(--scene-aurora-1, rgba(255, 190, 150, .45));
+  --sc-aurora-2: var(--scene-aurora-2, rgba(255, 214, 160, .40));
+  --sc-aurora-3: var(--scene-aurora-3, rgba(200, 186, 235, .34));
+  --sc-star: #FFFFFF;
+  --sc-moon: var(--scene-orb, #FFE2AE);
+  --sc-halo: #FFC46E;
+  --sc-far1: #AEB8CF;
+  --sc-far2: #C4C6D6;
+  --sc-farrim: rgba(255, 236, 214, .9);
+  --sc-w1: #EBD9CC;
+  --sc-w2: #A8C3C6;
+  --sc-glint: #FFF4DC;
+  --sc-mid: #7C9A8C;
+  --sc-near: #456B5A;
+  --sc-fore: #21402F;
+  --sc-rim: rgba(255, 238, 210, .85);
+  --sc-forerim: rgba(255, 230, 200, .35);
+  --sc-surf: #FFFFFF;
+  --sc-cont: var(--survey-contour, #2F7A6C);
+  --sc-fly: #FFE7B8;
+  --sc-mist: rgba(255, 255, 255, .55);
+  --sc-ray: rgba(255, 255, 255, .16);
+  --sc-win: #FFD98A;
+  --sc-house: #2E4A3C;
+  --sc-stripe: rgba(255, 255, 255, .22);
+  --sc-bloom: #2B6E4C;
+  --sc-bark: #8A5A2B;
+  --stars-o: 0;
+  --moon-y: 30%;
+  --full-o: 1;
+  --fly-o: .55;
+  --spot: var(--glow-spot, rgba(255, 200, 140, .22));
+}
+/* Beds take the project's season (blooms are art only; camas violet appears nowhere in UI). */
+.sc-spring { --sc-bloom: #B9A8FF; }
+.sc-summer { --sc-bloom: #F2C462; }
+.sc-fall { --sc-bloom: #E89A5B; }
+.sc-winter { --sc-bloom: #CFE6EE; }
+:root[data-theme="light"] .sc-spring { --sc-bloom: #6A5BC9; }
+:root[data-theme="light"] .sc-summer { --sc-bloom: #B07A1E; }
+:root[data-theme="light"] .sc-fall { --sc-bloom: #A4521F; }
+:root[data-theme="light"] .sc-winter { --sc-bloom: #5B7F8C; }
+
+/* ------------------------------------------------------------ media frame */
+.media { position: relative; margin: 0; overflow: hidden; background: var(--color-bg-grouped); }
+.media img, .media picture { display: block; width: 100%; height: 100%; object-fit: cover; }
+.media__chip, .media__credit { position: absolute; z-index: 2; display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--radius-pill, 999px); font-size: var(--font-size-caption, .75rem); font-weight: var(--font-weight-semibold, 600); color: #fff; background: var(--material-media-strong, rgba(3, 10, 7, .7)); box-shadow: var(--glass-shadow-media, none); }
+/* Default corners, except where an older template slice still places the chip (hero, feature split, before/after). */
+.media__chip:not(:is(.hero__media, .feature-split__media, .ba__img) *) { left: 12px; bottom: 12px; }
+.media__credit:not(:is(.hero__media, .ba__img) *) { right: 10px; bottom: 10px; }
+.media__credit { display: inline-block; padding: 4px 10px; line-height: 1.3; font-weight: var(--font-weight-medium, 500); }
+.media__credit a { color: inherit; text-decoration: none; }
+.media__credit a:hover { text-decoration: underline; }
+.media__chip--sample { color: #3E2A00; background: rgba(255, 243, 209, .92); }
+.media--scene { background: var(--sc-sky-top); }
+
+/* ------------------------------------------------------------------ scene */
+.scene { position: absolute; inset: 0; overflow: hidden; contain: paint; pointer-events: none; background: linear-gradient(180deg, var(--sc-sky-top) 0%, var(--sc-sky-mid) 52%, var(--sc-sky-low) 100%); }
+.sc-defs { position: absolute; width: 0; height: 0; }
+.scene .media__chip--art { z-index: 3; left: auto; right: 12px; bottom: 12px; font-size: .6875rem; letter-spacing: .04em; color: var(--color-ink-2, #B2C8BB); background: var(--material-thick, rgba(8, 20, 15, .86)); box-shadow: 0 0 0 1px var(--color-line, rgba(200, 240, 215, .12)); }
+/* Legacy heroes (picture() inside .hero__media) still set white copy on the left. At dawn the sky is pale, so the copy
+   side is shaded until W3 hero(p) sets the dawn ink on hero copy (requests/living.md). The chip stays above it. */
+:root[data-theme="light"] .hero__media .scene--hero::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(10, 28, 20, .5) 0%, rgba(10, 28, 20, .44) 40%, rgba(10, 28, 20, .16) 64%, transparent 80%); }
+/* Narrow heroes: the copy spans the full width, so a left-hand shade covers everything. Shade from below instead,
+   in a dusk indigo, and leave the sky above the headline (header band) its dawn colour. */
+@media (max-width: 39.99em) {
+  :root[data-theme="light"] .hero__media .scene--hero::after { background: linear-gradient(180deg, rgba(22, 28, 50, 0) 0%, rgba(22, 28, 50, .14) 14%, rgba(22, 28, 50, .5) 26%, rgba(22, 28, 50, .54) 100%); }
+}
+.scene--hero .media__chip--art { top: calc(var(--layout-header-h, 64px) + 8px); bottom: auto; right: max(var(--layout-gutter, 16px), env(safe-area-inset-right)); }
+
+/* Aurora: two pre-blurred CSS washes (ellipses + masked rays). Moved by transform only (T2) and translate (T4). */
+/* Sized to the visible sky (not the whole hero), so the composited quad stays small. */
+.sc-aurora { position: absolute; inset: -4% -8% 30%; }
+.sc-aurora > div { position: absolute; inset: 0; }
+.sc-aurora-a { background:
+  radial-gradient(30% 16% at 66% 30%, var(--sc-aurora-1), transparent 70%),
+  radial-gradient(22% 26% at 84% 22%, var(--sc-aurora-2), transparent 72%),
+  radial-gradient(30% 24% at 50% 12%, var(--sc-aurora-3), transparent 72%),
+  radial-gradient(42% 14% at 74% 48%, var(--sc-aurora-1), transparent 70%); }
+.sc-aurora-b { background: repeating-linear-gradient(97deg, transparent 0 22px, var(--sc-ray) 22px 30px, transparent 30px 58px);
+  -webkit-mask: radial-gradient(46% 34% at 66% 34%, #000 0%, rgba(0, 0, 0, .4) 50%, transparent 75%); mask: radial-gradient(46% 34% at 66% 34%, #000 0%, rgba(0, 0, 0, .4) 50%, transparent 75%); }
+
+/* Land box: every layer shares viewBox 0 0 1600 400 at 4:1, anchored to the bottom; sky content overflows upward.
+   Centred with a negative margin so `translate` stays free for T4 parallax and `scale` for the T1 dolly. */
+.sc-land { position: absolute; left: 50%; bottom: 0; width: max(100%, 1360px); margin-left: calc(max(100%, 1360px) / -2); aspect-ratio: 4 / 1; }
+.sc-land > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sc-mist { position: absolute; left: -10%; right: -10%; top: 16%; height: 52%; background:
+  radial-gradient(40% 26% at 50% 22%, var(--sc-mist), transparent 70%),
+  radial-gradient(30% 22% at 22% 70%, var(--sc-mist), transparent 70%),
+  radial-gradient(30% 22% at 82% 64%, var(--sc-mist), transparent 70%); }
+.sc-fade { position: absolute; inset: auto 0 0; height: 96px; background: linear-gradient(transparent, color-mix(in srgb, var(--color-bg, #06110C) 70%, transparent) 55%, var(--color-bg, #06110C)); }
+.sc-mfore { display: none; }
+.sc-stars-a, .sc-stars-b { opacity: var(--stars-o); }
+.scene--hero :is(.sc-stars-a, .sc-stars-b) { -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, .1) 0 46%, #000 72%); mask-image: linear-gradient(90deg, rgba(0, 0, 0, .1) 0 46%, #000 72%); }
+.sc-orb { transform: translateY(var(--moon-y)); }
+.sc-glint-b { opacity: .45; }
+.sc-fly-a, .sc-fly-b { opacity: var(--fly-o); }
+.sc-fly-b { opacity: calc(var(--fly-o) * .6); }
+.scene--band .sc-land { width: max(100%, 1200px); margin-left: calc(max(100%, 1200px) / -2); }
+
+/* Mobile composition (J3 #3): a 960px land box shows x ≈ 475–1125, which the mobile-only fore stand completes. */
+@media (max-width: 39.99em) {
+  .sc-land { width: 960px; margin-left: -480px; }
+  .sc-mfore { display: block; }
+  .sc-far { transform-origin: 50% 100%; transform: scaleY(.8); }
+  .sc-fade { height: 40px; }
+  .scene--hero :is(.sc-stars-a, .sc-stars-b) { -webkit-mask-image: linear-gradient(rgba(0, 0, 0, .25), #000 60%); mask-image: linear-gradient(rgba(0, 0, 0, .25), #000 60%); }
+}
+
+/* Art wells: one static svg filling the frame. */
+.scene--card > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ---------------------------------------------------------- paint classes */
+.scene .ln { fill: none; stroke-linecap: round; }
+.scene .f-far1 { fill: var(--sc-far1); }
+.scene .f-far2 { fill: var(--sc-far2); }
+.scene .s-farrim { stroke: var(--sc-farrim); stroke-width: 1.5; }
+.scene .f-mid { fill: var(--sc-mid); }
+.scene .f-near { fill: var(--sc-near); }
+.scene .f-fore { fill: var(--sc-fore); }
+.scene .s-forerim { stroke: var(--sc-forerim); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.scene .s-rim { stroke: var(--sc-rim); stroke-width: 1.4; }
+.scene .s-st1 { stroke: var(--sc-star); stroke-width: 1.6; }
+.scene--card .s-st2 { opacity: var(--stars-o); }
+.scene .s-st2 { stroke: var(--sc-star); stroke-width: 3; }
+.scene .f-moon { fill: var(--sc-moon); }
+.scene .f-full { opacity: var(--full-o); }
+.scene .f-halo { fill: var(--sc-halo); opacity: .07; }
+.scene .f-w1 { fill: var(--sc-w1); }
+.scene .s-glint { stroke: var(--sc-glint); stroke-width: 1.4; opacity: .8; }
+.scene .s-surf { stroke: var(--sc-surf); stroke-width: 1.6; }
+.scene .s-surf1 { stroke-width: 16; opacity: .12; }
+.scene .s-surf2 { stroke-width: 5; opacity: .34; }
+.scene .s-cont { stroke: var(--sc-cont); stroke-width: 1.2; opacity: .7; }
+.scene .s-strip { stroke: var(--sc-rim); stroke-width: 1.2; opacity: .35; }
+.scene .s-hedge { stroke: var(--sc-near); stroke-width: 12; }
+.scene .f-rock { fill: var(--sc-far1); }
+.scene .f-stripe { fill: var(--sc-stripe); }
+.scene .f-stone { fill: var(--sc-far1); }
+.scene .s-bloom { stroke: var(--sc-bloom); stroke-width: 6; }
+.scene .s-drip { stroke: var(--sc-glint); stroke-width: 2; opacity: .6; }
+.scene .s-spray { stroke: var(--sc-glint); stroke-width: 1.6; stroke-dasharray: 2 7; }
+.scene .s-emit { stroke: var(--sc-fly); stroke-width: 5; }
+.scene .s-chip { stroke: var(--sc-bark); stroke-width: 5; }
+.scene .f-house { fill: var(--sc-house); stroke-width: 1; }
+.scene .f-win { fill: var(--sc-win); stroke: var(--sc-win); stroke-width: 8; stroke-opacity: .22; stroke-linejoin: round; paint-order: stroke; }
+.scene .f-door { fill: var(--sc-fore); }
+.scene .s-fly { stroke: var(--sc-fly); stroke-width: 3.5; opacity: var(--fly-o); }
+.scene .s-flyg { stroke: var(--sc-fly); stroke-width: 12; opacity: .14; }
+.scene .st-flyc { stop-color: #fff; }
+.scene .st-fly { stop-color: var(--sc-fly); }
+.scene .st-halo { stop-color: var(--sc-halo); }
+.scene .st-w1 { stop-color: var(--sc-w1); }
+.scene .st-w2 { stop-color: var(--sc-w2); }
+.scene .st-glint { stop-color: var(--sc-glint); }
+/* Light theme: vignette strokes use brand-2 (white on a pale sky is invisible), dawn motes are gold. */
+:root[data-theme="light"] .scene :is(.s-spray, .s-drip, .scene--card .s-glint) { stroke: var(--color-brand-2, #2B6E4C); }
+
+/* ------------------------------------------------------- T2 ambient loops
+   Declared only under html[data-alive]; paused off-screen ([data-offscreen]) and on hidden tabs ([data-hidden]). */
+[data-living][data-offscreen], html[data-hidden] { --alive-play: paused; }
+@keyframes lv-aurora { 0% { transform: translate3d(-3%, 0, 0); } 100% { transform: translate3d(4%, -2%, 0); } }
+@keyframes lv-twinkle { 0%, 100% { opacity: var(--stars-o); } 50% { opacity: calc(var(--stars-o) * .25); } }
+@keyframes lv-glint-a { 0% { opacity: 1; transform: translate3d(0, 0, 0); } 100% { opacity: .2; transform: translate3d(-14px, 0, 0); } }
+@keyframes lv-glint-b { 0% { opacity: .15; transform: translate3d(10px, 0, 0); } 100% { opacity: .85; transform: translate3d(0, 0, 0); } }
+@keyframes lv-mist { 0% { transform: translate3d(-4%, 0, 0); } 100% { transform: translate3d(5%, 0, 0); } }
+@keyframes lv-fly-a { 0% { opacity: calc(var(--fly-o) * .15); transform: translate3d(0, 6px, 0); } 45% { opacity: var(--fly-o); } 100% { opacity: calc(var(--fly-o) * .35); transform: translate3d(12px, -10px, 0); } }
+@keyframes lv-fly-b { 0% { opacity: calc(var(--fly-o) * .9); transform: translate3d(0, 0, 0); } 55% { opacity: calc(var(--fly-o) * .1); } 100% { opacity: calc(var(--fly-o) * .7); transform: translate3d(-10px, -8px, 0); } }
+html[data-alive] [data-living]:not([data-still]) .sc-aurora[data-t2] { animation: lv-aurora 38s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-stars-a[data-t2] { animation: lv-twinkle 7s ease-in-out infinite var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-glint-a[data-t2] { animation: lv-glint-a 5.5s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-glint-b[data-t2] { animation: lv-glint-b 7.5s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-mist[data-t2] { animation: lv-mist 70s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-fly-a[data-t2] { animation: lv-fly-a 5.4s ease-in-out infinite alternate var(--alive-play, running); }
+html[data-alive] [data-living]:not([data-still]) .sc-fly-b[data-t2] { animation: lv-fly-b 6.4s ease-in-out infinite alternate var(--alive-play, running); }
+
+/* ---------------------------------------------------- T3 cursor spotlight
+   living.js injects one aria-hidden .spot per hovered [data-spotlight] card (fine pointer, motion on) and moves its
+   glow with translate3d. The rim is a hover/focus-only @property transition (never an ambient loop). */
+@property --lv-rim { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+[data-spotlight] { position: relative; isolation: isolate; }
+.spot { position: absolute; inset: 0; z-index: -1; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.spot-glow { position: absolute; left: 0; top: 0; width: 320px; height: 320px; margin: -160px 0 0 -160px; border-radius: 50%; background: radial-gradient(closest-side, var(--spot), transparent); opacity: 0; transition: opacity var(--dur-t0, 220ms) ease-out; will-change: transform; }
+.spot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; opacity: 0;
+  background: conic-gradient(from var(--lv-rim), var(--color-brand, #7FEBB0), var(--color-brand-2, #6FE0D2), var(--color-placeholder, #F2C462), var(--color-brand, #7FEBB0));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  transition: opacity var(--dur-t0, 220ms) ease-out, --lv-rim var(--dur-t0, 220ms) ease-out; }
+html[data-alive] [data-spotlight]:hover > .spot > .spot-glow { opacity: 1; }
+html[data-alive] [data-spotlight]:is(:hover, :focus-within) > .spot::after { opacity: .9; --lv-rim: 120deg; }
+@media not ((hover: hover) and (pointer: fine)) { .spot { display: none; } }
+
+/* ------------------------------------------------- /styleguide/ specimens */
+.lv-specimens .lv-spec { margin: 0; }
+.lv-spec__stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius-lg, 16px); box-shadow: 0 0 0 1px var(--color-line, rgba(200, 240, 215, .12)); }
+.lv-spec--hero .lv-spec__stage { aspect-ratio: auto; min-block-size: min(70svh, 560px); }
+.lv-spec--card .lv-spec__stage { aspect-ratio: 4 / 3; }
+.lv-spec figcaption { margin-top: .5rem; font-size: var(--font-size-caption, .8125rem); color: var(--color-ink-2, #B2C8BB); }
+.lv-spec-grid { display: grid; gap: 1rem; margin-top: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+
+/* Forced colours: art is decorative; drop it rather than fight the system palette. */
+@media (forced-colors: active) { .scene { display: none; } }
+}

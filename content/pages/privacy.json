@@ -1,5 +1,5 @@
 {
-  "_notes": "Owner/lawyer to confirm retention period and service-provider list. Draft for legal review. Written with PIPEDA and BC PIPA in mind.",
+  "_notes": "Owner/lawyer to confirm retention period and service-provider list. Draft for legal review. Written with PIPEDA and BC PIPA in mind. \"What we collect\" follows the six-input quote builder (CONTRACT section 6: no email field; the visitor sends from their own email app). \"Settings saved on your device\" lists the only browser storage the site uses (CONTRACT section 8: rnc-theme, rnc-motion, rnc-quote-draft). updated changed on 2026-11-22 because both sections changed.",
   "seo": {
     "title": "Privacy Policy (Draft) | RNC Landscaping",
     "description": "How RNC Landscaping handles personal information from quote requests and emails, including cookieless analytics. Draft for legal review before launch."
@@ -7,7 +7,7 @@
   "h1": "Privacy policy",
   "lede": "Draft for legal review. This page has not yet been reviewed by a lawyer and must not be relied on as final.",
   "status": "draft-for-legal-review",
-  "updated": "2026-11-19",
+  "updated": "2026-11-22",
   "sections": [
     {
       "id": "who",
@@ -20,7 +20,18 @@
       "id": "collect",
       "heading": "What we collect",
       "body": [
-        "When you request a quote, you send us an email from your own email app. It contains what you choose to include: your name, email address, phone (optional), organization (optional), property area and address (optional), project details and any photos you attach. This website does not collect or store what you type into the quote form, and we do not ask for payment information on this website."
+        "When you request a quote, the form writes an email for you to send from your own email app. It contains what you enter: the services you need, your municipality, details about the property or job, your timing, your name and how you would like us to reply, plus your phone number if you ask us to call or text. Because you send it, it also carries your email address and anything you add or attach before sending.",
+        "If your email app does not open, the form offers Gmail and Outlook.com links. They open your request in that service, and that service's own privacy terms apply.",
+        "This website does not send what you type in the quote form to us or store it on a server. Your browser keeps a temporary draft on your device (see below). We do not ask for payment information on this website."
+      ]
+    },
+    {
+      "id": "device",
+      "heading": "Settings saved on your device",
+      "body": [
+        "If you change the Dark theme or Animations setting, your browser remembers the choice in its local storage (rnc-theme and rnc-motion) so the next page looks the same.",
+        "While you fill in the quote form, your browser keeps a draft in its session storage (rnc-quote-draft), so the draft is still there if you come back to the page. The browser deletes it when you close the tab.",
+        "These settings stay on your device. They are not cookies, and they are never sent to us. Clearing this site's data in your browser removes them."
       ]
     },
     {
@@ -48,7 +59,7 @@
       "id": "analytics",
       "heading": "Analytics and cookies",
       "body": [
-        "We use Plausible Analytics, a cookieless analytics service, to count visits in aggregate. It does not use tracking cookies or collect personal information that identifies you. This site does not set tracking cookies."
+        "We use Plausible Analytics, a cookieless analytics service, to count visits in aggregate. It also counts a few actions, such as opening the quote email (with the service and municipality chosen) or pressing a Call button, but never your name, contact details or what you write. It does not use tracking cookies or collect personal information that identifies you. This site does not set tracking cookies."
       ]
     },
     {

@@ -1,0 +1,360 @@
+{
+  "id": "ia",
+  "wave": "w1",
+  "lens": "Information architect + SSG router engineer (C1, redirects, single source of truth)",
+  "branch": [
+    "w1/ia"
+  ],
+  "base": {
+    "w1": "the seed commit on ccr-384bdb88-mx8gtv"
+  },
+  "port": {
+    "w1": 4412
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": {
+    "w1": "$WT/site/dist (worktree-local)",
+    "later": "$SCRATCH/dist/<branch-with-dashes>"
+  },
+  "owns": {
+    "w1": [
+      "site/src/pages/**",
+      "site/src/components/{layout,ui,map,forms,living}.mjs",
+      "site/src/components/ui/**",
+      "site/src/lib/{seo,schema,data,tokens,dates}.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/tools/{check-links,check-html,rewrite-links,check-content}.mjs",
+      "site/tools/schemas/**",
+      "site/tests/e2e/**",
+      "site/tests/helpers/**",
+      "site/tests/site.spec.mjs",
+      "site/tests/unit/ia-*.test.mjs",
+      "site/tests/unit/ui-api.test.mjs",
+      "site/fixtures/**",
+      ".orchestra/requests/ia.md"
+    ]
+  },
+  "forbidden": {
+    "w1": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "content/{areas,projects,services,resources,testimonials,pages}/**",
+      "content/regional.json",
+      "site/src/styles/**",
+      "site/src/scripts/**",
+      "site/build.mjs",
+      "brand/**",
+      "media/**",
+      "netlify.toml"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "site/src/pages/routes.mjs",
+    "site/src/components/**",
+    "site/src/lib/**",
+    "site/site.config.mjs",
+    "content/**",
+    "site/tests/site.spec.mjs",
+    ".orchestra/url-map.json",
+    "CONTRACT.md §5 URL map, §6 Content schemas v3, §10 Components, §14 Build interface",
+    "site/COMPONENTS.md"
+  ],
+  "context": [
+    "Your base is the seed commit. It has ONE routes.mjs, ONE site.css and ONE main.js (no page families, no ui/ split, no new URLs, no --out). head-scripts.mjs exists and is frozen; layout.mjs emits HEAD_SCRIPT and keeps JS_FLAG as an alias.",
+    "Seed gate enablers already on your base: tools/lib.mjs honours SITE_DIST; playwright.config.mjs reads PORT and SITE_DIST and uses reuseExistingServer:false; build.mjs writes a route whose file does not end in .html raw and leaves sitemap:false routes out of the sitemap; tools/csp.mjs (--check) and tools/dev-setup.mjs exist as minimal versions; site.config.mjs has [REPLY TIME], [GOOGLE PROFILE] and [FOUNDED]; event-schema.yaml carries the CONTRACT §13 names next to the v2 ones; tools/check-links.mjs --url-map accepts url-map new/added URLs as targets.",
+    "NOT on your base (they come from the other W1 streams and meet only at the integrator): --out, module hashing, serve.mjs _redirects (build); page families, /free-quote/, /projects/, /process/, seo.mjs, site.json, check-content, rewrite-links (ia); the new area and content JSON (areas-content, content). Anything that needs them is an integration gate (see integrationGates).",
+    "Build into your worktree's own site/dist (OUT=$WT/site/dist): each worktree has its own dist, so parallel builds never collide. Always set your own PORT.",
+    "Tools: Playwright 1.63.0 at /opt/node-tools (Chromium in /opt/pw-browsers), tsc at /opt/node-tools/node_modules/.bin/tsc. WebSearch/WebFetch work server-side; curl reaches only the allow-listed hosts named in research/area-verification-V*.md (Unsplash and the Netlify API stay blocked)."
+  ],
+  "deliverables": [
+    "Route families: site/src/pages/{_shared,home,services,areas,projects,company,editorial,quote,styleguide}.mjs + the routes.mjs aggregator (frozen after W1; concatenates family exports in a fixed order). Every route declares {path, file, render, sources[], scripts[], sitemap?, noindex?, showcaseOnly?}; scripts:[\"quote\"] on /free-quote/ and scripts:[\"projects\"] on /projects/ and every case study.",
+    "C1 URLs: /projects/, /projects/{slug}/ (flat), /free-quote/, a /process/ stub; routes read pg(\"projects\") ?? pg(\"portfolio\") and pg(\"process\") ?? stub during the transition.",
+    "site/src/pages/redirects.mjs → a route {path:\"/_redirects\", file:\"_redirects\", sitemap:false} built from .orchestra/url-map.json (one 301 per retired URL, no chains), unit-tested in tests/unit/ia-redirects.test.mjs. One-hop resolution needs w1/build's serve.mjs, so it is an integration gate.",
+    "/styleguide/ route registered with showcaseOnly:true, noindex:true, sitemap:false, rendering the pages/styleguide.mjs stub (ds-comp fills it in W2). /404.html also gets sitemap:false.",
+    "site/src/lib/seo.mjs: headMeta(env, p) and jsonLd(env, p); layout.mjs only calls them (logic moved, output identical except URLs).",
+    "content/site.json (schema v3) as the single source of NAP, hours, services, municipalities, credentials and token values; site.config.mjs reads it and keeps the three tokens the seed added ([REPLY TIME] required; [GOOGLE PROFILE], [FOUNDED] optional).",
+    "site/src/lib/data.mjs: loadAll() gains site (content/site.json) and regional (content/regional.json), each with an empty fallback ({} and {blocks: []}), so pages build before areas-content merges. Update site/fixtures/content/** to schema v3 (site, regional, process, projects) so a fixture build still works.",
+    "C1 header: Services ▾ · Projects · Service areas ▾ · Process · About · [Call] [Free quote]. Both disclosures are <button type=button aria-expanded aria-controls> and in W1 they KEEP the existing hooks data-mega / data-mega-toggle / data-mega-panel, because main.js (build in W1, ds-chrome in W2) drives [data-mega]; ds-chrome renames both sides in W2. The header Call and Free quote buttons show only at ≥ 64em (below that the W2 sticky bar carries them). Keep the literal strings <header class=\"site-header\" and <footer class=\"site-footer\".",
+    "C1 footer: the 4 services + Commercial, the 13 municipalities, NAP from site.json, hours, tel:/sms:/mailto:, Privacy/Terms/Accessibility/Google profile; no careers link, no duplicate links.",
+    "ui.mjs split mechanically into components/ui/{actions,heads,cards,projects,trust,faq,cta,seasons,callouts}.mjs + index.mjs (export * from each; frozen): byte-identical HTML; callouts.mjs starts empty; components/living.mjs stub with the frozen livingScene/projectArt/illustrationChip signatures returning \"\".",
+    "layout.mjs: scripts:[] option reading env.assets.modules[name] = {src, deps[]} → <script type=module> + <link rel=modulepreload> per dep; main and living on every page. FALLBACK when env.assets.modules is absent (your seed base): emit env.assets.js exactly as today and ignore scripts[]. Keep the JS_FLAG alias untouched.",
+    "components/forms.mjs: add data-quote-form to the existing stepper form (keep data-stepper), so the W2 chrome sticky-bar test can find the form before the quote builder ships.",
+    "site/src/pages/home.mjs: the inline-link stripping regex that lives at routes.mjs:64 today must match both \"(/portfolio/)\" and \"(/projects/)\", otherwise the codemod duplicates the \"Browse the portfolio\" link.",
+    "site/src/lib/dates.mjs: formatDate(iso) → \"19 November 2026\", timeEl(iso) → <time datetime>.",
+    "tools/rewrite-links.mjs (dry-run by default; --write is integrator-only; never run on content/ by a stream), tools/check-content.mjs + tools/schemas/*.schema.json (schema v3: required fields, enums, no budget/price keys, slug lint, link targets exist). check-content accepts the virtual art slots proj-*-art and process-hero and treats images.art as optional until W2. Its rules under providesRules gate content and areas-content in W1, so ship them all in W1.",
+    "tools/check-links.mjs: keep the seed --url-map mode (url-map new/added URLs count as valid targets; W1 only), add --strict-redirects and the providesRules rules. check-links, check-html and check-content export RULES and, once w1/build merges, report through tools/lib.mjs report().",
+    "Tests split per owner into tests/e2e/{global,chrome,components,living,quote,projects,areas,home,services,company,editorial,redirects}.spec.mjs on the new URLs, tests/helpers/ for shared fixtures. Every test that verifies a traceability item has \"#<rule>\" in its title; a test that can only pass once w1/build has merged (one-hop redirects through serve.mjs) also carries \"@integration\" in its title. tests/unit/ui-api.test.mjs created from site/COMPONENTS.md: one entry per export with its parameter keys, laid out so later owners only append."
+  ],
+  "acceptance": [
+    "A13#1: Card links generated from the post URL; link checker in CI — check check-links#internal-200 (you author it)",
+    "A13#2: Netlify _redirects 301 map for every retired URL — check check-links#strict-redirects (you author it); every url-map 301 → one hop → 200; integration gate in W1 (needs w1/build serve.mjs)",
+    "A13#7: Services menu lists every service page (no orphans) — check check-links#orphans (you author it)",
+    "A13#8: <button aria-expanded> disclosures, never href=\"#\" — check check-html#no-href-hash (you author it)",
+    "A13#13: Single source of truth for founding year / business facts — check check-content#single-source (you author it)",
+    "A13#14: One municipality list in data; one page per municipality — check check-content#municipality-list (you author it)",
+    "A13#23: Structured project data with validation — check check-content#schema-v3 (you author it)",
+    "A13#25: Footer links deduplicated — check check-links#footer-duplicates (you author it)",
+    "A13#26: Footer phone and email linked — check check-html#footer-tel-mailto (you author it)",
+    "C1.1: Sitemap and URL map (/projects/, /free-quote/, /process/ …) — check check-links#sitemap-matches-url-map (you author it)",
+    "C1.2: Primary nav: Services ▾ · Projects · Service areas ▾ · Process · About · Call · Free quote — check e2e/chrome.spec#primary-nav (you author it)",
+    "C1.3: Footer: services, municipalities, NAP, hours, tel/sms/mailto, legal + Google profile, no careers — check e2e/chrome.spec#footer (you author it)",
+    "C6.5: Google Business Profile alignment: same NAP, 13 municipalities, 4 service lines — check check-content#gbp-alignment (you author it); site.json has the 13 contract municipalities (the areaServed source) and the 4 services; the off-site GBP steps go in W5 LAUNCH-CHECKLIST",
+    "P0#1: site.json single source for NAP, founding year, hours, licences, municipalities — check unit/ia-site-json.test#consumers (you author it)",
+    "P3#16: GBP alignment: matching NAP, 13 service areas, review link — check check-content#nap-consistency (you author it)",
+    "Own branch (seed base): tests/unit/ia-redirects.test.mjs proves redirects.mjs emits exactly the url-map redirect rules; HTML byte-identical to the pre-split build except URL changes, nav/footer and the moved seo calls (diff report attached); the quote and filter e2e tests pass with the env.assets.js fallback",
+    "Integration (after w1/build merges): every url-map 301 resolves in one hop to a 200 (serve.mjs + check-links --strict-redirects); no orphan pages; strict check-links passes on a scratch copy with tools/rewrite-links.mjs --write applied"
+  ],
+  "providesRules": [
+    {
+      "check": "check-links#internal-200",
+      "kind": "tool",
+      "file": "site/tools/check-links.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#1",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-links#strict-redirects",
+      "kind": "tool",
+      "file": "site/tools/check-links.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#2",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-links#orphans",
+      "kind": "tool",
+      "file": "site/tools/check-links.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#7",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-html#no-href-hash",
+      "kind": "tool",
+      "file": "site/tools/check-html.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#8",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-content#single-source",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#13",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-content#municipality-list",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#14",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-content#resource-byline-dates",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#20a",
+      "implementers": "content"
+    },
+    {
+      "check": "check-content#schema-v3",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#23",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-links#footer-duplicates",
+      "kind": "tool",
+      "file": "site/tools/check-links.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#25",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-html#footer-tel-mailto",
+      "kind": "tool",
+      "file": "site/tools/check-html.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#26",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-content#guarantee",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#30",
+      "implementers": "content"
+    },
+    {
+      "check": "check-content#service-tables",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#31",
+      "implementers": "content"
+    },
+    {
+      "check": "check-content#service-faqs",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "A13#32",
+      "implementers": "content"
+    },
+    {
+      "check": "check-links#sitemap-matches-url-map",
+      "kind": "tool",
+      "file": "site/tools/check-links.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "C1.1",
+      "implementers": "ia"
+    },
+    {
+      "check": "e2e/chrome.spec#primary-nav",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "C1.2",
+      "implementers": "ia"
+    },
+    {
+      "check": "e2e/chrome.spec#footer",
+      "kind": "e2e",
+      "file": "site/tests/e2e/chrome.spec.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "C1.3",
+      "implementers": "ia"
+    },
+    {
+      "check": "unit/ui-api.test#inventory",
+      "kind": "unit",
+      "file": "site/tests/unit/ui-api.test.mjs",
+      "shipIn": "w1",
+      "neededBy": "w2",
+      "forItems": "C3.6",
+      "implementers": "ds-comp"
+    },
+    {
+      "check": "check-content#area-unique-sentences",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "C6.4a",
+      "implementers": "areas-content"
+    },
+    {
+      "check": "check-content#gbp-alignment",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "C6.5",
+      "implementers": "ia"
+    },
+    {
+      "check": "unit/ia-site-json.test#consumers",
+      "kind": "unit",
+      "file": "site/tests/unit/ia-site-json.test.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "P0#1",
+      "implementers": "ia"
+    },
+    {
+      "check": "check-content#area-local-blocks",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "P2#10a",
+      "implementers": "areas-content"
+    },
+    {
+      "check": "check-content#nap-consistency",
+      "kind": "tool",
+      "file": "site/tools/check-content.mjs",
+      "shipIn": "w1",
+      "neededBy": "w1",
+      "forItems": "P3#16",
+      "implementers": "ia"
+    }
+  ],
+  "gates": {
+    "w1": [
+      "cd $WT/site && node tools/dev-setup.mjs   # seed version: links playwright, playwright-core, @types/node",
+      "export PORT=<your port> OUT=$WT/site/dist SITE_DIST=$WT/site/dist   # worktree-local dist: isolated from every other worktree",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images && node tools/check-all.mjs --no-build --url-map   # --url-map: url-map new URLs count as link targets until w1/ia merges; no baselines exist in W1",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off --grep-invert @integration   # reads PORT and SITE_DIST; tests titled @integration need another W1 stream and run at the integrator",
+      "node build.mjs && node tools/check-all.mjs --no-build --url-map   # Netlify parity: online images",
+      "node ../.orchestra/tools/ownership.mjs --stream=ia --wave=w1 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "integrationGates": {
+    "rule": "W1 integration gates: see ownership.json integration.w1. Run them on a throwaway merge of the reviewed upstream tips (never committed) when they exist; otherwise report them as deferred. The integrator always runs them after your merge.",
+    "upstream": [
+      "w1/build"
+    ],
+    "gates": [
+      "node tools/check-links.mjs --strict-redirects   # needs w1/build serve.mjs _redirects",
+      "node node_modules/playwright/cli.js test --trace off --grep @integration   # the one-hop redirect tests"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "Crawler + screen-reader landmark auditor: old→new URL matrix, nav landmark names, disclosure semantics, orphan detection",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/ia.md (never edit a file outside owns; describe the change there)"
+}

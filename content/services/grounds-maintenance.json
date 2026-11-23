@@ -4,13 +4,20 @@
   "navLabel": "Grounds maintenance",
   "seo": {
     "title": "Grounds & Landscape Maintenance in Victoria, BC | RNC",
-    "description": "Scheduled mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites in Greater Victoria. Ask RNC Landscaping for a free quote."
+    "description": "Scheduled mowing, bed care, pruning and seasonal cleanups for homes, stratas and commercial sites in Greater Victoria, with a written scope for each visit."
   },
   "hero": {
     "h1": "Grounds and landscape maintenance in Greater Victoria",
     "lede": "Mowing, bed care, pruning and seasonal cleanups on a set schedule, with a written scope so you know what each visit covers.",
     "image": "svc-grounds-maintenance-hero"
   },
+  "localContext": "Greater Victoria's mild, wet winters and dry summers mean lawns and beds need some care in every season, not only from spring to fall.",
+  "goodFitIf": [
+    "You want a set visit schedule and a written list of what each visit covers.",
+    "Your strata council needs a scope and calendar it can approve, with one contact for owner concerns.",
+    "You manage a commercial or institutional site and need work timed around tenants, students or patients.",
+    "You would rather hear about a broken sprinkler head or a leaning tree before it becomes a bigger job."
+  ],
   "audiences": [
     {
       "title": "Homeowners",
@@ -22,7 +29,7 @@
     },
     {
       "title": "Commercial and institutional sites",
-      "body": "Work to your specification, scheduled around tenants, students or patients, with insurance and safety documents on request."
+      "body": "Work to your specification, scheduled around tenants, students or patients. Insurance and safety details are listed on our [commercial page](/commercial/)."
     }
   ],
   "includes": [
@@ -51,10 +58,39 @@
       "body": "On recurring work we note anything we see that needs attention, such as a broken sprinkler head or a leaning tree, and tell you before we act."
     }
   ],
+  "perVisit": {
+    "caption": "What happens on each visit",
+    "rows": [
+      {
+        "task": "Lawn",
+        "detail": "Mowing, edging and string trimming, with the mowing height set for the season."
+      },
+      {
+        "task": "Beds",
+        "detail": "Weeding and deadheading, and a look for plants that are struggling."
+      },
+      {
+        "task": "Hedges and shrubs",
+        "detail": "Touch-up trimming where your scope includes it; full hedge trims follow the seasonal calendar."
+      },
+      {
+        "task": "Clean-up",
+        "detail": "Clippings and green waste taken away. Invasive plants are bagged separately."
+      },
+      {
+        "task": "Visit notes",
+        "detail": "Anything that needs attention, such as a broken sprinkler head or a leaning tree, noted and passed on before we act."
+      },
+      {
+        "task": "How often",
+        "detail": "Visit frequency is set in your written scope and changes with the season. No prices are shown here; every quote is site-specific."
+      }
+    ]
+  },
   "process": [
     {
       "title": "Tell us about the property",
-      "body": "Use the [free quote form](/quote/) to share the address, property type and what you need."
+      "body": "Use the [free quote form](/free-quote/?service=grounds-maintenance) to share the address, property type and what you need."
     },
     {
       "title": "Site walk",
@@ -111,6 +147,10 @@
       ]
     }
   ],
+  "localRulesRefs": [
+    "crd-watering",
+    "crd-invasives"
+  ],
   "faqs": [
     {
       "q": "How often will you visit?",
@@ -127,6 +167,14 @@
     {
       "q": "What happens to the green waste?",
       "a": "We remove it. Invasive plants are kept separate and disposed of following CRD guidance."
+    },
+    {
+      "q": "What do you need from us before the first visit?",
+      "a": "Access details: gate codes, pets, parking and any areas to avoid. For a strata, the name of the council member or property manager who approves changes to the scope."
+    },
+    {
+      "q": "What if something is missed on a visit?",
+      "a": "Tell us and we will check it against the scope for that visit. Workmanship guarantee: [WARRANTY]. [How we handle a concern](/process/)."
     }
   ],
   "detailImages": [

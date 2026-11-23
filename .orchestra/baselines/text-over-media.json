@@ -1,0 +1,10 @@
+{
+  "tool": "text-over-media",
+  "writtenAt": "w2/qa",
+  "entries": [
+    {
+      "rule": "worst-pixel",
+      "path": "styleguide/index.html"
+    }
+  ]
+}

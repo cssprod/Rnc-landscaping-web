@@ -23,6 +23,21 @@
     "after": "proj-tree-vegetation-1",
     "gallery": [
       "svc-tree-vegetation-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-sidney-tree-fixture-1-art"
+  },
+  "seo": {
+    "title": "Sidney tree and vegetation project 1 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample tree and vegetation project in Sidney."
+  },
+  "season": "Spring",
+  "tags": [
+    "tree-vegetation",
+    "sidney"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

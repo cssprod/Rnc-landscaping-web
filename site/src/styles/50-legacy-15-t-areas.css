@@ -1,0 +1,50 @@
+/* 50-legacy-15-t-areas.css: legacy slice of the pre-redesign site.css (lines 414–457).
+   Owner: t-areas. area map; area pages: intro, facts, check-list, service-list, notes, source chips.
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+
+/* Area map */
+.area-map__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.area-map h2 { max-width: 16ch; }
+.area-map__list { list-style: none; margin: var(--space-6) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.area-map__figure { padding: clamp(0.75rem, 2.5vw, 1.75rem); border-radius: var(--radius-2xl); }
+.map { width: 100%; height: auto; overflow: visible; }
+.map__contours path { stroke: var(--color-brand-2); stroke-opacity: 0.16; stroke-width: 1.4; }
+.map__tile { text-decoration: none; }
+.map__tile polygon { fill: color-mix(in srgb, var(--color-brand-2) 18%, var(--color-bg-elevated)); stroke: var(--color-bg-elevated); stroke-width: 3; stroke-linejoin: round; transition: fill var(--dur-fast) var(--ease); }
+.map__tile text { fill: var(--color-ink); font: 600 12.5px var(--font-family-sans); letter-spacing: -0.01em; pointer-events: none; }
+.map__tile:hover polygon, .map__tile:focus-visible polygon, .map__tile.is-current polygon { fill: var(--color-brand); }
+.map__tile:hover text, .map__tile:focus-visible text, .map__tile.is-current text { fill: var(--color-brand-ink); }
+.map__tile:focus-visible { outline: none; }
+.map__tile:focus-visible polygon { stroke: var(--color-focus); stroke-width: 4; }
+.map__water { fill: var(--color-ink-3); font: italic 500 12px var(--font-family-sans); }
+.area-map__note { display: flex; align-items: center; gap: 6px; margin: 10px 4px 0; color: var(--color-ink-3); font-size: var(--font-size-footnote); }
+
+/* Area pages */
+.area-intro { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+.area-intro__body p { color: var(--color-ink-2); }
+.area-intro__body p:first-child { color: var(--color-ink); font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem); line-height: 1.5; }
+.area-facts { display: grid; gap: 22px; margin: 0; padding: 26px; }
+.area-facts dt { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--color-ink-3); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); }
+.area-facts dd { margin: 0; }
+.check-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.check-list li { display: flex; align-items: flex-start; gap: 10px; }
+.check-list .i { margin-top: 0.22em; color: var(--color-brand-2); }
+.service-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr)); gap: 12px; }
+.service-item { padding: 24px; }
+.service-item h3 { margin-bottom: 8px; font-size: 1.125rem; }
+.service-item h3 a { color: var(--color-ink); text-decoration: none; }
+.service-item h3 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.service-item:hover h3 a { color: var(--color-brand); }
+.service-item p { margin: 0; color: var(--color-ink-2); font-size: var(--font-size-subheadline); }
+.service-item p a { position: relative; z-index: 1; }
+.service-item:has(a:focus-visible) { outline: 2.5px solid var(--color-focus); outline-offset: 3px; }
+.service-item h3 a:focus-visible { outline: none; }
+.service-list--compact .service-item { padding: 20px 22px; }
+.notes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 12px; }
+.note-card { display: flex; flex-direction: column; gap: 14px; padding: 24px; }
+.note-card p { margin: 0; color: var(--color-ink-2); }
+.source-chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: var(--radius-pill); background: var(--color-bg-tint); color: var(--color-brand); font-size: var(--font-size-footnote); font-weight: var(--font-weight-semibold); text-decoration: none; }
+.source-chip:hover { background: color-mix(in srgb, var(--color-brand) 14%, transparent); }
+}

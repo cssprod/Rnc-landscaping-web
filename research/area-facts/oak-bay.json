@@ -1,0 +1,176 @@
+{
+  "slug": "oak-bay",
+  "name": "Oak Bay",
+  "researchedOn": "2026-11-21",
+  "verifiedOn": "2026-11-21",
+  "facts": [
+    {
+      "id": "ob-tree-permit",
+      "kind": "rule",
+      "text": "Under Oak Bay's Tree Protection Bylaw No. 4742 (consolidated March 10, 2025 to include Bylaws 4759 and 4893), no protected tree may be cut down or damaged without a permit from the Municipal Arborist or a development permit.",
+      "sourceUrl": "https://www.oakbay.ca/parks-recreation/parks/trees/",
+      "sourceTitle": "Trees | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "No protected tree shall be cut down or damaged unless authorized by: a permit issued by the Municipal Arborist under this Bylaw; or development permit issued by the Municipality.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. CORRECTED: 'amended by No. 4759' is now 'consolidated to include 4759 and 4893', per the current consolidated PDF linked from this page (wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf). Applications go by email to the Parks Office."
+    },
+    {
+      "id": "ob-tree-protected-def",
+      "kind": "rule",
+      "text": "Oak Bay protects six native species, Garry oak, arbutus, Pacific yew, black hawthorn, shore pine and Pacific dogwood, once the trunk is over 4 cm across at the root collar or the tree is over 1 m tall. It also protects any tree over 30 cm DBH, plus nest trees, replacement trees, covenant trees and trees counted toward a lot's canopy target.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "which has either a basal diameter greater than 4 centimetres or a height above the point of germination in excess of 1 metre",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW fact. GAP CLOSED (diameter thresholds in the 'protected tree' definition). Basal diameter is measured at the top of the root collar."
+    },
+    {
+      "id": "ob-tree-pruning",
+      "kind": "rule",
+      "text": "Oak Bay's bylaw also covers pruning. Removing living branches over 5 cm in diameter from the six listed native species, or over 10 cm from any other protected tree, counts as pruning and needs a permit. Heavy limb work on an oak needs a check first.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4742-Tree-Protection-Bylaw-2020_CONSOLIDATED_2025-03-10.pdf",
+      "sourceTitle": "Tree Protection Bylaw No. 4742, 2020, consolidated March 10, 2025 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "remove living branches of a protected tree, which for a tree described in subsection 1 (a) to (f) of the definition of “protected tree” are greater than 5 centimetres",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. The 5 cm and 10 cm figures measure branch diameter, which answers R1a's question. CORRECTED: sourceUrl moved from the superseded sites/default/files/4742_CONSOLIDATED.pdf to the March 2025 consolidation. The bylaw's offence schedule lists 'Cut, Prune Protected Tree Without Permit'."
+    },
+    {
+      "id": "ob-tree-deposit",
+      "kind": "rule",
+      "text": "Oak Bay's tree work permit form says each tree removed needs a replacement tree in a location the Manager of Parks Services approves. The replacement is backed by a per-tree security deposit held for one year from the permit date.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/4742_TreeProtectionBylaw_2022.pdf",
+      "sourceTitle": "Bylaw No. 4742 Tree Work Application and Permit form (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "a replacement tree is required for each tree removed in locations approved by the Manager of Parks Services",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. CORRECTED: the deposit wording is on the permit form PDF (the 'Tree Application Permit' link on the Trees page, marked Rev. 010222), not in the bylaw consolidation, so sourceUrl changed. The form's revision mark reads 'Rev. 010222', not '10/2022'. The dollar amount is left out of text and excerpt because the site shows no $ figures. The bylaw's Schedule also sets replacement-tree securities."
+    },
+    {
+      "id": "ob-uplands-guidelines",
+      "kind": "rule",
+      "text": "John Charles Olmsted planned the Uplands in 1907–08. There, Oak Bay's Advisory Design Panel reviews proposed buildings, additions and alterations against the Uplands Design Guidelines. Its landscaping checklist covers fencing and screening, native plants, significant trees, hard landscaping and driveways, and landscaping is expected to respect the 'residential park' setting.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/04/Uplands-Design-Guidelines-Brochure.pdf",
+      "sourceTitle": "Uplands Design Guidelines brochure (District of Oak Bay, 2025)",
+      "sourceType": "official",
+      "excerpt": "Landscaping features should respect the residential park atmosphere of the Uplands.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. CORRECTED: the excerpt now matches the brochure exactly. Still unconfirmed: whether a landscape-only project with no building application triggers Panel review."
+    },
+    {
+      "id": "ob-prospect-hca",
+      "kind": "rule",
+      "text": "Oak Bay's Prospect Heritage Conservation Area covers York Place, San Carlos Avenue, Prospect Place, Broom Road and parts of Beach Drive and Oak Bay Avenue. The District describes it as a significant cultural landscape on sloped ground facing the Oak Bay beachfront.",
+      "sourceUrl": "https://www.oakbay.ca/building-infrastructure/planning/heritage-area/",
+      "sourceTitle": "What is a Heritage Conservation Area? | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "The area is a significant cultural landscape with a sloped topography, narrow scenic roads, significant architecturally designed houses and a location fronting the Oak Bay beachfront.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: CORRECTED. The page now lists Prospect as an existing HCA. The old future-tense excerpt ('will be Oak Bay's first') is gone and was replaced. Permit and landscape rules are in ob-prospect-hap and ob-prospect-landscape."
+    },
+    {
+      "id": "ob-prospect-hap",
+      "kind": "rule",
+      "text": "Inside Oak Bay's Prospect Heritage Conservation Area, every owner needs a Heritage Alteration Permit for substantial changes. The HCA's landscape guidelines apply to the whole neighbourhood, private and public land alike.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/appendix-a-prospect-heritage-conservation-area-guidelines.pdf",
+      "sourceTitle": "The Prospect Heritage Conservation Area Guidelines, Appendix A (District of Oak Bay, 24 Feb 2020)",
+      "sourceType": "official",
+      "excerpt": "The owners of all properties within the HCA boundary require Heritage Alteration Permits (HAP) when they wish to make substantial changes to their properties.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW fact. The guidelines say many changes need no new permit, and that the landscape design guidelines target aggregate change, not 'small or inconsequential changes'."
+    },
+    {
+      "id": "ob-prospect-landscape",
+      "kind": "rule",
+      "text": "The Prospect HCA guidelines favour stone, wood and wrought iron, permeable driveways, and terraced retaining walls with planting. They advise against artificial turf, pressure-treated timber retaining walls, asphalt, chain-link fences, cultured stone and stamped concrete.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/appendix-a-prospect-heritage-conservation-area-guidelines.pdf",
+      "sourceTitle": "The Prospect Heritage Conservation Area Guidelines, Appendix A (District of Oak Bay, 24 Feb 2020)",
+      "sourceType": "official",
+      "excerpt": "Existing heritage landscape materials on private and public land should be conserved and celebrated.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW fact (guidelines D7 Landscaping Materials and D8 Landscape Design, pp. 55-58). These are recommended and not-recommended lists, not prohibitions. Deer fencing that keeps views open is on the recommended list."
+    },
+    {
+      "id": "ob-pesticide-bylaw",
+      "kind": "rule",
+      "text": "Oak Bay's Pesticide Regulation Bylaw (No. 4518, 2011) bars using pesticides to maintain outdoor trees, shrubs, flowers, ornamental plants and turf on residential and public land, with exemptions that include listed permitted pesticides. A permit is possible when an infestation threatens a sensitive ecosystem or will cause significant economic loss.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/02/4518-pesticide-regulation-2011.pdf",
+      "sourceTitle": "Pesticide Regulation Bylaw, 2011, No. 4518 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "no person may apply or otherwise use a pesticide for the purpose of maintaining outdoor trees, shrubs, flowers, other ornamental plants and turf, on private land or public land",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW fact (sections 2, 3 and 4). The bylaw defines 'private land' as land used for residential purposes. Linked from oakbay.ca's municipal bylaws page."
+    },
+    {
+      "id": "ob-leafblower-hours",
+      "kind": "rule",
+      "text": "Oak Bay's Anti-Noise Bylaw bans running any leaf blower, electric or gas, outside 9 a.m.–5 p.m. on weekends and holidays, or outside 8 a.m.–8 p.m. on weekdays.",
+      "sourceUrl": "https://www.oakbay.ca/wp-content/uploads/2025/01/Noise-Bylaw.pdf",
+      "sourceTitle": "Anti-Noise Bylaw, 1977 (No. 3210), consolidated up to July 27, 2026 (District of Oak Bay)",
+      "sourceType": "official",
+      "excerpt": "on Saturday, Sunday or a holiday, the operation of a leaf blower at a time outside the hours of 9:00 a.m. to 5:00 p.m.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: NEW fact (s.4(5), Bylaw 4198). The bylaw defines 'leaf blower' as 'a portable electric or engine-driven device', so the hours cover electric units too. Municipal crews and the lands on Schedule A are exempt between 6 a.m. and 8 p.m."
+    },
+    {
+      "id": "ob-gas-equipment-phaseout",
+      "kind": "rule",
+      "text": "In May 2022 Oak Bay council voted to phase out gas-powered leaf blowers, mowers and other garden equipment, with the full ban reported to take effect in 2026. The in-force status is unconfirmed: do not state that the ban is in effect.",
+      "sourceUrl": "https://vancouverisland.ctvnews.ca/oak-bay-votes-to-ban-gas-powered-landscaping-gear-1.5919022",
+      "sourceTitle": "Oak Bay votes to ban gas-powered landscaping gear (CTV News Vancouver Island)",
+      "sourceType": "secondary",
+      "excerpt": "landscaping companies and residential users will have three years to phase out their gas-powered gear",
+      "verify": true,
+      "reviewedOn": null,
+      "note": "UNVERIFIED: secondary source, from search snippet. V1 could not open the CTV page (host not on this session's allowed list). The Anti-Noise Bylaw consolidation on oakbay.ca (up to July 27, 2026) has leaf-blower hours only (ob-leafblower-hours) and no gas-equipment prohibition. No separate gas-equipment bylaw appears on oakbay.ca's bylaw list either. That does not prove none exists. Writers must not say a ban is in force or that none exists."
+    },
+    {
+      "id": "ob-deer-project",
+      "kind": "condition",
+      "text": "Deer are a constant garden factor in Oak Bay. The District's Urban Deer Project with HERD Wildlife Management is giving immunocontraceptive to female deer across Oak Bay, on public and private land, from early September to the end of October 2026.",
+      "sourceUrl": "https://www.oakbay.ca/community-culture/pets-wildlife/urban-deer/",
+      "sourceTitle": "Urban Deer | District of Oak Bay",
+      "sourceType": "official",
+      "excerpt": "will be administering immuno-contraceptive (IC) to female deer throughout Oak Bay this fall (2026)",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed. The page also covers the six-year 2018-2024 study with the Urban Wildlife Stewardship Society. 'Constant garden factor' is our framing. The fall 2026 window has now passed, so phrase it in the past tense or say 'annual'."
+    },
+    {
+      "id": "ob-deer-garden",
+      "kind": "condition",
+      "text": "Oak Bay's deer flyer suggests sprays, fences and/or deer-resistant planting, fencing selected beds, and alternating repellents, because deer get used to the same repellent over time.",
+      "sourceUrl": "https://www.oakbay.ca/sites/default/files/OakBayDeer%20Info%20Flyer%20MAY%203%202017.pdf",
+      "sourceTitle": "Oak Bay Deer info flyer (District of Oak Bay, May 2017)",
+      "sourceType": "official",
+      "excerpt": "Deer can become accustomed to the same repellent over time, and eventually ignore it.",
+      "verify": true,
+      "reviewedOn": "2026-11-21",
+      "note": "V1: confirmed (the Oakbay.ca URL redirects to www.oakbay.ca). The flyer dates from 2017."
+    }
+  ],
+  "regionalRefs": [
+    "regional-crd-stage1-watering",
+    "regional-crd-invasive-disposal",
+    "regional-bc-rapr",
+    "regional-bc-wildlife-act-nests"
+  ],
+  "gaps": [
+    "Gas-powered garden equipment phase-out: only news sources were found, and the official Anti-Noise Bylaw consolidation does not contain it. Ask the District before writing about it.",
+    "Whether landscape-only work in the Uplands triggers Advisory Design Panel review is still unconfirmed.",
+    "Salt spray and exposure on the Oak Bay waterfront (Beach Drive, Uplands): no Oak Bay-specific source found.",
+    "Current tree permit fees are in the bylaw schedule but are not used, because the site shows no prices."
+  ]
+}

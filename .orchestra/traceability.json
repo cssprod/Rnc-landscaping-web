@@ -1,0 +1,1068 @@
+{
+  "$comment": "Every blueprint item (A13 #1–36, A12 #1–7, C1–C8, P0 #1–P4 #19; items with two implementers are split into #a/#b) → ONE implementing stream, ONE verifying check (tool#rule, e2e/<spec>.spec#rule, unit/<test>.test#rule, full-gate# or manual#) and its verifier (the stream that authors the check, by the wave in \"due\"). The verifier ships the rule (exported in the tool's literal RULES, or a test titled with #rule); site/tools/trace.mjs (qa, W2) enforces this. This file is static: per-item status lives in .orchestra/reports/trace-status.json (w4-evidence). W5 docs turns both into TRACEABILITY.md.",
+  "generatedOn": "2026-11-21",
+  "statusFile": ".orchestra/reports/trace-status.json",
+  "counts": {
+    "items": 114,
+    "byKind": {
+      "tool": 67,
+      "e2e": 36,
+      "unit": 9,
+      "manual": 1,
+      "gate": 1
+    }
+  },
+  "dupChecks": [],
+  "items": {
+    "A13#1": {
+      "title": "Card links generated from the post URL; link checker in CI",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-links#internal-200",
+      "kind": "tool",
+      "checkFile": "site/tools/check-links.mjs",
+      "due": "w1"
+    },
+    "A13#2": {
+      "title": "Netlify _redirects 301 map for every retired URL",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-links#strict-redirects",
+      "kind": "tool",
+      "checkFile": "site/tools/check-links.mjs",
+      "due": "w1",
+      "note": "every url-map 301 → one hop → 200; integration gate in W1 (needs w1/build serve.mjs)"
+    },
+    "A13#3a": {
+      "title": "One responsive component per pattern: one nav DOM, no duplicated chrome",
+      "stream": "ds-chrome",
+      "verifier": "seo",
+      "check": "check-seo#single-nav-dom",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2",
+      "note": "one nav[aria-label=Main]; header/footer link sets not duplicated"
+    },
+    "A13#3b": {
+      "title": "No content repeated in the markup (home dock and hero duplicates)",
+      "stream": "t-home",
+      "verifier": "seo",
+      "check": "check-seo#repeated-text",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3",
+      "note": "no text node repeated in a page outside [data-shared]; every other template keeps its baseline empty"
+    },
+    "A13#4": {
+      "title": "Descriptive hand-written alt; alt=\"\" for decorative",
+      "stream": "living",
+      "verifier": "seo",
+      "check": "check-seo#alt-filename",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2",
+      "note": "alt text lives in media/images.json"
+    },
+    "A13#5": {
+      "title": "One H1 per template; embedded blocks start at H2",
+      "stream": "ds-comp",
+      "verifier": "seo",
+      "check": "check-seo#h1-count",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2",
+      "note": "hero()/pageHead() emit the only H1"
+    },
+    "A13#6": {
+      "title": "H1 on every index page",
+      "stream": "ds-comp",
+      "verifier": "seo",
+      "check": "check-seo#h1-present-on-hubs",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#7": {
+      "title": "Services menu lists every service page (no orphans)",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-links#orphans",
+      "kind": "tool",
+      "checkFile": "site/tools/check-links.mjs",
+      "due": "w1"
+    },
+    "A13#8": {
+      "title": "<button aria-expanded> disclosures, never href=\"#\"",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-html#no-href-hash",
+      "kind": "tool",
+      "checkFile": "site/tools/check-html.mjs",
+      "due": "w1"
+    },
+    "A13#9": {
+      "title": "Header call button, sticky mobile bar, tel:/mailto: everywhere",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#tel-sms-mailto",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "A13#10": {
+      "title": "About 6 inputs, single name field, no CAPTCHA",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#six-inputs",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "A13#11a": {
+      "title": "Reviews band on the home page linking to Google",
+      "stream": "t-home",
+      "verifier": "t-home",
+      "check": "e2e/home.spec#reviews-band-google-link",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/home.spec.mjs",
+      "due": "w3"
+    },
+    "A13#11b": {
+      "title": "Reviews band on every service page linking to Google",
+      "stream": "t-services",
+      "verifier": "t-services",
+      "check": "e2e/services.spec#reviews-band-google-link",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/services.spec.mjs",
+      "due": "w3"
+    },
+    "A13#12": {
+      "title": "Only claim what can be verified; credentials band links to issuers",
+      "stream": "content",
+      "verifier": "qa",
+      "check": "check-honesty#unverifiable-claims",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2"
+    },
+    "A13#13": {
+      "title": "Single source of truth for founding year / business facts",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-content#single-source",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#14": {
+      "title": "One municipality list in data; one page per municipality",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-content#municipality-list",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#15": {
+      "title": "No loader; native View Transitions honouring reduced motion",
+      "stream": "ds-core",
+      "verifier": "qa",
+      "check": "motion-audit#vt-and-loader",
+      "kind": "tool",
+      "checkFile": "site/tools/motion-audit.mjs",
+      "due": "w2"
+    },
+    "A13#16": {
+      "title": "Static, user-controlled project rail (no auto-advance)",
+      "stream": "t-home",
+      "verifier": "qa",
+      "check": "motion-audit#no-auto-advance",
+      "kind": "tool",
+      "checkFile": "site/tools/motion-audit.mjs",
+      "due": "w3"
+    },
+    "A13#17": {
+      "title": "aria-hidden on decorative duplicates, or render once",
+      "stream": "t-home",
+      "verifier": "seo",
+      "check": "check-seo#decorative-duplicate",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "A13#18": {
+      "title": "One OG card per page; website type; en_CA locale",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#og-tags",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#19": {
+      "title": "Escape once at build; no double-encoding",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#double-encoding",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#20a": {
+      "title": "Named author and real publish dates in the guide data",
+      "stream": "content",
+      "verifier": "ia",
+      "check": "check-content#resource-byline-dates",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#20b": {
+      "title": "Byline \"[OWNER NAME], RNC Landscaping\" → /about/ and real dates rendered on every guide",
+      "stream": "t-editorial",
+      "verifier": "t-editorial",
+      "check": "e2e/editorial.spec#byline-dates",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/editorial.spec.mjs",
+      "due": "w3"
+    },
+    "A13#21": {
+      "title": "Slug linting",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#slug-lint",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#22": {
+      "title": "One <time datetime> format, displayed \"19 November 2026\"",
+      "stream": "t-editorial",
+      "verifier": "seo",
+      "check": "check-seo#time-format",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "A13#23": {
+      "title": "Structured project data with validation",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-content#schema-v3",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#24": {
+      "title": "Spell-check in CI",
+      "stream": "content",
+      "verifier": "qa",
+      "check": "check-honesty#spelling",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2"
+    },
+    "A13#25": {
+      "title": "Footer links deduplicated",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-links#footer-duplicates",
+      "kind": "tool",
+      "checkFile": "site/tools/check-links.mjs",
+      "due": "w1"
+    },
+    "A13#26": {
+      "title": "Footer phone and email linked",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-html#footer-tel-mailto",
+      "kind": "tool",
+      "checkFile": "site/tools/check-html.mjs",
+      "due": "w1"
+    },
+    "A13#27": {
+      "title": "AVIF+WebP srcset, max 1600 w",
+      "stream": "living",
+      "verifier": "qa",
+      "check": "budgets#image-widths",
+      "kind": "tool",
+      "checkFile": "site/tools/budgets.mjs",
+      "due": "w2"
+    },
+    "A13#28": {
+      "title": "Plausible only; no consent banner",
+      "stream": "ds-chrome",
+      "verifier": "qa",
+      "check": "budgets#third-party-origins",
+      "kind": "tool",
+      "checkFile": "site/tools/budgets.mjs",
+      "due": "w2",
+      "note": "the Plausible loader lives in layout.mjs"
+    },
+    "A13#29": {
+      "title": "HTTPS, consistent canonicals",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#canonical",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#30": {
+      "title": "Plain-language workmanship guarantee",
+      "stream": "content",
+      "verifier": "ia",
+      "check": "check-content#guarantee",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#31": {
+      "title": "\"What's included each visit / season\" tables (no prices)",
+      "stream": "content",
+      "verifier": "ia",
+      "check": "check-content#service-tables",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#32": {
+      "title": "Short FAQs on each service page",
+      "stream": "content",
+      "verifier": "ia",
+      "check": "check-content#service-faqs",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "A13#33": {
+      "title": "Proper case in the HTML source text",
+      "stream": "content",
+      "verifier": "seo",
+      "check": "check-seo#sentence-case",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2",
+      "note": "template strings added in W3 must not add entries (baseline rule)"
+    },
+    "A13#34": {
+      "title": "Only real people: the owner via [OWNER NAME] / [OWNER BIO]; no team grid; no stock people",
+      "stream": "t-company",
+      "verifier": "t-company",
+      "check": "e2e/company.spec#about-people",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/company.spec.mjs",
+      "due": "w3"
+    },
+    "A13#35": {
+      "title": "301 old duplicate URLs to new; one canonical per page",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#canonical-unique",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "A13#36": {
+      "title": "Audit performance, contrast, focus and tap targets before quoting numbers",
+      "stream": "w4-evidence",
+      "verifier": "qa",
+      "check": "measure#audit-report",
+      "kind": "tool",
+      "checkFile": "site/tools/measure.mjs",
+      "due": "w4",
+      "evidence": ".orchestra/reports/w4/evidence/r<n>/audit-report.json"
+    },
+    "A12#1": {
+      "title": "Project spec strip (municipality, service, duration, plant palette, challenge→approach→result; no budgets)",
+      "stream": "t-projects",
+      "verifier": "t-projects",
+      "check": "e2e/projects.spec#spec-strip",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/projects.spec.mjs",
+      "due": "w3"
+    },
+    "A12#2": {
+      "title": "Named, phased process with deliverables",
+      "stream": "t-company",
+      "verifier": "t-company",
+      "check": "e2e/company.spec#process-tracks",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/company.spec.mjs",
+      "due": "w3"
+    },
+    "A12#3": {
+      "title": "Filterable portfolio",
+      "stream": "t-projects",
+      "verifier": "t-projects",
+      "check": "e2e/projects.spec#filter",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/projects.spec.mjs",
+      "due": "w3"
+    },
+    "A12#4": {
+      "title": "Real-crew credibility (faces and roles, only when real)",
+      "stream": "t-company",
+      "verifier": "qa",
+      "check": "check-honesty#no-stock-people",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w3"
+    },
+    "A12#5a": {
+      "title": "Commercial proof points written as concrete operational commitments (no invented numbers)",
+      "stream": "content",
+      "verifier": "qa",
+      "check": "check-honesty#commercial-proof",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2"
+    },
+    "A12#5b": {
+      "title": "Commercial proof points rendered on /commercial/",
+      "stream": "t-services",
+      "verifier": "t-services",
+      "check": "e2e/services.spec#commercial-proof",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/services.spec.mjs",
+      "due": "w3"
+    },
+    "A12#6": {
+      "title": "Restraint: two-tone palette, big imagery, white space",
+      "stream": "ds-core",
+      "verifier": "ds-core",
+      "check": "check-contrast#all-pairs",
+      "kind": "tool",
+      "checkFile": "brand/check-contrast.mjs",
+      "due": "w2",
+      "superseded": true,
+      "proxy": true,
+      "note": "superseded on aesthetics by the alive direction; the hard constraint kept is contrast, so the proxy is C3.3's check; f-visual records the review in W4"
+    },
+    "A12#7": {
+      "title": "Dedicated landing page per service line with local context",
+      "stream": "t-services",
+      "verifier": "t-services",
+      "check": "e2e/services.spec#local-context",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/services.spec.mjs",
+      "due": "w3"
+    },
+    "C1.1": {
+      "title": "Sitemap and URL map (/projects/, /free-quote/, /process/ …)",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-links#sitemap-matches-url-map",
+      "kind": "tool",
+      "checkFile": "site/tools/check-links.mjs",
+      "due": "w1"
+    },
+    "C1.2": {
+      "title": "Primary nav: Services ▾ · Projects · Service areas ▾ · Process · About · Call · Free quote",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "e2e/chrome.spec#primary-nav",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w1"
+    },
+    "C1.3": {
+      "title": "Footer: services, municipalities, NAP, hours, tel/sms/mailto, legal + Google profile, no careers",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "e2e/chrome.spec#footer",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w1"
+    },
+    "C1.4a": {
+      "title": "Internal linking: every service page links to all 13 municipality pages",
+      "stream": "t-services",
+      "verifier": "seo",
+      "check": "check-seo#internal-links-service",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "C1.4b": {
+      "title": "Internal linking: every municipality links to the 4 services and to 1–3 local projects",
+      "stream": "t-areas",
+      "verifier": "seo",
+      "check": "check-seo#internal-links-area",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "C1.4c": {
+      "title": "Internal linking: every project links back to its service and municipality",
+      "stream": "t-projects",
+      "verifier": "seo",
+      "check": "check-seo#internal-links-project",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "C1.5": {
+      "title": "Breadcrumbs on all depth-2+ pages",
+      "stream": "ds-chrome",
+      "verifier": "seo",
+      "check": "check-seo#breadcrumbs",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "C2.1": {
+      "title": "Home wireframe sections 1–10",
+      "stream": "t-home",
+      "verifier": "t-home",
+      "check": "e2e/home.spec#sections",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/home.spec.mjs",
+      "due": "w3"
+    },
+    "C2.2": {
+      "title": "Service page wireframe",
+      "stream": "t-services",
+      "verifier": "t-services",
+      "check": "e2e/services.spec#template-order",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/services.spec.mjs",
+      "due": "w3"
+    },
+    "C2.3": {
+      "title": "Municipality page wireframe",
+      "stream": "t-areas",
+      "verifier": "t-areas",
+      "check": "e2e/areas.spec#template-order",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/areas.spec.mjs",
+      "due": "w3"
+    },
+    "C2.4": {
+      "title": "Project case study wireframe",
+      "stream": "t-projects",
+      "verifier": "t-projects",
+      "check": "e2e/projects.spec#case-study-order",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/projects.spec.mjs",
+      "due": "w3"
+    },
+    "C2.5": {
+      "title": "Free quote page wireframe",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#page-order",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "C3.1": {
+      "title": "Keep / adapt / drop (no loaders, sliders, lowercase source, third-party embeds)",
+      "stream": "ds-core",
+      "verifier": "qa",
+      "check": "check-motion-policy#banned-effects",
+      "kind": "tool",
+      "checkFile": "site/tools/check-motion-policy.mjs",
+      "due": "w2"
+    },
+    "C3.2": {
+      "title": "Fluid type scale (display…small, Inter 400/600/700, Newsreader italic quotes only)",
+      "stream": "ds-core",
+      "verifier": "ds-core",
+      "check": "unit/ds-core-tokens.test#type-scale",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/ds-core-tokens.test.mjs",
+      "due": "w2"
+    },
+    "C3.3": {
+      "title": "Colour usage and contrast incl. the dark focus token",
+      "stream": "ds-core",
+      "verifier": "ds-core",
+      "check": "check-contrast#all-pairs",
+      "kind": "tool",
+      "checkFile": "brand/check-contrast.mjs",
+      "due": "w2"
+    },
+    "C3.4": {
+      "title": "Imagery rules: own photos only in /projects/, stock labelled, illustration for process/maps",
+      "stream": "living",
+      "verifier": "qa",
+      "check": "check-honesty#stock-in-projects",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2"
+    },
+    "C3.5": {
+      "title": "Motion rules (transform/opacity, VT where supported, reduced motion, nothing autoplays)",
+      "stream": "ds-core",
+      "verifier": "qa",
+      "check": "motion-audit#policy-tiers",
+      "kind": "tool",
+      "checkFile": "site/tools/motion-audit.mjs",
+      "due": "w2"
+    },
+    "C3.6": {
+      "title": "Component inventory",
+      "stream": "ds-comp",
+      "verifier": "ia",
+      "check": "unit/ui-api.test#inventory",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/ui-api.test.mjs",
+      "due": "w2",
+      "note": "ia writes the test in W1 from COMPONENTS.md; ds-comp may only append (appendOnly)"
+    },
+    "C4.1": {
+      "title": "Content breakpoints 40/64/80em, container queries, one DOM per component",
+      "stream": "ds-comp",
+      "verifier": "ds-comp",
+      "check": "unit/ds-comp-markup.test#container-queries",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/ds-comp-markup.test.mjs",
+      "due": "w2"
+    },
+    "C4.2": {
+      "title": "Mobile nav sheet: inert, Esc, focus return, accordions",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#mobile-sheet",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "C4.3": {
+      "title": "Sticky action bar below 1024 px",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#sticky-bar",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "C4.4a": {
+      "title": "Touch targets ≥ 44×44 primary, ≥ 24×24 all: buttons, chips, cards",
+      "stream": "ds-comp",
+      "verifier": "qa",
+      "check": "a11y#target-size",
+      "kind": "tool",
+      "checkFile": "site/tools/a11y.mjs",
+      "due": "w2",
+      "note": "checked on /styleguide/ in W2"
+    },
+    "C4.4b": {
+      "title": "Touch targets ≥ 44×44 primary, ≥ 24×24 all: header, toggles, sheet, sticky bar, footer",
+      "stream": "ds-chrome",
+      "verifier": "qa",
+      "check": "a11y#target-size",
+      "kind": "tool",
+      "checkFile": "site/tools/a11y.mjs",
+      "due": "w2"
+    },
+    "C4.5": {
+      "title": "<picture> AVIF/WebP/JPEG, srcset, dimensions, hero priority, lazy below the fold, EXIF strip",
+      "stream": "living",
+      "verifier": "qa",
+      "check": "budgets#picture-pipeline",
+      "kind": "tool",
+      "checkFile": "site/tools/budgets.mjs",
+      "due": "w2"
+    },
+    "C4.6": {
+      "title": "≥ 16 px body, no horizontal scroll at 320 px, 200 % zoom",
+      "stream": "ds-core",
+      "verifier": "qa",
+      "check": "e2e/global.spec#reflow-320-zoom-200",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/global.spec.mjs",
+      "due": "w2"
+    },
+    "C5.1": {
+      "title": "Quote builder six inputs, ?area= prefill",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#prefill",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "C5.2": {
+      "title": "mailto submit with encoded subject/body ≤ 1,800 chars; works without JS",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "unit/quote-builder.test#mailto",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/quote-builder.test.mjs",
+      "due": "w2"
+    },
+    "C5.3": {
+      "title": "Ready panel: copy, address, call/text, webmail links",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#ready-panel",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "C5.4": {
+      "title": "Native validation, inline errors, error summary, values kept",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#validation",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "C5.5": {
+      "title": "sessionStorage draft",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#draft-restore",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "C5.6": {
+      "title": "Plausible custom events, no personal data",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "unit/quote-events.test#no-pii",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/quote-events.test.mjs",
+      "due": "w2"
+    },
+    "C5.7": {
+      "title": "Trust without prices (reply time, next steps, verifiable credentials, reviews, owner, local rules, guarantee)",
+      "stream": "content",
+      "verifier": "qa",
+      "check": "check-honesty#trust-without-prices",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2"
+    },
+    "C6.1": {
+      "title": "One @id JSON-LD graph (business subtype, Service, BreadcrumbList, FAQPage optional, no Review/AggregateRating)",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "unit/seo-graph.test#graph",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/seo-graph.test.mjs",
+      "due": "w2"
+    },
+    "C6.2": {
+      "title": "Title and meta description patterns and lengths (≤ 60 / ≤ 155)",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#title-meta",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "C6.3": {
+      "title": "Social cards: en_CA, one OG image per template, og:type website",
+      "stream": "og-render",
+      "verifier": "seo",
+      "check": "og-cards#coverage",
+      "kind": "tool",
+      "checkFile": "site/tools/og-cards.mjs",
+      "due": "w5",
+      "passableFrom": "w5",
+      "note": "seo ships the tool and rule in W2; cards are rendered in W5"
+    },
+    "C6.4a": {
+      "title": "Municipality data avoids doorway risk: no sentence shared by two area files",
+      "stream": "areas-content",
+      "verifier": "ia",
+      "check": "check-content#area-unique-sentences",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1",
+      "note": "summary, localRules, conditions, proof, servicesBlurb, intro, localNotes; regional.json excluded"
+    },
+    "C6.4b": {
+      "title": "Municipality pages avoid doorway risk in the rendered HTML ([data-shared] exempt)",
+      "stream": "t-areas",
+      "verifier": "seo",
+      "check": "check-seo#cross-area-duplicates",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w3"
+    },
+    "C6.5": {
+      "title": "Google Business Profile alignment: same NAP, 13 municipalities, 4 service lines",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-content#gbp-alignment",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1",
+      "note": "site.json has the 13 contract municipalities (the areaServed source) and the 4 services; the off-site GBP steps go in W5 LAUNCH-CHECKLIST"
+    },
+    "C6.6": {
+      "title": "Technical: sitemap, robots, self canonicals, _redirects, lang en-CA, build SEO checks",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#technical",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "C7.1": {
+      "title": "Lighthouse mobile ≥ 95 ×4 every template",
+      "stream": "fix-system",
+      "verifier": "qa",
+      "check": "lighthouse#median-of-3",
+      "kind": "tool",
+      "checkFile": "site/tools/lighthouse.mjs",
+      "due": "w4"
+    },
+    "C7.2": {
+      "title": "Weights: home ≤ 500 KB, inner ≤ 350 KB, hero raster ≤ 120 KB, CSS/JS/fonts caps, 1 third party",
+      "stream": "fix-system",
+      "verifier": "qa",
+      "check": "budgets#v2",
+      "kind": "tool",
+      "checkFile": "site/tools/budgets.mjs",
+      "due": "w4"
+    },
+    "C7.3": {
+      "title": "WCAG 2.2 AA, 0 axe violations",
+      "stream": "fix-system",
+      "verifier": "qa",
+      "check": "a11y#axe-matrix",
+      "kind": "tool",
+      "checkFile": "site/tools/a11y.mjs",
+      "due": "w4"
+    },
+    "C7.4": {
+      "title": "Core Web Vitals: LCP < 1.8 s, INP < 200 ms, CLS < 0.05 (lab: LCP ≤ 1.8 s, CLS ≤ 0.05, TBT ≤ 150 ms as the INP proxy)",
+      "stream": "fix-system",
+      "verifier": "qa",
+      "check": "lighthouse#cwv",
+      "kind": "tool",
+      "checkFile": "site/tools/lighthouse.mjs",
+      "due": "w4"
+    },
+    "C7.5": {
+      "title": "Manual keyboard + screen-reader pass",
+      "stream": "f-a11y",
+      "verifier": "w4-triage",
+      "check": "manual#keyboard-sr-pass",
+      "kind": "manual",
+      "checkFile": null,
+      "due": "w4",
+      "evidence": ".orchestra/reports/w4/manual-a11y.md"
+    },
+    "C8": {
+      "title": "Parallel streams on separate branches gated by the same CI; merge only when budgets pass",
+      "stream": "build",
+      "verifier": "architect",
+      "check": "ownership#every-merge",
+      "kind": "tool",
+      "checkFile": ".orchestra/tools/ownership.mjs",
+      "due": "w1",
+      "note": "the checker is .orchestra/tools/ownership.mjs (frozen, run by the integrator before every merge)"
+    },
+    "P0#1": {
+      "title": "site.json single source for NAP, founding year, hours, licences, municipalities",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "unit/ia-site-json.test#consumers",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/ia-site-json.test.mjs",
+      "due": "w1"
+    },
+    "P0#2": {
+      "title": "Lighthouse CI budgets, axe/Playwright at 5 widths, link checker in the build",
+      "stream": "qa",
+      "verifier": "qa",
+      "check": "check-ci#required-gates",
+      "kind": "tool",
+      "checkFile": "site/tools/check-ci.mjs",
+      "due": "w2"
+    },
+    "P0#3": {
+      "title": "Dark-mode focus ring ≥ 3:1 on Fir night; re-test all focus states",
+      "stream": "ds-core",
+      "verifier": "ds-core",
+      "check": "check-contrast#focus-pairs",
+      "kind": "tool",
+      "checkFile": "brand/check-contrast.mjs",
+      "due": "w2"
+    },
+    "P0#4": {
+      "title": "scroll-padding for sticky header and bar; 2.4.11 keyboard test",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#focus-not-obscured",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "P1#5": {
+      "title": "Quote builder → mailto, no-JS path, copy, visible email, tel/sms fallbacks + status",
+      "stream": "quote",
+      "verifier": "quote",
+      "check": "e2e/quote.spec#no-js-and-fallbacks",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/quote.spec.mjs",
+      "due": "w2"
+    },
+    "P1#6": {
+      "title": "Sticky mobile Call / Free-quote bar (≥ 48 px, safe-area, hidden over the form)",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#sticky-bar-hides",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "P1#7": {
+      "title": "tel:/mailto: in header and footer; desktop header call button",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#header-call",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "P1#8": {
+      "title": "Reviews band, credentials row (verifiable only), written guarantee",
+      "stream": "ds-comp",
+      "verifier": "qa",
+      "check": "check-honesty#reviews-credentials-guarantee",
+      "kind": "tool",
+      "checkFile": "site/tools/check-honesty.mjs",
+      "due": "w2",
+      "note": "checked on /styleguide/ in W2; on real pages from W3"
+    },
+    "P2#9": {
+      "title": "Services overview + 4 service pages on the C2 template",
+      "stream": "t-services",
+      "verifier": "t-services",
+      "check": "e2e/services.spec#hub-and-four",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/services.spec.mjs",
+      "due": "w3"
+    },
+    "P2#10a": {
+      "title": "13 municipality data files with ≥ 1 own local rule, condition and proof each (swap-test material)",
+      "stream": "areas-content",
+      "verifier": "ia",
+      "check": "check-content#area-local-blocks",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "P2#10b": {
+      "title": "/areas/ hub with the SVG map and 13 municipality pages rendering the local blocks",
+      "stream": "t-areas",
+      "verifier": "t-areas",
+      "check": "e2e/areas.spec#hub-map",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/areas.spec.mjs",
+      "due": "w3"
+    },
+    "P2#11": {
+      "title": "Case-study template, filterable portfolio, accessible before/after with side-by-side",
+      "stream": "t-projects",
+      "verifier": "t-projects",
+      "check": "e2e/projects.spec#before-after-keyboard",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/projects.spec.mjs",
+      "due": "w3"
+    },
+    "P2#12a": {
+      "title": "Process page (two tracks) and FAQ page",
+      "stream": "t-company",
+      "verifier": "t-company",
+      "check": "e2e/company.spec#process-faq",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/company.spec.mjs",
+      "due": "w3"
+    },
+    "P2#12b": {
+      "title": "Accessibility statement",
+      "stream": "t-editorial",
+      "verifier": "t-editorial",
+      "check": "e2e/editorial.spec#a11y-statement",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/editorial.spec.mjs",
+      "due": "w3"
+    },
+    "P2#13a": {
+      "title": "Disclosure-button menus (no href=\"#\") and breadcrumbs",
+      "stream": "ds-chrome",
+      "verifier": "ds-chrome",
+      "check": "e2e/chrome.spec#disclosure-breadcrumbs",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/chrome.spec.mjs",
+      "due": "w2"
+    },
+    "P2#13b": {
+      "title": "A helpful 404",
+      "stream": "t-editorial",
+      "verifier": "t-editorial",
+      "check": "e2e/editorial.spec#helpful-404",
+      "kind": "e2e",
+      "checkFile": "site/tests/e2e/editorial.spec.mjs",
+      "due": "w3"
+    },
+    "P3#14": {
+      "title": "JSON-LD graph, OG per page, og:locale en_CA, lang en-CA",
+      "stream": "seo",
+      "verifier": "seo",
+      "check": "check-seo#jsonld-graph",
+      "kind": "tool",
+      "checkFile": "site/tools/check-seo.mjs",
+      "due": "w2"
+    },
+    "P3#15": {
+      "title": "Sitemap with git lastmod, robots, _redirects, build checks",
+      "stream": "build",
+      "verifier": "build",
+      "check": "unit/build-lastmod.test#git-lastmod",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/build-lastmod.test.mjs",
+      "due": "w1"
+    },
+    "P3#16": {
+      "title": "GBP alignment: matching NAP, 13 service areas, review link",
+      "stream": "ia",
+      "verifier": "ia",
+      "check": "check-content#nap-consistency",
+      "kind": "tool",
+      "checkFile": "site/tools/check-content.mjs",
+      "due": "w1"
+    },
+    "P4#17": {
+      "title": "AVIF/WebP pipeline, EXIF stripping, licence records, no stock in /projects/",
+      "stream": "living",
+      "verifier": "living",
+      "check": "unit/living-images.test#pipeline",
+      "kind": "unit",
+      "checkFile": "site/tests/unit/living-images.test.mjs",
+      "due": "w2"
+    },
+    "P4#18": {
+      "title": "Glass limited to chrome, solid content, fluid type, reduced motion, no loaders/sliders/autoplay",
+      "stream": "ds-core",
+      "verifier": "ds-core",
+      "check": "check-contrast#glass-worst-case",
+      "kind": "tool",
+      "checkFile": "brand/check-contrast.mjs",
+      "due": "w2",
+      "superseded": true,
+      "note": "superseded on aesthetics, hard constraints kept (contrast-safe glass, solid fallbacks, motion policy)"
+    },
+    "P4#19": {
+      "title": "Final regression: Lighthouse ≥ 95 ×4, 0 axe, manual SR pass, 200 % zoom, 320 px, CLS ≤ 0.05",
+      "stream": "release-gate",
+      "verifier": "release-gate",
+      "check": "full-gate#no-baseline",
+      "kind": "gate",
+      "checkFile": null,
+      "due": "w5",
+      "evidence": ".orchestra/reports/w5/release-gate.json",
+      "note": "blueprint checklist item 19; the full REDESIGN-PLAN §Verification gate with --no-baseline, plus C7.5"
+    }
+  }
+}

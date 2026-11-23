@@ -1,0 +1,14 @@
+/* 50-legacy-31-t-services.css: legacy slice of the pre-redesign site.css (lines 606–650, selector-split: one rule per selector, original order).
+   Owner: t-services. responsive + dark-appearance rules for this owner (selector-split, original media-query order kept).
+   Delete by W3 (CONTRACT §12). Every !important here is listed in .orchestra/legacy-css-map.json importantRules:
+   inside @layer legacy it beats every newer layer, so delete it (or request its deletion) when you restyle that selector. */
+@layer legacy {
+@media (max-width: 959.98px) {
+  .includes { grid-template-columns: minmax(0, 1fr); }
+  .includes__media { position: static; }
+  .includes__media { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 599.98px) {
+  .includes__media { grid-template-columns: minmax(0, 1fr); }
+}
+}

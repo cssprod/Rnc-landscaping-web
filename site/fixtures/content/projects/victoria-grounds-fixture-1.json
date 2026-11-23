@@ -23,6 +23,21 @@
     "after": "proj-grounds-maintenance-1",
     "gallery": [
       "svc-grounds-maintenance-detail-1"
-    ]
-  }
+    ],
+    "art": "proj-victoria-grounds-fixture-1-art"
+  },
+  "seo": {
+    "title": "Victoria grounds maintenance project 1 | RNC",
+    "description": "Fixture case study: Fixture summary for a sample grounds maintenance project in Victoria."
+  },
+  "season": "Fall",
+  "tags": [
+    "grounds-maintenance",
+    "victoria"
+  ],
+  "challenge": "Fixture paragraph describing the starting point of the site.",
+  "approach": [
+    "Fixture paragraph describing the approach and the work."
+  ],
+  "plantPalette": []
 }

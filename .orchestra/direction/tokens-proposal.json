@@ -1,0 +1,728 @@
+{
+  "$description": "S1 \"Living Coast\" token deltas for brand/tokens.json (W2 ds-core). Shape matches TODAY's brand/build-tokens.mjs: $value = light (Pacific dawn), $extensions[\"ca.rnc.dark\"] = dark (Fir night), ca.rnc.css = CSS expression, ca.rnc.solid = opaque fallback. Deep-merge into tokens.json: every token listed here is added or replaced; tokens not listed are unchanged. CONTRACT §15 migration (ds-core, mechanical): swap each pair so $value = dark and $extensions[\"ca.rnc.light\"] = light, set ca.rnc.default = \"dark\", and emit light under :root[data-theme=light]. Source of every colour: .orchestra/direction (S1 palette.mjs), contrast table in DESIGN-DIRECTION.md §3 (558 checks, 0 fails).",
+  "$extensions": {
+    "ca.rnc.default": "dark",
+    "ca.rnc.fontFaces": [
+      {
+        "family": "Inter Variable",
+        "src": "/assets/fonts/inter-latin-var.woff2",
+        "weight": "400 720",
+        "style": "normal",
+        "display": "swap",
+        "preload": true,
+        "note": "Body and UI. Metric-matched Arial fallback keeps swap CLS ~0."
+      },
+      {
+        "family": "Newsreader Variable",
+        "src": "/assets/fonts/newsreader-latin-italic-var.woff2",
+        "weight": "400 520",
+        "style": "italic",
+        "display": "optional",
+        "preload": true,
+        "note": "NEW display:optional + preload (J2 V3): the accent phrase never swaps after first render, so it cannot shift the hero. generate() must read f.display (default swap)."
+      }
+    ],
+    "ca.rnc.fallbacks": [
+      {
+        "family": "Inter Fallback",
+        "local": "Arial",
+        "size-adjust": "107.06%",
+        "ascent-override": "90.49%",
+        "descent-override": "22.56%",
+        "line-gap-override": "0%"
+      }
+    ],
+    "ca.rnc.generatorChanges": [
+      "Honour ca.rnc.default = \"dark\": dark values on :root, light under :root[data-theme=\"light\"]; never consult prefers-color-scheme (CONTRACT §8 D1).",
+      "Emit font-display from fontFaces[].display (default swap); emit <link rel=preload as=font crossorigin> for preload:true faces (layout.mjs reads the list).",
+      "Reduced-motion block becomes @media (prefers-reduced-motion: reduce) { :root:not([data-motion=on]) {...} } plus :root[data-motion=off] {...} (CONTRACT §8).",
+      "Reduced transparency / more contrast: materials solid (existing), plus --glass-blur:0px, --grain-opacity:0, --stage-opacity:0, and the card gradients flatten to bg-elevated.",
+      "forced-colors: focus ring falls back to outline 2px solid Highlight / CanvasText; no box-shadow."
+    ]
+  },
+  "color": {
+    "bg": {
+      "$value": "#F2F6F3",
+      "$extensions": {
+        "ca.rnc.dark": "#06110C"
+      },
+      "$description": "Page. Dark: Fir night. Light: Pacific dawn."
+    },
+    "bg-elevated": {
+      "$value": "#FFFFFF",
+      "$extensions": {
+        "ca.rnc.dark": "#0D1D16"
+      },
+      "$description": "Fields, menus, solid material fallback."
+    },
+    "bg-grouped": {
+      "$value": "#E7EEEA",
+      "$extensions": {
+        "ca.rnc.dark": "#030907"
+      },
+      "$description": "Sunken areas."
+    },
+    "bg-tint": {
+      "$value": "#DCEBE2",
+      "$extensions": {
+        "ca.rnc.dark": "#0F2A1F"
+      },
+      "$description": "Chips, quiet fills."
+    },
+    "ink": {
+      "$value": "#0C1A13",
+      "$extensions": {
+        "ca.rnc.dark": "#E8F4EC"
+      },
+      "$description": "Primary text."
+    },
+    "ink-2": {
+      "$value": "#3E5047",
+      "$extensions": {
+        "ca.rnc.dark": "#B2C8BB"
+      },
+      "$description": "Secondary text."
+    },
+    "ink-3": {
+      "$value": "#4F6157",
+      "$extensions": {
+        "ca.rnc.dark": "#9AB3A4"
+      },
+      "$description": "Tertiary text (meta, spec dt). >= 4.5:1 on every content surface and on regular/thick/chrome over art."
+    },
+    "line": {
+      "$value": "rgba(12, 26, 19, 0.11)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(200, 240, 215, 0.12)"
+      },
+      "$description": "Decorative hairlines only."
+    },
+    "line-strong": {
+      "$value": "#6C7F76",
+      "$extensions": {
+        "ca.rnc.dark": "#5E7D6C"
+      },
+      "$description": "Field and control borders, >= 3:1. Never used alone to show state."
+    },
+    "brand": {
+      "$value": "#1D4A33",
+      "$extensions": {
+        "ca.rnc.dark": "#7FEBB0"
+      },
+      "$description": "Dark: bioluminescent moss. Light: Douglas fir (unchanged). Links, primary buttons, the one display accent phrase."
+    },
+    "brand-hover": {
+      "$value": "#143826",
+      "$extensions": {
+        "ca.rnc.dark": "#A6F5CA"
+      }
+    },
+    "brand-ink": {
+      "$value": "#FFFFFF",
+      "$extensions": {
+        "ca.rnc.dark": "#03140B"
+      }
+    },
+    "brand-2": {
+      "$value": "#2B6E4C",
+      "$extensions": {
+        "ca.rnc.dark": "#6FE0D2"
+      },
+      "$description": "Dark: sea-glass. Light: fern. Icons, ticks, contour strokes in UI."
+    },
+    "deep": {
+      "$value": "#0B1F15",
+      "$extensions": {
+        "ca.rnc.dark": "#020806"
+      },
+      "$description": "Fir night band (CTA band, footer). Dark in BOTH themes."
+    },
+    "deep-2": {
+      "$value": "#163826",
+      "$extensions": {
+        "ca.rnc.dark": "#0A1E16"
+      }
+    },
+    "on-deep": {
+      "$value": "#FFFFFF"
+    },
+    "on-deep-2": {
+      "$value": "rgba(255, 255, 255, 0.78)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(255, 255, 255, 0.76)"
+      }
+    },
+    "accent-on-deep": {
+      "$value": "#9FF2C4",
+      "$description": "NEW. Newsreader accent phrase and links on deep bands, both themes."
+    },
+    "placeholder": {
+      "$value": "#7A5200",
+      "$extensions": {
+        "ca.rnc.dark": "#F2C462"
+      }
+    },
+    "placeholder-bg": {
+      "$value": "#FFF3D1",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(242, 196, 98, 0.14)"
+      }
+    },
+    "success": {
+      "$value": "#1C6E3F",
+      "$extensions": {
+        "ca.rnc.dark": "#74D9A0"
+      }
+    },
+    "error": {
+      "$value": "#B42318",
+      "$extensions": {
+        "ca.rnc.dark": "#FF8F85"
+      }
+    },
+    "sky": {
+      "$value": "#DCE9EC",
+      "$extensions": {
+        "ca.rnc.dark": "#0A1C26"
+      },
+      "$description": "Illustration sky anchor."
+    },
+    "sun": {
+      "$value": "#FFE7B8",
+      "$extensions": {
+        "ca.rnc.dark": "#E4EEF2"
+      },
+      "$description": "Dark: moon. Light: rising sun."
+    },
+    "focus": {
+      "$value": "{focus.ring}",
+      "$description": "Contract alias of focus.ring (two-tone ring: use focus.ring + focus.halo together)."
+    },
+    "focus-on-deep": {
+      "$value": "{focus.ring-on-deep}",
+      "$description": "Contract alias of focus.ring-on-deep."
+    }
+  },
+  "focus": {
+    "$type": "color",
+    "$description": "NEW two-tone \"sandwich\" ring: outline 2px focus.ring at offset 2px over box-shadow 0 0 0 6px focus.halo, plus 0 0 24px 6px focus.glow. On every surface at least one tone is >= 3:1; ring vs halo >= 3:1.",
+    "ring": {
+      "$value": "#4A3FC2",
+      "$extensions": {
+        "ca.rnc.dark": "#C9C1FF"
+      },
+      "$description": "Camas. The only violet in UI."
+    },
+    "halo": {
+      "$value": "#FFFFFF",
+      "$extensions": {
+        "ca.rnc.dark": "#1A0F4D"
+      }
+    },
+    "glow": {
+      "$value": "rgba(74, 63, 194, 0.28)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(201, 193, 255, 0.45)"
+      },
+      "$description": "Soft camas glow, decorative."
+    },
+    "ring-on-deep": {
+      "$value": "#C9C1FF",
+      "$description": "Deep bands, both themes."
+    },
+    "halo-on-deep": {
+      "$value": "#1A0F4D"
+    }
+  },
+  "material": {
+    "$type": "color",
+    "$description": "Fills. Real backdrop-filter only on the header after it scrolls past the hero (and never while it overlaps [data-living]). Everything else uses the fill alone, so the alpha must carry contrast: regular/thick/chrome are checked over art extremes with ink, ink-2, ink-3 and brand. No text on ultrathin/thin over art.",
+    "ultrathin": {
+      "$value": "rgba(255, 255, 255, 0.40)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(16, 34, 26, 0.40)",
+        "ca.rnc.solid": "#FFFFFF"
+      }
+    },
+    "thin": {
+      "$value": "rgba(255, 255, 255, 0.58)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(12, 28, 21, 0.56)",
+        "ca.rnc.solid": "#FFFFFF"
+      }
+    },
+    "regular": {
+      "$value": "rgba(255, 255, 255, 0.84)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(10, 24, 18, 0.80)",
+        "ca.rnc.solid": "#FFFFFF"
+      }
+    },
+    "thick": {
+      "$value": "rgba(255, 255, 255, 0.88)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(8, 20, 15, 0.86)",
+        "ca.rnc.solid": "#FFFFFF"
+      }
+    },
+    "chrome": {
+      "$value": "rgba(246, 250, 247, 0.84)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(7, 18, 13, 0.82)",
+        "ca.rnc.solid": "#FFFFFF"
+      }
+    },
+    "media": {
+      "$value": "rgba(9, 17, 12, 0.58)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(3, 10, 7, 0.58)",
+        "ca.rnc.solid": "#13211A"
+      }
+    },
+    "media-strong": {
+      "$value": "rgba(9, 17, 12, 0.72)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(3, 10, 7, 0.70)",
+        "ca.rnc.solid": "#0F1C15"
+      }
+    }
+  },
+  "glass": {
+    "rim": {
+      "$type": "color",
+      "$value": "rgba(255, 255, 255, 0.90)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(255, 255, 255, 0.10)"
+      }
+    },
+    "edge": {
+      "$type": "color",
+      "$value": "rgba(12, 26, 19, 0.08)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(0, 0, 0, 0.60)"
+      }
+    },
+    "blur": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "Capped at 16px (L1 lab measured 16)."
+    },
+    "blur-strong": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "Deprecated alias; equals glass.blur. Remove at W3b."
+    },
+    "saturate": {
+      "$type": "number",
+      "$value": 1.5
+    }
+  },
+  "glow": {
+    "$type": "color",
+    "$description": "NEW. Decorative glows (text-shadow, halos, spotlight). Never carry meaning.",
+    "moss": {
+      "$value": "rgba(43, 110, 76, 0.18)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(127, 235, 176, 0.42)"
+      }
+    },
+    "sea": {
+      "$value": "rgba(70, 160, 160, 0.20)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(111, 224, 210, 0.34)"
+      }
+    },
+    "firefly": {
+      "$value": "#FFD98A",
+      "$extensions": {
+        "ca.rnc.dark": "#E6FFA3"
+      }
+    },
+    "spot": {
+      "$value": "rgba(255, 200, 140, 0.22)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(127, 235, 176, 0.08)"
+      }
+    }
+  },
+  "surface": {
+    "$type": "gradient",
+    "$description": "NEW \"lit solid\" card fills: opaque gradients with glass rim/edge/sheen. Every stop is contrast-checked; under prefers-contrast:more they flatten to bg-elevated.",
+    "card": {
+      "$value": [
+        {
+          "color": "#FFFFFF",
+          "position": 0
+        },
+        {
+          "color": "#F7FAF8",
+          "position": 0.6
+        },
+        {
+          "color": "#EEF4F0",
+          "position": 1
+        }
+      ],
+      "$extensions": {
+        "ca.rnc.css": "linear-gradient(160deg, #FFFFFF 0%, #F7FAF8 60%, #EEF4F0 100%)",
+        "ca.rnc.dark": "linear-gradient(160deg, #10241B 0%, #0B1A14 55%, #08150F 100%)"
+      }
+    },
+    "card-hi": {
+      "$value": [
+        {
+          "color": "#FFFFFF",
+          "position": 0
+        },
+        {
+          "color": "#FBF4EC",
+          "position": 0.6
+        },
+        {
+          "color": "#F3EDE4",
+          "position": 1
+        }
+      ],
+      "$extensions": {
+        "ca.rnc.css": "linear-gradient(160deg, #FFFFFF 0%, #FBF4EC 60%, #F3EDE4 100%)",
+        "ca.rnc.dark": "linear-gradient(160deg, #143128 0%, #0D1F18 55%, #09170F 100%)"
+      },
+      "$description": "Featured / spotlight card (dawn honey tint in light)."
+    },
+    "edge": {
+      "$value": [
+        {
+          "color": "#1D4A33",
+          "position": 0
+        },
+        {
+          "color": "#2B6E4C",
+          "position": 0.5
+        },
+        {
+          "color": "#B07A1E",
+          "position": 1
+        }
+      ],
+      "$extensions": {
+        "ca.rnc.css": "linear-gradient(135deg, #1D4A33 0%, #2B6E4C 50%, #B07A1E 100%)",
+        "ca.rnc.dark": "linear-gradient(135deg, #7FEBB0 0%, #6FE0D2 50%, #F2C462 100%)"
+      },
+      "$description": "Hover/focus border gradient on bento tiles: moss -> sea-glass -> honey. No violet (camas is reserved for focus)."
+    }
+  },
+  "scene": {
+    "$type": "color",
+    "$description": "NEW art-palette ANCHORS for contrast and text-over-media checks. Living vars (--sc-*) in 45-living.css derive from these with color-mix(); living never edits tokens.json.",
+    "sky-top": {
+      "$value": "#C9DCE4",
+      "$extensions": {
+        "ca.rnc.dark": "#030A10"
+      }
+    },
+    "sky-mid": {
+      "$value": "#EADFD6",
+      "$extensions": {
+        "ca.rnc.dark": "#081B22"
+      }
+    },
+    "sky-low": {
+      "$value": "#F8E3CC",
+      "$extensions": {
+        "ca.rnc.dark": "#0D2A28"
+      }
+    },
+    "aurora-1": {
+      "$value": "rgba(255, 190, 150, 0.45)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(64, 230, 160, 0.22)"
+      }
+    },
+    "aurora-2": {
+      "$value": "rgba(255, 214, 160, 0.40)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(70, 200, 225, 0.24)"
+      }
+    },
+    "aurora-3": {
+      "$value": "rgba(200, 186, 235, 0.34)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(150, 132, 255, 0.22)"
+      }
+    },
+    "orb": {
+      "$value": "#FFE7B8",
+      "$extensions": {
+        "ca.rnc.dark": "#E4EEF2"
+      }
+    },
+    "art-bright": {
+      "$value": "#FFFFFF",
+      "$extensions": {
+        "ca.rnc.dark": "#E6FFA3"
+      }
+    },
+    "art-glow": {
+      "$value": "#FFD98A",
+      "$extensions": {
+        "ca.rnc.dark": "#6FE0D2"
+      }
+    },
+    "art-dark": {
+      "$value": "#0E2A1D",
+      "$extensions": {
+        "ca.rnc.dark": "#030907"
+      }
+    },
+    "far-range": {
+      "$value": "#AEB8CF",
+      "$extensions": {
+        "ca.rnc.dark": "#1A2E36"
+      }
+    }
+  },
+  "survey": {
+    "$type": "color",
+    "$description": "NEW contour language for the area plate, ridge contours and CTA-band rings. Lines only, never labels or readouts.",
+    "contour": {
+      "$value": "#2F7A6C",
+      "$extensions": {
+        "ca.rnc.dark": "#5ED8C6"
+      }
+    },
+    "contour-faint": {
+      "$value": "rgba(47, 122, 108, 0.20)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(94, 216, 198, 0.22)"
+      }
+    },
+    "rule": {
+      "$value": "rgba(12, 26, 19, 0.16)",
+      "$extensions": {
+        "ca.rnc.dark": "rgba(170, 230, 196, 0.22)"
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "serif": {
+        "$type": "fontFamily",
+        "$value": [
+          "Newsreader Variable",
+          "Georgia",
+          "Iowan Old Style",
+          "serif"
+        ],
+        "$description": "Editorial italic: client quotations, plus ONE accent phrase per page (H1 and the CTA band line). S1 ruling on C3."
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "display": {
+        "$value": {
+          "value": 4.5,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(2.5rem, 1.833rem + 2.963vw, 4.5rem)"
+        },
+        "$description": "C3 display 2.5 -> 4.5rem (home hero)."
+      },
+      "large-title": {
+        "$value": {
+          "value": 3.25,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(2rem, 1.583rem + 1.852vw, 3.25rem)"
+        },
+        "$description": "C3 h1 (inner page titles)."
+      },
+      "title-1": {
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(1.5rem, 1.25rem + 1.111vw, 2.25rem)"
+        },
+        "$description": "C3 h2."
+      },
+      "title-2": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(1.25rem, 1.083rem + 0.741vw, 1.75rem)"
+        },
+        "$description": "Feature-card titles."
+      },
+      "title-3": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(1.25rem, 1.167rem + 0.37vw, 1.5rem)"
+        },
+        "$description": "C3 h3."
+      },
+      "lede": {
+        "$value": {
+          "value": 1.375,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(1.125rem, 1.042rem + 0.37vw, 1.375rem)"
+        }
+      },
+      "body": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        },
+        "$extensions": {
+          "ca.rnc.css": "clamp(1.0625rem, 1.042rem + 0.093vw, 1.125rem)"
+        },
+        "$description": "C3 body 17 -> 18px."
+      },
+      "small": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        },
+        "$description": "NEW. C3 small."
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "medium": {
+        "$value": 520
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 680
+      },
+      "display": {
+        "$value": 700
+      }
+    },
+    "leading": {
+      "$type": "number",
+      "display": {
+        "$value": 1.02
+      },
+      "title": {
+        "$value": 1.06
+      },
+      "body": {
+        "$value": 1.6
+      }
+    },
+    "tracking": {
+      "$type": "dimension",
+      "display": {
+        "$value": {
+          "value": -0.036,
+          "unit": "em"
+        }
+      },
+      "title": {
+        "$value": {
+          "value": -0.028,
+          "unit": "em"
+        }
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "fast": {
+        "$value": {
+          "value": 140,
+          "unit": "ms"
+        },
+        "$description": "T0."
+      },
+      "base": {
+        "$value": {
+          "value": 220,
+          "unit": "ms"
+        },
+        "$description": "T0 ceiling (<= 250ms). Was 260."
+      },
+      "slow": {
+        "$value": {
+          "value": 520,
+          "unit": "ms"
+        },
+        "$description": "T1: theme moonrise reveal."
+      },
+      "reveal": {
+        "$value": {
+          "value": 600,
+          "unit": "ms"
+        },
+        "$description": "NEW T1: one-shot IO reveals."
+      },
+      "draw": {
+        "$value": {
+          "value": 1600,
+          "unit": "ms"
+        },
+        "$description": "NEW T1: contour draw-in ceiling."
+      },
+      "vt": {
+        "$value": {
+          "value": 250,
+          "unit": "ms"
+        },
+        "$description": "NEW T1: cross-document view transitions (L1 ceiling)."
+      }
+    }
+  },
+  "layout": {
+    "$type": "dimension",
+    "gutter": {
+      "$value": {
+        "value": 2.25,
+        "unit": "rem"
+      },
+      "$extensions": {
+        "ca.rnc.css": "clamp(1rem, 0.583rem + 1.852vw, 2.25rem)"
+      },
+      "$description": "16px at 320/360 (reflow), 36px at 1440."
+    },
+    "header-h": {
+      "$value": {
+        "value": 80,
+        "unit": "px"
+      },
+      "$description": ">= 64em. Mobile header is layout.header-h-sm."
+    },
+    "header-h-sm": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      },
+      "$description": "NEW. < 64em."
+    },
+    "actionbar-h": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      },
+      "$description": "NEW. Sticky bar: 48px buttons + 8px padding, plus env(safe-area-inset-bottom) in CSS."
+    }
+  }
+}

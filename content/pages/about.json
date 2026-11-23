@@ -1,14 +1,15 @@
 {
-  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock.",
+  "_notes": "Owner photo slot about-owner is supplied by RNC; never stock. People: only the owner, through [OWNER NAME] and [OWNER BIO]; no team grid, and no invented names, roles, bios or crew photos. images.hero is the hero slot: it points at commercial-hero, which shows no people, because stock is never used for a person shown as the owner or crew (CONTRACT section 2). images.crew is the deprecated legacy key with the same value; it is removed once t-company (W3) reads images.hero.",
   "seo": {
     "title": "About RNC Landscaping | Greater Victoria Landscapers",
-    "description": "Meet RNC Landscaping, a local landscaping contractor serving Greater Victoria homes, stratas and businesses. Learn how we work and keep crews safe on site."
+    "description": "Meet RNC Landscaping, a local contractor for Greater Victoria homes, stratas and businesses: how we work, safety on site and our workmanship guarantee."
   },
   "h1": "About RNC Landscaping",
   "lede": "A local contractor for grounds maintenance, landscape installation, irrigation and tree work across Greater Victoria.",
   "images": {
     "owner": "about-owner",
-    "crew": "about-crew"
+    "hero": "commercial-hero",
+    "crew": "commercial-hero"
   },
   "sections": [
     {
@@ -25,7 +26,7 @@
       "items": [
         {
           "title": "Say what we'll do, then do it",
-          "body": "A written scope, a clear schedule and no surprises."
+          "body": "A written scope and a clear schedule, so you see the plan before work starts."
         },
         {
           "title": "Respect the property",
@@ -37,7 +38,7 @@
         },
         {
           "title": "Be a good neighbour",
-          "body": "We keep noise, parking and debris in mind on every street we work on."
+          "body": "We plan around noise, parking and debris on the streets we work on."
         }
       ]
     },
@@ -56,10 +57,18 @@
       ]
     },
     {
+      "id": "guarantee",
+      "heading": "Our workmanship guarantee",
+      "body": [
+        "Our guarantee on workmanship: [WARRANTY]. If something we did is not right, [tell us](/contact/). [How we handle a concern](/process/) explains what happens next."
+      ]
+    },
+    {
       "id": "next",
       "heading": "Work with us",
       "body": [
-        "See [our services](/services/), browse [sample projects](/portfolio/), or [get a free quote](/quote/)."
+        "See [our services](/services/), browse [sample projects](/projects/), or [get a free quote](/free-quote/).",
+        "Read [how we work](/process/), from first request to finished job."
       ]
     }
   ]

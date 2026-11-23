@@ -1,59 +1,76 @@
 // @ts-check
 /**
- * Single source of truth for business facts and site settings.
+ * Site settings, read from the single source of truth: content/site.json
+ * (CONTRACT §6; frozen after W1). Business facts live ONLY there: never type a
+ * phone number, address, founding year or municipality list into a template.
  *
- * Every value in `tokens` that is still `null` renders as its bracket token
- * (for example "[PHONE]"). Showcase builds (the default) display unresolved
- * tokens as small placeholder chips. A launch build (SITE_MODE=launch) fails
- * while any token is still unresolved, so fill these in before going live.
+ * Every value in site.json `tokens` that is still `null` renders as its bracket
+ * token. Showcase builds (the default) display unresolved tokens as small
+ * placeholder chips. A launch build (SITE_MODE=launch) fails while any required
+ * token is still unresolved, so fill these in (in content/site.json) before going live.
  *
- * Only the token names listed in CONTRACT.md are allowed here.
+ * Only the token names listed in CONTRACT.md §3 are allowed.
+ * When content/ holds no site.json (fixture builds), site/fixtures/content/site.json is used.
  */
+import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'PLAUSIBLE DOMAIN'} TokenName */
+/** @typedef {'PHONE'|'EMAIL'|'HOURS'|'ADDRESS'|'LEGAL NAME'|'YEAR'|'CREW SIZE'|'OWNER NAME'|'OWNER BIO'|'LIABILITY LIMIT'|'WORKSAFEBC STATUS'|'LICENCES'|'CERTIFICATIONS'|'MEMBERSHIPS'|'WARRANTY'|'DOMAIN'|'REPLY TIME'|'GOOGLE PROFILE'|'FOUNDED'|'PLAUSIBLE DOMAIN'} TokenName */
 
-/** @type {Record<TokenName, string|null>} */
-export const tokens = {
-  PHONE: null, // e.g. "250-555-0100"
-  EMAIL: null, // public contact address; the quote form composes an email to it
-  HOURS: null, // e.g. "Mon–Fri 7:30 am – 5 pm"
-  ADDRESS: null, // mailing or service address (or "Serving Greater Victoria")
-  'LEGAL NAME': null,
-  YEAR: null, // copyright year owner prefers; leave null to be prompted
-  'CREW SIZE': null,
-  'OWNER NAME': null,
-  'OWNER BIO': null,
-  'LIABILITY LIMIT': null, // e.g. "$5 million CGL"
-  'WORKSAFEBC STATUS': null,
-  LICENCES: null, // business licences held
-  CERTIFICATIONS: null,
-  MEMBERSHIPS: null,
-  WARRANTY: null,
-  DOMAIN: null, // bare host, e.g. "rnclandscaping.ca" (required for SITE_MODE=launch)
-  'PLAUSIBLE DOMAIN': null, // optional: set to turn on cookieless analytics in launch builds
-};
+/**
+ * The CONTRACT §3 token names, in order. Notes on each:
+ * PHONE e.g. "250-555-0100" (tel: and sms: are derived from it); EMAIL the public address the quote builder composes to;
+ * HOURS display string; ADDRESS or "Serving Greater Victoria"; YEAR copyright year; LIABILITY LIMIT e.g. "$5 million CGL";
+ * DOMAIN bare host (required for SITE_MODE=launch); REPLY TIME e.g. "2 business days" (/free-quote/, CTA band, contact);
+ * GOOGLE PROFILE optional, unset in launch omits every link built on it; FOUNDED optional four-digit year, JSON-LD
+ * foundingDate only (never visible copy); PLAUSIBLE DOMAIN optional, turns on cookieless analytics in launch builds.
+ * @type {TokenName[]}
+ */
+export const TOKEN_ORDER = ['PHONE', 'EMAIL', 'HOURS', 'ADDRESS', 'LEGAL NAME', 'YEAR', 'CREW SIZE', 'OWNER NAME', 'OWNER BIO',
+  'LIABILITY LIMIT', 'WORKSAFEBC STATUS', 'LICENCES', 'CERTIFICATIONS', 'MEMBERSHIPS', 'WARRANTY', 'DOMAIN', 'REPLY TIME',
+  'GOOGLE PROFILE', 'FOUNDED', 'PLAUSIBLE DOMAIN'];
 
 /** Tokens a launch build may leave empty (features that simply stay off). */
-export const optionalTokens = /** @type {TokenName[]} */ (['PLAUSIBLE DOMAIN']);
+export const optionalTokens = /** @type {TokenName[]} */ (['PLAUSIBLE DOMAIN', 'GOOGLE PROFILE', 'FOUNDED']);
+
+const REAL = fileURLToPath(new URL('../content/site.json', import.meta.url));
+const FIXTURE = fileURLToPath(new URL('./fixtures/content/site.json', import.meta.url));
+/** Path of the site.json in use (the real one, else the fixture). */
+export const siteJsonPath = existsSync(REAL) ? REAL : FIXTURE;
+
+/**
+ * @typedef {{ slug: string, name: string, navLabel?: string }} SiteService
+ * @typedef {{ slug: string, name: string }} SiteMunicipality
+ * @typedef {{ id: string, label: string, value: string, issuerUrl: string|null }} SiteCredential
+ * @typedef {{ tokens: Record<string, string|null>, name: string, shortName: string, locale: string, region: string,
+ *   nap: { name: string, legalName: string, address: string, phone: string, email: string },
+ *   hours: { display: string, openingHours: object[] }, replyTime: string, googleProfile: string, founded: string,
+ *   owner: { name: string, bio: string, photo: string }, crewSize: string, warranty: string,
+ *   services: SiteService[], municipalities: SiteMunicipality[], credentials: SiteCredential[], sameAs: string[],
+ *   capabilityStatement: string }} SiteJson
+ */
+
+/** content/site.json as loaded (single source; consumers read it through this object). @type {SiteJson} */
+export const siteJson = JSON.parse(readFileSync(siteJsonPath, 'utf8'));
+
+/** @type {Record<TokenName, string|null>} */
+export const tokens = /** @type {any} */ (Object.fromEntries(TOKEN_ORDER.map((k) => [k, siteJson.tokens?.[k] ?? null])));
 
 export const site = {
-  name: 'RNC Landscaping',
-  shortName: 'RNC',
-  locale: 'en-CA',
-  region: 'Greater Victoria, BC',
-  /** Ordered service slugs (contract). */
-  services: ['grounds-maintenance', 'landscape-installation', 'irrigation', 'tree-vegetation'],
-  /** Ordered area slugs (contract). */
-  areas: [
-    'victoria', 'saanich', 'oak-bay', 'esquimalt', 'langford', 'colwood', 'view-royal',
-    'sooke', 'central-saanich', 'north-saanich', 'sidney', 'highlands', 'metchosin',
-  ],
-  /** Social profiles once they exist (used for sameAs in JSON-LD). */
-  sameAs: /** @type {string[]} */ ([]),
+  name: siteJson.name,
+  shortName: siteJson.shortName,
+  locale: siteJson.locale,
+  region: siteJson.region,
+  /** Ordered service slugs (contract), from site.json services. */
+  services: siteJson.services.map((s) => s.slug),
+  /** Ordered area slugs (contract), from site.json municipalities. */
+  areas: siteJson.municipalities.map((m) => m.slug),
+  /** Profiles RNC controls (used for sameAs in JSON-LD). */
+  sameAs: /** @type {string[]} */ (siteJson.sameAs || []),
   /** Public path of the capability statement PDF (copy links to it). Put the file at static/downloads/. */
-  capabilityStatement: '/downloads/rnc-capability-statement.pdf',
+  capabilityStatement: siteJson.capabilityStatement,
   /** Responsive widths requested from the photo CDN. */
   imageWidths: [480, 800, 1200, 1600, 2000, 2400],
 };
 
-export default { tokens, site, optionalTokens };
+export default { tokens, site, optionalTokens, siteJson };

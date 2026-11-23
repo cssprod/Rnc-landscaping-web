@@ -1,0 +1,231 @@
+{
+  "id": "quote",
+  "wave": "w2",
+  "lens": "Conversion-form engineer (progressive enhancement, mailto encoding, accessible validation)",
+  "branch": [
+    "w2/quote"
+  ],
+  "base": {
+    "w2": "tag wave-1-int"
+  },
+  "port": {
+    "w2": 4426
+  },
+  "portRule": "builder = port; reviewer = port + 10; fixer = port + 20; W4 evidence collector 4400",
+  "out": "$SCRATCH/dist/<branch-with-dashes>",
+  "owns": {
+    "w2": [
+      "site/src/components/forms.mjs",
+      "site/src/scripts/quote.js",
+      "site/src/styles/70-quote.css",
+      "site/src/styles/50-legacy-*-quote.css",
+      "site/src/pages/quote.mjs",
+      "content/pages/quote.json",
+      "site/event-schema.yaml",
+      "site/event-schema.d.ts",
+      "site/tools/gen-event-types.mjs",
+      "site/tests/unit/quote-*.test.mjs",
+      "site/tests/e2e/quote.spec.mjs",
+      ".orchestra/requests/quote.md"
+    ]
+  },
+  "forbidden": {
+    "w2": [
+      "CONTRACT.md",
+      "REDESIGN-PLAN.md",
+      "site/src/lib/head-scripts.mjs",
+      ".orchestra/ownership.json",
+      ".orchestra/briefs/**",
+      ".orchestra/traceability.json",
+      ".orchestra/url-map.json",
+      ".orchestra/legacy-css-map.json",
+      ".orchestra/tools/**",
+      ".orchestra/baselines/**",
+      "research/**",
+      "site/src/pages/routes.mjs",
+      "site/src/components/ui/index.mjs",
+      "site/site.config.mjs",
+      "content/site.json",
+      "site/src/lib/data.mjs",
+      "site/src/components/ui/**",
+      "site/src/components/layout.mjs",
+      "brand/**"
+    ]
+  },
+  "reads": [
+    "CONTRACT.md",
+    "REDESIGN-PLAN.md",
+    ".orchestra/ownership.json",
+    "research/cedar-springs-teardown-blueprint.md (moved from the repo root at the seed commit)",
+    "REDESIGN-PLAN.md §Quote builder",
+    "CONTRACT.md §6 quote.json, §13 Analytics events",
+    "research/cedar-springs-teardown-blueprint.md C2 Free quote, C5"
+  ],
+  "context": [
+    "Your base is tag wave-1-int: page families + frozen routes.mjs aggregator, ui/ split, layout scripts[] with env.assets.modules, new URLs + _redirects, legacy CSS slices in @layer legacy, module hashing, --out/SITE_DIST/PORT, dev-setup --devtools, check-content, rewrite-links, site.json.",
+    "qa merges LAST in W2, so a11y.mjs, motion-audit.mjs, text-over-media.mjs, check-honesty.mjs, trace.mjs and budgets v2 are not on your base: run those gates as deferred (report them) and the integrator runs them after the qa merge, when it also writes their baselines.",
+    "No stream owns the page files (site/src/pages/{home,services,areas,projects,company,editorial}.mjs) in W2: new primitives and scenes are proven on /styleguide/ (showcase build), not on real pages."
+  ],
+  "deliverables": [
+    "Six inputs: services (4 multi-select cards + \"Not sure yet\"), municipality <select> of 13 (+ \"somewhere else\"), description, timing (ASAP / this season / planning ahead), name, best way to reach you (email / call / text; the phone field appears and becomes required for call or text). No email field.",
+    "?area= / ?service= prefill; form action = mailto (method=post enctype=text/plain) so it works without JS; subject \"Free quote request — X — Y\"; URL body ≤ 1,800 characters (truncate + tell them to paste the copied full text). Keep form[data-quote-form].",
+    "Ready panel: Copy request (role=status confirmation), address + copy button, Call / Text (only when PHONE is known), Gmail / Outlook web compose links.",
+    "Native validation + inline errors (aria-describedby) + error summary on submit; values never cleared; sessionStorage draft.",
+    "content/pages/quote.json is yours outright (v3 schema, CONTRACT §6); nobody edited it in W1.",
+    "Plausible events (CONTRACT §13) with no personal data; pure builder functions exported from quote.js and unit-tested. event-schema.yaml: the seed added the §13 names next to the v2 ones; rename your own emitters, then delete the deprecated v2 entries and regenerate event-schema.d.ts (ds-chrome and ds-comp merge before you and rename theirs)."
+  ],
+  "acceptance": [
+    "A13#10: About 6 inputs, single name field, no CAPTCHA — check e2e/quote.spec#six-inputs (you author it)",
+    "C2.5: Free quote page wireframe — check e2e/quote.spec#page-order (you author it)",
+    "C5.1: Quote builder six inputs, ?area= prefill — check e2e/quote.spec#prefill (you author it)",
+    "C5.2: mailto submit with encoded subject/body ≤ 1,800 chars; works without JS — check unit/quote-builder.test#mailto (you author it)",
+    "C5.3: Ready panel: copy, address, call/text, webmail links — check e2e/quote.spec#ready-panel (you author it)",
+    "C5.4: Native validation, inline errors, error summary, values kept — check e2e/quote.spec#validation (you author it)",
+    "C5.5: sessionStorage draft — check e2e/quote.spec#draft-restore (you author it)",
+    "C5.6: Plausible custom events, no personal data — check unit/quote-events.test#no-pii (you author it)",
+    "P1#5: Quote builder → mailto, no-JS path, copy, visible email, tel/sms fallbacks + status — check e2e/quote.spec#no-js-and-fallbacks (you author it)",
+    "Free-quote page order: H1 → reassurance strip ([REPLY TIME]) → builder → What happens next (3) → alternative contacts → privacy note",
+    "quote slices 19 and 26 deleted (the !important on [aria-invalid] and .choice--check with them)"
+  ],
+  "providesRules": [
+    {
+      "check": "e2e/quote.spec#six-inputs",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "A13#10",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#page-order",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C2.5",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#prefill",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.1",
+      "implementers": "quote"
+    },
+    {
+      "check": "unit/quote-builder.test#mailto",
+      "kind": "unit",
+      "file": "site/tests/unit/quote-builder.test.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.2",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#ready-panel",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.3",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#validation",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.4",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#draft-restore",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.5",
+      "implementers": "quote"
+    },
+    {
+      "check": "unit/quote-events.test#no-pii",
+      "kind": "unit",
+      "file": "site/tests/unit/quote-events.test.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "C5.6",
+      "implementers": "quote"
+    },
+    {
+      "check": "e2e/quote.spec#no-js-and-fallbacks",
+      "kind": "e2e",
+      "file": "site/tests/e2e/quote.spec.mjs",
+      "shipIn": "w2",
+      "neededBy": "w2",
+      "forItems": "P1#5",
+      "implementers": "quote"
+    }
+  ],
+  "legacySlices": [
+    {
+      "file": "site/src/styles/50-legacy-19-quote.css",
+      "lines": [
+        500,
+        569
+      ],
+      "label": "quote form, stepper, fields, choices, ready panel",
+      "mustDeleteIn": "w2",
+      "importantRules": [
+        "L508 .quote-aside .media: aspect-ratio: 3 / 2 !important",
+        "L547 [aria-invalid=\"true\"]: border-color: var(--color-error) !important",
+        "L559 .choice--check: box-shadow: none !important"
+      ]
+    },
+    {
+      "file": "site/src/styles/50-legacy-26-quote.css",
+      "lines": [
+        606,
+        650
+      ],
+      "label": "responsive + dark-appearance rules for this owner (selector-split, original media-query order kept)",
+      "mustDeleteIn": "w2",
+      "importantRules": []
+    }
+  ],
+  "gates": {
+    "w2": [
+      "cd $WT/site && node tools/dev-setup.mjs --devtools",
+      "export PORT=<your port> OUT=$SCRATCH/dist/<branch-with-dashes> SITE_DIST=$OUT CHROME_PATH=/usr/bin/google-chrome",
+      "node ../brand/build-tokens.mjs --check && node ../brand/check-contrast.mjs",
+      "/opt/node-tools/node_modules/.bin/tsc -p jsconfig.json",
+      "node --test \"tests/unit/**/*.test.mjs\"",
+      "node build.mjs --offline-images --out=$OUT && node tools/check-all.mjs --no-build --strict-redirects   # .orchestra/baselines apply automatically",
+      "node tools/csp.mjs --check",
+      "node node_modules/playwright/cli.js test --trace off   # reads PORT and SITE_DIST; reuseExistingServer:false",
+      "node tools/a11y.mjs --themes=dark,light --widths=320,1440 --motion=off,on   # deferred in W2 until qa merges",
+      "node tools/motion-audit.mjs && node tools/text-over-media.mjs   # deferred in W2 until qa merges",
+      "node tools/trace.mjs --upto=w2 --stream=quote   # deferred in W2 until qa merges",
+      "node build.mjs && node tools/check-all.mjs --no-build   # Netlify parity: online images, no extra flags",
+      "node ../.orchestra/tools/ownership.mjs --stream=quote --wave=w2 --base=<base sha> --head=HEAD"
+    ]
+  },
+  "rules": [
+    "Write ONLY paths matched by your owns for the wave you are running in; everything else is forbidden. Need a change elsewhere? Describe it in your requests file and carry on. node ../.orchestra/tools/ownership.mjs enforces this before every merge.",
+    "Builders commit on their own branch (at least every ~20 minutes and at the end), then git format-patch $BASE..HEAD -o $SCRATCH/patches/<branch>/. Never merge, tag or push: the integrator does that. Reviewers never commit. Fixers branch <branch>--fix<n> from the tip and fix only verified findings, inside the builder's owns.",
+    "Never invent facts about RNC. Unknown business facts stay as the exact bracket tokens of CONTRACT §3. Samples carry sample:true and a visible \"Sample\" label. No prices, budgets, superlatives, years-in-business claims, invented numbers, counters or tickers. Never mention internal software or automation. Canadian English.",
+    "A URL that depends on an unresolved token ([PHONE], [EMAIL], [GOOGLE PROFILE], [DOMAIN]) is never put in an href: render plain text plus the placeholder chip in showcase builds, and omit it (or use the documented fallback) in launch builds (CONTRACT §3).",
+    "Legacy !important: .orchestra/legacy-css-map.json lists every !important in the legacy slices (importantRules). In @layer legacy an !important beats every newer layer, so if you restyle one of those selectors, delete that declaration from its slice (if you own the slice) or request it from the slice owner.",
+    "Baselines (CONTRACT §17): tools apply .orchestra/baselines/<tool>.json automatically; a failure not in the baseline fails your gate. Never edit a baseline (integrator-only). Where your acceptance says so, the entries for your pages or files must be gone.",
+    "Generated files are never hand-edited: brand/tokens.css (integrator regenerates), event-schema.d.ts (tools/gen-event-types.mjs), the .orchestra JSON files (gen-a1.mjs).",
+    "Frozen APIs: site/COMPONENTS.md signatures, data-* hooks and accessible names only grow (new optional parameters). site/tests/unit/ui-api.test.mjs is append-only.",
+    "Traceability: every acceptance line names one check. A check you author must exist under that exact id: tool rules in the tool's literal `export const RULES = [...]`, e2e/unit checks as a test whose title contains `#<rule>`. From W2 on, tools/trace.mjs fails when one is missing.",
+    "Return {branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]} as your final answer."
+  ],
+  "verifierLens": "Mail-client pessimist: length caps, encoding of non-ASCII, no-JS submit, back-navigation draft restore, screen-reader error flow",
+  "returns": "{branch, head, base, files, gates:{name:pass|fail|deferred}, acceptance:[{item, status, evidence}], requests:[...]}",
+  "requests": ".orchestra/requests/quote.md (never edit a file outside owns; describe the change there)"
+}
