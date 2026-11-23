@@ -433,7 +433,7 @@
       "verifier": "ds-core",
       "check": "check-contrast#all-pairs",
       "kind": "tool",
-      "checkFile": "site/tools/check-contrast.mjs",
+      "checkFile": "brand/check-contrast.mjs",
       "due": "w2",
       "superseded": true,
       "proxy": true,
@@ -580,7 +580,7 @@
       "verifier": "ds-core",
       "check": "check-contrast#all-pairs",
       "kind": "tool",
-      "checkFile": "site/tools/check-contrast.mjs",
+      "checkFile": "brand/check-contrast.mjs",
       "due": "w2"
     },
     "C3.4": {
@@ -885,7 +885,7 @@
       "verifier": "ds-core",
       "check": "check-contrast#focus-pairs",
       "kind": "tool",
-      "checkFile": "site/tools/check-contrast.mjs",
+      "checkFile": "brand/check-contrast.mjs",
       "due": "w2"
     },
     "P0#4": {
@@ -1048,7 +1048,7 @@
       "verifier": "ds-core",
       "check": "check-contrast#glass-worst-case",
       "kind": "tool",
-      "checkFile": "site/tools/check-contrast.mjs",
+      "checkFile": "brand/check-contrast.mjs",
       "due": "w2",
       "superseded": true,
       "note": "superseded on aesthetics, hard constraints kept (contrast-safe glass, solid fallbacks, motion policy)"
